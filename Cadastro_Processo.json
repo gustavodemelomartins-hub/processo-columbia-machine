@@ -2,7 +2,8 @@
   "schema": "columbia-operational-process/1",
   "part": {
     "name": "FP 16F H8 12V",
-    "order": "OS 10713"
+    "order": "OS 10713",
+    "order_display": "OS 10-713"
   },
   "revision": null,
   "drawing": {
@@ -93,6 +94,13 @@
       "value": "Alinhar a peça por fora",
       "provenance": "dado de processo — informado pelo usuário",
       "scope": "todas as etapas deste trabalho"
+    },
+    "orientation_sequence": {
+      "provenance": "dado de processo — orientação definida pelo usuário",
+      "first_face": "invertida em relação à posição sobre calços",
+      "after_tumble": "mesma orientação do segundo faceamento e da montagem sobre calços",
+      "tumble_count": 1,
+      "next_setup": "elevar para os calços sem tombar novamente"
     }
   },
   "steps": [
@@ -121,6 +129,10 @@
       "inspection": {
         "registered": false,
         "criteria": null
+      },
+      "orientation": {
+        "rotation_x_degrees": 180,
+        "provenance": "montagem ilustrativa conforme orientação do usuário; não inferida do TAP"
       }
     },
     {
@@ -148,6 +160,10 @@
       "inspection": {
         "registered": false,
         "criteria": null
+      },
+      "orientation": {
+        "rotation_x_degrees": 0,
+        "provenance": "montagem ilustrativa conforme orientação do usuário; não inferida do TAP"
       }
     },
     {
@@ -177,6 +193,10 @@
         "kind": "espessura",
         "target_mm": 96,
         "provenance": "meta definida pelo usuário; desenho indica 95,75 mm, alinhar revisão"
+      },
+      "orientation": {
+        "rotation_x_degrees": 0,
+        "provenance": "montagem ilustrativa conforme orientação do usuário; não inferida do TAP"
       }
     },
     {
@@ -204,6 +224,10 @@
       "inspection": {
         "registered": false,
         "criteria": null
+      },
+      "orientation": {
+        "rotation_x_degrees": 0,
+        "provenance": "montagem ilustrativa conforme orientação do usuário; não inferida do TAP"
       }
     },
     {
@@ -231,6 +255,10 @@
       "inspection": {
         "registered": false,
         "criteria": null
+      },
+      "orientation": {
+        "rotation_x_degrees": 0,
+        "provenance": "montagem ilustrativa conforme orientação do usuário; não inferida do TAP"
       }
     },
     {
@@ -258,6 +286,10 @@
       "inspection": {
         "registered": false,
         "criteria": null
+      },
+      "orientation": {
+        "rotation_x_degrees": 0,
+        "provenance": "montagem ilustrativa conforme orientação do usuário; não inferida do TAP"
       }
     },
     {
@@ -285,6 +317,10 @@
       "inspection": {
         "registered": false,
         "criteria": null
+      },
+      "orientation": {
+        "rotation_x_degrees": 0,
+        "provenance": "montagem ilustrativa conforme orientação do usuário; não inferida do TAP"
       }
     },
     {
@@ -312,6 +348,10 @@
       "inspection": {
         "registered": false,
         "criteria": null
+      },
+      "orientation": {
+        "rotation_x_degrees": 0,
+        "provenance": "montagem ilustrativa conforme orientação do usuário; não inferida do TAP"
       }
     },
     {
@@ -341,6 +381,10 @@
         "kind": "medida observada / degrau",
         "target_mm": null,
         "provenance": "in-process proposto, parada e retomada a validar"
+      },
+      "orientation": {
+        "rotation_x_degrees": 0,
+        "provenance": "montagem ilustrativa conforme orientação do usuário; não inferida do TAP"
       }
     },
     {
@@ -368,6 +412,10 @@
       "inspection": {
         "registered": false,
         "criteria": null
+      },
+      "orientation": {
+        "rotation_x_degrees": 0,
+        "provenance": "montagem ilustrativa conforme orientação do usuário; não inferida do TAP"
       }
     },
     {
@@ -397,6 +445,10 @@
         "kind": "medida observada / degrau",
         "target_mm": null,
         "provenance": "in-process proposto, parada e retomada a validar"
+      },
+      "orientation": {
+        "rotation_x_degrees": 0,
+        "provenance": "montagem ilustrativa conforme orientação do usuário; não inferida do TAP"
       }
     },
     {
@@ -424,6 +476,10 @@
       "inspection": {
         "registered": false,
         "criteria": null
+      },
+      "orientation": {
+        "rotation_x_degrees": 0,
+        "provenance": "montagem ilustrativa conforme orientação do usuário; não inferida do TAP"
       }
     }
   ],
@@ -442,5 +498,45 @@
     },
     "xy_position": "part_center",
     "exceptions": "A engenharia/programador cadastra a referência específica em steps[].references. A conferência na máquina continua manual."
+  },
+  "tool_mounting": {
+    "policy": "margin-10/v1",
+    "recommended_margin_mm": 10,
+    "basis": "Descida programada em relação a Z0 no topo; não equivale ao comprimento das arestas de corte.",
+    "exceptions": "Margem adotada por ferramenta, seguida de medida e confirmação manual do conjunto real.",
+    "tools": {
+      "1": {
+        "cutting_length_mm": null,
+        "cutting_length_provenance": "não fornecido; cadastro de ferramenta real a confirmar"
+      },
+      "9": {
+        "cutting_length_mm": null,
+        "cutting_length_provenance": "não fornecido; cadastro de ferramenta real a confirmar"
+      },
+      "3": {
+        "cutting_length_mm": null,
+        "cutting_length_provenance": "não fornecido; cadastro de ferramenta real a confirmar"
+      },
+      "12": {
+        "cutting_length_mm": null,
+        "cutting_length_provenance": "não fornecido; cadastro de ferramenta real a confirmar"
+      },
+      "4": {
+        "cutting_length_mm": null,
+        "cutting_length_provenance": "não fornecido; cadastro de ferramenta real a confirmar"
+      },
+      "8": {
+        "cutting_length_mm": null,
+        "cutting_length_provenance": "não fornecido; cadastro de ferramenta real a confirmar"
+      },
+      "5": {
+        "cutting_length_mm": null,
+        "cutting_length_provenance": "não fornecido; cadastro de ferramenta real a confirmar"
+      },
+      "6": {
+        "cutting_length_mm": null,
+        "cutting_length_provenance": "não fornecido; cadastro de ferramenta real a confirmar"
+      }
+    }
   }
 }

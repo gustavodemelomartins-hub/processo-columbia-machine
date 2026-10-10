@@ -39,3 +39,11 @@ Três cards grandes organizam as operações. A preparação deste trabalho orie
 Em Detalhes técnicos, consulte estratégias PERCURSO, linhas físicas L e blocos N, trocas M6, primeiro movimento de corte, parâmetros e tempos aproximados por estratégia. Os botões abrem o trecho original destacado. Essas linhas localizam o código e não aprovam retomadas.
 
 AP/AE não foram declarados neste lote e aparecem Não determinado. O tempo do cabeçalho é separado da estimativa da trajetória (rápido assumido 10.000 mm/min, sem aceleração, trocas, paradas e G53 não localizado). Dados estruturados: CNC/Estrategias_Programa.json.
+
+## OS, orientação e montagem de ferramentas
+
+OS 10-713 em destaque abaixo do logo. Operação OK é registro manual de conclusão, sem substituir o checklist das etapas. A terceira operação aguarda definição.
+
+A primeira face começa invertida; depois de tombar, a peça mantém a orientação do segundo faceamento e é elevada para os calços. Essa orientação foi cadastrada pelo usuário, não inferida do TAP.
+
+Play permite prévia durante etapas manuais; o programa da prévia é identificado e não inicia execução. Ferramentas apresentam Z mínimo por programa, montagem recomendada com 10 mm de margem, margem adotada por ferramenta e medida fora da pinça. Exceções como 3 mm exigem nova confirmação. Corte útil permanece a confirmar quando não cadastrado; não equivale à descida Z. A comparação não verifica colisões físicas.
