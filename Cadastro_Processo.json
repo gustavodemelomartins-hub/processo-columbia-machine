@@ -88,7 +88,12 @@
         "z": 235
       }
     ],
-    "physical_collision_validation": false
+    "physical_collision_validation": false,
+    "alignment": {
+      "value": "Alinhar a peça por fora",
+      "provenance": "dado de processo — informado pelo usuário",
+      "scope": "todas as etapas deste trabalho"
+    }
   },
   "steps": [
     {

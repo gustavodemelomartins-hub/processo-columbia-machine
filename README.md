@@ -31,3 +31,11 @@ Logo e favicon: Columbia Machine Brasil, obtidos de https://columbiamachine.com.
 No 3D, um dedo gira e dois dedos ajustam o zoom. Os botões + e − também estão disponíveis no celular.
 
 X0/Y0 vêm no centro da peça por padrão de engenharia. O operador confere a referência na máquina; esse cadastro não confirma o checklist automaticamente. Cadastro_Processo.json registra reference_defaults e exceções em steps[].references. Para publicar alterações, edite o cadastro no projeto de origem e gere novamente o HTML; editar apenas esse JSON publicado não modifica o index.html incorporado.
+
+## Operações e estratégias
+
+Três cards grandes organizam as operações. A preparação deste trabalho orienta alinhar a peça por fora. O 3D conserva apenas as três linhas na origem, sem texto, setas periféricas ou batente amarelo.
+
+Em Detalhes técnicos, consulte estratégias PERCURSO, linhas físicas L e blocos N, trocas M6, primeiro movimento de corte, parâmetros e tempos aproximados por estratégia. Os botões abrem o trecho original destacado. Essas linhas localizam o código e não aprovam retomadas.
+
+AP/AE não foram declarados neste lote e aparecem Não determinado. O tempo do cabeçalho é separado da estimativa da trajetória (rápido assumido 10.000 mm/min, sem aceleração, trocas, paradas e G53 não localizado). Dados estruturados: CNC/Estrategias_Programa.json.
