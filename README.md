@@ -1,0 +1,27 @@
+# Processo Columbia Machine
+
+Protótipo de procedimento operacional digital de usinagem para a OS 10713, FP 16F H8 12V.
+
+Site: https://gustavodemelomartins-hub.github.io/processo-columbia-machine/
+
+Esta publicação conserva o protótipo atual: sequência de operações, consulta do desenho, percurso CNC, ferramentas e checklist. O index.html é a cópia publicada do protótipo local. O PDF em Desenhos mantém os bytes do original.
+
+## Uso
+
+Abra o site no PC ou celular. Use as abas 3D e Desenho; escolha a operação/etapa e confira as ferramentas e referências.
+
+Registros de conferência ficam no armazenamento do navegador, por dispositivo. PC e celular não sincronizam os registros. Acesso ao site e ao repositório é público.
+
+O percurso vem do programa; montagem, calços e referências ilustrativas dependem de confirmação humana. Esta versão não verifica colisões físicas nem envia comandos à máquina.
+
+## Atualização
+
+Atualize index.html com o protótipo gerado pelo projeto atual. Mantenha Desenhos e Identidade_Visual junto dele. GitHub Pages publica a raiz da branch main; .nojekyll mantém os arquivos estáticos.
+
+Os programas .TAP originais continuam preservados no projeto local e não são editados pela publicação.
+
+## Atribuições
+
+Bibliotecas: Three.js e @sienci/gviewer (MIT); análise pré-calculada com easy_gcode_plot (MIT). Licenças e atribuições estão em Licencas.
+
+Logo e favicon: Columbia Machine Brasil, obtidos de https://columbiamachine.com.br/. Consulte Identidade_Visual/Identidade_Columbia.json para fontes e identidade observada. Não foi atribuída licença aberta aos arquivos da empresa ou ao desenho técnico.

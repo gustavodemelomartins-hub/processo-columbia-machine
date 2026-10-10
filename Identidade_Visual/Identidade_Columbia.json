@@ -1,0 +1,355 @@
+{
+  "identidade": "Columbia Machine Brasil",
+  "consultado_em": "2026-10-10",
+  "fonte": "https://columbiamachine.com.br/",
+  "natureza": "Identidade observada no site público; não é um manual oficial de marca.",
+  "font": "system-ui, -apple-system, \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, \"Noto Sans\", \"Liberation Sans\", sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+  "tokens_aplicados": {
+    "azul": "#0066B3",
+    "ciano": "#00AEEF",
+    "titulos": "#215A98",
+    "azul_escuro": "#0A3250",
+    "cinza_texto": "#606060",
+    "superficie": "#F3F3F5"
+  },
+  "cores_observadas_css": {
+    "#215A98": [
+      {
+        "arquivo": "globalStyle.css",
+        "linha": 6,
+        "uso": "color: #215a98;"
+      },
+      {
+        "arquivo": "globalStyle.css",
+        "linha": 435,
+        "uso": "background-color: #215a98;"
+      }
+    ],
+    "#0066B3": [
+      {
+        "arquivo": "globalStyle.css",
+        "linha": 13,
+        "uso": "background: #0066b3;"
+      },
+      {
+        "arquivo": "globalStyle.css",
+        "linha": 32,
+        "uso": "background-color: #0066b3;"
+      },
+      {
+        "arquivo": "globalStyle.css",
+        "linha": 50,
+        "uso": "color: #0066b3;"
+      },
+      {
+        "arquivo": "globalStyle.css",
+        "linha": 57,
+        "uso": "color: #0066b3 !important;"
+      },
+      {
+        "arquivo": "globalStyle.css",
+        "linha": 67,
+        "uso": "background: #0066b3;"
+      },
+      {
+        "arquivo": "globalStyle.css",
+        "linha": 107,
+        "uso": "background: #0066b3;"
+      },
+      {
+        "arquivo": "globalStyle.css",
+        "linha": 148,
+        "uso": "border: 1px solid #0066b3 !important;"
+      },
+      {
+        "arquivo": "globalStyle.css",
+        "linha": 157,
+        "uso": "color: #0066b3;"
+      },
+      {
+        "arquivo": "globalStyle.css",
+        "linha": 165,
+        "uso": "color: #0066b3;"
+      },
+      {
+        "arquivo": "globalStyle.css",
+        "linha": 170,
+        "uso": "background: #0066b3;"
+      },
+      {
+        "arquivo": "globalStyle.css",
+        "linha": 181,
+        "uso": "color: #0066b3;"
+      },
+      {
+        "arquivo": "globalStyle.css",
+        "linha": 191,
+        "uso": "color: #0066b3;"
+      },
+      {
+        "arquivo": "globalStyle.css",
+        "linha": 197,
+        "uso": "color: #0066b3;"
+      },
+      {
+        "arquivo": "globalStyle.css",
+        "linha": 264,
+        "uso": "fill: #0066B3;"
+      },
+      {
+        "arquivo": "globalStyle.css",
+        "linha": 346,
+        "uso": "background: #0066b3;"
+      },
+      {
+        "arquivo": "globalStyle.css",
+        "linha": 503,
+        "uso": "color: #0066b3 !important;"
+      },
+      {
+        "arquivo": "globalStyle.css",
+        "linha": 532,
+        "uso": "background: #0066b3;"
+      },
+      {
+        "arquivo": "home.css",
+        "linha": 140,
+        "uso": "background-color: #0066b3;"
+      },
+      {
+        "arquivo": "home.css",
+        "linha": 146,
+        "uso": "background: #0066b3;"
+      },
+      {
+        "arquivo": "home.css",
+        "linha": 163,
+        "uso": "color: #0066b3;"
+      },
+      {
+        "arquivo": "home.css",
+        "linha": 181,
+        "uso": "background: #0066b3;"
+      },
+      {
+        "arquivo": "home.css",
+        "linha": 201,
+        "uso": "color: #0066b3;"
+      }
+    ],
+    "#FFFFFF": [
+      {
+        "arquivo": "globalStyle.css",
+        "linha": 17,
+        "uso": "color: #fff;"
+      }
+    ],
+    "#00AEEF": [
+      {
+        "arquivo": "globalStyle.css",
+        "linha": 25,
+        "uso": "background: #00aeef;"
+      },
+      {
+        "arquivo": "globalStyle.css",
+        "linha": 40,
+        "uso": "background: #00aeef;"
+      },
+      {
+        "arquivo": "globalStyle.css",
+        "linha": 180,
+        "uso": "background: #00aeef;"
+      },
+      {
+        "arquivo": "globalStyle.css",
+        "linha": 196,
+        "uso": "background: #00aeef;"
+      },
+      {
+        "arquivo": "globalStyle.css",
+        "linha": 234,
+        "uso": "color: #00aeef;"
+      },
+      {
+        "arquivo": "globalStyle.css",
+        "linha": 285,
+        "uso": "fill: #00AEEF;"
+      },
+      {
+        "arquivo": "globalStyle.css",
+        "linha": 358,
+        "uso": "background: #00aeef;"
+      },
+      {
+        "arquivo": "globalStyle.css",
+        "linha": 463,
+        "uso": "background: #00aeef;"
+      },
+      {
+        "arquivo": "globalStyle.css",
+        "linha": 481,
+        "uso": "color: #00aeef;"
+      },
+      {
+        "arquivo": "globalStyle.css",
+        "linha": 513,
+        "uso": "/* background: #00aeef; */"
+      },
+      {
+        "arquivo": "globalStyle.css",
+        "linha": 536,
+        "uso": "color: #00aeef;"
+      },
+      {
+        "arquivo": "home.css",
+        "linha": 200,
+        "uso": "background: #00aeef;"
+      }
+    ],
+    "#DEDEDE": [
+      {
+        "arquivo": "globalStyle.css",
+        "linha": 124,
+        "uso": "box-shadow: 0 3px 6px #dedede;"
+      }
+    ],
+    "#A5D7FF": [
+      {
+        "arquivo": "globalStyle.css",
+        "linha": 243,
+        "uso": "fill: #a5d7ff;"
+      },
+      {
+        "arquivo": "globalStyle.css",
+        "linha": 248,
+        "uso": "fill: #a5d7ff;"
+      },
+      {
+        "arquivo": "globalStyle.css",
+        "linha": 253,
+        "uso": "fill: #a5d7ff;"
+      },
+      {
+        "arquivo": "globalStyle.css",
+        "linha": 258,
+        "uso": "fill: #a5d7ff;"
+      },
+      {
+        "arquivo": "globalStyle.css",
+        "linha": 275,
+        "uso": "stroke: #a5d7ff;"
+      }
+    ],
+    "#CCCCCC": [
+      {
+        "arquivo": "globalStyle.css",
+        "linha": 270,
+        "uso": "fill: #cccccc;"
+      },
+      {
+        "arquivo": "globalStyle.css",
+        "linha": 354,
+        "uso": "background: #ccc;"
+      }
+    ],
+    "#ED1C24": [
+      {
+        "arquivo": "globalStyle.css",
+        "linha": 280,
+        "uso": "fill: #ED1C24;"
+      },
+      {
+        "arquivo": "globalStyle.css",
+        "linha": 350,
+        "uso": "background: #ed1c24;"
+      }
+    ],
+    "#606060": [
+      {
+        "arquivo": "globalStyle.css",
+        "linha": 328,
+        "uso": "color: #606060;"
+      },
+      {
+        "arquivo": "globalStyle.css",
+        "linha": 363,
+        "uso": "color: #606060;"
+      }
+    ],
+    "#F7941D": [
+      {
+        "arquivo": "globalStyle.css",
+        "linha": 370,
+        "uso": "color: #f7941d;"
+      }
+    ],
+    "#198754": [
+      {
+        "arquivo": "globalStyle.css",
+        "linha": 564,
+        "uso": "border-color: #198754 !important;"
+      }
+    ],
+    "#DC3545": [
+      {
+        "arquivo": "globalStyle.css",
+        "linha": 568,
+        "uso": "border-color: #dc3545 !important;"
+      }
+    ],
+    "#0A3250": [
+      {
+        "arquivo": "home.css",
+        "linha": 20,
+        "uso": "background-color: #0a3250;"
+      },
+      {
+        "arquivo": "home.css",
+        "linha": 214,
+        "uso": "background-color: #0a3250;"
+      }
+    ],
+    "#00000061": [
+      {
+        "arquivo": "home.css",
+        "linha": 46,
+        "uso": "box-shadow: 1px 3px 6px #00000061;"
+      }
+    ],
+    "#000000": [
+      {
+        "arquivo": "home.css",
+        "linha": 127,
+        "uso": "color: #000;"
+      }
+    ],
+    "#F3F3F5": [
+      {
+        "arquivo": "home.css",
+        "linha": 133,
+        "uso": "background: #f3f3f5;"
+      }
+    ]
+  },
+  "assets": [
+    {
+      "arquivo": "columbia_logo.png",
+      "fonte": "https://columbiamachine.com.br/img/columbia_logo.png",
+      "sha256": "e93850d32b3cf61d9d4ad18245eccac701af04b3a4063769a20ae05296e8a7e1",
+      "original_sem_alteracao": true
+    },
+    {
+      "arquivo": "favicon-32x32.png",
+      "fonte": "https://columbiamachine.com.br/img/favicon-32x32.png",
+      "sha256": "03f06535b39c6fae71301afcaeecbe8f37e49862c73133925bdcb0655c83fe0d",
+      "original_sem_alteracao": true
+    }
+  ],
+  "instagram": {
+    "url": "https://www.instagram.com/columbiamachineconcreto/",
+    "evidencia": "Link do cabeçalho e rodapé gerados pelo include.js do site oficial.",
+    "conteudo": "Não acessível nesta consulta; nenhuma imagem ou cor atribuída a posts."
+  },
+  "direitos": "Logo e favicon da Columbia Machine Brasil; uso neste protótipo solicitado pelo usuário. Não foi encontrada licença de redistribuição aberta. CSS de referência arquivado, não executado pelo protótipo.",
+  "sem_rede": "Logo e favicon incorporados ao HTML; não carrega scripts, rastreadores, widgets ou fontes do site."
+}

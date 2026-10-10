@@ -1,0 +1,250 @@
+/* FIXME: usar SAAS*/
+
+
+/* CSS da página */
+
+.carousel-indicators {
+  bottom: 55px;
+}
+
+.carousel-indicators .active {
+  background-color: white;
+}
+
+.inner-content {
+  position: relative;
+}
+
+.counterSection {
+  margin: -55px auto;
+  background-color: #0a3250;
+  max-width: 100%;
+  padding: 10px 0;
+  border-radius: 15px;
+  width: fit-content;
+}
+
+.counterSection ul {
+  justify-content: center;
+  list-style: none;
+  margin: 0;
+}
+
+.counterSection ul li {
+  width: 100%;
+  margin: 0 15px;
+  text-align: center;
+  color: white;
+  font-size: 13px;
+  text-transform: capitalize;
+  font-weight: 500;
+  border-radius: 15px;
+  padding: 10px;
+}
+
+.counterSection ul li:hover {
+  box-shadow: 1px 3px 6px #00000061;
+}
+
+.counterSection .cont-title {
+  font-size: 36px;
+  font-weight: normal;
+  margin-bottom: 0;
+  line-height: 32px;
+  text-align: center;
+}
+
+.counterSection .icon-setup i {
+  font-size: 22px;
+  line-height: 35px;
+  margin-left: 5px;
+}
+
+#homeAbout {
+  padding-top: 100px;
+  margin: 0 auto;
+}
+
+#homeAbout .video-div {
+  position: relative;
+}
+
+#homeAbout .btn-video,
+#homeAbout .btn-video:visited {
+  text-decoration: none;
+  padding: 7px 20px;
+  display: inline-block;
+  border-radius: 100px;
+  transition: all 0.2s;
+  position: absolute;
+  top: 32%;
+  left: 41%;
+}
+
+#homeAbout .btn-video:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+.btn-video:active {
+  transform: translateY(-1px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+#homeAbout .btn-video:hover::after {
+  transform: scaleX(1.4) scaleY(1.6);
+  opacity: 0;
+}
+
+#homeAbout .btn-video::after {
+  content: '';
+  display: inline-block;
+  height: 100%;
+  width: 100%;
+  border-radius: 100px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -1;
+  transition: all 0.4s;
+}
+
+#homeAbout .bnt-video-white {
+  background-color: white;
+}
+
+#homeAbout .bnt-video-white::after {
+  background-color: white;
+}
+
+#homeAbout .btn-video-animate {
+  animation: moveInBottom 5s ease-out;
+  animation-fill-mode: backwards;
+}
+
+#homeAbout p {
+  line-height: 28px;
+  color: #000;
+  font-weight: 400;
+  margin-bottom: 20px;
+}
+
+#concreteSection {
+  background: #f3f3f5;
+  padding: 80px 0;
+  margin: 100px auto 0;
+  font-weight: 400;
+}
+
+#btn-concreteSection a {
+  background-color: #0066b3;
+  color: white;
+  transition: all 0.6s;
+}
+
+#palletizerSection {
+  background: #0066b3;
+  padding: 80px 0;
+  margin: 0 auto;
+  font-weight: 400;
+}
+
+#palletizerSection .subHeading,
+#palletizerSection p {
+  color: white;
+}
+
+#palletizerSection img {
+  max-width: 360px;
+}
+
+#btn-palletizer a {
+  background-color: white;
+  color: #0066b3;
+  transition: all 0.6s;
+}
+
+#globalPresenceSection {
+  margin: 100px auto 0;
+}
+
+#globalPresenceSection p {
+  text-align: justify;
+}
+
+#socialProofSection {
+  margin: 0 auto;
+}
+
+#socialProofSection .bg-blue {
+  color: white;
+  background: #0066b3;
+}
+
+#socialProofSection .subHeading {
+  padding-top: 50px;
+  margin-bottom: 0;
+  color: white;
+}
+
+.panel {
+  text-decoration: none;
+}
+
+.panel:hover {
+  box-shadow: 2px 2px 10px black;
+}
+
+#btn-concreteSection a:hover,
+#btn-palletizer a:hover {
+  background: #00aeef;
+  color: #0066b3;
+}
+
+@media (max-width: 768px) {
+  .counterSection {
+    /* background-color: transparent;
+    width: inherit; */
+    display: none;
+  }
+  .counterSection .col-6 {
+    position: relative;
+  }
+  .counterSection ul {
+    background-color: #0a3250;
+    position: absolute;
+    width: 384px;
+    display: flex;
+  }
+  .counterSection li {
+    width: 192px !important;
+  }
+  .counterSection #ul-1 {
+    right: 0;
+    border-radius: 40px 0 0 40px;
+  }
+  .counterSection #ul-2 {
+    left: 0;
+    top: 110px;
+    border-radius: 0 40px 40px 0;
+  }
+  #homeAbout {
+    /* margin-top: 164px; */
+    padding-top: 50px;
+  }
+}
+
+@media (max-width: 384px) {
+  .counterSection li span {
+    font-size: 22px;
+  }
+  .counterSection ul {
+    width: 235px;
+  }
+  .counterSection #ul-2 {
+    top: 126px;
+  }
+  #homeAbout {
+    /* margin-top: 208px; */
+  }
+}

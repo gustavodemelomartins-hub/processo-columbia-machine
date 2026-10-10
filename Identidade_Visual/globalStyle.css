@@ -1,0 +1,622 @@
+/* classes reutilizadas */
+
+.subHeading {
+  font-size: 35px;
+  text-transform: uppercase;
+  color: #215a98;
+  margin-bottom: 35px;
+  font-weight: 500;
+  text-align: center;
+}
+
+.read-more {
+  background: #0066b3;
+  padding: 8px 16px;
+  border-radius: 10px;
+  font-size: 16px;
+  color: #fff;
+  line-height: 16px;
+  text-decoration: none;
+  display: inline-block;
+  margin-top: 4px;
+}
+
+.read-more:hover {
+  background: #00aeef;
+}
+
+
+/* Menu */
+
+header {
+  background-color: #0066b3;
+  box-sizing: border-box;
+  transition: all 0.6s;
+}
+
+header .nav-item:hover,
+header .navbar .dropdown-menu .dropdown-item:hover,
+header a:hover {
+  background: #00aeef;
+  transition: all 0.6s;
+}
+
+header .nav-link {
+  color: white;
+  text-decoration: none;
+}
+
+header .dropdown-menu .dropdown-item {
+  color: #0066b3;
+}
+
+header .nav-link:hover,
+header .nav-link:hover:visited,
+header .navbar .dropdown-menu .dropdown-item:hover,
+header .navbar .dropdown-menu h5 a:hover {
+  color: #0066b3 !important;
+}
+
+header .navbar .nav-link:visited,
+header .navbar .nav-link:focus {
+  color: white;
+}
+
+header .navbar .dropdown-menu {
+  width: 672px;
+  background: #0066b3;
+  color: white;
+}
+
+header .navbar .dropdown-menu h5 {
+  font-size: 1rem;
+  padding: 0 16px;
+}
+
+header .navbar .dropdown-menu h5 a {
+  text-decoration: none;
+}
+
+header .navbar .dropdown-menu ul {
+  list-style: none;
+  padding: 0;
+}
+
+header .navbar .dropdown-menu .dropdown-item {
+  color: white;
+  text-transform: lowercase;
+}
+
+header .navbar .dropdown-menu .dropdown-item::first-letter {
+  text-transform: capitalize;
+}
+
+header #btn-menu {
+  height: 44px;
+}
+
+header .navbar a {
+  color: white;
+}
+
+header .navbar li a {
+  color: white !important;
+}
+
+footer {
+  background: #0066b3;
+  color: white;
+  margin-top: 20px;
+}
+
+footer i.fab::before,
+footer i.fa::before,
+footer i.fas::before {
+  margin-right: 5px;
+}
+
+footer span {
+  overflow-wrap: anywhere;
+}
+
+form {
+  margin-top: 10px;
+  box-shadow: 0 3px 6px #dedede;
+  text-align: center;
+}
+
+form .col-6,
+form .col-12,
+form .col {
+  position: relative;
+}
+
+form .read-more {
+  margin-top: 0;
+  width: fit-content;
+  border: none;
+  margin-bottom: 10px;
+}
+
+select {
+  -webkit-appearance: auto !important;
+}
+
+input,
+select,
+textarea {
+  border: 1px solid #0066b3 !important;
+}
+
+label {
+  position: absolute;
+  left: 20px;
+  top: -15px;
+  background: white;
+  padding: 0 10px;
+  color: #0066b3;
+}
+
+form .container .row {
+  margin-bottom: 22px;
+}
+
+form h4 {
+  color: #0066b3;
+  margin-bottom: 20px;
+}
+
+form a {
+  background: #0066b3;
+  text-decoration: none;
+  padding: 15px;
+  color: white;
+  display: block;
+  margin-bottom: 10px;
+  border-radius: 5px;
+}
+
+form a:hover {
+  background: #00aeef;
+  color: #0066b3;
+}
+
+form a i {
+  margin-right: 5px;
+}
+
+footer .btn-trabalhe-conosco {
+  text-decoration: none;
+  background-color: white;
+  color: #0066b3;
+  transition: all 0.6s;
+}
+
+footer .btn-trabalhe-conosco:hover {
+  background: #00aeef;
+  color: #0066b3;
+}
+
+footer h3::after {
+  content: "";
+  display: block;
+  width: 60px;
+  height: 3px;
+  background: white;
+  margin: 10px 0;
+}
+
+p {
+  font-size: 19px;
+  text-align: justify;
+}
+
+footer p {
+  font-size: 16px;
+}
+
+h1 {
+  font-size: 35px;
+}
+
+footer ul {
+  list-style: none;
+  padding: 0;
+}
+
+footer li a {
+  text-decoration: none;
+  color: white;
+  transition: all 0.6s;
+}
+
+footer li a:hover {
+  color: #00aeef;
+}
+
+.fil1 {
+  fill: none;
+  fill-rule: nonzero
+}
+
+.fil2 {
+  fill: #a5d7ff;
+  fill-rule: nonzero
+}
+
+.fil4 {
+  fill: #a5d7ff;
+  fill-rule: nonzero
+}
+
+.fil3 {
+  fill: #a5d7ff;
+  fill-rule: nonzero
+}
+
+.fil0 {
+  fill: #a5d7ff;
+  fill-rule: nonzero
+}
+
+.fil2.on,
+.fil2:hover {
+  fill: #0066B3;
+  cursor: pointer;
+}
+
+.fil3.on,
+.fil3:hover {
+  fill: #cccccc;
+  cursor: pointer;
+}
+
+.str0:hover {
+  stroke: #a5d7ff;
+}
+
+.fil0.on,
+.fil0:hover {
+  fill: #ED1C24;
+}
+
+.fil4.on,
+.fil4:hover {
+  fill: #00AEEF;
+}
+
+svg {
+  width: 100%;
+  height: auto;
+}
+
+.mapCircle .list-of-states {
+  display: block;
+  flex-wrap: wrap;
+  max-width: 900px;
+  margin: 0 auto;
+  position: relative;
+  list-style: none;
+  position: relative;
+  width: 100%;
+}
+
+.mapCircle .list-of-states li {
+  padding: 2px 4px;
+  display: table-caption;
+  position: relative;
+}
+
+.mapCircle .list-of-states li:hover::after {
+  content: "";
+  display: block;
+  position: absolute;
+  width: 175px;
+  height: 175px;
+  background-size: cover;
+}
+
+.mapCircle .mapDesc {
+  padding-top: 18px;
+  width: 100%;
+  margin: 0 auto;
+  /* margin-left: 32px; */
+}
+
+.mapCircle .companyTitle {
+  font-size: 16px;
+  color: #606060;
+  font-weight: 500;
+  line-height: 15px;
+  text-align: left;
+  margin-top: 20px;
+  position: relative;
+}
+
+.mapCircle .companyTitle a::before {
+  content: '';
+  width: 12px;
+  height: 30px;
+  position: absolute;
+  top: 14px;
+  left: -20px;
+}
+
+.mapCircle #blueID a::before {
+  background: #0066b3;
+}
+
+.mapCircle #redID a::before {
+  background: #ed1c24;
+}
+
+.mapCircle #greyID a::before {
+  background: #ccc;
+}
+
+.mapCircle #lightblueID a::before {
+  background: #00aeef;
+}
+
+.mapCircle .companyTitle a {
+  text-decoration: none;
+  color: #606060;
+  text-align: left;
+  display: inline-block;
+  font-size: 12px;
+}
+
+.mapCircle .companyTitle a:hover {
+  color: #f7941d;
+}
+
+#img1 {
+  position: absolute;
+  top: 26%;
+  left: 25%;
+  display: none;
+}
+
+#img2 {
+  position: absolute;
+  top: 20%;
+  left: 55%;
+  display: none;
+}
+
+#img3 {
+  position: absolute;
+  top: 63%;
+  left: 52%;
+  display: none;
+}
+
+#img4 {
+  position: absolute;
+  top: 62%;
+  left: 24%;
+  display: none;
+}
+
+.navbar-brand:hover {
+  background: inherit;
+}
+
+address {
+  display: inline;
+}
+
+.logo {
+  height: 75px;
+  width: auto;
+}
+
+.counterSection span {
+  font-size: 25px;
+}
+
+.counterSection .counter-count::before {
+  content: "+";
+}
+
+#financiamentoSection li {
+  font-size: 19px;
+}
+
+#menu-lateral {
+  right: 0;
+  width: 42px;
+  position: relative;
+  top: calc(50% - 138px);
+  z-index: 10;
+}
+
+#menu-lateral ul {
+  background-color: #215a98;
+  position: absolute;
+  border-radius: 10px;
+  width: max-content;
+}
+
+#menu-lateral li {
+  border-radius: 10px;
+  transition: all 0.6s;
+}
+
+#menu-lateral a {
+  text-decoration: none;
+  transition: all 0.6s;
+}
+
+.circle {
+  border-radius: 50%;
+  background: white;
+  width: 10px;
+  height: 10px;
+  display: inline-block;
+  transition: all 0.6s;
+}
+
+#menu-lateral li:hover {
+  width: max-content;
+  transform: translateX(calc(-100% + 42px));
+  background: #00aeef;
+}
+
+#menu-lateral li:hover>a::after {
+  content: attr(data);
+  color: white;
+}
+
+#menu-lateral li:hover>a .circle {
+  background: transparent;
+}
+
+footer a {
+  text-decoration: none;
+  color: white;
+}
+
+footer a:hover {
+  color: #00aeef;
+}
+
+#menu-lateral i,
+#menu-lateral a {
+  color: white;
+}
+
+header .nav-link {
+  font-weight: 700;
+}
+
+#menu-lateral img {
+  width: 30px;
+}
+
+#menu-lateral a {
+  padding: 10px 6px;
+}
+
+.btn-fale-conosco {
+  background: white;
+  color: #0066b3 !important;
+  text-decoration: none;
+  border-radius: 25px;
+  padding: 10px !important;
+  font-weight: 700;
+}
+
+.title {
+  position: absolute;
+  top: -100px;
+  /* background: #00aeef; */
+  padding: 10px;
+  display: inline-block;
+  text-align: center;
+  /* width: fit-content; */
+  color: black;
+  margin-top: 8px;
+}
+
+.title-paletizacao,
+.title-concreto {
+  top: -71px !important;
+}
+
+.social-icons-menu a {
+  color: white;
+}
+
+.social-icons-menu a:hover {
+  background: #0066b3;
+}
+
+.social-icons-menu a:hover {
+  color: #00aeef;
+}
+
+.social-icons-menu i.fab::before,
+.social-icons-menu i.fa::before,
+.social-icons-menu i.fas::before {
+  margin-right: 5px;
+}
+
+@media (max-width: 418px) {
+  .fa-envelope+span {
+    font-size: 0.80rem;
+  }
+}
+
+@media (max-width: 388px) {
+  .btn-trabalhe-conosco {
+    font-size: 0.8rem;
+  }
+}
+
+@media (max-width:390px) {
+  .panel {
+    width: initial;
+  }
+}
+
+.was-validated .form-control:valid {
+  border-color: #198754 !important;
+}
+
+.was-validated .form-control:invalid {
+  border-color: #dc3545 !important;
+}
+
+.invalid-feedback {
+  text-align: left;
+}
+
+.form-select {
+  background-image: none !important;
+}
+
+.text-radiobox {
+  position: relative;
+  text-align: left;
+  padding: 0;
+}
+
+.text-radiobox-item {
+  position: initial;
+  background: transparent;
+}
+
+@media (max-width: 376px) {
+  #maquinarioConcreto {
+    margin-top: 0px;
+  }
+  .title {
+    position: initial !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .produto {
+    margin-top: 85px;
+  }
+  .title-paletizacao,
+  .title-concreto {
+    top: -95px !important;
+  }
+}
+
+#solicite-contato{
+  border-radius: 40px;
+  position: fixed;
+  z-index: 10000;
+  bottom: 14px;
+  right: 81px;
+  padding: 16px;
+  text-align: center;
+  box-shadow: 0px 0px 10px 0px black;
+}
+
+.d-flex.justify-content-center.ficha-tecnica a {
+  font-size: 20px;
+}
