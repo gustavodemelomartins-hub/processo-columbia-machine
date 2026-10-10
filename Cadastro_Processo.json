@@ -1,0 +1,441 @@
+{
+  "schema": "columbia-operational-process/1",
+  "part": {
+    "name": "FP 16F H8 12V",
+    "order": "OS 10713"
+  },
+  "revision": null,
+  "drawing": {
+    "file": "FP16F 12V H8 - PB.pdf",
+    "revision": null,
+    "pages": 5,
+    "principal": true,
+    "source": "desenho técnico original; visualização por render derivado"
+  },
+  "operation_groups": [
+    {
+      "number": 1,
+      "name": "Faceamento das duas faces",
+      "programs_received": [
+        "O001.TAP"
+      ],
+      "substeps": [
+        "Facear a primeira face",
+        "Tombar a peça",
+        "Retirar sobremetal da segunda face e medir"
+      ],
+      "tools_received": [
+        1
+      ],
+      "pre_heat_target_mm": 96
+    },
+    {
+      "number": 2,
+      "name": "Usinagem sobre calços",
+      "programs_received": [
+        "O002.TAP",
+        "O003.TAP",
+        "O004.TAP",
+        "O005.TAP",
+        "O006.TAP",
+        "O007.TAP",
+        "O008.TAP"
+      ],
+      "tools_received": [
+        9,
+        3,
+        12,
+        4,
+        8,
+        5,
+        6
+      ],
+      "program_set_status": "parcial; demais programas aguardando envio"
+    },
+    {
+      "number": 3,
+      "name": null,
+      "programs_received": [],
+      "tools_received": [],
+      "status": "aguardando programas e definição de processo"
+    }
+  ],
+  "fixture": {
+    "provenance": "dados de processo / definição do usuário e validação humana",
+    "cavities_visible_both_operations": true,
+    "support_count": 4,
+    "supports": "quatro blocos curtos nas extremidades, sob os pontos de aperto, sem atravessar as cavidades",
+    "top_clamps": "quatro garras sobre a peça, contato sobre cada calço",
+    "schematic_coordinates_mm": [
+      {
+        "anchor_x": -602,
+        "contact_x": -520,
+        "z": -235
+      },
+      {
+        "anchor_x": -602,
+        "contact_x": -520,
+        "z": 235
+      },
+      {
+        "anchor_x": 602,
+        "contact_x": 520,
+        "z": -235
+      },
+      {
+        "anchor_x": 602,
+        "contact_x": 520,
+        "z": 235
+      }
+    ],
+    "physical_collision_validation": false
+  },
+  "steps": [
+    {
+      "phase": 0,
+      "group": 1,
+      "name": "Facear a primeira face",
+      "program": "O001.TAP",
+      "program_revision": null,
+      "setup": "mesa",
+      "references": {
+        "x0": null,
+        "y0": null,
+        "z0": {
+          "value": "topo da peça",
+          "provenance": "dado de processo / a confirmar na máquina"
+        }
+      },
+      "drawing_reference": {
+        "file": "FP16F 12V H8 - PB.pdf",
+        "page": null,
+        "region": null,
+        "detail": null,
+        "important_dimension": null
+      },
+      "inspection": {
+        "registered": false,
+        "criteria": null
+      }
+    },
+    {
+      "phase": 1,
+      "group": 1,
+      "name": "Tombar a peça",
+      "program": null,
+      "program_revision": null,
+      "setup": "mesa",
+      "references": {
+        "x0": null,
+        "y0": null,
+        "z0": {
+          "value": "topo da peça",
+          "provenance": "dado de processo / a confirmar na máquina"
+        }
+      },
+      "drawing_reference": {
+        "file": "FP16F 12V H8 - PB.pdf",
+        "page": null,
+        "region": null,
+        "detail": null,
+        "important_dimension": null
+      },
+      "inspection": {
+        "registered": false,
+        "criteria": null
+      }
+    },
+    {
+      "phase": 2,
+      "group": 1,
+      "name": "Retirar sobremetal e medir",
+      "program": "O001.TAP",
+      "program_revision": null,
+      "setup": "mesa",
+      "references": {
+        "x0": null,
+        "y0": null,
+        "z0": {
+          "value": "topo da peça",
+          "provenance": "dado de processo / a confirmar na máquina"
+        }
+      },
+      "drawing_reference": {
+        "file": "FP16F 12V H8 - PB.pdf",
+        "page": null,
+        "region": null,
+        "detail": null,
+        "important_dimension": null
+      },
+      "inspection": {
+        "registered": true,
+        "kind": "espessura",
+        "target_mm": 96,
+        "provenance": "meta definida pelo usuário; desenho indica 95,75 mm, alinhar revisão"
+      }
+    },
+    {
+      "phase": 3,
+      "group": 2,
+      "name": "Montar nos calços",
+      "program": null,
+      "program_revision": null,
+      "setup": "quatro calços nas extremidades",
+      "references": {
+        "x0": null,
+        "y0": null,
+        "z0": {
+          "value": "topo da peça",
+          "provenance": "dado de processo / a confirmar na máquina"
+        }
+      },
+      "drawing_reference": {
+        "file": "FP16F 12V H8 - PB.pdf",
+        "page": null,
+        "region": null,
+        "detail": null,
+        "important_dimension": null
+      },
+      "inspection": {
+        "registered": false,
+        "criteria": null
+      }
+    },
+    {
+      "phase": 4,
+      "group": 2,
+      "name": "Marcação e referência",
+      "program": "O002.TAP",
+      "program_revision": null,
+      "setup": "quatro calços nas extremidades",
+      "references": {
+        "x0": null,
+        "y0": null,
+        "z0": {
+          "value": "topo da peça",
+          "provenance": "dado de processo / a confirmar na máquina"
+        }
+      },
+      "drawing_reference": {
+        "file": "FP16F 12V H8 - PB.pdf",
+        "page": null,
+        "region": null,
+        "detail": null,
+        "important_dimension": null
+      },
+      "inspection": {
+        "registered": false,
+        "criteria": null
+      }
+    },
+    {
+      "phase": 5,
+      "group": 2,
+      "name": "Desbaste",
+      "program": "O003.TAP",
+      "program_revision": null,
+      "setup": "quatro calços nas extremidades",
+      "references": {
+        "x0": null,
+        "y0": null,
+        "z0": {
+          "value": "topo da peça",
+          "provenance": "dado de processo / a confirmar na máquina"
+        }
+      },
+      "drawing_reference": {
+        "file": "FP16F 12V H8 - PB.pdf",
+        "page": null,
+        "region": null,
+        "detail": null,
+        "important_dimension": null
+      },
+      "inspection": {
+        "registered": false,
+        "criteria": null
+      }
+    },
+    {
+      "phase": 6,
+      "group": 2,
+      "name": "Alívio Ø25",
+      "program": "O004.TAP",
+      "program_revision": null,
+      "setup": "quatro calços nas extremidades",
+      "references": {
+        "x0": null,
+        "y0": null,
+        "z0": {
+          "value": "topo da peça",
+          "provenance": "dado de processo / a confirmar na máquina"
+        }
+      },
+      "drawing_reference": {
+        "file": "FP16F 12V H8 - PB.pdf",
+        "page": null,
+        "region": null,
+        "detail": null,
+        "important_dimension": null
+      },
+      "inspection": {
+        "registered": false,
+        "criteria": null
+      }
+    },
+    {
+      "phase": 7,
+      "group": 2,
+      "name": "Alívio Ø16",
+      "program": "O004.TAP",
+      "program_revision": null,
+      "setup": "quatro calços nas extremidades",
+      "references": {
+        "x0": null,
+        "y0": null,
+        "z0": {
+          "value": "topo da peça",
+          "provenance": "dado de processo / a confirmar na máquina"
+        }
+      },
+      "drawing_reference": {
+        "file": "FP16F 12V H8 - PB.pdf",
+        "page": null,
+        "region": null,
+        "detail": null,
+        "important_dimension": null
+      },
+      "inspection": {
+        "registered": false,
+        "criteria": null
+      }
+    },
+    {
+      "phase": 8,
+      "group": 2,
+      "name": "Acabamento / teste",
+      "program": "O005.TAP",
+      "program_revision": null,
+      "setup": "quatro calços nas extremidades",
+      "references": {
+        "x0": null,
+        "y0": null,
+        "z0": {
+          "value": "topo da peça",
+          "provenance": "dado de processo / a confirmar na máquina"
+        }
+      },
+      "drawing_reference": {
+        "file": "FP16F 12V H8 - PB.pdf",
+        "page": null,
+        "region": null,
+        "detail": null,
+        "important_dimension": null
+      },
+      "inspection": {
+        "registered": true,
+        "kind": "medida observada / degrau",
+        "target_mm": null,
+        "provenance": "in-process proposto, parada e retomada a validar"
+      }
+    },
+    {
+      "phase": 9,
+      "group": 2,
+      "name": "Cantos Ø12",
+      "program": "O006.TAP",
+      "program_revision": null,
+      "setup": "quatro calços nas extremidades",
+      "references": {
+        "x0": null,
+        "y0": null,
+        "z0": {
+          "value": "topo da peça",
+          "provenance": "dado de processo / a confirmar na máquina"
+        }
+      },
+      "drawing_reference": {
+        "file": "FP16F 12V H8 - PB.pdf",
+        "page": null,
+        "region": null,
+        "detail": null,
+        "important_dimension": null
+      },
+      "inspection": {
+        "registered": false,
+        "criteria": null
+      }
+    },
+    {
+      "phase": 10,
+      "group": 2,
+      "name": "Cantos Ø10 / teste",
+      "program": "O007.TAP",
+      "program_revision": null,
+      "setup": "quatro calços nas extremidades",
+      "references": {
+        "x0": null,
+        "y0": null,
+        "z0": {
+          "value": "topo da peça",
+          "provenance": "dado de processo / a confirmar na máquina"
+        }
+      },
+      "drawing_reference": {
+        "file": "FP16F 12V H8 - PB.pdf",
+        "page": null,
+        "region": null,
+        "detail": null,
+        "important_dimension": null
+      },
+      "inspection": {
+        "registered": true,
+        "kind": "medida observada / degrau",
+        "target_mm": null,
+        "provenance": "in-process proposto, parada e retomada a validar"
+      }
+    },
+    {
+      "phase": 11,
+      "group": 2,
+      "name": "Espaçador",
+      "program": "O008.TAP",
+      "program_revision": null,
+      "setup": "quatro calços nas extremidades",
+      "references": {
+        "x0": null,
+        "y0": null,
+        "z0": {
+          "value": "topo da peça",
+          "provenance": "dado de processo / a confirmar na máquina"
+        }
+      },
+      "drawing_reference": {
+        "file": "FP16F 12V H8 - PB.pdf",
+        "page": null,
+        "region": null,
+        "detail": null,
+        "important_dimension": null
+      },
+      "inspection": {
+        "registered": false,
+        "criteria": null
+      }
+    }
+  ],
+  "reference_defaults": {
+    "x0": {
+      "value": "Centro da peça",
+      "provenance": "Engenharia — padrão definido pelo usuário"
+    },
+    "y0": {
+      "value": "Centro da peça",
+      "provenance": "Engenharia — padrão definido pelo usuário"
+    },
+    "z0": {
+      "value": "Topo da peça",
+      "provenance": "Engenharia — referência de processo"
+    },
+    "xy_position": "part_center",
+    "exceptions": "A engenharia/programador cadastra a referência específica em steps[].references. A conferência na máquina continua manual."
+  }
+}

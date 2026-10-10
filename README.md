@@ -25,3 +25,9 @@ Os programas .TAP originais continuam preservados no projeto local e não são e
 Bibliotecas: Three.js e @sienci/gviewer (MIT); análise pré-calculada com easy_gcode_plot (MIT). Licenças e atribuições estão em Licencas.
 
 Logo e favicon: Columbia Machine Brasil, obtidos de https://columbiamachine.com.br/. Consulte Identidade_Visual/Identidade_Columbia.json para fontes e identidade observada. Não foi atribuída licença aberta aos arquivos da empresa ou ao desenho técnico.
+
+## Celular e origem da engenharia
+
+No 3D, um dedo gira e dois dedos ajustam o zoom. Os botões + e − também estão disponíveis no celular.
+
+X0/Y0 vêm no centro da peça por padrão de engenharia. O operador confere a referência na máquina; esse cadastro não confirma o checklist automaticamente. Cadastro_Processo.json registra reference_defaults e exceções em steps[].references. Para publicar alterações, edite o cadastro no projeto de origem e gere novamente o HTML; editar apenas esse JSON publicado não modifica o index.html incorporado.
