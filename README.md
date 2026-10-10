@@ -36,14 +36,24 @@ X0/Y0 vêm no centro da peça por padrão de engenharia. O operador confere a re
 
 Três cards grandes organizam as operações. A preparação deste trabalho orienta alinhar a peça por fora. O 3D conserva apenas as três linhas na origem, sem texto, setas periféricas ou batente amarelo.
 
-Em Detalhes técnicos, consulte estratégias PERCURSO, linhas físicas L e blocos N, trocas M6, primeiro movimento de corte, parâmetros e tempos aproximados por estratégia. Os botões abrem o trecho original destacado. Essas linhas localizam o código e não aprovam retomadas.
+Ao lado da vista, consulte o programa da etapa, todas as ferramentas/chamadas M6, estratégias PERCURSO, parâmetros e tempos. Em “Linhas do programa”, consulte as linhas físicas L e blocos N, trocas M6 e primeiro movimento de corte. Os botões abrem o trecho original destacado. Essas linhas localizam o código e não aprovam retomadas.
 
 AP/AE não foram declarados neste lote e aparecem Não determinado. O tempo do cabeçalho é separado da estimativa da trajetória (rápido assumido 10.000 mm/min, sem aceleração, trocas, paradas e G53 não localizado). Dados estruturados: CNC/Estrategias_Programa.json.
 
 ## OS, orientação e montagem de ferramentas
 
-OS 10-713 em destaque abaixo do logo. Operação OK é registro manual de conclusão, sem substituir o checklist das etapas. A terceira operação aguarda definição.
+OS 10-713 em destaque abaixo do logo. Operação OK fica dentro do card, no canto superior direito, verde ao marcar; é registro manual de conclusão, sem substituir o checklist das etapas. A terceira operação aguarda definição.
 
 A primeira face começa invertida; depois de tombar, a peça mantém a orientação do segundo faceamento e é elevada para os calços. Essa orientação foi cadastrada pelo usuário, não inferida do TAP.
 
-Play permite prévia durante etapas manuais; o programa da prévia é identificado e não inicia execução. Ferramentas apresentam Z mínimo por programa, montagem recomendada com 10 mm de margem, margem adotada por ferramenta e medida fora da pinça. Exceções como 3 mm exigem nova confirmação. Corte útil permanece a confirmar quando não cadastrado; não equivale à descida Z. A comparação não verifica colisões físicas.
+Play permite prévia durante etapas manuais; o programa da prévia é identificado e não inicia execução. O programa da etapa mostra Z por estratégia; a lista total das oito ferramentas mostra Z máximo do conjunto, montagem recomendada com 10 mm de margem, margem adotada por ferramenta e medida fora da pinça. Exceções como 3 mm exigem nova confirmação. Corte útil permanece a confirmar quando não cadastrado; não equivale à descida Z. A comparação não verifica colisões físicas.
+
+## Consulta operacional e alturas no 3D
+
+Engenharia envia X/Y no centro e Z no topo; operador ajusta origem e preseta ferramentas. Navegação e Play são livres, sem checklist ou aprovação dimensional. Registro de execução/conclusão continua separado da consulta.
+
+O001: ajustar o corretor para facear o primeiro lado até limpar; tombar uma vez; ajustar o corretor para fechar 96,0 mm no segundo lado (1 mm acima da medida final de 95 mm). Sem divisão automática do sobremetal. Instruções fornecidas pelo usuário, não extraídas do TAP.
+
+O 3D posiciona a ponta no XYZ da trajetória e aplica montagem medida e corte útil informado em campo próprio. Sem medida, a montagem estimada é identificada; T1 sem medida não recebe altura inventada. Corte útil desconhecido é representado por anel nominal e haste em arame. Corpo e diâmetro do porta-ferramenta são ilustrativos. Altura insuficiente ou corte útil maior que montagem geram aviso sem alterar o percurso. Sem remoção de material ou validação de colisões.
+
+A lista total conserva oito ferramentas, inclusive enquanto a terceira operação aguarda programas. Dados do programa não são confundidos com medição real. Campo de processista está oculto na tela operacional.

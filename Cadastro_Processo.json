@@ -101,6 +101,14 @@
       "after_tumble": "mesma orientação do segundo faceamento e da montagem sobre calços",
       "tumble_count": 1,
       "next_setup": "elevar para os calços sem tombar novamente"
+    },
+    "face_method": {
+      "first_face": "Facear até limpar, ajustando o corretor da ferramenta",
+      "second_face": "Tombar uma vez e facear ajustando o corretor até fechar 96,0 mm",
+      "pre_heat_target_mm": 96,
+      "final_target_mm": 95,
+      "allowance_for_after_heat_mm": 1,
+      "provenance": "processo descrito pelo usuário; ajustes reais do corretor não estão no TAP"
     }
   },
   "steps": [
@@ -494,7 +502,7 @@
     },
     "z0": {
       "value": "Topo da peça",
-      "provenance": "Engenharia — referência de processo"
+      "provenance": "Engenharia envia Z0 no topo; ferramentas presetadas pelo operador"
     },
     "xy_position": "part_center",
     "exceptions": "A engenharia/programador cadastra a referência específica em steps[].references. A conferência na máquina continua manual."
