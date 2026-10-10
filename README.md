@@ -1,59 +1,29 @@
 # Processo Columbia Machine
 
-Protótipo de procedimento operacional digital de usinagem para a OS 10713, FP 16F H8 12V.
+Procedimento operacional digital de usinagem — OS 10-713. Preserva o protótipo atual e os dados reais de O001–O008.
 
-Site: https://gustavodemelomartins-hub.github.io/processo-columbia-machine/
+[Site](https://gustavodemelomartins-hub.github.io/processo-columbia-machine/)
 
-Esta publicação conserva o protótipo atual: sequência de operações, consulta do desenho, percurso CNC, ferramentas e checklist. O index.html é a cópia publicada do protótipo local. O PDF em Desenhos mantém os bytes do original.
+## Operação
 
-## Uso
+Escolha o card e a etapa. Título, programa e status no alto; 3D dominante e painel somente das ferramentas do programa atual. O003: T3/Ø32, S1800, F5400, G54. Desenho de cinco páginas na aba vizinha, com zoom/pan/ajuste/ampliação. Mouse, teclado e zoom por pinça disponíveis.
 
-Abra o site no PC ou celular. Use as abas 3D e Desenho; escolha a operação/etapa e confira as ferramentas e referências.
+Passos numerados e referências abaixo. Lista completa das oito ferramentas depois, para preparação antecipada. Preparar usa os mesmos registros da lateral. Checklist não bloqueia navegação ou Play; execução é registro separado. Registros ficam no navegador, por dispositivo, sem sincronização.
 
-Registros de conferência ficam no armazenamento do navegador, por dispositivo. PC e celular não sincronizam os registros. Acesso ao site e ao repositório é público.
+## Comprimentos
 
-O percurso vem do programa; montagem, calços e referências ilustrativas dependem de confirmação humana. Esta versão não verifica colisões físicas nem envia comandos à máquina.
+Descida máxima exata separada da montagem recomendada inteira: 99,97 + margem10 →110 mm. Domínio único com arredondamento para cima. Margem configurável; medida fora da pinça e corte útil são físicos e separados. Só recomenda com análise resolvida em relação a Z0 no topo; caso contrário A confirmar. Lista do trabalho considera todos os programas da ferramenta. Recomendar não autoriza execução nem garante colisão/rigidez. Confirmações antigas de comprimento são invalidadas, conservando medições/observações/exceções.
 
-## Atualização
+## Engenharia e CNC
 
-Atualize index.html com o protótipo gerado pelo projeto atual. Mantenha Desenhos e Identidade_Visual junto dele. GitHub Pages publica a raiz da branch main; .nojekyll mantém os arquivos estáticos.
+X/Y centro e Z topo enviados pela engenharia; operador ajusta origem/preseta ferramentas. Alinhar por fora. O001: primeiro lado invertido até limpar via corretor; tombar uma vez; segundo até96,0 mm; elevar para os quatro calços sem novo tombamento. Orientação cadastrada pelo usuário, não extraída do TAP. Terceira operação a definir.
 
-Os programas .TAP originais continuam preservados no projeto local e não são editados pela publicação.
+Trajetória nominal extraída do CNC; montagem/fixação ilustrativas, sem remoção de material, colisão física ou comandos enviados à máquina. Alturas 3D consideram medida ou estimativa identificada; porta-ferramenta ilustrativo e corte útil desconhecido não inventado.
 
-## Atribuições
+Detalhes técnicos fechado por padrão: estratégias, M6/subprogramas, linhas L/N e tempos. AP/AE não declarados no lote. Linhas localizam código; não validam retomadas. [Auditoria antes](docs/ui-audit-before.md) e [depois](docs/ui-audit-after.md).
 
-Bibliotecas: Three.js e @sienci/gviewer (MIT); análise pré-calculada com easy_gcode_plot (MIT). Licenças e atribuições estão em Licencas.
+## Publicação
 
-Logo e favicon: Columbia Machine Brasil, obtidos de https://columbiamachine.com.br/. Consulte Identidade_Visual/Identidade_Columbia.json para fontes e identidade observada. Não foi atribuída licença aberta aos arquivos da empresa ou ao desenho técnico.
+index.html é o HTML gerado pelo projeto original; arquivo independente com recursos incorporados. Cadastro_Processo.json é incorporado na geração: editar somente o JSON publicado não muda o HTML. GitHub Pages publica a raiz main. PDF em Desenhos conserva bytes do original; TAPs imutáveis no projeto local. Repositório/site públicos.
 
-## Celular e origem da engenharia
-
-No 3D, um dedo gira e dois dedos ajustam o zoom. Os botões + e − também estão disponíveis no celular.
-
-X0/Y0 vêm no centro da peça por padrão de engenharia. O operador confere a referência na máquina; esse cadastro não confirma o checklist automaticamente. Cadastro_Processo.json registra reference_defaults e exceções em steps[].references. Para publicar alterações, edite o cadastro no projeto de origem e gere novamente o HTML; editar apenas esse JSON publicado não modifica o index.html incorporado.
-
-## Operações e estratégias
-
-Três cards grandes organizam as operações. A preparação deste trabalho orienta alinhar a peça por fora. O 3D conserva apenas as três linhas na origem, sem texto, setas periféricas ou batente amarelo.
-
-Ao lado da vista, consulte o programa da etapa, todas as ferramentas/chamadas M6, estratégias PERCURSO, parâmetros e tempos. Em “Linhas do programa”, consulte as linhas físicas L e blocos N, trocas M6 e primeiro movimento de corte. Os botões abrem o trecho original destacado. Essas linhas localizam o código e não aprovam retomadas.
-
-AP/AE não foram declarados neste lote e aparecem Não determinado. O tempo do cabeçalho é separado da estimativa da trajetória (rápido assumido 10.000 mm/min, sem aceleração, trocas, paradas e G53 não localizado). Dados estruturados: CNC/Estrategias_Programa.json.
-
-## OS, orientação e montagem de ferramentas
-
-OS 10-713 em destaque abaixo do logo. Operação OK fica dentro do card, no canto superior direito, verde ao marcar; é registro manual de conclusão, sem substituir o checklist das etapas. A terceira operação aguarda definição.
-
-A primeira face começa invertida; depois de tombar, a peça mantém a orientação do segundo faceamento e é elevada para os calços. Essa orientação foi cadastrada pelo usuário, não inferida do TAP.
-
-Play permite prévia durante etapas manuais; o programa da prévia é identificado e não inicia execução. O programa da etapa mostra Z por estratégia; a lista total das oito ferramentas mostra Z máximo do conjunto, montagem recomendada com 10 mm de margem, margem adotada por ferramenta e medida fora da pinça. Exceções como 3 mm exigem nova confirmação. Corte útil permanece a confirmar quando não cadastrado; não equivale à descida Z. A comparação não verifica colisões físicas.
-
-## Consulta operacional e alturas no 3D
-
-Engenharia envia X/Y no centro e Z no topo; operador ajusta origem e preseta ferramentas. Navegação e Play são livres, sem checklist ou aprovação dimensional. Registro de execução/conclusão continua separado da consulta.
-
-O001: ajustar o corretor para facear o primeiro lado até limpar; tombar uma vez; ajustar o corretor para fechar 96,0 mm no segundo lado (1 mm acima da medida final de 95 mm). Sem divisão automática do sobremetal. Instruções fornecidas pelo usuário, não extraídas do TAP.
-
-O 3D posiciona a ponta no XYZ da trajetória e aplica montagem medida e corte útil informado em campo próprio. Sem medida, a montagem estimada é identificada; T1 sem medida não recebe altura inventada. Corte útil desconhecido é representado por anel nominal e haste em arame. Corpo e diâmetro do porta-ferramenta são ilustrativos. Altura insuficiente ou corte útil maior que montagem geram aviso sem alterar o percurso. Sem remoção de material ou validação de colisões.
-
-A lista total conserva oito ferramentas, inclusive enquanto a terceira operação aguarda programas. Dados do programa não são confundidos com medição real. Campo de processista está oculto na tela operacional.
+Three.js, @sienci/gviewer e easy_gcode_plot: MIT; atribuições em Licencas. Logo/favicon Columbia: [fonte oficial](https://columbiamachine.com.br/); não atribuída licença aberta aos ativos da empresa ou desenho.
