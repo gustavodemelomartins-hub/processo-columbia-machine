@@ -22,8 +22,7 @@
       ],
       "substeps": [
         "Facear a primeira face",
-        "Tombar a peça",
-        "Retirar sobremetal da segunda face e medir"
+        "Tombar uma vez, facear o segundo lado e medir"
       ],
       "tools_received": [
         1
@@ -172,12 +171,14 @@
       "orientation": {
         "rotation_x_degrees": 0,
         "provenance": "montagem ilustrativa conforme orientação do usuário; não inferida do TAP"
-      }
+      },
+      "archived": true,
+      "merged_into_phase": 2
     },
     {
       "phase": 2,
       "group": 1,
-      "name": "Retirar sobremetal e medir",
+      "name": "Facear o segundo lado e medir",
       "program": "O001.TAP",
       "program_revision": null,
       "setup": "mesa",
@@ -515,7 +516,9 @@
     "tools": {
       "1": {
         "cutting_length_mm": null,
-        "cutting_length_provenance": "não fornecido; cadastro de ferramenta real a confirmar"
+        "cutting_length_provenance": "não fornecido; cadastro de ferramenta real a confirmar",
+        "mounting_mode": "standard",
+        "mounting_provenance": "Montagem padrão informada pelo usuário; comprimento físico não fornecido"
       },
       "9": {
         "cutting_length_mm": null,

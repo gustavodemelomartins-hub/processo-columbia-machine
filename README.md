@@ -8,7 +8,7 @@ Procedimento operacional digital de usinagem — OS 10-713. Preserva o protótip
 
 Escolha o card e a etapa. Título, programa e status no alto; 3D dominante e painel somente das ferramentas do programa atual. O003: T3/Ø32, S1800, F5400, G54. Desenho de cinco páginas na aba vizinha, com zoom/pan/ajuste/ampliação. Mouse, teclado e zoom por pinça disponíveis.
 
-Passos numerados e referências abaixo. Lista completa das oito ferramentas depois, para preparação antecipada. Preparar usa os mesmos registros da lateral. Checklist não bloqueia navegação ou Play; execução é registro separado. Registros ficam no navegador, por dispositivo, sem sincronização.
+Passos numerados e referências acima da visualização. Lateral: Ferramenta atual / Detalhes técnicos, com estratégias e linhas exatas. Checklist/conferência em seção expansível abaixo da vista. Primeira operação: primeira face → segundo lado, com a virada integrada à instrução. Lista completa das oito ferramentas depois, para preparação antecipada. Preparar usa os mesmos registros da lateral. Checklist não bloqueia navegação ou Play; execução é registro separado. Registros ficam no navegador, por dispositivo, sem sincronização.
 
 ## Comprimentos
 
@@ -27,3 +27,7 @@ Detalhes técnicos fechado por padrão: estratégias, M6/subprogramas, linhas L/
 index.html é o HTML gerado pelo projeto original; arquivo independente com recursos incorporados. Cadastro_Processo.json é incorporado na geração: editar somente o JSON publicado não muda o HTML. GitHub Pages publica a raiz main. PDF em Desenhos conserva bytes do original; TAPs imutáveis no projeto local. Repositório/site públicos.
 
 Three.js, @sienci/gviewer e easy_gcode_plot: MIT; atribuições em Licencas. Logo/favicon Columbia: [fonte oficial](https://columbiamachine.com.br/); não atribuída licença aberta aos ativos da empresa ou desenho.
+
+## Refinamentos da tela operacional
+
+Margem padrão10 em texto; exceções técnicas preservadas na rastreabilidade. Corte útil desconhecido não aparece na tela e não se deduz do Z. T1 mostra Z nominal0 e Montagem padrão do processo; comprimento físico não inventado. Botões redundantes de operação retirados; usar os três cards. [Relatório e testes](docs/ui-refinements.md).

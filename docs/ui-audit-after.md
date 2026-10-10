@@ -1,5 +1,7 @@
 # Auditoria UI depois — Processo Columbia Machine
 
+> Registro da rodada anterior (06c02b2). A disposição atual e a validação dos novos comentários estão em [Refinamentos operacionais](ui-refinements.md).
+
 2026-10-10. Resultado: PASS no escopo desta rodada. Aplicação real inspecionada em Chromium, em 1920×1080 e 1440×900; capturas antes/depois e completas em `screens/`. Monitor físico distante e celular físico não foram testados.
 
 ## Antes → depois
