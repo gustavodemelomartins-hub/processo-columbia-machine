@@ -1,47 +1,31 @@
 # Processo Columbia Machine
 
-Procedimento operacional digital de usinagem — OS 10-713. Preserva o protótipo atual e os dados reais de O001–O008.
+Instrução digital de trabalho CNC — OS10-713 / Mini Portal. Evolução do protótipo existente com programas reais O001–O008.
 
-[Site](https://gustavodemelomartins-hub.github.io/processo-columbia-machine/)
+[Aplicação](https://gustavodemelomartins-hub.github.io/processo-columbia-machine/)
 
-## Operação
+## Uso atual
 
-Escolha o card e a etapa. Título, programa e status no alto; 3D dominante e painel somente das ferramentas do programa atual. O003: T3/Ø32, S1800, F5400, G54. Desenho de cinco páginas na aba vizinha, com zoom/pan/ajuste/ampliação. Mouse, teclado e zoom por pinça disponíveis.
+Escolha a operação e um mini box de etapa. A primeira operação tem dois faceamentos O001; a segunda começa diretamente em O002 e segue até O008, com duas etapas de O004. A montagem nos quatro calços aparece nas instruções de O002. Terceira operação a definir.
 
-Passos numerados e referências acima da visualização. Lateral: Ferramenta atual / Detalhes técnicos, com estratégias e linhas exatas. Checklist/conferência em seção expansível abaixo da vista. Primeira operação: primeira face → segundo lado, com a virada integrada à instrução. Lista completa das oito ferramentas depois, para preparação antecipada. Preparar usa os mesmos registros da lateral. Checklist não bloqueia navegação ou Play; execução é registro separado. Registros ficam no navegador, por dispositivo, sem sincronização.
+Passos e referências acima da vista. Conferir orientação conforme desenho3D; X/Y no centro definido pela engenharia e preset da ferramenta no topo da peça. Segundo lado: tombar uma vez e ajustar corretor para fechar96 mm; elevar aos calços sem novo tombamento.
 
-## Comprimentos
+3D grande, rotação, pan, zoom, Play e desenho de cinco páginas. A lateral mostra somente as ferramentas do programa atual, parâmetros reais e valores físicos da tabela. Detalhes técnicos trazem estratégias e linhas exatas L/N. Mini boxes permitem registrar conclusão manual; navegar e simular não conclui etapas nem exige checklist.
 
-Descida máxima exata separada da montagem recomendada inteira: 99,97 + margem10 →110 mm. Domínio único com arredondamento para cima. Margem configurável; medida fora da pinça e corte útil são físicos e separados. Só recomenda com análise resolvida em relação a Z0 no topo; caso contrário A confirmar. Lista do trabalho considera todos os programas da ferramenta. Recomendar não autoriza execução nem garante colisão/rigidez. Confirmações antigas de comprimento são invalidadas, conservando medições/observações/exceções.
+## Ferramentas do trabalho
 
-## Engenharia e CNC
+Tabela abaixo do processo, derivada dos programas: ferramenta, programas, descida máxima, montagem recomendada, montagem medida, diâmetro real, corretor, Montada e Na máquina. Editar diretamente; a lateral consulta a mesma atribuição. Ausência de medida/diâmetro/corretor aparece como Não informado. Sem workflow de preparação, magazine ou checklist na superfície atual.
 
-X/Y centro e Z topo enviados pela engenharia; operador ajusta origem/preseta ferramentas. Alinhar por fora. O001: primeiro lado invertido até limpar via corretor; tombar uma vez; segundo até96,0 mm; elevar para os quatro calços sem novo tombamento. Orientação cadastrada pelo usuário, não extraída do TAP. Terceira operação a definir.
+Descida máxima preserva precisão do TAP. Recomendação arredonda para cima com margem padrão10 mm centralizada:99,97 +10 →110 mm. T1 mostra montagem padrão; não inventa medida física. Só calcular descida com trajetória/WCS resolvidos e Z0 no topo. Coordenada Z não é comprimento total de ferramenta; recomendação não valida colisões nem autoriza máquina.
 
-Trajetória nominal extraída do CNC; montagem/fixação ilustrativas, sem remoção de material, colisão física ou comandos enviados à máquina. Alturas 3D consideram medida ou estimativa identificada; porta-ferramenta ilustrativo e corte útil desconhecido não inventado.
+Diâmetro real informado fica separado do nominal. Montagem medida e diâmetro real alimentam a representação 3D sem alterar a ponta do percurso. Porta-ferramenta, peça e fixação são representações; não há remoção de material ou validação física de colisão.
 
-Detalhes técnicos fechado por padrão: estratégias, M6/subprogramas, linhas L/N e tempos. AP/AE não declarados no lote. Linhas localizam código; não validam retomadas. [Auditoria antes](docs/ui-audit-before.md) e [depois](docs/ui-audit-after.md).
+## Dados e continuidade
 
-## Publicação
+Registros persistem apenas no navegador/dispositivo. Dados antigos de preparação/checklist e máquina permanecem arquivados para compatibilidade. Mini Portal é a máquina do piloto; capacidade e posições físicas desconhecidas. Perfis provisórios Portal1/2 permanecem isolados e sem aplicação ao trabalho atual. Não há login, servidor, rede ou envio ao CNC.
 
-index.html é o HTML gerado pelo projeto original; arquivo independente com recursos incorporados. Cadastro_Processo.json é incorporado na geração: editar somente o JSON publicado não muda o HTML. GitHub Pages publica a raiz main. PDF em Desenhos conserva bytes do original; TAPs imutáveis no projeto local. Repositório/site públicos.
+[Auditoria antes](docs/ui-audit-simple-before.md) · [Auditoria depois e validação](docs/ui-audit-simple-after.md). Capturas novas somente na entrega local.
 
-Three.js, @sienci/gviewer e easy_gcode_plot: MIT; atribuições em Licencas. Logo/favicon Columbia: [fonte oficial](https://columbiamachine.com.br/); não atribuída licença aberta aos ativos da empresa ou desenho.
+index.html é o HTML gerado pelo projeto original, com recursos incorporados. Cadastro_Processo.json é incorporado no build; editar só o JSON publicado não altera o HTML. Fontes do domínio ferramental em src/ferramental; demais fontes e testes no pacote de reprodução local. GitHub Pages publica main.
 
-## Refinamentos da tela operacional
-
-Margem padrão10 em texto; exceções técnicas preservadas na rastreabilidade. Corte útil desconhecido não aparece na tela e não se deduz do Z. T1 mostra Z nominal0 e Montagem padrão do processo; comprimento físico não inventado. Botões redundantes de operação retirados; usar os três cards. [Relatório e testes](docs/ui-refinements.md).
-
-## Ferramental e magazine virtual
-
-O trabalho piloto é da Mini Portal. Use Preparar ferramentas no cabeçalho ou a área inferior Ferramental. A ferramenta atual permanece na lateral do 3D. Magazine, Ferramentas deste trabalho e Preparação compartilham os mesmos dados locais. Descida exata e montagem recomendada são separadas; recomendação arredonda para cima com margem padrão10mm, configurável.
-
-Mini Portal não possui capacidade/posições inventadas. Portal1/2 possuem perfis provisórios isolados com base comum. Campos físicos e fotos são cadastrados no navegador; não há servidor nem sincronização. Estado anterior migra preservando conferências.
-
-Referências, arquitetura e testes: [docs/ferramental-after.md](docs/ferramental-after.md). Fontes do módulo em src/ferramental; integração e gerador permanecem no projeto local e no pacote de reprodução completo. A publicação usa index.html gerado, sem framework novo.
-
-## Etapas visíveis e progresso
-
-Abaixo dos cards de operação, mini boxes mostram todas as etapas da operação selecionada, cada uma com seu programa e estado. Clique para consultar a etapa no mesmo processo/3D. Azul: etapa atual; verde: execução concluída; contador por operação. Primeira operação com dois faceamentos; segunda com montagem manual e oito etapas de O002–O008; terceira a confirmar.
-
-Conclusão usa os registros existentes de execução/conferência. Navegar ou simular não conclui nem exige checklist. Alteração de comprimento invalida a conclusão correspondente; estado salvo por navegador. [Revisão e validação](docs/stage-flow.md).
+Three.js, @sienci/gviewer e easy_gcode_plot: MIT; atribuições em Licencas. Logo/favicon Columbia: [fonte oficial](https://columbiamachine.com.br/). Não atribuída licença aberta aos ativos da empresa ou desenho. PDF preservado em Desenhos; TAPs originais imutáveis no projeto local.

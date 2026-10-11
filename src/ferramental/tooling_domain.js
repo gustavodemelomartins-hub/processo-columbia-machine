@@ -9,7 +9,7 @@ const ToolingDomain=(()=>{
   for(const name of ['assignments','assemblies','preparations','pocketStates','toolNotes','toolImages'])store[name]??={};store.history??=[];
   const jobKey=id=>jobId+'|'+id;
   const catalog=tools.map(t=>({id:t.id,logicalToolNumber:t.id,description:t.name,diameter:t.diameter,radius:t.radius,source:'extraído do programa',programs:[...t.programs]}));
-  function assignment(machine,id){profile(profiles,machine);const k=key(machine,id);return store.assignments[k]??={machineId:machine,toolId:Number(id),assemblyId:k,physicalPocket:null,measuredLength:null,offset:null,mounted:false,inMachine:false,lastCheckedAt:null,positionStatus:'A_CONFIRMAR'};}
+  function assignment(machine,id){profile(profiles,machine);const k=key(machine,id);return store.assignments[k]??={machineId:machine,toolId:Number(id),assemblyId:k,physicalPocket:null,measuredLength:null,measuredDiameter:null,offset:null,mounted:false,inMachine:false,lastCheckedAt:null,positionStatus:'A_CONFIRMAR'};}
   function assembly(machine,id){const k=key(machine,id);return store.assemblies[k]??={id:k,toolId:Number(id),holder:null,cuttingLength:null,source:'A_CONFIRMAR'};}
   function preparation(id){return store.preparations[jobKey(id)]??={jobId,toolId:Number(id),lengthChecked:false,offsetChecked:false,lastConfirmedAt:null};}
   for(const t of tools){
@@ -31,6 +31,11 @@ const ToolingDomain=(()=>{
    if(p!==null&&store.pocketStates[key(machine,p)]==='empty')delete store.pocketStates[key(machine,p)];
    a.physicalPocket=p;a.positionStatus=p===null?'A_CONFIRMAR':'CONFIRMADO';a.lastCheckedAt=p===null?null:new Date().toISOString();record('position',machine,id,p===null?'Posição física a confirmar':'Posição física '+p+' conferida');return {ok:true};
   }
+  function setMeasuredDiameter(machine,id,value){
+   const diameter=value===null||String(value).trim()===''?null:positive(value);
+   if(diameter===null&&value!==null&&String(value).trim()!=='')return {ok:false,message:'Informe um diâmetro real positivo ou deixe sem informação.'};
+   const a=assignment(machine,id);a.measuredDiameter=diameter;a.diameterSource=diameter===null?'A_CONFIRMAR':'INFORMADO_PELO_OPERADOR';return {ok:true};
+  }
   function pocketEmpty(machine,pocket){const m=profile(profiles,machine);if(!Number.isInteger(pocket)||!m.magazineCapacity||pocket<1||pocket>m.magazineCapacity)return {ok:false,message:'Posição fora do perfil da máquina.'};if(Object.values(store.assignments).some(a=>a.machineId===machine&&a.physicalPocket===pocket))return {ok:false,message:'Retire o vínculo da ferramenta antes de confirmar a posição vazia.'};store.pocketStates[key(machine,pocket)]='empty';return {ok:true};}
   function requirement(t,rule,file=null){return {jobId,programId:file,toolId:t.id,maxProgramDescent:rule.maximumDescent,recommendedStickout:rule.recommended,exactRequired:rule.exactRequired,margin:rule.margin,resolved:rule.resolved,evidence:rule.evidence,source:rule.resolved?'CALCULADO_DO_TAP':'A_CONFIRMAR'};}
   function status(id,rule,standard=false){const a=assignment(JOB_MACHINE,id),p=preparation(id),measured=positive(a.measuredLength),lengthOK=measured!==null&&(standard||rule.recommended!==null&&measured>=rule.recommended);
@@ -46,7 +51,7 @@ const ToolingDomain=(()=>{
    if(m.magazineCapacity===null)return {capacity:null,slots:[],assignments:assigned};
    return {capacity:m.magazineCapacity,slots:Array.from({length:m.magazineCapacity},(_,i)=>{const n=i+1,a=assigned.find(a=>a.physicalPocket===n);return {physicalPocket:n,assignment:a??null,status:a?'assigned':store.pocketStates[key(machine,n)]==='empty'?'empty':'unknown'};}),assignments:assigned};
   }
-  return {store,catalog,profile:id=>profile(profiles,id),assignment,assembly,preparation,checks,stickouts,cuttingLengths,setPocket,pocketEmpty,requirement,status,confirm,magazine,record,jobMachineId:JOB_MACHINE,jobId};
+  return {store,catalog,profile:id=>profile(profiles,id),assignment,assembly,preparation,checks,stickouts,cuttingLengths,setPocket,setMeasuredDiameter,pocketEmpty,requirement,status,confirm,magazine,record,jobMachineId:JOB_MACHINE,jobId};
  }
  return {create,profile,positive,JOB_MACHINE};
 })();

@@ -237,7 +237,9 @@
       "orientation": {
         "rotation_x_degrees": 0,
         "provenance": "montagem ilustrativa conforme orientação do usuário; não inferida do TAP"
-      }
+      },
+      "merged_into_phase": 4,
+      "archived": true
     },
     {
       "phase": 4,

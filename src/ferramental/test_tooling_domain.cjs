@@ -7,3 +7,15 @@ const rule={maximumDescent:99.97,recommended:110,exactRequired:109.97,margin:10,
 assert.equal(d.setPocket('mini-portal',3,17).ok,true);assert.equal(d.assignment('mini-portal',3).physicalPocket,17);assert.equal(d.setPocket('mini-portal',6,17).ok,false);assert.equal(d.assignment('portal-1',3).physicalPocket,null);assert.equal(d.setPocket('portal-1',3,25).ok,false);assert.equal(d.setPocket('portal-1',3,4).ok,true);assert.equal(d.magazine('portal-1').slots[3].assignment.toolId,3);assert.equal(d.magazine('portal-2').slots[3].assignment,null);assert.equal(d.pocketEmpty('portal-2',4).ok,true);assert.equal(d.magazine('portal-2').slots[3].status,'empty');assert.equal(d.magazine('portal-1').slots[0].status,'unknown');
 const reload=D.create({tools,jobId:'os-10713',profiles:P,saved:JSON.parse(JSON.stringify(d.store))});assert.equal(reload.stickouts[3],'100');assert.equal(reload.checks[3].mounted,true);assert.equal(reload.assignment('mini-portal',3).physicalPocket,17);reload.checks[3].machine=false;assert.equal(reload.assignment('mini-portal',3).inMachine,false);assert.equal(reload.confirm(3,{recommended:null,resolved:false}).ok,false);assert.equal(reload.status(3,{recommended:null},true).ready,false);
 assert.equal(d.requirement(tools[0],rule,'O003.TAP').maxProgramDescent,99.97);console.log('Tooling domain: migration, canonical views, machine isolation, null pockets, collision of slots and readiness passed.');
+
+assert.equal(d.assignment('mini-portal',3).measuredDiameter,null);
+assert.equal(d.setMeasuredDiameter('mini-portal',3,'31.8').ok,true);
+assert.equal(d.assignment('mini-portal',3).measuredDiameter,31.8);
+for(const bad of ['-1','0','Infinity','abc',true])assert.equal(d.setMeasuredDiameter('mini-portal',3,bad).ok,false);
+assert.equal(d.assignment('mini-portal',3).measuredDiameter,31.8);
+assert.equal(d.assignment('portal-1',3).measuredDiameter,null);
+const restored=D.create({tools,jobId:'os-10713',profiles:P,saved:JSON.parse(JSON.stringify(d.store))});
+assert.equal(restored.assignment('mini-portal',3).measuredDiameter,31.8);
+assert.equal(restored.setMeasuredDiameter('mini-portal',3,'').ok,true);
+assert.equal(restored.assignment('mini-portal',3).measuredDiameter,null);
+console.log('Actual diameter: validation, preservation, unknown clearing, persistence and machine isolation passed.');
