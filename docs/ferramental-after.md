@@ -57,14 +57,7 @@ Problemas encontrados e corrigidos na inspeção: grade antiga comprimindo o nov
 
 ## Capturas
 
-Estado inicial, sem registros fictícios:
-
-- [Processo1920](screens/tooling-clean-1920-process.png)
-- [Mini Portal1920](screens/tooling-clean-1920-mini.png)
-- [Preparação1920](screens/tooling-clean-1920-preparation.png)
-- [Detalhe1440](screens/tooling-clean-1440-detail.png)
-
-Capturas ferramental-* registram dados de QA em contexto isolado (por exemplo, posição17 e corte útil15). São testes de comportamento; esses valores não são cadastro real da Columbia nem foram incorporados à publicação.
+Capturas antes/depois em1920×1080 e1440×900 e verificações em390×844 estão na entrega local, em outputs/docs/screens. Não foram publicadas. Capturas de teste que registram medidas/posições representam contexto isolado de QA, sem incorporar esses valores ao cadastro real ou à publicação.
 
 ## Arquivos
 

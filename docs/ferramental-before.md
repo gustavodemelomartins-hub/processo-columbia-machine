@@ -10,4 +10,4 @@ Base inspecionada: gerador HTML estático, camada operacional, domínio ToolLeng
 - Fotos/dados da Lima & Bonfá não serão transferidos para Columbia. Histórico será local e simples, sem sistema social.
 - Perfis Portal compartilham base provisória; Mini Portal não herda capacidade nem dimensões. Referência atual Eurostec confirma dimensões/BT50/24, mas informa Siemens 828D; Mitsubishi M80A será mantido como referência do pedido, com origem e pendência explícitas.
 
-Capturas anteriores: screens/ferramental-before-refinements-1920-visual.png e screens/ferramental-before-refinements-1440-visual.png. Direção: preservar identidade Columbia, alvos de 44px, números grandes, status com texto, foco visível e detalhe em diálogo; ferramental fica abaixo/por atalho, sem comprimir o 3D.
+Capturas anteriores arquivadas somente na entrega local, em outputs/docs/screens. Direção: preservar identidade Columbia, alvos de 44px, números grandes, status com texto, foco visível e detalhe em diálogo; ferramental fica abaixo/por atalho, sem comprimir o 3D.
