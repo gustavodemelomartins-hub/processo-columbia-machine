@@ -1,0 +1,55 @@
+{
+  "schema": "columbia-machine-profiles/1",
+  "baseProfiles": {
+    "portal-base": {
+      "model": "Eurostec FVM 2016 (referência FVM 2016L)",
+      "travelMm": {
+        "x": 2200,
+        "y": 1500,
+        "z": 800
+      },
+      "tableMm": {
+        "x": 2100,
+        "y": 1300
+      },
+      "tableCapacityKg": 3500,
+      "taper": "BT50",
+      "magazineCapacity": 24,
+      "control": "Mitsubishi M80A",
+      "dataStatus": "PROVISORIO",
+      "source": "Referência fabricante · confirmar na máquina",
+      "sourceUrl": "https://eurostec.com.br/centro-de-usinagem-portal-fvm-2016l",
+      "controlSource": "Referência indicada pelo usuário · confirmar na máquina",
+      "controlNote": "Página atual FVM 2016L apresenta Siemens 828D. Não substituir o comando físico sem levantamento."
+    }
+  },
+  "machines": [
+    {
+      "id": "portal-1",
+      "name": "PORTAL 1",
+      "baseProfileId": "portal-base",
+      "source": "Referência fabricante · confirmar na máquina",
+      "dataStatus": "PROVISORIO"
+    },
+    {
+      "id": "portal-2",
+      "name": "PORTAL 2",
+      "baseProfileId": "portal-base",
+      "source": "Perfil provisório baseado na Portal 1 · levantamento físico pendente",
+      "dataStatus": "PROVISORIO"
+    },
+    {
+      "id": "mini-portal",
+      "name": "MINI PORTAL",
+      "model": null,
+      "magazineCapacity": null,
+      "tableMm": null,
+      "travelMm": null,
+      "tableCapacityKg": null,
+      "taper": null,
+      "control": null,
+      "dataStatus": "A_CONFIRMAR",
+      "source": "Máquina do trabalho piloto · levantamento físico pendente"
+    }
+  ]
+}

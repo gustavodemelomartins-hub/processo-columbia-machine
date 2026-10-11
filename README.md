@@ -31,3 +31,11 @@ Three.js, @sienci/gviewer e easy_gcode_plot: MIT; atribuições em Licencas. Log
 ## Refinamentos da tela operacional
 
 Margem padrão10 em texto; exceções técnicas preservadas na rastreabilidade. Corte útil desconhecido não aparece na tela e não se deduz do Z. T1 mostra Z nominal0 e Montagem padrão do processo; comprimento físico não inventado. Botões redundantes de operação retirados; usar os três cards. [Relatório e testes](docs/ui-refinements.md).
+
+## Ferramental e magazine virtual
+
+O trabalho piloto é da Mini Portal. Use Preparar ferramentas no cabeçalho ou a área inferior Ferramental. A ferramenta atual permanece na lateral do 3D. Magazine, Ferramentas deste trabalho e Preparação compartilham os mesmos dados locais. Descida exata e montagem recomendada são separadas; recomendação arredonda para cima com margem padrão10mm, configurável.
+
+Mini Portal não possui capacidade/posições inventadas. Portal1/2 possuem perfis provisórios isolados com base comum. Campos físicos e fotos são cadastrados no navegador; não há servidor nem sincronização. Estado anterior migra preservando conferências.
+
+Referências, arquitetura e testes: [docs/ferramental-after.md](docs/ferramental-after.md). Fontes do módulo em src/ferramental; integração e gerador permanecem no projeto local e no pacote de reprodução completo. A publicação usa index.html gerado, sem framework novo.

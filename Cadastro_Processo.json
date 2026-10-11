@@ -549,5 +549,7 @@
         "cutting_length_provenance": "não fornecido; cadastro de ferramenta real a confirmar"
       }
     }
-  }
+  },
+  "machine_id": "mini-portal",
+  "tooling_schema": "columbia-tooling/1"
 }
