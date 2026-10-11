@@ -39,3 +39,9 @@ O trabalho piloto é da Mini Portal. Use Preparar ferramentas no cabeçalho ou a
 Mini Portal não possui capacidade/posições inventadas. Portal1/2 possuem perfis provisórios isolados com base comum. Campos físicos e fotos são cadastrados no navegador; não há servidor nem sincronização. Estado anterior migra preservando conferências.
 
 Referências, arquitetura e testes: [docs/ferramental-after.md](docs/ferramental-after.md). Fontes do módulo em src/ferramental; integração e gerador permanecem no projeto local e no pacote de reprodução completo. A publicação usa index.html gerado, sem framework novo.
+
+## Etapas visíveis e progresso
+
+Abaixo dos cards de operação, mini boxes mostram todas as etapas da operação selecionada, cada uma com seu programa e estado. Clique para consultar a etapa no mesmo processo/3D. Azul: etapa atual; verde: execução concluída; contador por operação. Primeira operação com dois faceamentos; segunda com montagem manual e oito etapas de O002–O008; terceira a confirmar.
+
+Conclusão usa os registros existentes de execução/conferência. Navegar ou simular não conclui nem exige checklist. Alteração de comprimento invalida a conclusão correspondente; estado salvo por navegador. [Revisão e validação](docs/stage-flow.md).
