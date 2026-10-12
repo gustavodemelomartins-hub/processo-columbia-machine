@@ -1,11 +1,12 @@
 {
   "date": "2026-10-12",
-  "sha256": "89a7c5bdb060fa352ed734b34c3ecb1878c45d1d75ff489a3ddecaf10b36a373",
-  "bytes": 12728554,
+  "sha256": "a447a2e83389cde7d61b2e52ef7de04eb2bc3f1348335a63ee1bde8f8e288a23",
+  "bytes": 12733621,
   "reproducesLocalPrototype": true,
   "domainsPassed": 5,
-  "browserSuitesPassed": 5,
+  "browserSuitesPassed": 6,
   "parserTestsPassed": 2,
   "originalTAPHashesPassed": 8,
-  "browserErrors": []
+  "browserErrors": [],
+  "facingStockAndRepeatedPassesVerified": true
 }

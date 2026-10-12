@@ -56,3 +56,12 @@
 .industrial .stage-box-top{display:flex;align-items:center;gap:9px}.industrial .stage-box-top strong{font-size:19px}.industrial .stage-number{font-size:15px;color:#465b6a;font-weight:600}.industrial .stage-name{font-size:17px;flex:1}.industrial .stage-state{font-size:15px;color:#465b6a;font-weight:600}.industrial .stage-current{margin-left:auto;font-size:13px;background:var(--blue);color:white;border-radius:3px;padding:3px 6px}
 .industrial .stage-box:hover{background:#f1f7fc;border-color:var(--blue)}.industrial .stage-box[aria-current=step]{border:2px solid var(--blue);padding:11px 13px;background:#eaf5fd}.industrial .stage-box[data-status=completed]{background:#f0f8f3;border-color:#438065}.industrial .stage-box[data-status=completed] .stage-state{color:#176547}.industrial .stage-box[data-status=completed][aria-current=step]{border-color:var(--blue)}.industrial .stage-box[data-status=ready] .stage-state{color:#176547}.industrial .stage-box[data-status=review] .stage-state{color:#804d12}.industrial .stage-box[data-status=running] .stage-state{color:var(--blue)}
 @media(max-width:600px){.industrial .stage-flow-heading{align-items:flex-start;flex-direction:column;gap:10px}.industrial .stage-flow .stage-navigation{width:100%;justify-content:space-between}.industrial .stage-flow #steps{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.industrial .stage-box{padding:10px;min-height:135px}.industrial .stage-box[aria-current=step]{padding:9px}.industrial .stage-box-top{flex-wrap:wrap;gap:5px}.industrial .stage-box-top strong{font-size:16px}.industrial .stage-name{font-size:16px}.industrial .stage-current{font-size:12px}.industrial .stage-number{font-size:14px}.industrial .stage-state{font-size:14px}}
+
+.industrial #faceTimingSetup{display:flex;align-items:center;flex-wrap:wrap;gap:12px 24px;background:#f3f7fa;border:1px solid #c7d4de;border-radius:4px;padding:12px 14px;margin-bottom:12px}
+.industrial .face-pass-setting{display:flex;align-items:center;flex-wrap:wrap;gap:10px;font-size:16px}
+.industrial #faceReduction{width:100px;min-height:44px;font-size:18px}
+.industrial .face-pass-time{font-size:16px;color:#465b6a}
+.industrial .face-stock-field{display:flex;flex-direction:column;gap:6px;font-size:15px;margin:8px 14px}
+.industrial .face-stock-field input{width:100%;min-width:0;min-height:44px;font-size:18px}
+.industrial .stage-time{display:block;line-height:1.4}
+@media(max-width:600px){.industrial #faceTimingSetup{padding:12px}.industrial .face-stock-field{font-size:14px}}

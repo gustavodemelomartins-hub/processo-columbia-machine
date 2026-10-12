@@ -6,7 +6,7 @@ Protótipo industrial existente da OS 10-713, peça FP16F H8 12V, na **Mini Port
 
 Abra `index.html` no navegador. Escolha a operação e a etapa. A primeira operação tem duas faces com O001. A segunda tem sete etapas, O002 até O008; **O004 é uma etapa com T12 e T4**. A terceira permanece a confirmar.
 
-**Iniciar etapa** registra “Em execução”. A caixa **Concluída** registra o término. Desmarcar a conclusão retorna a etapa a “Não iniciada”. Navegar, consultar o desenho e usar Play não registram produção. Os tempos previstos incluem 20% e o progresso acompanha apenas etapas concluídas, ponderadas pelo tempo. A previsão da peça recebida é 6 h 47 min; a terceira operação ainda não entra no total.
+**Iniciar etapa** registra “Em execução”. A caixa **Concluída** registra o término. Desmarcar a conclusão retorna a etapa a “Não iniciada”. Navegar, consultar o desenho e usar Play não registram produção. Os tempos previstos incluem 20% e o progresso acompanha apenas etapas concluídas, ponderadas pelo tempo. No faceamento, o tempo do TAP corresponde a um passe. Informe o sobremetal a retirar em cada face; o sistema calcula `ceil(sobremetal / redução por passe)`. A redução padrão, confirmada pelo operador, é 0,7 mm e pode ser editada. Os tempos de cada face, da operação e da peça consideram esses passes. Sem sobremetal informado, o total fica A definir e o progresso mostra a quantidade de etapas concluídas. A terceira operação ainda não entra no total.
 
 Os registros, fotos e medidas ficam no navegador. Git versiona a aplicação, não os registros pessoais do operador. Abrir por outro endereço ou dispositivo pode usar outro armazenamento.
 
@@ -42,7 +42,7 @@ python scripts/check_originals.py
 python scripts/test_parser.py
 ```
 
-Os testes de navegador abrem o HTML local e verificam fluxo, persistência, ferramentas, fotos, corretor, insertos, cálculos, desenho e 3D em 1920×1080, 1440×900 e 390×844. Resultados e capturas novos ficam em `artifacts/`, ignorado pelo Git. Evidências desta entrega estão em [docs/Entrega_2026-10-12.md](docs/Entrega_2026-10-12.md).
+Os testes de navegador abrem o HTML local e verificam fluxo, persistência, ferramentas, fotos, corretor, insertos, cálculos, desenho e 3D em 1920×1080, 1440×900 e 390×844. A suíte de faceamento também verifica passes fracionários, totais desconhecidos, edição, persistência e conclusão preservada. Resultados e capturas novos ficam em `artifacts/`, ignorado pelo Git. Evidências desta entrega estão em [docs/Entrega_2026-10-12.md](docs/Entrega_2026-10-12.md).
 
 Em ambientes com navegador instalado fora do padrão, `COLUMBIA_CHROMIUM_PATH` escolhe o executável; `COLUMBIA_PLAYWRIGHT_MODULE` escolhe um módulo Playwright já instalado. Não são necessários no uso normal com npm.
 

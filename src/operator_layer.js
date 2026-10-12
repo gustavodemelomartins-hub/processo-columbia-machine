@@ -8,6 +8,7 @@ const STRATEGY_DATA=__STRATEGY_DATA__;
 __STRATEGY_UI__
 const DRAWING_PAGES=__DRAWING_PAGES__;
 state.operator=saved.operator&&typeof saved.operator==="object"?saved.operator:{};
+state.faceTiming={stockByStage:saved.faceTiming?.stockByStage||{},reductionPerPassMm:saved.faceTiming?.reductionPerPassMm===undefined?OPERATOR_CONFIG.process_timing.face_milling.reduction_per_pass_mm:saved.faceTiming.reductionPerPassMm};
 state.visualMode=saved.visualMode==="drawing"?"drawing":"3d";
 state.cuttingLengths=saved.cuttingLengths||{};
 state.operationCheckins=saved.operationCheckins||{};state.toolMargins=saved.toolMargins||{};
@@ -140,7 +141,7 @@ function renderStageFlow(){
  $("steps").dataset.stageOperation=op.id;
  $("steps").innerHTML=op.phases.map((id,index)=>{
   const p=phases[id],program=p.kind==="setup"?"Montagem manual":DATA.programs[p.program].file;
-  return '<div class="stage-box" data-stage="'+id+'"><button class="stage-open" data-step="'+id+'"><span class="stage-box-top"><span class="stage-number">'+String(index+1).padStart(2,"0")+'</span><strong>'+esc(program)+'</strong><span class="stage-current" hidden>Atual</span></span><span class="stage-name">'+esc(stageLabels[id])+'</span>'+stageTimeMarkup(id)+'</button><label class="stage-completion"><input type="checkbox" data-stage-complete="'+id+'" aria-label="Etapa '+(index+1)+' concluída"><span class="stage-state">Concluída</span></label></div>';
+  return '<div class="stage-box" data-stage="'+id+'"><button class="stage-open" data-step="'+id+'"><span class="stage-box-top"><span class="stage-number">'+String(index+1).padStart(2,"0")+'</span><strong>'+esc(program)+'</strong><span class="stage-current" hidden>Atual</span></span><span class="stage-name">'+esc(stageLabels[id])+'</span>'+stageTimeMarkup(id)+'</button>'+faceStockInputMarkup(id)+'<label class="stage-completion"><input type="checkbox" data-stage-complete="'+id+'" aria-label="Etapa '+(index+1)+' concluída"><span class="stage-state">Concluída</span></label></div>';
  }).join("");
  $("steps").querySelectorAll('[data-step]').forEach(b=>b.onclick=()=>{
   const id=Number(b.dataset.step);selectPhase(id);
@@ -151,6 +152,7 @@ function renderStageFlow(){
   const id=Number(input.dataset.stageComplete),record=operatorRecord(String(id));
   record.completed=input.checked;record.started=false;record.completionSource='registro manual da etapa';persist();renderOperational();
  });
+ renderFaceTimingControls();
  renderStageProgress();
 }
 function renderStageProgress(){

@@ -39,5 +39,10 @@
       "stageHeight": 390
     }
   ],
-  "errors": []
+  "errors": [],
+  "faceStockScenario": {
+    "0": 0.7,
+    "2": 0.7
+  },
+  "scenario": "regressão com um passe informado para cada face"
 }

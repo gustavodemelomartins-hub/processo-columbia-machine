@@ -1,0 +1,36 @@
+{
+  "stockPerFace": true,
+  "defaultReductionConfirmed": 0.7,
+  "editableReduction": true,
+  "unknownFaceAndPieceTime": true,
+  "unknownTimeUsesStageCountProgress": true,
+  "basePassCNCSeconds": 570,
+  "plannedPassSeconds": 684,
+  "firstFaceStock2_1Passes": 3,
+  "secondFaceStock1_4Passes": 2,
+  "totalSeconds": 26417,
+  "completedRecordsPreserved": true,
+  "unknownCompletedFaceDoesNotBlockKnownRemainder": true,
+  "persistence": true,
+  "invalidValuesAndClearing": true,
+  "independentSecondOperation": true,
+  "currentToolPreserved": true,
+  "sizes": [
+    {
+      "width": 1920,
+      "height": 1080,
+      "stageHeight": 620
+    },
+    {
+      "width": 1440,
+      "height": 900,
+      "stageHeight": 550
+    },
+    {
+      "width": 390,
+      "height": 844,
+      "stageHeight": 390
+    }
+  ],
+  "errors": []
+}

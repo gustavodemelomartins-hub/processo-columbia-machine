@@ -668,7 +668,16 @@
   "process_timing": {
     "allowance_percent": 20,
     "source": "margem de planejamento solicitada pelo operador",
-    "scope": "programas recebidos; O001 nas duas faces; terceira operação a definir"
+    "scope": "programas recebidos; O001 nas duas faces; terceira operação a definir",
+    "face_milling": {
+      "stage_ids": [
+        0,
+        2
+      ],
+      "reduction_per_pass_mm": 0.7,
+      "source": "confirmado pelo operador: redução de 0,7 mm por passe; editável para planejamento",
+      "stock_source": "sobremetal a retirar informado por face; não inferido do TAP"
+    }
   },
   "cutter_compensation": {
     "machine_id": "mini-portal",
