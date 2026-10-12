@@ -1,0 +1,42 @@
+{
+  "radiusDifferenceConfirmedByUser": true,
+  "exampleNominal25Real23_5OffsetMinus0_75": true,
+  "noAutomaticOverwrite": true,
+  "explicitUseButton": true,
+  "staleMeasureDetected": true,
+  "noG41ToolNotApplicable": true,
+  "nominalTAPPreserved": true,
+  "canonicalSidebar": true,
+  "mountedAndMachineIndependent": true,
+  "readinessCount": true,
+  "nextProgramAutomatic": true,
+  "usageCompletionAndSharedTool": true,
+  "reload": true,
+  "realPhotoUploadAndCompression": true,
+  "photoMachineIsolation": true,
+  "photoSidebarAndTableShareSource": true,
+  "invalidImageDoesNotOverwrite": true,
+  "photoRemoval": true,
+  "photoStorageFailureRollsBack": true,
+  "offsetStorageFailureRollsBack": true,
+  "keyboardEscapeAndFocusReturn": true,
+  "sizes": [
+    {
+      "w": 1920,
+      "h": 1080,
+      "stageHeight": 620
+    },
+    {
+      "w": 1440,
+      "h": 900,
+      "stageHeight": 550
+    },
+    {
+      "w": 390,
+      "h": 844,
+      "stageHeight": 390
+    }
+  ],
+  "errors": [],
+  "photosInScreenshotsAreSyntheticTestFixtures": true
+}

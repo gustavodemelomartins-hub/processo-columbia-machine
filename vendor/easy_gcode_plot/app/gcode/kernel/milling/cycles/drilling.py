@@ -1,0 +1,342 @@
+"""Milling drilling-cycle expansion using shared axial-cycle mechanics."""
+
+from __future__ import annotations
+
+from dataclasses import dataclass, replace
+
+from ...api.resources import SemanticError, checkpoint
+from ...api.types import MachineSignal, TraceMotion
+from ...runtime.cycles import CycleContext, CycleOutcome, apply_cycle_outcome
+from ...runtime.drilling import AxialMove, axial_cycle_moves
+from ..state import MillState, _machine, _xyz
+from .events import drilling_event, drilling_orientation
+
+
+@dataclass(frozen=True)
+class _DrillBehavior:
+    peck: bool = False
+    high_speed_peck: bool = False
+    feed_return: bool = False
+
+
+@dataclass(frozen=True)
+class _ResolvedDrillingCycle:
+    x: float
+    y: float
+    retract_z: float
+    target_z: float
+    return_z: float
+    feed: float
+    step: float | None
+    behavior: _DrillBehavior
+
+
+# This table describes the geometry that the kernel already models. It does
+# not claim controller-side dwell/spindle semantics that are not represented
+# in the backplot yet.
+_DRILL_BEHAVIOR = {
+    73: _DrillBehavior(peck=True, high_speed_peck=True),
+    74: _DrillBehavior(feed_return=True),
+    76: _DrillBehavior(),
+    81: _DrillBehavior(),
+    82: _DrillBehavior(),
+    83: _DrillBehavior(peck=True),
+    # Tapping remains synchronized with the spindle on withdrawal, so its
+    # return is cutting/feed motion rather than a rapid retract.
+    84: _DrillBehavior(feed_return=True),
+    85: _DrillBehavior(feed_return=True),
+    86: _DrillBehavior(),
+    87: _DrillBehavior(),
+    89: _DrillBehavior(feed_return=True),
+}
+
+CANNED_CYCLE_CODES = frozenset(_DRILL_BEHAVIOR) | {80}
+
+
+def _update_cycle_parameters(state: MillState, words) -> None:
+    if "R" in words:
+        initial_z = state.cycle_initial_z if state.cycle_initial_z is not None else state.z
+        state.cycle_r = words["R"] * state.unit_scale if state.absolute else initial_z + words["R"] * state.unit_scale
+    if "Z" in words:
+        retract_z = state.cycle_r if state.cycle_r is not None else state.z
+        state.cycle_z = words["Z"] * state.unit_scale if state.absolute else retract_z + words["Z"] * state.unit_scale
+    if "Q" in words:
+        state.cycle_q = abs(words["Q"] * state.unit_scale)
+        if state.cycle in (74, 84):
+            state.cycle_tapping_q = state.cycle_q
+    if "F" in words:
+        state.cycle_feed = words["F"] * state.unit_scale
+    if "P" in words:
+        if words["P"] < 0:
+            raise ValueError("Milling canned-cycle P dwell must not be negative")
+        state.cycle_p = words["P"] / 1000.0
+
+
+def _drilling_cycle_signals(block, state: MillState, words) -> tuple[MachineSignal, ...]:
+    """Describe controller actions associated with one emitted canned cycle."""
+    if state.cycle not in _DRILL_BEHAVIOR or not any(key in words for key in ("X", "Y", "Z", "R")):
+        return ()
+    code = f"G{state.cycle}"
+    if state.cycle in (82, 89) and state.cycle_p > 0.0:
+        return (MachineSignal("dwell", block.index, code, state.cycle_p),)
+    if state.cycle in (74, 84):
+        reversals = 1
+        if state.cycle_tapping_q:
+            resolved = _resolve_drilling_cycle(state, words)
+            reversals = sum(
+                segment.move == 1 and segment.end > segment.start for segment in _drilling_axial_moves(state, resolved)
+            )
+        signals = (MachineSignal("spindle_sync", block.index, code),) + tuple(
+            MachineSignal("spindle_reverse", block.index, code) for _ in range(reversals)
+        )
+        if state.rigid_tapping_ready:
+            signals = (MachineSignal("rigid_tapping", block.index, code),) + signals
+        if state.cycle_p > 0:
+            signals = (MachineSignal("dwell", block.index, code, state.cycle_p),) + signals
+        return signals
+    if state.cycle in (76, 87):
+        count = 2 if state.cycle == 87 else 1
+        signals = tuple(MachineSignal("spindle_orient", block.index, code) for _ in range(count))
+        return signals + ((MachineSignal("dwell", block.index, code, state.cycle_p),) if state.cycle_p else ())
+    if state.cycle == 86:
+        return (MachineSignal("spindle_stop", block.index, "G86"),)
+    return ()
+
+
+def _cycle_modal_updates(state: MillState, gcodes) -> tuple[tuple[str, object], ...]:
+    cycle = state.cycle
+    initial_z = state.cycle_initial_z
+    for gcode in gcodes:
+        if gcode not in CANNED_CYCLE_CODES:
+            continue
+        if gcode != 80 and cycle == 80:
+            initial_z = state.z
+        cycle = int(gcode)
+    updates = (("cycle", cycle), ("cycle_initial_z", initial_z))
+    if cycle != state.cycle or cycle == 80:
+        updates += (("cycle_tapping_q", 0.0),)
+    return updates + (("rigid_tapping_ready", False),) if 80 in gcodes else updates
+
+
+def _cycle_parameter_updates(state: MillState) -> tuple[tuple[str, object], ...]:
+    return tuple(
+        (attribute, getattr(state, attribute))
+        for attribute in (
+            "cycle_z",
+            "cycle_r",
+            "cycle_q",
+            "cycle_tapping_q",
+            "cycle_feed",
+            "cycle_p",
+            "polar_radius",
+            "polar_angle",
+        )
+    )
+
+
+def _resolve_drilling_cycle(state: MillState, words) -> _ResolvedDrillingCycle | None:
+    """Resolve modal cycle parameters and the programmed hole position."""
+    x, y, _ = _xyz(words, state)
+    if state.cycle_z is None or state.cycle_r is None:
+        raise SemanticError("INCOMPLETE_DRILLING_CYCLE", "Drilling requires modal Z depth and R plane", "unsupported")
+    retract_z = state.cycle_r
+    feed = state.cycle_feed or state.feed
+    if feed <= 0:
+        raise SemanticError("INVALID_DRILLING_FEED", "Drilling requires a positive modal feed", "invalid_geometry")
+    if state.cycle != 87 and state.cycle_z > retract_z + 1e-9:
+        raise SemanticError("INVALID_DRILLING_DEPTH", "Drilling depth Z is above the R plane", "invalid_geometry")
+    behavior = _DRILL_BEHAVIOR[state.cycle]
+    initial_z = state.cycle_initial_z if state.cycle_initial_z is not None else state.z
+    if state.cycle == 87 and (state.cycle_z < retract_z or initial_z < state.cycle_z):
+        raise SemanticError(
+            "INVALID_DRILLING_DEPTH", "Back boring requires R <= Z <= initial plane", "invalid_geometry"
+        )
+    if state.cycle in (76, 87) and not state.cycle_q:
+        raise SemanticError("INCOMPLETE_DRILLING_CYCLE", "Fine/back boring requires a positive Q shift", "unsupported")
+    # G87 always returns to the initial plane; G99 is not used by this cycle.
+    if state.cycle == 87:
+        return_z = initial_z
+    else:
+        return_z = max(initial_z, retract_z) if state.return_initial else retract_z
+    return _ResolvedDrillingCycle(
+        x=x,
+        y=y,
+        retract_z=retract_z,
+        target_z=state.cycle_z,
+        return_z=return_z,
+        feed=feed,
+        step=state.cycle_q if behavior.peck and state.cycle_q and state.cycle_q > 1e-12 else None,
+        behavior=behavior,
+    )
+
+
+def _drilling_axial_moves(state, resolved):
+    if state.cycle in (74, 84) and state.cycle_tapping_q > 0:
+        segments = axial_cycle_moves(
+            resolved.retract_z,
+            resolved.target_z,
+            step=state.cycle_tapping_q,
+            retract_distance=state.tapping_retract_distance,
+            full_retract=state.tapping_full_retract,
+            return_to=resolved.retract_z,
+            return_feed=True,
+        )
+        # Every movement inside a tapped thread remains synchronized; there
+        # is no rapid reentry or chip-breaking retract in rigid tapping.
+        segments = tuple(AxialMove(1, segment.start, segment.end) for segment in segments)
+        if resolved.return_z != resolved.retract_z:
+            segments += (AxialMove(0, resolved.retract_z, resolved.return_z),)
+        return segments
+    # Feed withdrawal ends at R; G98 adds a rapid to the saved initial plane.
+    return_z = resolved.retract_z if resolved.behavior.feed_return else resolved.return_z
+    segments = axial_cycle_moves(
+        resolved.retract_z,
+        resolved.target_z,
+        step=resolved.step,
+        retract_distance=state.g73_retract_distance,
+        reentry_clearance=(
+            state.g83_clearance if resolved.behavior.peck and not resolved.behavior.high_speed_peck else None
+        ),
+        full_retract=not resolved.behavior.high_speed_peck,
+        retract_after_final=False,
+        return_to=return_z,
+        return_feed=resolved.behavior.feed_return,
+        tolerance=1e-9,
+    )
+    if return_z != resolved.return_z:
+        segments += (AxialMove(0, return_z, resolved.return_z),)
+    return segments
+
+
+def _expand_drilling_cycle(
+    context: CycleContext,
+    state: MillState,
+    resolved: _ResolvedDrillingCycle,
+    *,
+    axial_moves=None,
+    path_moves=None,
+    retract_feed=None,
+) -> tuple[TraceMotion, ...]:
+    """Build drilling geometry without committing the machine position."""
+    block = context.block
+    wcs_offsets = context.coordinate_context
+    out: list[TraceMotion] = []
+
+    def add(kind: int, a, b, motion_feed=None):
+        am = _machine(a, state, wcs_offsets)
+        bm = _machine(b, state, wcs_offsets)
+        if am == bm:
+            return
+        checkpoint("generated_motions")
+        out.append(
+            TraceMotion(
+                kind,
+                am[0],
+                am[2],
+                bm[0],
+                bm[2],
+                feed=motion_feed,
+                start_y=am[1],
+                end_y=bm[1],
+                plane=state.plane,
+                source_block=block.index,
+                source_nlabel=block.nlabel,
+                source_raw=block.raw,
+                source_kind="cycle",
+                cycle_generated=True,
+                compensation_mode=state.cutter_comp,
+                compensation_applied=False,
+                tool=state.active_tool,
+                orientation=drilling_orientation(state),
+            )
+        )
+
+    start = (state.x, state.y, state.z)
+    x, y = resolved.x, resolved.y
+    add(0, start, (x, y, start[2]))
+    if path_moves is not None:
+        for kind, a, b, feed in path_moves:
+            add(kind, a, b, feed)
+        return tuple(out)
+    add(0, (x, y, start[2]), (x, y, resolved.retract_z))
+    segments = axial_moves if axial_moves is not None else _drilling_axial_moves(state, resolved)
+    for segment in segments:
+        add(
+            segment.move,
+            (x, y, segment.start),
+            (x, y, segment.end),
+            None
+            if segment.move == 0
+            else retract_feed
+            if retract_feed is not None and segment.end > segment.start
+            else resolved.feed,
+        )
+
+    return tuple(out)
+
+
+def boring_path(state, resolved, shift, *, back=False):
+    """Oriented boring path; shift is a configured/programmed XYZ vector."""
+    x, y = resolved.x, resolved.y
+
+    def point(z, shifted=False):
+        base = (x, y, z)
+        return tuple(base[i] + shift[i] for i in range(3)) if shifted else base
+
+    if back:
+        return (
+            (0, point(state.z), point(state.z, True), None),
+            (0, point(state.z, True), point(resolved.retract_z, True), None),
+            (0, point(resolved.retract_z, True), point(resolved.retract_z), None),
+            (1, point(resolved.retract_z), point(resolved.target_z), resolved.feed),
+            (0, point(resolved.target_z), point(resolved.target_z, True), None),
+            (0, point(resolved.target_z, True), point(resolved.return_z, True), None),
+            (0, point(resolved.return_z, True), point(resolved.return_z), None),
+        )
+    return (
+        (0, point(state.z), point(resolved.retract_z), None),
+        (1, point(resolved.retract_z), point(resolved.target_z), resolved.feed),
+        (0, point(resolved.target_z), point(resolved.target_z, True), None),
+        (0, point(resolved.target_z, True), (x + shift[0], y + shift[1], resolved.retract_z), None),
+        (0, (x + shift[0], y + shift[1], resolved.retract_z), point(resolved.return_z), None),
+    )
+
+
+def execute_milling_cycle(context: CycleContext, *, emit_geometry: bool = True) -> CycleOutcome:
+    """Resolve one milling canned-cycle block and return all of its effects."""
+    state = context.machine_state
+    if not isinstance(state, MillState):
+        raise TypeError("Milling cycle context requires MillState")
+
+    cycle_codes = tuple(g for g in context.codes if g in CANNED_CYCLE_CODES)
+    has_position = any(key in context.words for key in ("X", "Y", "Z", "R"))
+    modal_updates = _cycle_modal_updates(state, cycle_codes)
+    trial_state = replace(state)
+    apply_cycle_outcome(trial_state, CycleOutcome(modal_updates=modal_updates))
+
+    explicit_cycle = bool(cycle_codes)
+    should_expand = emit_geometry and trial_state.cycle != 80 and has_position
+    handled = emit_geometry and (explicit_cycle or should_expand)
+    if not should_expand:
+        return CycleOutcome(handled=handled, modal_updates=modal_updates)
+
+    _update_cycle_parameters(trial_state, context.words)
+    resolved = _resolve_drilling_cycle(trial_state, context.words)
+    if resolved is None:
+        return CycleOutcome(
+            handled=True,
+            modal_updates=modal_updates + _cycle_parameter_updates(trial_state),
+        )
+    path = None
+    if trial_state.cycle in (76, 87):
+        shift = tuple(value * trial_state.cycle_q for value in trial_state.boring_shift_direction)
+        path = boring_path(trial_state, resolved, shift, back=trial_state.cycle == 87)
+    motions = _expand_drilling_cycle(context, trial_state, resolved, path_moves=path)
+    return CycleOutcome(
+        handled=True,
+        motions=motions,
+        signals=_drilling_cycle_signals(context.block, trial_state, context.words),
+        modal_updates=modal_updates + _cycle_parameter_updates(trial_state),
+        position_update=(("x", resolved.x), ("y", resolved.y), ("z", resolved.return_z)),
+        events=(drilling_event(context, trial_state, resolved, motions),),
+    )

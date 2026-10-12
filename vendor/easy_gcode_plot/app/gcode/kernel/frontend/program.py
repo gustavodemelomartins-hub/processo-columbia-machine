@@ -1,0 +1,303 @@
+"""Lexed FANUC program construction and numeric word helpers."""
+
+from __future__ import annotations
+
+import math
+import re
+from collections.abc import Iterable
+from contextvars import ContextVar
+from dataclasses import dataclass
+
+from app.native import native_symbol, require_packaged_native
+
+from ..api.resources import checkpoint, checkpointed
+from .lang import (
+    WordToken,
+    evaluate_expression,
+    lex_words,
+    parse_flow,
+    strip_comments,
+    try_literal_int,
+)
+from .model import Block, CycleNode, ModalSnapshot, MotionNode, Program
+
+# The compiled scanner splits LF only and uses fixed-width integer token codes.
+# Preserve Python reference semantics for uncommon separators and oversized words.
+_REFERENCE_SOURCE = re.compile(r"\r(?!\n)|[\v\f\x1c-\x1e\x85\u2028\u2029]|\d{19,}")
+
+
+def resolve_cycle_profile_indices(
+    blocks: tuple[Block, ...] | list[Block],
+    call_index: int,
+    p_label: int,
+    q_label: int,
+    *,
+    prefer_preceding: bool = False,
+) -> tuple[int, int] | None:
+    """Resolve repeated P/Q labels relative to the cycle call site."""
+    p_indices = [i for i, block in enumerate(blocks) if block.nlabel == p_label]
+    q_indices = [i for i, block in enumerate(blocks) if block.nlabel == q_label]
+    pairs = [(p, q) for p in p_indices for q in q_indices if p <= q]
+    if not pairs:
+        return None
+    preceding = [pair for pair in pairs if pair[1] < call_index]
+    following = [pair for pair in pairs if pair[0] > call_index]
+    if prefer_preceding and preceding:
+        return max(preceding, key=lambda pair: pair[1])
+    if following:
+        return min(following, key=lambda pair: pair[0])
+    if preceding:
+        return max(preceding, key=lambda pair: pair[1])
+    return min(pairs, key=lambda pair: abs(pair[0] - call_index))
+
+
+def move_for_xz_plot(move: int) -> int:
+    # ConvertPlot.cs behavior for G18: swap G2/G3 in XZ plane.
+    if move == 2:
+        return 3
+    if move == 3:
+        return 2
+    return move
+
+
+class EvaluatedWords(dict[str, float]):
+    """Backward-compatible evaluated word map that also preserves repeats/errors."""
+
+    def __init__(self) -> None:
+        super().__init__()
+        self._all: dict[str, list[float]] = {}
+        self.errors: list[tuple[WordToken, Exception]] = []
+
+    def add(self, token: WordToken, value: float) -> None:
+        letter = token.letter.upper()
+        self._all.setdefault(letter, []).append(value)
+        self[letter] = value
+
+    def all(self, letter: str) -> tuple[float, ...]:
+        return tuple(self._all.get(letter.upper(), ()))
+
+
+def word_values(words: object, letter: str) -> tuple[float, ...]:
+    getter = getattr(words, "all", None)
+    if callable(getter):
+        return tuple(float(v) for v in getter(letter))
+    if isinstance(words, dict) and letter in words:
+        return (float(words[letter]),)
+    return ()
+
+
+def literal_codes(tokens: tuple[WordToken, ...], letter: str) -> tuple[int, ...]:
+    out: list[int] = []
+    for token in tokens:
+        if token.letter.upper() != letter.upper():
+            continue
+        code = try_literal_int(token.expr)
+        if code is not None:
+            out.append(code)
+    return tuple(out)
+
+
+def _parse_blocks(lines: Iterable[str], *, start_index: int = 0):
+    motion_codes = {0, 1, 2, 3, 32, 33}
+    # G90/G92/G94 are turning cycles but have different milling meanings.
+    # Keep the shared parser dialect-neutral; the selected executor resolves
+    # those codes after parsing.
+    cycle_codes = {70, 71, 72, 73, 74, 75, 76, 80, 83, 84}
+    for offset, raw in checkpointed(lines):
+        i = start_index + offset
+        clean = strip_comments(raw).upper()
+        optional_skip = False
+        clean_l = clean.lstrip()
+        while clean_l.startswith("/"):
+            optional_skip = True
+            clean_l = clean_l[1:].lstrip()
+        clean = clean_l
+        words = lex_words(clean)
+        word_map = {w.letter: w.expr for w in words}
+        flow = parse_flow(clean)
+
+        g_words = [w for w in words if w.letter.upper() == "G"]
+        g_codes = [(w, try_literal_int(w.expr)) for w in g_words]
+        motion_g_word = next((w for w, code in reversed(g_codes) if code in motion_codes), None)
+        cycle_g_word = next((w for w, code in reversed(g_codes) if code in cycle_codes), None)
+        cycle_g_lit = try_literal_int(cycle_g_word.expr) if cycle_g_word is not None else None
+        g65_call = any(code == 65 for _word, code in g_codes)
+
+        modal = ModalSnapshot(
+            g_expr=(
+                None
+                if g65_call
+                else (motion_g_word.expr if motion_g_word is not None else (g_words[-1].expr if g_words else None))
+            ),
+            x_expr=None if g65_call else word_map.get("X"),
+            z_expr=None if g65_call else word_map.get("Z"),
+            u_expr=None if g65_call else word_map.get("U"),
+            w_expr=None if g65_call else word_map.get("W"),
+            f_expr=None if g65_call else word_map.get("F"),
+            y_expr=None if g65_call else word_map.get("Y"),
+            v_expr=None if g65_call else word_map.get("V"),
+        )
+
+        motion_node: MotionNode | None = None
+        if not g65_call and (
+            any(k in word_map for k in ("X", "Y", "Z", "U", "V", "W", "A", "B", "C")) or motion_g_word is not None
+        ):
+            motion_node = MotionNode(
+                g_expr=motion_g_word.expr if motion_g_word is not None else None,
+                x_expr=word_map.get("X"),
+                z_expr=word_map.get("Z"),
+                u_expr=word_map.get("U"),
+                w_expr=word_map.get("W"),
+                i_expr=word_map.get("I"),
+                k_expr=word_map.get("K"),
+                r_expr=word_map.get("R"),
+                f_expr=word_map.get("F"),
+                a_expr=word_map.get("A"),
+                c_expr=word_map.get("C"),
+                y_expr=word_map.get("Y"),
+                v_expr=word_map.get("V"),
+                j_expr=word_map.get("J"),
+                b_expr=word_map.get("B"),
+            )
+
+        cycle_node: CycleNode | None = None
+        if not g65_call and cycle_g_lit is not None:
+            cycle_node = CycleNode(cycle=f"G{cycle_g_lit}", params=words)
+
+        # N/O labels are taken only from genuine address tokens.  The bracket-aware
+        # lexer therefore cannot invent O100 from the keyword GOTO100.
+        nlabel = next(
+            (try_literal_int(w.expr) for w in words if w.letter == "N" and try_literal_int(w.expr) is not None),
+            None,
+        )
+        olabel = next(
+            (try_literal_int(w.expr) for w in words if w.letter == "O" and try_literal_int(w.expr) is not None),
+            None,
+        )
+
+        yield Block(
+            index=i,
+            raw=raw.rstrip("\n"),
+            parsed_words=words,
+            modal_snapshot=modal,
+            motion_node=motion_node,
+            cycle_node=cycle_node,
+            flow_node=flow,
+            nlabel=nlabel,
+            olabel=olabel,
+            optional_skip=optional_skip,
+        )
+
+
+def _parse_fallback_block(index: int, raw: str) -> Block:
+    return next(_parse_blocks((raw,), start_index=index))
+
+
+def _parse_program_python(lines: Iterable[str]) -> Program:
+    return Program(blocks=tuple(_parse_blocks(lines)))
+
+
+def parse_program(lines: Iterable[str] | str) -> Program:
+    """Build the public Program graph, using one compiled call for string sources."""
+    require_packaged_native()
+    if isinstance(lines, str):
+        native_parse = native_symbol("parser", "parse_source")
+        if native_parse is not None and not _REFERENCE_SOURCE.search(lines):
+            return _instrument_parse(native_parse, lines)
+        lines = lines.splitlines(keepends=True)
+    program = _parse_program_python(lines)
+    _last_parser_statistics.set(ParserStatistics(len(program.blocks), 0, len(program.blocks)))
+    return program
+
+
+def _parse_source_blocks(source: Iterable[str] | str) -> tuple[Block, ...]:
+    """Internal blocks-only parser for dialect augmentation before AST creation."""
+    require_packaged_native()
+    if isinstance(source, str):
+        native_parse = native_symbol("parser", "parse_source_blocks")
+        if native_parse is not None and not _REFERENCE_SOURCE.search(source):
+            return _instrument_parse(native_parse, source)
+        source = source.splitlines(keepends=True)
+    blocks = tuple(_parse_blocks(source))
+    _last_parser_statistics.set(ParserStatistics(len(blocks), 0, len(blocks)))
+    return blocks
+
+
+@dataclass(frozen=True)
+class ParserStatistics:
+    total_blocks: int = 0
+    native_blocks: int = 0
+    fallback_blocks: int = 0
+
+
+_last_parser_statistics = ContextVar("parser_statistics", default=ParserStatistics())
+
+
+def parser_statistics() -> ParserStatistics:
+    """Statistics for the most recent successful parse in the current context."""
+    return _last_parser_statistics.get()
+
+
+def _instrument_parse(parse, source):
+    fallback_count = 0
+
+    def fallback(index, raw):
+        nonlocal fallback_count
+        fallback_count += 1
+        return _parse_fallback_block(index, raw)
+
+    result = parse(source, fallback, checkpoint)
+    total = len(result.blocks) if isinstance(result, Program) else len(result)
+    _last_parser_statistics.set(ParserStatistics(total, total - fallback_count, fallback_count))
+    return result
+
+
+def eval_words(tokens: tuple[WordToken, ...], variables: dict[str, float]) -> EvaluatedWords:
+    out = EvaluatedWords()
+    for token in tokens:
+        try:
+            value = float(token.expr)
+            if not math.isfinite(value):
+                value = evaluate_expression(token.expr, variables)
+        except Exception:
+            try:
+                value = evaluate_expression(token.expr, variables)
+            except Exception as expression_exc:
+                out.errors.append((token, expression_exc))
+                continue
+        letter = token.letter
+        out._all.setdefault(letter, []).append(value)  # pylint: disable=protected-access
+        out[letter] = value
+    return out
+
+
+def scaled_word(words: dict[str, float], key: str, unit_scale: float) -> float:
+    return words[key] * unit_scale
+
+
+def scaled_word_or(words: dict[str, float], key: str, default: float, unit_scale: float) -> float:
+    if key not in words:
+        return default
+    return words[key] * unit_scale
+
+
+def x_value_to_diameter(value: float, x_is_diameter: bool) -> float:
+    return value if x_is_diameter else (value * 2.0)
+
+
+def x_delta_to_diameter(value: float, x_is_diameter: bool) -> float:
+    return value if x_is_diameter else (value * 2.0)
+
+
+def radius_to_diameter(value: float) -> float:
+    return value * 2.0
+
+
+def try_wcs_from_gcode(gcode: int | float | None) -> int | None:
+    if gcode is None:
+        return None
+    numeric = float(gcode)
+    if not numeric.is_integer():
+        return None
+    code = int(numeric)
+    return code if 54 <= code <= 59 else None

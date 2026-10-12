@@ -1,0 +1,126 @@
+"""Composable coordinate transforms used by the milling interpreter."""
+
+from __future__ import annotations
+
+import math
+from dataclasses import dataclass
+
+from .matrix import Matrix, transform_vector, transpose
+
+Point3 = tuple[float, float, float]
+
+
+@dataclass(frozen=True)
+class CoordinateTransform:
+    """Program-coordinate transform applied before the active WCS offset."""
+
+    translation: Point3 = (0.0, 0.0, 0.0)
+    rotation_center: Point3 = (0.0, 0.0, 0.0)
+    rotation_degrees: float = 0.0
+    rotation_plane: int = 17
+    scale_center: Point3 = (0.0, 0.0, 0.0)
+    scale_factors: Point3 = (1.0, 1.0, 1.0)
+    spatial_rotation: Matrix | None = None
+
+    def _rotate(self, point: Point3, degrees: float) -> Point3:
+        if abs(degrees) <= 1e-12:
+            return point
+        axes = {17: (0, 1), 18: (0, 2), 19: (1, 2)}
+        first, second = axes.get(self.rotation_plane, (0, 1))
+        center = self.rotation_center
+        values = list(point)
+        a = point[first] - center[first]
+        b = point[second] - center[second]
+        radians = math.radians(degrees)
+        cosine = math.cos(radians)
+        sine = math.sin(radians)
+        values[first] = center[first] + a * cosine - b * sine
+        values[second] = center[second] + a * sine + b * cosine
+        return values[0], values[1], values[2]
+
+    def apply(self, point: Point3) -> Point3:
+        if self.spatial_rotation is not None:
+            rotated = transform_vector(self.spatial_rotation, point)
+            return tuple(rotated[i] + self.translation[i] for i in range(3))
+        tx, ty, tz = self.translation
+        translated = point[0] + tx, point[1] + ty, point[2] + tz
+        rotated = self._rotate(translated, self.rotation_degrees)
+        if all(abs(factor - 1.0) <= 1e-12 for factor in self.scale_factors):
+            return rotated
+        center = self.scale_center
+        scaled = list(rotated)
+        for axis, factor in enumerate(self.scale_factors):
+            scaled[axis] = center[axis] + (rotated[axis] - center[axis]) * factor
+        return scaled[0], scaled[1], scaled[2]
+
+    def inverse(self, point: Point3) -> Point3:
+        if self.spatial_rotation is not None:
+            shifted = tuple(point[i] - self.translation[i] for i in range(3))
+            return transform_vector(transpose(self.spatial_rotation), shifted)
+        unscaled = point
+        if any(abs(factor - 1.0) > 1e-12 for factor in self.scale_factors):
+            center = self.scale_center
+            values = list(point)
+            for axis, factor in enumerate(self.scale_factors):
+                values[axis] = center[axis] + (point[axis] - center[axis]) / factor
+            unscaled = values[0], values[1], values[2]
+        unrotated = self._rotate(unscaled, -self.rotation_degrees)
+        tx, ty, tz = self.translation
+        return unrotated[0] - tx, unrotated[1] - ty, unrotated[2] - tz
+
+    def apply_vector(self, vector: Point3) -> Point3:
+        """Apply the transform's linear part to an I/J/K displacement."""
+        if self.spatial_rotation is not None:
+            return transform_vector(self.spatial_rotation, vector)
+        first, second = {17: (0, 1), 18: (0, 2), 19: (1, 2)}.get(self.rotation_plane, (0, 1))
+        radians = math.radians(self.rotation_degrees)
+        cosine = math.cos(radians)
+        sine = math.sin(radians)
+        values = list(vector)
+        values[first] = vector[first] * cosine - vector[second] * sine
+        values[second] = vector[first] * sine + vector[second] * cosine
+        rotated = values[0], values[1], values[2]
+        scaled = list(rotated)
+        for axis, factor in enumerate(self.scale_factors):
+            scaled[axis] *= factor
+        return scaled[0], scaled[1], scaled[2]
+
+    def plane_scale_factors(self, plane: int) -> tuple[float, float]:
+        """Return scale factors for the two axes of an interpolation plane."""
+        first, second = {17: (0, 1), 18: (0, 2), 19: (1, 2)}.get(plane, (0, 1))
+        return self.scale_factors[first], self.scale_factors[second]
+
+
+@dataclass
+class TransformState:
+    """Modal ISO transforms or a native rigid frame, with one transform builder."""
+
+    translation: Point3 = (0.0, 0.0, 0.0)
+    rotation_active: bool = False
+    rotation_center: Point3 = (0.0, 0.0, 0.0)
+    rotation_degrees: float = 0.0
+    rotation_plane: int = 17
+    scaling_active: bool = False
+    scale_center: Point3 = (0.0, 0.0, 0.0)
+    scale_factors: Point3 = (1.0, 1.0, 1.0)
+    spatial_rotation: Matrix | None = None
+
+    def build(self) -> CoordinateTransform:
+        return CoordinateTransform(
+            translation=self.translation,
+            rotation_center=self.rotation_center,
+            rotation_degrees=self.rotation_degrees if self.rotation_active else 0.0,
+            rotation_plane=self.rotation_plane,
+            scale_center=self.scale_center,
+            scale_factors=self.scale_factors if self.scaling_active else (1.0, 1.0, 1.0),
+            spatial_rotation=self.spatial_rotation,
+        )
+
+    def build_without_scaling(self) -> CoordinateTransform:
+        return CoordinateTransform(
+            translation=self.translation,
+            rotation_center=self.rotation_center,
+            rotation_degrees=self.rotation_degrees if self.rotation_active else 0.0,
+            rotation_plane=self.rotation_plane,
+            spatial_rotation=self.spatial_rotation,
+        )

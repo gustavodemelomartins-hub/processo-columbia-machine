@@ -1,0 +1,227 @@
+"""Directory orchestration over the single-file export service."""
+
+from __future__ import annotations
+
+import csv
+import json
+from collections import Counter
+from dataclasses import asdict, replace
+from datetime import UTC, datetime
+from io import StringIO
+from pathlib import Path
+from time import perf_counter
+from typing import Callable, Iterable
+
+from app.gcode.batch import DEFAULT_BATCH_EXTENSIONS, _normalize_extensions, discover_nc_files
+from app.gcode.export.common import is_export_limitation
+from app.gcode.export_file import ExportRequest, export_file, request_document
+from app.gcode.file_io import atomic_write_text
+from app.gcode.kinematics_report import kinematics_report_fields
+from app.gcode.post_profiles import export_file_suffix
+from app.gcode.source_mode import language_for_path, source_dialect_for_path
+
+REPORT_BASENAME = "batch_export_report"
+REPORT_SCHEMA_VERSION = 1
+
+
+def _destination(
+    path: Path, root: Path, output_root: Path, request: ExportRequest, source_extensions: Iterable[str]
+) -> Path:
+    destination = output_root / path.relative_to(root)
+    suffix = export_file_suffix(path, target=request.target_dialect, dxf=request.format == "dxf")
+    if path.suffix.lower() in source_extensions:
+        return destination.with_suffix(suffix)
+    return destination.with_name(destination.name + suffix)
+
+
+def _file_report(
+    path: Path, root: Path, destination: Path, output_root: Path, request: ExportRequest
+) -> dict[str, object]:
+    started = perf_counter()
+    relative = path.relative_to(root).as_posix()
+    report: dict[str, object] = {
+        "input_path": str(path),
+        "source_dialect": source_dialect_for_path(path),
+        "input_relative_path": relative,
+        "output_path": None,
+        "output_relative_path": None,
+        "status": "ERRORS",
+        "ok": False,
+        "complete": False,
+        "size_bytes": None,
+        "output_size_bytes": None,
+        "motion_count": 0,
+        "executed_block_count": 0,
+        "diagnostic_count": 0,
+        "diagnostics": [],
+        "elapsed_ms": 0.0,
+        "effective_units": None,
+        "effective_arc_type": None,
+        "kinematics_profile": request.kinematics,
+    }
+    try:
+        report["size_bytes"] = path.stat().st_size
+        exported = export_file(path, destination, request)
+    except (OSError, UnicodeError, ValueError) as exc:
+        report["diagnostics"] = [{"code": "EXPORT_ERROR", "message": str(exc), "severity": "error"}]
+    else:
+        execution = exported.execution
+        diagnostics = execution.diagnostics
+        report.update(
+            source_dialect=execution.source_dialect,
+            ok=execution.ok,
+            complete=execution.complete,
+            motion_count=len(execution.motions),
+            executed_block_count=len(execution.executed_blocks),
+            diagnostics=[asdict(item) for item in diagnostics],
+            effective_units=exported.effective_units,
+            effective_arc_type=exported.effective_arc_type,
+            **kinematics_report_fields(execution),
+        )
+        if exported.output_size_bytes > 0:
+            report["output_path"] = str(destination)
+            report["output_relative_path"] = destination.relative_to(output_root).as_posix()
+            report["output_size_bytes"] = exported.output_size_bytes
+        if execution.ok and execution.complete:
+            report["status"] = "WARNINGS" if diagnostics else "EXPORTED"
+            report["output_path"] = str(destination)
+            report["output_relative_path"] = destination.relative_to(output_root).as_posix()
+            report["output_size_bytes"] = exported.output_size_bytes
+        elif any(is_export_limitation(item) for item in diagnostics) and not any(
+            item.severity == "error" and not is_export_limitation(item) for item in diagnostics
+        ):
+            report["status"] = "UNSUPPORTED"
+    report["diagnostic_count"] = len(report["diagnostics"])
+    report["elapsed_ms"] = round((perf_counter() - started) * 1000, 3)
+    return report
+
+
+def export_directory(
+    root: str | Path,
+    output_root: str | Path,
+    request: ExportRequest,
+    *,
+    recursive: bool = True,
+    extensions: Iterable[str] = DEFAULT_BATCH_EXTENSIONS,
+    on_file: Callable[[dict[str, object]], None] | None = None,
+    kinematics_by_file: dict[str, str] | None = None,
+) -> dict[str, object]:
+    """Export each discovered file to a mirrored tree and return a manifest."""
+    started = perf_counter()
+    directory = Path(root).resolve()
+    destination_root = Path(output_root).resolve()
+    if destination_root == directory or directory in destination_root.parents:
+        raise ValueError("Output directory must be outside the input directory")
+    normalized_extensions = _normalize_extensions(extensions)
+    paths = discover_nc_files(directory, recursive=recursive, extensions=normalized_extensions)
+    profiles = kinematics_by_file or {}
+    actual = {path.relative_to(directory).as_posix() for path in paths}
+    unknown = set(profiles) - actual
+    if unknown:
+        raise ValueError(f"Kinematics map references an undiscovered file: {sorted(unknown)[0]}")
+    destinations = [_destination(path, directory, destination_root, request, normalized_extensions) for path in paths]
+    reserved_reports = {
+        (destination_root / f"{REPORT_BASENAME}.{suffix}").as_posix().casefold() for suffix in ("json", "csv")
+    }
+    collision = next(
+        (path for path in destinations if path.as_posix().casefold() in reserved_reports),
+        None,
+    )
+    if collision is not None:
+        raise ValueError(f"Export destination conflicts with batch manifest: {collision.name}")
+    duplicates = [
+        name for name, count in Counter(path.as_posix().casefold() for path in destinations).items() if count > 1
+    ]
+    if duplicates:
+        raise ValueError(f"Multiple inputs map to the same output: {duplicates[0]}")
+    files = []
+    for path, destination in zip(paths, destinations, strict=True):
+        relative = path.relative_to(directory).as_posix()
+        selected = profiles.get(relative, request.kinematics)
+        file_request = replace(request, kinematics=selected, language=request.language or language_for_path(path))
+        item = _file_report(path, directory, destination, destination_root, file_request)
+        files.append(item)
+        if on_file is not None:
+            on_file(item)
+    counts = Counter(item["status"] for item in files)
+    status = (
+        "NO_FILES"
+        if not files
+        else "ERRORS"
+        if counts["ERRORS"]
+        else "UNSUPPORTED"
+        if counts["UNSUPPORTED"]
+        else "WARNINGS"
+        if counts["WARNINGS"]
+        else "CLEAN"
+    )
+    return {
+        "schema_version": REPORT_SCHEMA_VERSION,
+        "generated_at": datetime.now(UTC).isoformat(),
+        "status": status,
+        "root": str(directory),
+        "output_root": str(destination_root),
+        "language": request.language,
+        "encoding": request.encoding,
+        "recursive": recursive,
+        "extensions": list(normalized_extensions),
+        "format": request.format,
+        "mode": request.mode,
+        "units": request.units,
+        "arc_type": request.arc_type,
+        "export_options": request_document(request),
+        "kinematics_by_file": profiles,
+        "summary": {
+            "files_total": len(files),
+            "exported": counts["EXPORTED"] + counts["WARNINGS"],
+            "unsupported": counts["UNSUPPORTED"],
+            "warnings": counts["WARNINGS"],
+            "errors": counts["ERRORS"],
+            "diagnostics_total": sum(int(item["diagnostic_count"]) for item in files),
+            "elapsed_ms": round((perf_counter() - started) * 1000, 3),
+        },
+        "files": files,
+    }
+
+
+def write_export_reports(report: dict[str, object], output_root: str | Path) -> tuple[Path, Path]:
+    """Write JSON and Excel-friendly CSV manifests beside exported programs."""
+    directory = Path(output_root)
+    directory.mkdir(parents=True, exist_ok=True)
+    json_path = directory / f"{REPORT_BASENAME}.json"
+    csv_path = directory / f"{REPORT_BASENAME}.csv"
+    atomic_write_text(
+        json_path,
+        json.dumps(report, ensure_ascii=False, indent=2) + "\n",
+        encoding="utf-8",
+    )
+    fieldnames = (
+        "input_relative_path",
+        "output_relative_path",
+        "status",
+        "ok",
+        "complete",
+        "size_bytes",
+        "output_size_bytes",
+        "motion_count",
+        "executed_block_count",
+        "diagnostic_count",
+        "diagnostics",
+        "elapsed_ms",
+        "effective_units",
+        "effective_arc_type",
+        "kinematics_profile",
+        "kinematics_fingerprint",
+        "kinematics_definition",
+        "source_dialect",
+    )
+    stream = StringIO(newline="")
+    writer = csv.DictWriter(stream, fieldnames=fieldnames)
+    writer.writeheader()
+    for item in report["files"]:
+        row = {name: item.get(name) for name in fieldnames}
+        row["kinematics_definition"] = json.dumps(item.get("kinematics_definition"), sort_keys=True)
+        row["diagnostics"] = "; ".join(f"{entry['code']}: {entry['message']}" for entry in item["diagnostics"])
+        writer.writerow(row)
+    atomic_write_text(csv_path, stream.getvalue(), encoding="utf-8-sig")
+    return json_path, csv_path

@@ -1,0 +1,404 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Processo Columbia Machine | OS 10713</title>
+<style>
+:root{--ink:#233e53;--blue:#225faa;--steel:#e5ebef;--paper:#f7fafc;--line:#d1dde5;--amber:#ba7522;--ok:#247357;--shadow:0 8px 26px #203e5110}
+*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:15px/1.45 "Segoe UI",Arial,sans-serif}button,input,select,textarea{font:inherit}button{cursor:pointer;border:1px solid var(--line);background:white;color:var(--ink);padding:9px 13px;border-radius:5px}button:hover{border-color:var(--blue);background:#eff5fc}button:disabled{opacity:.42;cursor:default}button:focus-visible,a:focus-visible,input:focus-visible,summary:focus-visible{outline:3px solid #87b7ed;outline-offset:3px}.primary{background:var(--blue);color:white;border-color:var(--blue)}.primary:hover{background:#164b8c;color:white}.muted{color:#637c8e}.small{font-size:12px}.pill{display:inline-block;background:#e3edf8;border-radius:4px;padding:4px 8px;color:#315d87;font-size:12px}.amber{background:#fff0d9;color:#835815}.tag{font-weight:600;font-size:13px}h1,h2,h3,p{margin:0}h1{font:500 24px/1.2 Bahnschrift,"Segoe UI",sans-serif}h2{font:500 20px/1.25 Bahnschrift,"Segoe UI",sans-serif}h3{font-size:16px;font-weight:600}a{color:var(--blue)}.topbar{padding:19px 28px 16px;display:flex;align-items:center;justify-content:space-between;gap:18px;border-bottom:1px solid var(--line);background:white}.brand{display:flex;gap:13px;align-items:center}.brandmark{height:43px;width:43px;background:var(--blue);border-radius:5px;display:grid;place-items:center;color:white;font:500 24px Bahnschrift}.top-actions{display:flex;gap:8px;align-items:center}.context{display:flex;justify-content:space-between;align-items:center;gap:20px;padding:17px 28px}.context p{margin-top:5px}.author{display:flex;gap:8px;align-items:center;font-size:13px}.author input{width:180px;border:0;border-bottom:1px solid var(--line);padding:5px;background:transparent}.main{display:grid;grid-template-columns:minmax(0,1fr) 350px;gap:18px;padding:0 24px}.viewer{background:#e6edf2;border:1px solid var(--line);border-radius:9px;overflow:hidden;position:relative;min-width:0}.viewer-top{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:14px 16px;background:#f4f8fb}.view-controls{display:flex;gap:5px;flex-wrap:wrap}.view-controls button{font-size:12px;padding:6px 9px}.view-controls button[aria-pressed=true]{background:var(--ink);color:white}.stage{height:480px;position:relative;touch-action:none;overflow:hidden}.stage canvas{width:100%;height:100%;display:block}.stage-label{position:absolute;top:18px;left:18px;max-width:65%;pointer-events:none}.stage-label h2{margin-bottom:7px}.stage-label p{font-size:13px;max-width:480px}.stage-key{position:absolute;bottom:15px;left:18px;display:flex;gap:13px;align-items:center;font-size:12px;pointer-events:none}.dot{display:inline-block;width:9px;height:9px;border-radius:50%;background:var(--blue);margin-right:5px}.dot.amber{background:#d29138}.dot.gray{background:#778998}.view-foot{padding:11px 16px;background:#f4f8fb;display:flex;justify-content:space-between;align-items:center;gap:12px;border-top:1px solid var(--line);font-size:12px}.stage-note{color:#61788a;font-size:11px;line-height:1.4;max-width:430px}.sidebar{background:white;border:1px solid var(--line);border-radius:9px;overflow:hidden}.tabs{display:flex;border-bottom:1px solid var(--line);background:#f2f6f9}.tabs button{flex:1;border:0;border-radius:0;background:transparent;padding:14px 8px;font-size:13px}.tabs button[aria-selected=true]{color:var(--blue);box-shadow:inset 0 -3px var(--blue);background:white}.panel{height:539px;overflow:auto;padding:17px}.panel[hidden]{display:none}.panel>p{margin:6px 0 13px}.tool{border-bottom:1px solid #e5edf2;padding:14px 0}.tool:first-of-type{padding-top:7px}.tool-line{display:flex;gap:10px;align-items:center}.tool-icon{height:43px;width:38px;flex-shrink:0;background:#eaf0f5;border-radius:5px;display:grid;place-items:center;font-weight:600;color:#416b8a}.tool.active .tool-icon{background:var(--blue);color:white}.tool.active{background:#f4f8fe;margin:0 -8px;padding-left:8px;padding-right:8px;border-radius:5px}.toolname{font-size:13px;font-weight:600}.toolstate{color:var(--blue);font-size:11px;margin-top:2px}.checks{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-top:10px;font-size:12px}.checks label{display:flex;gap:6px;align-items:center}.checks input{accent-color:var(--blue);width:15px;height:15px;margin:0}.progress{height:5px;background:#e2eaf1;border-radius:3px;overflow:hidden;margin:10px 0}.progress span{display:block;height:100%;background:var(--ok);transition:width .2s}.process{margin:18px 24px 0;border-top:1px solid var(--line);padding-top:15px}.process-head{display:flex;justify-content:space-between;gap:16px;align-items:center;margin-bottom:12px}.steps{display:flex;gap:7px;overflow:auto;padding:2px 2px 12px}.step{width:141px;flex-shrink:0;text-align:left;min-height:89px;padding:10px;border-radius:5px;background:white}.step strong{display:block;font-size:12px;margin:5px 0}.step small{font-size:11px;color:#617d90}.step[aria-current=step]{background:var(--blue);color:white;border-color:var(--blue)}.step[aria-current=step] small{color:#d7e8fb}.step .num{font:500 17px Bahnschrift}.footer{display:flex;justify-content:space-between;gap:20px;padding:7px 26px 18px;font-size:11px;color:#728595}.instruction{font-size:13px;margin:10px 0 16px;line-height:1.6}.inspect-state{padding:12px 13px;background:#fff2df;border-left:3px solid #d08c31;margin:12px 0}.inspect-state strong{display:block;font-size:14px}.measure{margin:10px 0}.measure label{display:block;font-size:12px;margin-bottom:4px}.measure input,.measure textarea{width:100%;padding:9px;border:1px solid var(--line);border-radius:4px;resize:vertical}.inspection-check{display:flex;gap:8px;margin:10px 0;font-size:13px}.inspection-check input{accent-color:var(--blue)}.inspection-actions{display:grid;gap:8px;margin-top:15px}.file{padding:12px 0;border-bottom:1px solid var(--line);font-size:13px}.file b{font-size:14px}.file span{display:block;margin-top:4px;color:#607e90;font-size:12px}.pending{margin-top:15px;padding:12px;background:#f6f0e5;font-size:12px;border-radius:5px}.modal{border:0;border-radius:10px;padding:0;max-width:1100px;width:92vw;box-shadow:0 15px 80px #102f5140;color:var(--ink)}.modal::backdrop{background:#18344bb3}.modal-head{padding:15px 20px;display:flex;align-items:center;justify-content:space-between;gap:20px;border-bottom:1px solid var(--line)}.modal-body{padding:20px;max-height:75vh;overflow:auto}.gallery{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.gallery img{width:100%;height:175px;object-fit:cover;border-radius:5px}.gallery button{padding:0;overflow:hidden;text-align:left}.gallery span{display:block;font-size:11px;padding:7px}.photo-full{max-width:100%;max-height:65vh;display:block;margin:auto}.flow{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}.flow div{padding:17px;background:#edf3f8;border-radius:5px}.flow b{display:block;margin:5px 0}.flow p{font-size:13px;margin-top:7px}.demo-success{padding:13px;background:#eaf6ef;margin-top:15px}.zoom{display:flex;gap:4px}.zoom button{padding:5px 12px}.hint{font-size:11px;display:block;color:#617a8a;margin-top:8px}.error{position:absolute;inset:0;display:grid;place-content:center;padding:30px;background:#edf2f7}
+@media(min-width:1600px){.stage{height:560px}.panel{height:619px}}
+@media(max-width:1000px){.main{grid-template-columns:minmax(0,1fr) 300px;padding:0 14px;gap:12px}.stage{height:450px}.panel{height:510px}.topbar,.context{padding-left:18px;padding-right:18px}.top-actions{flex-wrap:wrap}.author{display:flex}}
+@media(max-width:760px){.topbar{align-items:flex-start;padding:15px;flex-wrap:wrap}.top-actions{width:100%}.context{padding:13px 15px;align-items:flex-start;flex-wrap:wrap}.author{width:100%}.author input{flex:1}.context h2{font-size:18px}.main{grid-template-columns:1fr}.viewer-top{flex-wrap:wrap}.stage{height:380px}.stage-label{max-width:80%}.stage-label h2{font-size:18px}.panel{height:auto;max-height:530px}.process{margin:17px 15px 0}.process-head{align-items:flex-start}.process-head p{max-width:220px}.footer{padding:9px 15px 16px;flex-direction:column;gap:4px}.gallery,.flow{grid-template-columns:1fr 1fr}.view-foot{flex-wrap:wrap}.topbar h1{font-size:21px}}
+@media print{button,.view-controls,.top-actions,.steps,.stage-key{display:none!important}.main{display:block}.stage{height:450px}.sidebar{margin-top:16px}.panel{height:auto;overflow:visible}.checks input{appearance:none}.topbar,.context{padding:10px}.modal{display:none}.process{display:none}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+.setup-fields{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:12px 0}.setup-fields label,.margin-field{font-size:12px}.setup-fields input,.margin-field input,.reach input,.measure select{display:block;width:100%;border:1px solid var(--line);border-radius:4px;padding:7px;margin-top:5px}.face-result{background:#edf4fa;border-left:3px solid var(--blue);padding:11px;font-size:13px}.face-result strong{display:block;margin-bottom:4px}.face-sequence{padding-left:20px;font-size:13px;line-height:1.65;margin:13px 0}.margin-field{display:flex;align-items:center;gap:9px;margin:12px 0 6px}.margin-field input{width:70px;margin:0}.tool-group{border-bottom:1px solid var(--line);margin-top:10px}.tool-group summary{cursor:pointer;font-size:13px;font-weight:600;padding:10px 0}.tool-group summary span{font-size:11px;color:#637c8e;font-weight:400;margin-left:5px}.tool-group .tool:last-child{border-bottom:0}.reach{margin-top:9px;padding:9px;background:#eef3f7;border-radius:4px;font-size:12px}.reach p{margin-top:4px}.reach input{width:100%;font-size:12px}.reach .below{color:#9a641d}.reach-note{font-size:11px;color:#607c8f}.tabs button{font-size:12px}.step small em{font-style:normal;display:block}.face-result .invalid{color:#9e5918}.step{width:151px}.stage-label{max-width:82%}.stage-note{max-width:480px}
+
+.process{margin:0 24px 18px;border-top:0;padding-top:0}
+.operations{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-bottom:10px}
+.operation-card{display:flex;gap:12px;text-align:left;align-items:center;padding:14px 16px;min-width:0;background:white;border-radius:7px}
+.operation-number{font:500 24px Bahnschrift;color:#678197}
+.operation-card strong,.operation-card b,.operation-card small{display:block}
+.operation-card strong{font-size:15px}.operation-card b{font-size:12px;font-weight:400;margin-top:3px}.operation-card small{font-size:11px;color:#678197;margin-top:5px}
+.operation-card[aria-current=true]{background:var(--blue);border-color:var(--blue);color:white}
+.operation-card[aria-current=true] .operation-number,.operation-card[aria-current=true] small{color:#e0ecf8}
+.operation-detail{padding:13px 15px 9px;background:#edf3f8;border:1px solid var(--line);border-radius:7px}
+.operation-detail .process-head{margin-bottom:8px}.operation-detail .steps{padding-bottom:8px}
+.operation-tools{display:flex;align-items:center;gap:12px;border-top:1px solid var(--line);padding:9px 0 1px}
+.operation-tools>span{font-size:12px;font-weight:600;flex-shrink:0}.operation-tools-list{display:flex;gap:6px;flex-wrap:wrap}
+.tool-chip{font-size:11px;padding:5px 8px;background:white}.tool-chip b{margin-right:3px}.tool-chip.ready{color:var(--ok);border-color:#9cc6b5}
+#steps[data-operation="0"] .step{flex:1;min-width:156px;width:auto}
+.operation-detail .step{min-height:72px;width:156px;padding:8px 10px}.operation-detail .step .num{font-size:13px}.operation-detail .step strong{margin:3px 0}
+.pending-view{position:absolute;inset:0;display:grid;place-content:center;text-align:center;padding:35px;background:#e6edf2;z-index:1}
+.pending-view[hidden]{display:none}.pending-view p{font-size:14px;max-width:420px;margin:10px auto;color:#61788a}
+.stage-label{z-index:2}.stage-key{z-index:2}
+@media(max-width:760px){.process{margin:0 14px 14px}.operations{display:flex;overflow-x:auto;padding-bottom:5px;gap:7px}.operation-card{flex:0 0 245px;padding:10px 12px}.operation-card strong{font-size:13px}.operation-number{font-size:20px}.operation-detail{padding:10px}.operation-detail .process-head{flex-wrap:wrap}.operation-tools{align-items:flex-start;flex-direction:column;gap:6px}.process-head p{max-width:none}}
+
+__OPERATOR_CSS__
+__COLUMBIA_BRAND_CSS__
+__INDUSTRIAL_CSS__
+__TOOLING_CSS__
+</style><link rel="icon" type="image/png" href="__COLUMBIA_FAVICON__">
+</head><body class="industrial">
+<header class="topbar"><div class="brand"><div class="brand-identity"><img class="brand-logo" src="__COLUMBIA_LOGO__" alt="Columbia Machine Brasil"><strong id="workOrder">OS 10-713</strong></div><div class="brand-title"><h1>Processo Columbia Machine</h1></div></div><div class="tooling-entry"><strong id="jobMachineName">MINI PORTAL</strong><button id="openFerramental">Ferramentas</button></div></header>
+<section class="process" aria-label="Operação atual">
+ <section class="job-timing" id="jobTiming" aria-label="Previsão de usinagem da peça"></section>
+ <nav id="operations" class="operations" aria-label="Escolher operação"></nav>
+ <section class="stage-flow" id="operationDetail" aria-labelledby="stageFlowTitle">
+  <div class="stage-flow-heading"><div><h3 id="stageFlowTitle">Etapas da operação</h3><p id="stageProgress" aria-live="polite"></p></div><div class="stage-navigation"><button id="prev">← Etapa</button><button id="next">Próxima etapa →</button></div></div>
+  <nav id="steps" aria-label="Escolher etapa"></nav>
+ </section>
+ <div class="current-work">
+  <div class="current-operation"><div class="operation-line"><span id="currentOperationNumber" class="tag"></span></div><h2 id="phaseTitle"></h2><p id="phaseSubtitle" hidden></p></div>
+  <div class="current-program"><span class="small muted">Programa atual</span><strong id="currentProgram"></strong><span id="currentToolHint" class="small"></span></div>
+  <div class="current-status"><span class="small muted">Status</span><strong id="operationStatus" aria-live="polite"></strong><button id="startStageExecution" type="button">Iniciar etapa</button></div>
+ </div>
+
+
+</section>
+<section class="operation-instructions" aria-label="Instruções e referências"> <div class="preparation">
+  <section class="now"><h3>O que fazer agora</h3><ol id="doNow"></ol></section>
+  <section class="reference"><h3>Referência</h3><div class="zero-fields"><label>X0<input id="referenceX" readonly maxlength="100" placeholder="A confirmar" aria-label="Referência X0"><small id="referenceXState"></small></label><label>Y0<input id="referenceY" readonly maxlength="100" placeholder="A confirmar" aria-label="Referência Y0"><small id="referenceYState"></small></label><div><b>Z0</b><p id="referenceZ">Topo da peça</p><small id="referenceZState"></small></div></div><p id="referenceHint" class="small muted">Referência da engenharia. Conferir X/Y e Z na máquina antes de iniciar.</p></section>
+ </div>
+</section>
+<main class="main">
+ <section class="viewer" aria-label="Referência visual">
+  <div class="viewer-top"><h3>Referência visual</h3><div class="visual-tabs" role="tablist" aria-label="Referência visual"><button id="view3D" role="tab" aria-controls="view3DPanel" aria-selected="true">3D</button><button id="viewDrawing" role="tab" aria-controls="drawingPanel" aria-selected="false">Desenho</button></div><button id="animateCut">Play percurso</button></div>
+  <div id="view3DPanel" role="tabpanel"><div class="stage" id="stage"><div class="pending-view" id="pendingView" hidden><h3>A confirmar</h3><p>Programas e montagem desta operação ainda não foram recebidos.</p></div><div class="stage-key"><span><i class="dot"></i>Azul = corte</span><span><i class="dot amber"></i>Laranja = rápido</span><span><i class="dot gray"></i>Cinza = fixação ilustrativa</span></div></div><div class="view-foot"><span><span class="desktop-gesture">Arraste para girar · roda para aproximar</span><span class="mobile-gesture">Um dedo gira · dois dedos dão zoom</span></span><div class="view-actions"><div class="zoom3d"><button id="zoom3DOut" aria-label="Afastar vista 3D">−</button><button id="zoom3DIn" aria-label="Aproximar vista 3D">+</button></div><span id="playbackPreview" class="small" hidden></span></div></div><p id="toolHeightNotice" class="small operational-notice" aria-live="polite"></p><p id="pathNotice" class="small operational-notice" hidden></p></div>
+  <div id="drawingPanel" role="tabpanel" hidden><div id="drawingHost"></div></div>
+  <div class="drawing-reference" hidden><span id="drawingReference"></span><small id="drawingLink"></small></div>
+ </section>
+ <aside class="sidebar" aria-label="Ferramenta atual e parâmetros">
+  <div class="tabs" role="tablist" aria-label="Dados da etapa"><button role="tab" data-tab="tools" aria-selected="true" aria-controls="toolsPanel">Ferramenta atual</button><button role="tab" data-tab="details" aria-selected="false" aria-controls="detailsPanel">Detalhes técnicos</button></div>
+  <section class="panel" id="pendingPanel" role="tabpanel" hidden><h3 id="pendingPanelTitle">A confirmar</h3><p>Envie os programas e cadastre montagem, referências e conferências.</p></section>
+  <section class="panel" id="toolsPanel" role="tabpanel"><div class="section-line"><h3 id="toolsTitle" hidden>Ferramentas</h3><span id="readyCount" class="small"></span></div><p id="toolsIntro" class="small muted"></p><div id="toolList"></div><p id="toolIdentityNote" class="small operational-notice" hidden>Conferir T12: R0,8 no nome; raio 0 na coluna do programa.</p></section>
+
+  <section class="panel" id="detailsPanel" role="tabpanel" hidden> <aside class="program-consultation" aria-label="Programa e parâmetros"><section id="programPanel" class="program-panel"><section id="strategyDetails" class="strategy-details"></section><details class="program-call-details"><summary>Chamadas do programa</summary><div id="programOverview"></div></details></section></aside></section>
+ </aside>
+</main>
+<div id="legacyProcessRecords" hidden inert><details id="operationChecks" class="operation-checks"><summary>Checklist e conferência da etapa</summary>  <section class="panel" id="inspectionPanel" >
+   <div class="section-line"><h3>Checklist de liberação</h3><strong id="readinessResult" class="small" aria-live="polite"></strong></div>
+   <p id="readinessMissing" class="small muted"></p><div id="releaseChecklist"></div>
+   <div class="execution-actions"><button id="startOperation" class="primary">Iniciar execução</button><span class="small muted">Registro local</span></div>
+   <details id="measurementPreparation"><summary>Espessura e retirada</summary><section id="setupPanel">
+    <h3 id="setupTitle"></h3><p id="setupIntro" class="small muted"></p><div id="faceForm">
+    <div class="setup-fields"><label>Bruto medido (mm)<input id="stockThickness" type="number" step="0.01" min="0" placeholder="Medir bruto"></label><label>Meta antes do T.T. (mm)<input id="targetThickness" type="number" step="0.01" min="0" value="96"></label></div>
+    <div class="face-result" id="stockResult"></div><div class="setup-fields"><label>Retirada no 1º lado (opcional, mm)<input id="firstRemoval" type="number" step="0.01" min="0" placeholder="Após limpar a face"></label><label>Após 1º lado (mm)<input id="afterFirst" type="number" step="0.01" min="0" placeholder="Medição opcional"></label></div>
+    <p class="small operational-notice">Meta do processo: 96,0 mm. Desenho: 95,75 mm antes do tratamento; alinhar revisão.</p><p class="small muted" id="faceStatus"></p></div><div id="setup2Fields" hidden></div>
+   </section></details>
+   <section class="final-inspection"><h3>Conferência após usinagem</h3><p id="finalCriteria" class="small muted"></p><div id="finalThicknessForm" hidden><label class="measure">Espessura final medida (mm)<input id="finalThickness" type="number" step="0.01" min="0" placeholder="Medir após as duas faces"></label><label class="inspection-check"><input type="checkbox" id="faceClosed">Espessura final conferida</label></div>
+    <div id="legacyInspection"><h3 id="inspectTitle" hidden></h3><p id="inspectText" class="small"></p><div class="inspect-state" hidden><strong id="inspectStatus"></strong><span id="inspectStatusText"></span></div><div id="inspectForm"><label class="measure">Medida observada / degrau<input id="measured" placeholder="Registrar medição"></label><label class="measure">Ajuste registrado<textarea id="adjustment" rows="2" placeholder="Ajuste ou observação"></textarea></label><label class="inspection-check"><input type="checkbox" data-inspect="dimension">Dimensão ou degrau conferido</label><label class="inspection-check"><input type="checkbox" data-inspect="offset">Ferramenta e corretor conferidos</label><label class="inspection-check"><input type="checkbox" data-inspect="resume">Retomada revisada</label></div><div class="inspection-actions"><button id="showStop">Ver posição de inspeção proposta</button><button id="release">Registrar conferência proposta</button></div></div>
+    <button id="completeOperation" class="primary">Aprovar operação / etapa</button><p id="completionResult" class="small" aria-live="polite"></p>
+   </section>
+   <label class="measure operation-note">Observação da operação<textarea id="operationNote" rows="2" maxlength="2000" placeholder="Registrar orientação ou ocorrência"></textarea></label>
+  </section>
+</details></div>
+<section id="workToolsSection" class="work-tools" aria-label="Ferramentas do trabalho"><div class="section-line"><h3>Ferramentas do trabalho</h3><strong id="workToolCount"></strong></div><p id="toolTableMessage" role="status" class="small"></p><div id="workToolList"></div><div id="workToolEditor" hidden inert></div></section>
+<details id="technicalDetails" class="technical-details"><summary>Arquivos e cadastros</summary><div class="technical-content">
+
+
+ <p>Dados extraídos e calculados do programa. Montagem ilustrativa; sem remoção de material ou verificação de colisões.</p>
+ <div class="technical-actions"><button id="cncInfo">Dados CNC</button><button id="export">Exportar checklist</button><button id="references">Referências arquivadas</button><button id="receive">Recebimento de arquivos</button></div><p id="cncStatus" class="small">Carregando percurso CNC…</p><span id="setupBadge" hidden></span><span id="footerStatus" hidden></span>
+ <div class="technical-settings"><input id="author" hidden><label class="margin-field">Margem padrão adotada (mm)<input id="reachMargin" type="number" min="0" step="0.5" value="10"></label><label class="inspection-check"><input id="topZero" type="checkbox" hidden><span hidden>Conferido Z0</span></label><label class="measure" hidden>Alinhamento do processo<select id="alignmentReference"><option value="external">Alinhar a peça por fora</option><option value="slot">Varão / ranhura da mesa</option><option value="stops">Dois encostos retificados</option><option value="edge">Borda da mesa</option></select></label><p id="alignmentDescription" class="small" hidden></p></div>
+ <section id="filesPanel"><h3>Programas recebidos</h3><p id="programIntro" class="small"></p><div id="programList"></div></section><div id="reachSettings" hidden></div><div class="progress" hidden><span id="toolProgress"></span></div><div id="operationTools" hidden></div><span id="operationToolsLabel" hidden></span><span id="operationDetailTitle" hidden></span><span id="operationPrograms" hidden></span>
+</div></details>
+<footer class="footer"><span id="revisionLine"></span><span id="storageNotice" role="status">Registros salvos neste navegador.</span></footer>
+<dialog id="modal" class="modal"><div class="modal-head"><h3 id="modalTitle"></h3><button id="closeModal" aria-label="Fechar">Fechar</button></div><div id="modalBody" class="modal-body"></div></dialog>
+
+<script>__THREE__</script>
+<script>__GVIEWER__</script><script>
+const DATA=__DATA__;
+const DRAWING="__DRAWING__";
+const phases=[
+ {title:"Facear a primeira face",sub:"Setup 1 · Conferir o lado pelas cavidades. Prender nas mesmas extremidades da segunda operação e usar O001.",tools:[1],program:0,setup:"mesa",inspect:"Conferir a face usinada e a medida antes de repetir o faceamento do outro lado.",kind:"face"},
+ {title:"Tombar para a face oposta",sub:"Etapa incorporada ao segundo faceamento; registro legado preservado.",tools:[1],program:0,setup:"virada",inspect:"Conferir a orientação antes da próxima montagem. Esta virada não está indicada por M0 nos arquivos.",kind:"setup"},
+ {title:"Facear o segundo lado e fechar 96,0 mm",sub:"Setup 1 · O001 novamente. Conferir a espessura final antes de subir a peça nos calços.",tools:[1],program:0,setup:"mesa",inspect:"Fechar e registrar a espessura na aba Montagem. Esta etapa ainda utiliza somente O001.",kind:"face"},
+ {title:"Montar sobre os calços",sub:"Quatro apoios nas extremidades, sob os pontos de aperto. Alinhar e definir a origem.",tools:[],program:null,setup:"calcos",inspect:"Confirmar os apoios, a fixação e a origem com a montagem real.",kind:"setup"},
+ {title:"Marcação e referência",sub:"T9 · Fresa de topo Ø12. Operação identificada como referência no O002.",tools:[9],program:1,setup:"calcos",inspect:"Conferir a referência inicial antes de continuar. Região e critério de conferência a definir.",kind:"cut"},
+ {title:"Desbaste",sub:"T3 · Alto avanço Ø32. Preparar as ferramentas dos alívios enquanto este ciclo acontece.",tools:[3],program:2,setup:"calcos",inspect:"Usinar a janela completa no desbaste. Nesta revisão, o in-process fica no acabamento e nos cantos.",kind:"cut"},
+ {title:"Alívios com T12 e T4",sub:"T12 Ø25 e T4 Ø16 são chamadas do mesmo O004.TAP.",tools:[12,4],program:3,setup:"calcos",inspect:"Executar os alívios com T12. A conferência in-process está proposta no acabamento e nos cantos.",kind:"cut"},
+ {title:"Alívio com cabeçote Ø16",sub:"T4 · Turbo Ø16. Segunda ferramenta do O004.",tools:[4],program:3,setup:"calcos",inspect:"Executar os alívios com T4. Seguir para o acabamento com a fresa Ø25.",kind:"cut"},
+ {title:"Acabamento da cavidade",sub:"T8 · Fresa longa Ø25. O005 usa G41 e seleciona D8.",tools:[8],program:4,setup:"calcos",inspect:"Concluir os passes de uma cavidade de teste; propor retirada e M0; medir, conferir a compensação e só então repetir nas demais.",kind:"finish"},
+ {title:"Cantos com fresa Ø12",sub:"T5 · Fresa longa Ø12 nos O006 e O007. Primeira ferramenta do par de alívio.",tools:[5],program:5,setup:"calcos",inspect:"Primeira etapa do par de fresas de canto. A conferência combinada do degrau está proposta após a fresa Ø10, na próxima etapa.",kind:"pair"},
+ {title:"Cantos com fresa Ø10",sub:"T6 · Fresa longa Ø10 no O007. Conferência proposta após o par T5/T6.",tools:[5,6],program:6,setup:"calcos",inspect:"Após as duas fresas, propor M0 e verificar se existe degrau. Registrar o ajuste e revisar a retomada antes de repetir nas outras regiões.",kind:"finish"},
+ {title:"Usinar o espaçador",sub:"T4 · Turbo Ø16. Operação identificada como espaçador no O008.",tools:[4],program:7,setup:"calcos",inspect:"Conferir a região inicial do espaçador. Critério e posição de medição ainda serão definidos.",kind:"cut"}
+];
+const labels=["1º lado","Tombar peça","2º lado / 96 mm","Calços e origem","Referência","Desbaste","Alívios Ø25 / Ø16","Alívio Ø16","Acabamento / teste","Cantos Ø12","Cantos Ø10 / teste","Espaçador"];
+const toolNames={1:"Girassol Ø100",9:"Topo Ø12",3:"Alto avanço Ø32",12:"Abacaxi Ø25 · R0,8 no nome",4:"Turbo Ø16",8:"Topo Ø25 longa",5:"Topo Ø12 longa",6:"Topo Ø10 longa"};
+const flags=[["mounted","Montada"],["length","Comprimento"],["offset","Corretor"],["machine","Na máquina"]];
+let saved={};try{saved=JSON.parse(localStorage.getItem("columbia-os10713-demo-v2")||"{}")}catch{}
+let state={phase:Math.min(11,Math.max(0,saved.phase||0)),checks:saved.checks||{},inspections:saved.inspections||{},author:saved.author||"",face:saved.face||{stock:"",target:96,first:"",afterFirst:"",final:"",closed:false},alignment:"external",margin:saved.margin??null,stickouts:saved.stickouts||{},topZero:!!saved.topZero,openGroups:saved.openGroups||{},stopped:false,exploded:false};
+state.operation=Number.isInteger(saved.operation)&&saved.operation>=0&&saved.operation<=2?saved.operation:(state.phase<3?0:1);
+state.operationPhases={0:0,1:3,...(saved.operationPhases||{})};
+if(state.operation<2)state.operationPhases[state.operation]=state.phase;
+function persist(){try{localStorage.setItem("columbia-os10713-demo-v2",JSON.stringify({operation:state.operation,operationPhases:state.operationPhases,phase:state.phase,checks:state.checks,inspections:state.inspections,author:state.author,face:state.face,alignment:state.alignment,margin:state.margin,stickouts:state.stickouts,topZero:state.topZero,openGroups:state.openGroups}))}catch{}}
+const $=id=>document.getElementById(id);
+function duration(s){const h=Math.floor(s/3600),m=Math.floor(s%3600/60);return(h?h+"h ":"")+m+"min"}
+function tab(name){document.querySelectorAll("[data-tab]").forEach(b=>b.setAttribute("aria-selected",b.dataset.tab===name));const pending=state.operation===2;["setup","tools","inspection","files"].forEach(n=>$(n+"Panel").hidden=pending||n!==name);$("pendingPanel").hidden=!pending;if(pending)$("pendingPanelTitle").textContent={setup:"Montagem a definir",tools:"Ferramentas a definir",inspection:"Conferências a definir",files:"Programas aguardando"}[name]}
+document.querySelectorAll("[data-tab]").forEach(b=>b.onclick=()=>tab(b.dataset.tab));
+$("author").value=state.author;$("author").oninput=e=>{state.author=e.target.value;persist()};
+const number=v=>v===""||v===null||v===undefined?null:Number(v);
+const fmt=v=>Number(v).toLocaleString("pt-BR",{maximumFractionDigits:3});
+function facePlan(){const stock=number(state.face.stock),target=number(state.face.target),first=number(state.face.first),after=number(state.face.afterFirst);if(stock===null||target===null||!Number.isFinite(stock)||!Number.isFinite(target)||stock<=0||target<=0||stock<target)return{valid:false};const total=stock-target,a=first===null?(after===null?null:stock-after):first,b=after===null?(a===null?null:total-a):after-target;return{valid:(a===null||(a>=0&&a<=total))&&(b===null||b>=0)&&(after===null||(after>0&&after<=stock)),stock,target,total,first:a,second:b,after};}
+function faceAccepted(){return facePlan().valid&&number(state.face.final)>0&&state.face.closed}
+function renderSetup(){const first=state.operation===0;$("setupTitle").textContent=first?"Setup 1 · Fechar a espessura":"Setup 2 · Subir nos calços";$("setupIntro").textContent=first?"Somente O001 nas duas faces. Primeiro limpar a face; depois tombar e fechar 96,0 mm ajustando o corretor.":"Apoiar, alinhar, fixar e conferir G54. Depois: referência, desbaste, alívios, acabamento e cantos.";$("faceForm").hidden=!first;$("setup2Fields").hidden=first;const plan=facePlan();$("stockResult").innerHTML=plan.valid?"<strong>Sobremetal total: "+fmt(plan.total)+" mm</strong>1º lado: "+(plan.first===null?"facear até limpar":fmt(plan.first)+" mm registrados")+".<br>2º lado: "+(plan.second===null?"ajustar o corretor até fechar 96,0 mm":fmt(plan.second)+" mm restantes pela medição")+".":'<strong>Facear o primeiro lado até limpar</strong><span>Depois tombar e ajustar o corretor para fechar 96,0 mm. Medições de preparação são opcionais para consulta.</span>';$("firstRemoval").placeholder="Registrar após limpar";const final=number(state.face.final),target=number(state.face.target);$("faceStatus").textContent=faceAccepted()?"Espessura registrada: "+fmt(final)+" mm. Diferença para a meta: "+fmt(final-target)+" mm. Conferência manual registrada.":"Registrar a espessura final; consulta e simulação das próximas etapas estão disponíveis.";$("alignmentReference").value=state.alignment;$("topZero").checked=state.topZero;$("alignmentDescription").textContent={external:"Alinhar a peça por fora — informação de processo definida pelo usuário.",slot:"Referência visual no varão / vão da mesa. Confirmar como o varão é montado.",stops:"Dois encostos retificados nas laterais como referência. Posição e contato a confirmar.",edge:"Encosto na borda da mesa para peças grandes. Confirmar a face de referência."}[state.alignment];$("setupBadge").textContent=first?"1ª operação · Faceamento das duas faces · O001":"2ª operação · Sobre calços · O002 a O008 recebidos";$("next").disabled=state.operation===2||state.phase===11;}
+for(const [id,key] of [["stockThickness","stock"],["targetThickness","target"],["firstRemoval","first"],["afterFirst","afterFirst"],["finalThickness","final"]]){$(id).value=state.face[key];$(id).oninput=e=>{state.face[key]=e.target.value;state.face.closed=false;$("faceClosed").checked=false;persist();renderSetup()};}
+$("faceClosed").checked=state.face.closed;$("faceClosed").onchange=e=>{state.face.closed=e.target.checked;persist();renderSetup()};
+$("alignmentReference").onchange=e=>{state.alignment=e.target.value;persist();renderSetup();updateAssembly()};
+$("topZero").onchange=e=>{state.topZero=e.target.checked;persist();renderTools()};
+$("reachMargin").value=state.margin;$("reachMargin").oninput=e=>{const value=number(e.target.value);state.margin=value!==null&&Number.isFinite(value)&&value>=0?value:null;persist();renderTools()};
+
+const processOperations=[
+ {id:0,title:"Primeira operação",name:"Faceamento das duas faces",programs:[0],phases:[0,2],tools:[1],status:"received",description:"O001 nas duas faces · fechar a espessura antes do tratamento"},
+ {id:1,title:"Segunda operação",name:"Usinagem sobre calços",programs:[1,2,3,4,5,6,7],phases:[4,5,6,8,9,10,11],tools:[9,3,12,4,8,5,6],status:"partial",description:"O002–O008 recebidos · demais programas aguardando envio"},
+ {id:2,title:"Terceira operação",name:"A definir",programs:[],phases:[],tools:[],status:"pending",description:"Aguardando programas e definição do processo"}
+];
+function selectedOperation(){return processOperations[state.operation]}
+function renderOperationNavigation(){
+ const op=selectedOperation();
+ $("operations").innerHTML=processOperations.map(o=>'<button class="operation-card" data-operation="'+o.id+'" aria-expanded="'+(o.id===state.operation)+'" aria-controls="operationDetail" aria-current="'+(o.id===state.operation?'true':'false')+'"><span class="operation-number">'+String(o.id+1).padStart(2,"0")+'</span><span><strong>'+o.title+'</strong><b>'+o.name+'</b><small>'+o.description+'</small></span></button>').join("");
+ document.querySelectorAll("button[data-operation]").forEach(b=>b.onclick=()=>selectOperation(Number(b.dataset.operation)));
+ $("operationDetailTitle").textContent=op.status==="pending"?"Terceira operação · a definir":"Subetapas da "+(op.id===0?"primeira":"segunda")+" operação";
+ $("operationPrograms").textContent=op.status==="pending"?"As subetapas serão definidas quando os próximos programas forem enviados.":op.id===0?"Programa recebido: O001. Facear, tombar e retirar o sobremetal do outro lado; medir para fechar a espessura.":"Programas recebidos: O002–O008. Conjunto parcial; os demais programas ainda não foram enviados.";
+ $("steps").dataset.operation=op.id;
+ $("steps").innerHTML=op.phases.map(i=>'<button class="step" data-step="'+i+'" aria-current="'+(i===state.phase?'step':'false')+'"><span class="num">'+String(op.phases.indexOf(i)+1).padStart(2,"0")+'</span><strong>'+stageLabels[i]+'</strong><small>'+(phases[i].program!==null?DATA.programs[phases[i].program].file.replace(".TAP",""):"Montagem de processo")+'</small></button>').join("");
+ document.querySelectorAll("[data-step]").forEach(b=>b.onclick=()=>selectPhase(Number(b.dataset.step)));
+ $("steps").hidden=op.status==="pending";
+ renderOperationToolLine();keepNavigationVisible();
+}
+function keepNavigationVisible(){
+ for(const [container,selector] of [[$("operations"),'[data-operation="'+state.operation+'"]'],[$("steps"),'[data-step="'+state.phase+'"]']]){
+  const active=container.querySelector(selector);if(!active||container.scrollWidth<=container.clientWidth)continue;
+  const outer=container.getBoundingClientRect(),inner=active.getBoundingClientRect();
+  if(inner.left<outer.left||inner.right>outer.right)container.scrollLeft+=inner.left-outer.left-2;
+ }
+}
+window.addEventListener("resize",()=>requestAnimationFrame(keepNavigationVisible));
+const stageLabels=["Facear a primeira face","Tombar a peça","Facear o segundo lado e medir","Montar nos calços","Referência","Desbaste","Alívios Ø25 / Ø16","Alívio Ø16","Acabamento / teste","Cantos Ø12","Cantos Ø10 / teste","Espaçador"];
+function renderOperationToolLine(){
+ const op=selectedOperation();$("operationToolsLabel").textContent=op.tools.length?"Ferramentas da "+(op.id+1)+"ª operação":"Ferramentas a definir";
+ $("operationTools").innerHTML=op.tools.length?op.tools.map(id=>{
+  const done=flags.every(([f])=>(state.checks[id]||{})[f]);
+  return '<button class="tool-chip '+(done?"ready":"")+'" data-op-tool="'+id+'"><b>T'+id+'</b> '+toolNames[id]+(done?'<span aria-label="Checklist marcado"> ✓</span>':"")+'</button>';
+ }).join(""):'<span class="small muted">A lista será extraída dos próximos programas.</span>';
+ document.querySelectorAll("[data-op-tool]").forEach(b=>b.onclick=()=>{tab("tools");const card=$("toolList").querySelector('[data-tool-card="'+b.dataset.opTool+'"]');if(card){$("toolsPanel").scrollTop=Math.max(0,card.offsetTop-$("toolsPanel").offsetTop-10);card.querySelector("input")?.focus({preventScroll:true})}});
+}
+function selectOperation(id){
+ if(!processOperations[id])return;
+ if(state.operation<2)state.operationPhases[state.operation]=state.phase;
+ state.operation=id;
+ if(id<2){selectPhase(state.operationPhases[id]??processOperations[id].phases[0]);return}
+ stopAnimation();state.stopped=false;renderOperationNavigation();renderTools();renderProgramList();renderSetup();updateAssembly();
+ $("phaseTitle").textContent="Terceira operação";
+ $("phaseSubtitle").textContent="Aguardando os próximos programas. Montagem, subetapas e ferramentas ainda serão definidas.";
+ $("setupBadge").textContent="3ª operação · Aguardando programas";
+ $("prev").disabled=false;$("next").disabled=true;
+ $("footerStatus").textContent="Operação pendente. Nenhum programa, ferramenta ou montagem foi presumido.";
+ tab("tools");persist();
+}
+function renderProgramList(){
+ const op=selectedOperation();
+ $("programList").innerHTML=op.programs.length?op.programs.map(n=>DATA.programs[n]).map(p=>'<div class="file"><b>'+p.file+'</b><span>'+p.tools.map(t=>'T'+t).join(" / ")+' · '+duration(p.seconds)+' estimados no cabeçalho</span><span>'+p.operations.join(" · ").replaceAll("__","")+'</span></div>').join(""):'<div class="pending">Programas ainda não enviados para esta operação.</div>';
+ $("programIntro").textContent=op.status==="partial"?"Arquivos recebidos da segunda operação. O conjunto ainda está parcial.":op.status==="pending"?"Aguardando os programas desta operação.":"Programa recebido da primeira operação, usado nas duas faces.";
+}
+
+const operationGroups=[{key:"face",title:"Setup 1 · Faceamento",ids:[1],phases:[0,1,2]},{key:"reference",title:"Referência",ids:[9],phases:[4]},{key:"rough",title:"Desbaste",ids:[3],phases:[5]},{key:"relief",title:"Alívios",ids:[12,4],phases:[6,7]},{key:"finish",title:"Acabamento",ids:[8],phases:[8]},{key:"corners",title:"Cantos e raios",ids:[5,6],phases:[9,10]},{key:"spacer",title:"Espaçador",ids:[4],phases:[11]}];
+function reachTarget(t){return t.depthMm!==null&&t.depthMm>0&&!t.depthIssues.length&&state.margin!==null?t.depthMm+state.margin:null}
+function reachMarkup(t){const r=reachTarget(t),actual=number(state.stickouts[t.id]),source=t.depthSource;let text=source?"Z mínimo extraído do programa "+fmt(source.z)+" mm · "+source.file.replace(".TAP",""):"Z não interpretado";if(r===null)text+='<p>Faceamento / alcance exige avaliação da montagem.</p>';else text+='<p>Alcance preliminar: '+fmt(t.depthMm)+' + '+fmt(state.margin)+' = <b>'+fmt(r)+' mm</b></p>';text+='<p class="reach-note">'+(state.topZero?"Z0 no topo marcado como conferido.":"Cálculo condicionado a Z0 no topo, a conferir.")+'</p>';if(r!==null)text+='<input type="number" step="0.01" min="0" data-stickout="'+t.id+'" aria-label="Comprimento livre medido T'+t.id+'" placeholder="Comprimento livre medido (mm)" value="'+(actual===null?"":actual)+'"><p class="'+(actual!==null&&actual<r?"below":"reach-note")+'">'+(actual===null?"Registrar e conferir o conjunto real.":actual<r?"Abaixo do cálculo preliminar.":"Alcance preliminar atendido; colisões não verificadas.")+'</p>';return'<div class="reach">'+text+'</div>';}
+
+function renderTools(){
+ const op=selectedOperation(),p=phases[state.phase],ids=op.tools;
+ const ready=ids.filter(id=>flags.every(([f])=>(state.checks[id]||{})[f])).length;
+ $("toolsTitle").textContent=op.status==="pending"?"Ferramentas a definir":"Ferramentas da "+(op.id+1)+"ª operação";
+ $("toolsIntro").textContent=op.status==="pending"?"Aguardando os próximos programas.":"Lista desta operação · extraída dos programas. Marque conforme a montagem real.";
+ $("readyCount").textContent=ids.length?ready+" de "+ids.length+" ferramentas com os quatro itens marcados":"Nenhuma ferramenta recebida para esta operação.";
+ $("toolProgress").style.width=(ids.length?ready/ids.length*100:0)+"%";
+ $("reachSettings").hidden=!ids.length;
+ $("toolIdentityNote").hidden=!ids.includes(12);
+ $("toolList").innerHTML=ids.map(id=>{
+  const t=DATA.tools.find(t=>t.id===id),check=state.checks[id]||{},active=p.tools.includes(id);
+  const usage=operationGroups.filter(g=>g.ids.includes(id)).map(g=>g.title.replace("Setup 1 · ","")).join(" / ");
+  return '<div class="tool '+(active?"active":"")+'" data-tool-card="'+id+'"><div class="tool-line"><div class="tool-icon">T'+id+'</div><div><div class="toolname">'+toolNames[id]+'</div><div class="small muted">'+t.programs.filter(name=>op.programs.some(n=>DATA.programs[n].file===name)).map(n=>n.replace(".TAP","")).join(" / ")+'</div><div class="toolstate">'+usage+'</div></div></div>'+reachMarkup(t)+'<div class="checks">'+flags.map(([f,l])=>'<label><input type="checkbox" data-tool="'+id+'" data-flag="'+f+'" '+(check[f]?"checked":"")+'>'+l+'</label>').join("")+'</div></div>';
+ }).join("");
+ $("toolList").querySelectorAll("[data-tool]").forEach(i=>i.onchange=()=>{state.checks[i.dataset.tool]??={};state.checks[i.dataset.tool][i.dataset.flag]=i.checked;persist();renderTools()});
+ $("toolList").querySelectorAll("[data-stickout]").forEach(i=>i.onchange=()=>{state.stickouts[i.dataset.stickout]=i.value;persist();renderTools()});
+ renderOperationToolLine();
+}
+
+function inspectRecord(){return state.inspections[state.phase]??={}}
+function renderInspection(){const p=phases[state.phase],r=inspectRecord(),has=[8,10].includes(state.phase);$("inspectForm").hidden=!has;document.querySelector(".inspection-actions").hidden=!has;$("inspectText").textContent=p.inspect;$("inspectTitle").textContent=labels[state.phase];$("measured").value=r.measured||"";$("adjustment").value=r.adjustment||"";document.querySelectorAll("[data-inspect]").forEach(i=>i.checked=!!r[i.dataset.inspect]);$("inspectStatus").textContent=r.approved?"Conferência marcada na demonstração":state.stopped?"M0 de inspeção proposto":(has?"In-process proposto":"Etapa do processo");$("inspectStatusText").textContent=r.approved?"Registro local, sem liberar uma máquina real.":p.kind==="pair"?"Verificar o par de ferramentas após a próxima etapa.":(has?"Posição de inspeção e sequência de retomada a validar.":"In-process no acabamento e após o par de fresas de canto.");$("release").disabled=!["dimension","offset","resume"].every(f=>r[f]);$("showStop").textContent=state.stopped?"Voltar à posição de usinagem":"Mostrar parada de inspeção"}
+document.querySelectorAll("[data-inspect]").forEach(i=>i.onchange=()=>{inspectRecord()[i.dataset.inspect]=i.checked;inspectRecord().approved=false;persist();renderInspection();renderSetup()});
+$("measured").oninput=e=>{inspectRecord().measured=e.target.value;inspectRecord().approved=false;persist();renderSetup()};$("adjustment").oninput=e=>{inspectRecord().adjustment=e.target.value;inspectRecord().approved=false;persist();renderSetup()};
+$("showStop").onclick=()=>{state.stopped=!state.stopped;updateAssembly();renderInspection()};
+$("release").onclick=()=>{inspectRecord().approved=true;state.stopped=false;persist();renderInspection();renderSetup();updateAssembly();$("footerStatus").textContent="Conferência registrada somente na demonstração."};
+
+function selectPhase(i,{progress=false}={}){
+ if(!Number.isInteger(i)||i<0||i>=phases.length)return;
+ stopAnimation();state.phase=i;state.operation=i<3?0:1;state.operationPhases[state.operation]=i;state.stopped=false;
+ $("phaseTitle").textContent=phases[i].title;$("phaseSubtitle").textContent=phases[i].sub;
+ $("prev").disabled=i===0;
+ renderOperationNavigation();renderTools();renderProgramList();renderInspection();renderSetup();updateAssembly();persist();tab(i<=3?"setup":"tools");
+ // Navigation is preview-only: it never approves a dimension or inspection.
+ const active=$("steps").querySelector('[data-step="'+i+'"]');
+ if(active)keepNavigationVisible();
+}
+$("prev").onclick=()=>state.operation===2?selectOperation(1):selectPhase(Math.max(0,state.phase-1));
+$("next").onclick=()=>selectPhase(Math.min(phases.length-1,state.phase+1),{progress:true});
+
+function modal(title,body){$("modalTitle").textContent=title;$("modalBody").innerHTML=body;$("modal").showModal()}
+$("closeModal").onclick=()=>$("modal").close();$("modal").addEventListener("click",e=>{if(e.target===$("modal"))$("modal").close()});
+$("references").onclick=()=>{modal("Referências da peça e montagem",'<p class="small muted" style="margin-bottom:14px">Desenho original preservado. As fotos abaixo foram reduzidas apenas para a apresentação.</p><button id="viewDrawing">Ver primeira folha do desenho</button><div class="gallery" style="margin-top:15px">'+DATA.photos.map((p,i)=>'<button data-photo="'+i+'"><img src="'+p.image+'" alt="Registro original de montagem '+(i+1)+'"><span>'+p.name+'</span></button>').join("")+'</div>');$("viewDrawing").onclick=()=>modal("Desenho técnico · folha 1",'<img class="photo-full" src="'+DRAWING+'" alt="Primeira folha do desenho técnico original da Columbia Machine">');document.querySelectorAll("[data-photo]").forEach(b=>b.onclick=()=>{const p=DATA.photos[Number(b.dataset.photo)];modal(p.name,'<img class="photo-full" src="'+p.image+'" alt="Fotografia de referência da montagem">')})};
+$("receive").onclick=()=>modal("Como será o recebimento automático",'<p style="margin-bottom:16px">Esta é uma demonstração com os oito arquivos fornecidos. A pasta da rede ainda não está conectada.</p><div class="flow"><div><span class="pill">1</span><b>Rafa salva na rede</b><p>O conjunto e a revisão precisam ser identificados.</p></div><div><span class="pill">2</span><b>Identificar programas</b><p>Ferramentas, operações e dependências são extraídas.</p></div><div><span class="pill">3</span><b>Montar o processo</b><p>Desenho, regras de montagem e cadastros completam a vista 3D.</p></div><div><span class="pill">4</span><b>Preparar e conferir</b><p>Checklist durante os ciclos e pontos de inspeção por ferramenta.</p></div></div><div class="demo-success"><b>Exemplo carregado: OS 10713</b><p class="small">8 programas · 8 ferramentas distintas · 7 fotos · desenho de 5 folhas</p></div>');
+function csvCell(v){return '"'+String(v??"").replaceAll('"','""')+'"'}
+$("export").onclick=()=>{const rows=[["Projeto","OS","Processista","Ferramenta","Nome","Montada","Comprimento conferido","Corretor conferido","Na máquina","Z mínimo (mm)","Alcance preliminar (mm)","Comprimento livre medido (mm)","Margem adotada (mm)","Corte útil cadastrado (mm)"]];DATA.tools.forEach(t=>{const c=state.checks[t.id]||{};rows.push(["Processo Columbia Machine","10713",state.author,"T"+t.id,toolNames[t.id],...flags.map(([f])=>c[f]?"Sim":"Pendente"),t.depthSource?.z,reachTarget(t),state.stickouts[t.id],adoptedMargin(t),toolDimensions(t.id)?.cut])});rows.push([],["Setup 1","Bruto","Meta antes T.T.","Retirada no 1º lado","Após 1º lado","Final medido","Conferido"],["O001 nas duas faces",state.face.stock,state.face.target,facePlan().first??"",state.face.afterFirst,state.face.final,state.face.closed?"Sim":"Pendente"],["Referência de alinhamento",state.alignment],["Margem adicional (mm)",state.margin],["Z0 no topo conferido",state.topZero?"Sim":"Pendente"]);rows.push([],["Etapa","Medida observada","Ajuste ou observação","Dimensão conferida","Corretor conferido","Retomada revisada","Conferência na demonstração"]);phases.forEach((p,i)=>{const r=state.inspections[i]||{};rows.push([labels[i],r.measured,r.adjustment,r.dimension?"Sim":"Pendente",r.offset?"Sim":"Pendente",r.resume?"Sim":"Pendente",r.approved?"Registrada":"Pendente"])});rows.push([],["Etapa","Status operacional","X0","Y0","Z conferido","Programa conferido","Execução iniciada","Execução concluída","Observação"]);
+for(const [key,r] of Object.entries(state.operator||{}))rows.push([key,r.note?"Com observação":r.completed?"Concluída":r.started?"Em execução":"Preparando",r.refs?.x,r.refs?.y,r.checks?.z?"Sim":"Pendente",r.checks?.program?"Sim":"Pendente",r.started?"Sim":"Não",r.completed?"Sim":"Não",r.note]);
+const blob=new Blob(["\ufeff"+rows.map(r=>r.map(csvCell).join(";")).join("\r\n")],{type:"text/csv;charset=utf-8"});const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="Checklist_OS10713.csv";a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000)};
+let scene,camera,renderer,part,rawStock,clamps,strapClamps,supports,alignmentMarks,tool,highlight,machine,plateBottom=132;
+let view={yaw:.68,pitch:.75,radius:2200,target:new THREE.Vector3(0,250,0)};
+function mat(color,metalness=.25,roughness=.65){return new THREE.MeshStandardMaterial({color,metalness,roughness})}
+function box(parent,w,h,d,x,y,z,material){const m=new THREE.Mesh(new THREE.BoxGeometry(w,h,d),material);m.position.set(x,y,z);m.castShadow=true;m.receiveShadow=true;parent.add(m);return m}
+function init3d(){
+ scene=new THREE.Scene();scene.background=new THREE.Color("#e6edf2");
+ camera=new THREE.PerspectiveCamera(38,1,10,11000);
+ renderer=new THREE.WebGLRenderer({antialias:true,preserveDrawingBuffer:true});renderer.setPixelRatio(Math.min(devicePixelRatio,2));renderer.shadowMap.enabled=true;renderer.shadowMap.type=THREE.PCFSoftShadowMap;renderer.outputColorSpace=THREE.SRGBColorSpace;$("stage").prepend(renderer.domElement);
+ scene.add(new THREE.HemisphereLight(0xf8fcff,0x849cad,2.2));const key=new THREE.DirectionalLight(0xffffff,2.8);key.position.set(700,1900,1100);key.castShadow=true;key.shadow.mapSize.set(2048,2048);Object.assign(key.shadow.camera,{left:-1600,right:1600,top:1600,bottom:-1600,near:50,far:5000});key.shadow.normalBias=1.7;scene.add(key);
+ const metal=mat(0x8094a3,.55,.5),steel=mat(0x526878,.65,.4),blue=mat(0x376fa5,.35,.5),dark=mat(0x455661,.55,.5),caseMat=mat(0xe5e9e8,.05,.7),supportMat=mat(0xa2b3ba,.65,.5);
+ const floor=new THREE.Mesh(new THREE.PlaneGeometry(6000,4500),mat(0xe6edf2,0,.95));floor.rotation.x=-Math.PI/2;floor.position.y=-150;floor.receiveShadow=true;scene.add(floor);
+ const table=new THREE.Group();scene.add(table);box(table,1840,85,1060,0,75,0,metal);box(table,1660,130,920,0,-32,0,dark);
+ for(let z=-430;z<=430;z+=108)box(table,1840,2,10,0,119,z,steel);
+ machine=new THREE.Group();scene.add(machine);box(machine,1980,90,1120,0,-130,-170,caseMat);box(machine,180,1130,230,-890,465,-580,caseMat);box(machine,180,1130,230,890,465,-580,caseMat);box(machine,1790,210,230,0,915,-580,caseMat);box(machine,520,670,110,0,500,-665,caseMat);box(machine,75,560,8,-155,510,-600,metal);box(machine,75,560,8,155,510,-600,metal);box(machine,500,70,250,0,715,-490,caseMat);box(machine,180,270,150,0,520,-480,metal);
+ // Fixture coordinates are process illustrations, never extracted from the TAP.
+ const fixtureSites=[-1,1].flatMap(side=>[-235,235].map(z=>({side,z,anchorX:side*602,contactX:side*520})));
+ supports=new THREE.Group();supports.name="four-end-supports";scene.add(supports);
+ fixtureSites.forEach((site,i)=>{
+  const g=new THREE.Group();g.name="support-"+i;g.position.set(site.contactX,120,site.z);
+  g.userData={role:"load-support",site:i,top:212,footprint:{width:50,depth:60},provenance:"dados de processo / validação humana"};supports.add(g);
+  box(g,50,88,60,0,44,0,supportMat);
+  box(g,50,4,60,0,90,0,metal);
+  const edge=new THREE.LineSegments(new THREE.EdgesGeometry(new THREE.BoxGeometry(50,92,60)),new THREE.LineBasicMaterial({color:0x526571}));
+  edge.position.y=46;g.add(edge);
+ });
+ clamps=new THREE.Group();clamps.name="lateral-end-clamps";scene.add(clamps);
+ function socketBolt(parent,x,y,z){const bolt=new THREE.Mesh(new THREE.CylinderGeometry(11,11,12,24),metal);bolt.position.set(x,y,z);parent.add(bolt);const socket=new THREE.Mesh(new THREE.CylinderGeometry(5.5,5.5,1,6),mat(0x26343e));socket.position.set(x,y+6.1,z);parent.add(socket)}
+ fixtureSites.forEach((site,i)=>{
+  const g=new THREE.Group();g.name="lateral-clamp-"+i;g.position.set(site.anchorX,120,site.z);g.rotation.y=site.side*Math.PI/2;
+  g.userData={side:site.side<0?"esquerda":"direita",site:i,role:"lateral-clamp",provenance:"dados de processo / validação humana"};clamps.add(g);
+  const shape=new THREE.Shape();shape.moveTo(-59,48);shape.lineTo(59,48);shape.lineTo(59,-27);shape.lineTo(34,-51);shape.lineTo(-34,-51);shape.lineTo(-59,-27);shape.closePath();
+  const body=new THREE.Mesh(new THREE.ExtrudeGeometry(shape,{depth:22,bevelEnabled:true,bevelSize:1.4,bevelThickness:1.4,bevelSegments:1}),dark);body.rotation.x=-Math.PI/2;body.castShadow=true;body.receiveShadow=true;g.add(body);
+  [-30,30].forEach(j=>{box(g,45,28,30,j,23,-33,supportMat);for(let y=12;y<=32;y+=5)box(g,42,1.6,2,j,y,-49,metal);socketBolt(g,j,29,10)});
+  box(g,5,24,80,0,12,0,steel);box(g,112,6,20,0,1,14,steel);
+ });
+ strapClamps=new THREE.Group();strapClamps.name="top-end-clamps";scene.add(strapClamps);
+ fixtureSites.forEach((site,i)=>{
+  const g=new THREE.Group();g.name="top-clamp-"+i;g.position.set(site.anchorX,120,site.z);if(site.side<0)g.rotation.y=Math.PI;
+  g.userData={site:i,role:"top-clamp",provenance:"dados de processo / validação humana"};strapClamps.add(g);
+  box(g,170,22,58,-22,209,0,dark);
+  // Heel supports the outer tail; the four load supports are under the piece.
+  box(g,32,188,58,48,104,0,dark);box(g,144,10,64,0,5,0,steel);
+  const rod=new THREE.Mesh(new THREE.CylinderGeometry(8,8,230,16),metal);rod.position.set(-12,115,0);g.add(rod);
+  for(let h=15;h<230;h+=7){const ring=new THREE.Mesh(new THREE.TorusGeometry(8,.6,3,12),steel);ring.rotation.x=Math.PI/2;ring.position.set(-12,h,0);g.add(ring)}
+  const washer=new THREE.Mesh(new THREE.CylinderGeometry(17,17,4,24),steel);washer.position.set(-12,222,0);g.add(washer);socketBolt(g,-12,230,0);
+  const toe=new THREE.Mesh(new THREE.BoxGeometry(42,10,50),steel);toe.name="top-contact";toe.position.set(-82,193,0);toe.castShadow=true;g.add(toe);
+ });
+ alignmentMarks=new THREE.Group();scene.add(alignmentMarks);
+ part=new THREE.Group();scene.add(part);
+ const shape=new THREE.Shape();shape.moveTo(-552.5,-284.15);shape.lineTo(552.5,-284.15);shape.lineTo(552.5,284.15);shape.lineTo(-552.5,284.15);shape.closePath();
+ DATA.contours.forEach(points=>{const hole=new THREE.Path();points.forEach((p,i)=>i?hole.lineTo(p[0],p[1]):hole.moveTo(p[0],p[1]));hole.closePath();shape.holes.push(hole)});
+ const geom=new THREE.ExtrudeGeometry(shape,{depth:96,bevelEnabled:false,curveSegments:8});const grid=new THREE.Mesh(geom,blue);grid.rotation.x=-Math.PI/2;grid.castShadow=true;grid.receiveShadow=true;grid.name="finished-part";part.add(grid);rawStock=new THREE.Mesh(new THREE.BoxGeometry(1104.9,96,568.3),blue);rawStock.position.y=48;rawStock.castShadow=true;rawStock.receiveShadow=true;rawStock.name="raw-stock-illustrative";part.add(rawStock);const edge=new THREE.LineSegments(new THREE.EdgesGeometry(geom,30),new THREE.LineBasicMaterial({color:0x235279,transparent:true,opacity:.5}));edge.rotation.x=-Math.PI/2;edge.name="finished-edges";part.add(edge);
+ highlight=new THREE.Group();part.add(highlight);const points=DATA.contours[0].map(p=>new THREE.Vector3(p[0],99,-p[1]));points.push(points[0].clone());const line=new THREE.Line(new THREE.BufferGeometry().setFromPoints(points),new THREE.LineBasicMaterial({color:0xd89126}));highlight.add(line);
+ const targetPlate=new THREE.Mesh(new THREE.CylinderGeometry(34,34,3,48),new THREE.MeshStandardMaterial({color:0xe8a23a,transparent:true,opacity:.8}));targetPlate.position.set(345,100,155);highlight.add(targetPlate);
+ tool=new THREE.Group();scene.add(tool);
+ resize();new ResizeObserver(resize).observe($("stage"));draw();updateAssembly();
+ __THREE_INTERACTION__
+ installThreeInteraction(renderer.domElement,view,draw);
+}
+function resize(){if(!renderer)return;const w=$("stage").clientWidth,h=$("stage").clientHeight;if(!w||!h)return;renderer.setSize(w,h,false);camera.aspect=w/h;camera.updateProjectionMatrix();draw()}
+function draw(){if(!renderer)return;const r=view.radius*Math.max(1,1.9/camera.aspect),p=view.pitch,y=view.yaw;camera.position.set(view.target.x+r*Math.sin(y)*Math.cos(p),view.target.y+r*Math.sin(p),view.target.z+r*Math.cos(y)*Math.cos(p));camera.lookAt(view.target);renderer.render(scene,camera)}
+function updateAssembly(){if(!part)return;stopAnimation();const pending=state.operation===2;$("pendingView").hidden=!pending;renderer.domElement.style.visibility=pending?"hidden":"visible";if(pending){loadCNC();return}const p=phases[state.phase];$("animateCut").disabled=false;const onCalcos=p.setup==="calcos";plateBottom=onCalcos?212:132;part.position.y=plateBottom;rawStock.visible=false;part.getObjectByName("finished-part").visible=true;part.getObjectByName("finished-edges").visible=true;const inverted=OPERATOR_CONFIG.steps.find(s=>s.phase===state.phase)?.orientation?.rotation_x_degrees===180;part.rotation.x=inverted?Math.PI:0;part.position.y+=inverted?96:0;supports.visible=onCalcos;clamps.visible=!onCalcos;strapClamps.visible=onCalcos;alignmentMarks.visible=false;alignmentMarks.children.forEach(g=>g.visible=g.name===state.alignment);tool.visible=p.tools.length>0&&p.kind!=="setup";tool.position.set(p.kind==="face"?0:345,plateBottom+96+78+(state.stopped?210:0),p.kind==="face"?0:155);highlight.visible=[8,9,10].includes(state.phase);const t=DATA.tools.find(t=>t.id===p.tools[0]);if(t)updateToolVisual(t.id);loadCNC();draw()}
+let animation=null;
+function stopAnimation(){if(animation!==null){cancelAnimationFrame(animation);animation=null}if($("animateCut"))$("animateCut").textContent="Play percurso"}
+let cncData=null,cncToolpath=null,cncRows=[],cncFile=null;
+const cncReady=(async()=>{
+ const bytes=Uint8Array.from(atob("__CNC_PAYLOAD__"),c=>c.charCodeAt(0));
+ const stream=new Blob([bytes]).stream().pipeThrough(new DecompressionStream("gzip"));
+ cncData=JSON.parse(await new Response(stream).text());loadCNC();return cncData;
+})().catch(e=>{console.error(e);$("cncStatus").textContent="Falha ao carregar trajetória CNC: "+e.message;throw e});
+function cncDetails(){const d=cncData?.[cncFile];if(!d)return;const m=d.meta;
+ modal("CNC · "+cncFile+' · extraído do programa','<p>Motor: easy_gcode_plot 1.9.8 · milling FANUC. '+m.motion_count+' movimentos. Percurso nominal calculado; corretores reais da máquina não fornecidos.</p><p style="margin-top:10px">Operações: '+m.operations.map(o=>esc(o.name)).join(" · ")+'</p><p>G54 sobre o centro/topo da peça é referência visual de processo, a validar. Movimentos G53 e a transferência inicial sem origem localizada ficam fora da sobreposição.</p><p>Tempo cinemático: '+(m.time_engine_minutes).toFixed(2)+' min; rápido assumido 10.000 mm/min. Cabeçalho: '+duration(m.time_header_seconds||0)+'.</p><ul>'+[...m.diagnostics,...m.warnings].map(w=>'<li><b>'+esc(w.code)+'</b> '+esc(w.message)+(w.count?' · '+w.count+' ocorrências':'')+'</li>').join("")+'</ul><p>Arcos amostrados pelo próprio motor com erro de corda de 0,02 mm. A vista não calcula remoção de material ou colisões.</p>');
+}
+function esc(s){return String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
+$("cncInfo").onclick=cncDetails;
+function loadCNC(){
+ if(!scene||!cncData)return;
+ if(state.operation===2){if(cncToolpath){CNCGViewer.disposePrecomputedToolpath(scene,cncToolpath);cncToolpath=null}cncRows=[];cncFile=null;$("playbackPreview").hidden=false;$("playbackPreview").textContent="Programa a confirmar";$("cncInfo").disabled=true;$("animateCut").disabled=true;$("cncStatus").textContent="3ª operação · aguardando programas";return}
+ if(cncToolpath){CNCGViewer.disposePrecomputedToolpath(scene,cncToolpath);cncToolpath=null}
+ cncRows=[];const current=phases[state.phase],phase=current.program!==null?current:phases.find((p,i)=>i>state.phase&&selectedOperation().phases.includes(i)&&p.program!==null);cncFile=phase?.program!==null&&phase?.program!==undefined?DATA.programs[phase.program].file:null;$("playbackPreview").hidden=current.kind!=="setup";$("playbackPreview").textContent=cncFile?"Prévia: "+cncFile:"Sem programa para prévia";
+ const d=cncData[cncFile];$("cncInfo").disabled=!d;
+ if(!d){$("cncStatus").textContent="Montagem · dados de processo / validação humana";$("animateCut").disabled=true;return}
+ cncRows=d.segments.filter(r=>phase.tools.includes(r[7]));
+ const groups=[{rapid:false,hexColor:"#0b7bb6",opacity:1},{rapid:true,hexColor:"#e79d35",opacity:.7}].map(g=>{
+  const nums=[];for(const r of cncRows){if((r[6]===0)!==g.rapid)continue;nums.push(r[0],r[2],-r[1],r[3],r[5],-r[4])}
+  const positions=new Float32Array(nums);return {hexColor:g.hexColor,opacity:g.opacity,positionsBuffer:positions.buffer,positionsLen:positions.length,stride:6};
+ });
+ cncToolpath=CNCGViewer.createPrecomputedToolpath({groups,parent:scene}).state;
+ cncToolpath.group.position.y=plateBottom+96;
+ for(const l of cncToolpath.lines)l.material.depthTest=false;
+ $("animateCut").disabled=!cncRows.length;
+ const warn=d.meta.diagnostics.length;const unverified=d.meta.compensation_states.includes("UNVERIFIED");const partial=!d.meta.engine_complete;
+ $("cncStatus").textContent=cncFile+" · extraído do programa · "+cncRows.length+" segmentos"+(partial?" · TRAJETÓRIA PARCIAL":"")+(unverified?" · COMPENSAÇÃO NÃO VALIDADA":warn?" · "+warn+" aviso(s)":"")+" · montagem a validar";
+ $("footerStatus").textContent="Percurso CNC calculado. Montagem ilustrativa; sem remoção de material ou verificação de colisões.";
+ if(cncRows.length){const r=cncRows[0];placeTool(r,0)}
+ draw();
+}
+// Trajectory coordinates are the nominal tool tip. Tool dimensions never shift the path.
+function toolDimensions(id){
+ const t=DATA.tools.find(v=>v.id===Number(id));if(!t)return null;
+ const cfg=OPERATOR_CONFIG.tool_mounting.tools[id],actual=measuredLength(id),estimated=reachTarget(t,displayedProgramFile());
+ const raw=Object.hasOwn(state.cuttingLengths,id)?state.cuttingLengths[id]:cfg?.cutting_length_mm;
+ const d=ToolRepresentationRule.resolve({measuredMount:actual,recommendedMount:estimated,cuttingLength:number(raw),reference:cfg?.visual_reference});
+ return {id:t.id,diameter:ToolingDomain.positive(tooling.assignment(tooling.jobMachineId,t.id).measuredDiameter)??t.diameter,...d,cutSource:d.cut===null?'a confirmar':Object.hasOwn(state.cuttingLengths,id)?'informada pelo operador':'cadastro'};
+}
+function updateToolVisual(id){
+ if(!tool)return;const d=toolDimensions(id);if(!d)return;
+ const key=JSON.stringify(d);tool.userData.activeId=d.id;
+ if(tool.userData.dimensionsKey!==key){
+  for(const child of [...tool.children]){tool.remove(child);child.geometry?.dispose();child.material?.dispose()}
+  const mesh=(name,rTop,rBottom,height,y,color,wireframe=false)=>{const m=new THREE.Mesh(new THREE.CylinderGeometry(rTop,rBottom,height,24),new THREE.MeshStandardMaterial({color,metalness:.45,roughness:.5,wireframe,transparent:wireframe,opacity:wireframe?.55:1}));m.name=name;m.position.y=y;tool.add(m);return m};
+  // A missing cutting length is represented only by a nominal diameter ring at the tip.
+  if(d.cut!==null)mesh('cutter',d.diameter/2,d.diameter/2,d.cut,d.cut/2,0xd9a24a);
+  else mesh('cutter',d.diameter/2,d.diameter/2,.5,.25,0xd9a24a,true);
+  if(d.holder&&d.cut){for(let f=0;f<3;f++){const pts=[];for(let i=0;i<=40;i++){const angle=f*Math.PI*2/3+i/40*Math.PI*1.3;pts.push(new THREE.Vector3(Math.cos(angle)*(d.diameter/2+.05),i/40*d.cut,Math.sin(angle)*(d.diameter/2+.05)));}const flute=new THREE.Line(new THREE.BufferGeometry().setFromPoints(pts),new THREE.LineBasicMaterial({color:0x6c532e}));flute.name='illustrative-flute';tool.add(flute);}}
+  if(d.mount!==null){
+   const nonCut=Math.max(0,d.mount-(d.cut??0));
+   if(nonCut>0)mesh('shank',Math.min(d.diameter/2,13),Math.min(d.diameter/2,13),nonCut,(d.cut??0)+nonCut/2,0x8798a2,d.cut===null||d.mountSource==='estimada');
+   const hspec=d.holder,height=hspec?.height_mm??88;
+   const h=mesh('holder',hspec?.top_radius_mm??44,hspec?.bottom_radius_mm??29,height,d.mount+height/2,d.invalidCut?0xbd3535:0x526575,!hspec);
+   h.userData.illustrative=true; // holder diameter/body not supplied, only its mounting plane is positioned.
+  }
+  tool.userData.dimensions=d;tool.userData.dimensionsKey=key;
+ }
+ const note=$('toolHeightNotice');if(note){note.hidden=state.operation===2;note.textContent='Montagem '+(d.mount===null?'a confirmar':d.mountSource==='medida'?'medida':'estimada')+(d.cut!==null?' · corte útil informado':'')+'. Porta-ferramenta ilustrativo';
+  const depth=Math.max(0,plateBottom+96-tool.position.y);
+  if(d.mount!==null&&depth>=d.mount)note.textContent+=' · ⚠ altura de montagem insuficiente para este Z';
+  if(d.invalidCut)note.textContent+=' · ⚠ corte útil maior que a montagem informada';
+ }
+}
+function refreshToolVisual(){if(!tool||!tool.userData.activeId)return;updateToolVisual(tool.userData.activeId);draw()}
+function placeTool(r,t){tool.position.set(r[0]+(r[3]-r[0])*t,plateBottom+96+r[2]+(r[5]-r[2])*t,-(r[1]+(r[4]-r[1])*t));updateToolVisual(r[7])}
+
+$("animateCut").onclick=()=>{
+ if(animation!==null){stopAnimation();$("animateCut").textContent="Play percurso";return}
+ if(!cncRows.length)return;tool.visible=true;
+ const times=cncRows.map(r=>Math.hypot(r[3]-r[0],r[4]-r[1],r[5]-r[2])/(r[6]===0?10000:(r[10]||1000))*60000);
+ const sum=times.reduce((a,b)=>a+b,0),factor=Math.max(1,sum/15000),start=performance.now();let index=0,passed=0;
+ $("animateCut").textContent="Parar";$("footerStatus").textContent="Playback acelerado "+factor.toFixed(1)+"× · movimento calculado; tempo aproximado.";
+ function tick(now){const pos=(now-start)*factor;while(index<times.length-1&&pos>passed+times[index])passed+=times[index++];
+  if(pos>=sum){stopAnimation();loadCNC();return}const r=cncRows[index],f=Math.min(1,(pos-passed)/(times[index]||1));placeTool(r,f);
+  $("cncStatus").textContent=cncFile+" · extraído do programa · linha "+r[8]+" / N"+r[9]+" · T"+r[7]+" · "+(r[6]===0?"Rápido":"Corte")+" · "+(cncData[cncFile].source_lines[r[8]-1]||"");
+  draw();animation=requestAnimationFrame(tick)}
+ animation=requestAnimationFrame(tick);
+};
+
+__OPERATOR_LAYER__
+try{init3d()}catch(e){console.error(e);$("stage").insertAdjacentHTML("beforeend",'<div class="error"><h3>Vista 3D indisponível neste navegador</h3><p>Abra o protótipo no Edge ou Chrome com aceleração gráfica habilitada. O checklist e as referências continuam disponíveis.</p></div>')}
+if(state.operation===2)selectOperation(2);else selectPhase(state.phase);
+window.columbiaDemo={cncReady,getCNC:()=>({file:cncFile,rows:cncRows,toolpath:cncToolpath}),processOperations,selectedOperation,selectOperation,state,phases,DATA,selectPhase,view,facePlan,faceAccepted,reachTarget,getRenderer:()=>renderer,getAssembly:()=>({clamps,supports,strapClamps,alignmentMarks,part,zeroMarker,tool,plateBottom}),placeTool,toolDimensions,refreshToolVisual,operatorReady,operatorStatus,operatorRecord,requiredTools,toolConfirmed,drawingViewer,operatorConfig:OPERATOR_CONFIG,mountingRule,displayedProgramFile,lengthEvidenceCache,tooling,toolingUI,openToolPreparation,cavitySelection,selectCavity,cavityEntry,insertUsage,getCavityView:()=>({camera,meshes:cavityMeshes}),jobTiming,ToolRepresentationRule,JobTimingDomain,InsertUsageDomain,ToolWorkDomain,toolWorkStatus,offsetSuggestion,toolPhoto};
+cncReady.then(()=>{renderTools();renderOperational()});
+applyVisualMode();renderOperational();
+</script></body></html>

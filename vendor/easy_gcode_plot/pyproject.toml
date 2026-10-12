@@ -1,0 +1,154 @@
+[project]
+name = "easy-gcode-plot"
+version = "1.9.8"
+description = "Desktop application for viewing, editing, analyzing, and exporting G-code."
+readme = "README.md"
+requires-python = ">=3.13"
+license = { file = "LICENSE.md" }
+
+dependencies = [
+    "ezdxf>=1.4.4,<2",
+    "mapbox-earcut>=2.1,<3",
+    "numpy>=2.1,<3",
+    "pyopengl>=3.1.7,<4",
+    "pyqt6>=6.6,<7",
+    "pyqt6-qscintilla>=2.14,<3",
+    "pyqtgraph>=0.13.7,<0.15",
+]
+
+[build-system]
+requires = ["setuptools>=77", "cython>=3.0,<4"]
+build-backend = "setuptools.build_meta"
+
+[[tool.setuptools.ext-modules]]
+name = "app.gcode.kernel.frontend._native_parser"
+sources = ["app/gcode/kernel/frontend/_native_parser.pyx"]
+
+[[tool.setuptools.ext-modules]]
+name = "app.gcode.kernel.milling._native_executor"
+sources = ["app/gcode/kernel/milling/_native_executor.pyx"]
+
+[[tool.setuptools.ext-modules]]
+name = "app.tools._native_discovery"
+sources = ["app/tools/_native_discovery.pyx"]
+
+[tool.setuptools.packages.find]
+include = ["app", "app.*"]
+namespaces = false
+
+[tool.setuptools.package-data]
+"app.gcode.export" = ["posts/*.json"]
+"app.gcode" = ["templates/*.html", "templates/*.js"]
+"app.gcode.kernel.milling" = ["rotary_profiles.json"]
+"app.ui.generated" = ["*.ui"]
+"app.ui.generated.main" = ["*.ui"]
+"app.ui.generated.dialogs" = ["*.ui"]
+"app.ui.generated.editors" = ["*.ui"]
+"app.resources" = ["*.qrc", "icons/*"]
+
+[dependency-groups]
+dev = [
+    "pyside6>=6.11,<7; python_version < '3.15'",
+    "pylint>=3.0",
+    "pytest>=8.0",
+    "ruff>=0.8",
+]
+
+build = [
+    "pyinstaller>=6.0",
+]
+
+[tool.uv]
+environments = ["sys_platform == 'win32'", "sys_platform == 'linux'"]
+required-environments = [
+    "sys_platform == 'win32' and platform_machine == 'AMD64'",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-ra"
+markers = ["performance: relative large-program guards requiring native acceleration"]
+
+[tool.ruff]
+target-version = "py313"
+line-length = 120
+extend-exclude = [
+    "app/ui/generated",
+    "app/resources",
+]
+
+[tool.ruff.lint]
+select = ["E4", "E9", "F", "I"]
+
+[tool.ruff.lint.isort]
+known-first-party = ["app"]
+
+# Both lint entrypoints also run scripts/check_complexity.py with C901,
+# PLR0912 and PLR0915. Reviewed per-function ceilings live in
+# scripts/complexity_baseline.json; new functions use these strict defaults.
+[tool.ruff.lint.mccabe]
+max-complexity = 10
+
+[tool.ruff.lint.pylint]
+max-branches = 12
+max-statements = 50
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+line-ending = "auto"
+
+[tool.pylint]
+ignore-paths = [
+    "\\.venv",
+    ".*[\\\\/]ui[\\\\/]generated[\\\\/].*",
+    ".*[\\\\/]resources[\\\\/].*",
+]
+
+[tool.pylint."messages control"]
+disable = [
+    "import-error",
+    "no-name-in-module",
+    "too-many-lines",
+    "too-many-instance-attributes",
+    "too-many-public-methods",
+    "too-few-public-methods",
+    "too-many-branches",
+    "too-many-statements",
+    "too-many-locals",
+    "too-many-arguments",
+    "too-many-positional-arguments",
+    "too-many-nested-blocks",
+    "invalid-name",
+    "attribute-defined-outside-init",
+    "redefined-outer-name",
+    "unused-argument",
+    "expression-not-assigned",
+    "unnecessary-lambda",
+    "consider-using-enumerate",
+    "consider-using-f-string",
+    "consider-using-in",
+    "consider-using-min-builtin",
+    "simplifiable-if-statement",
+    "no-else-return",
+    "use-implicit-booleaness-not-comparison",
+    "singleton-comparison",
+    "implicit-str-concat",
+    "broad-exception-caught",
+    "redefined-builtin",
+    "inconsistent-return-statements",
+    "missing-module-docstring",
+    "missing-class-docstring",
+    "missing-function-docstring",
+    "duplicate-code",
+]
+
+[tool.pylint.format]
+max-line-length = 120
+
+[tool.pylint.basic]
+argument-naming-style = "any"
+attr-naming-style = "any"
+variable-naming-style = "any"
+function-naming-style = "any"
+method-naming-style = "any"

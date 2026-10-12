@@ -1,0 +1,18 @@
+/* Columbia Machine Brasil: colors observed on the official public website.
+   Operational meanings and CNC geometry colors remain independent of brand colors. */
+:root{--columbia-blue:#0066b3;--columbia-cyan:#00aeef;--columbia-heading:#215a98;--columbia-navy:#0a3250;--columbia-gray:#606060;--columbia-surface:#f3f3f5;--blue:var(--columbia-blue);--ink:var(--columbia-navy);--paper:var(--columbia-surface);--line:#d3dce3}
+body{font-family:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif}
+h1,h2{font-family:inherit}button,input,select,textarea{font-family:inherit}
+.topbar{background:var(--columbia-blue);border-bottom:3px solid var(--columbia-cyan);padding:10px 24px;min-height:78px;color:white}
+.brand{gap:22px}.brand-logo{display:block;width:136px;height:58px;object-fit:contain;flex-shrink:0}.brand-title{padding-left:22px;border-left:1px solid #ffffff59}.topbar h1{font-size:19px;font-weight:600;color:white}.topbar .muted{color:white}
+.current-operation h2,.part-context strong,.current-program strong{color:var(--columbia-navy)}.preparation h3,.viewer-top h3,.section-line h3{color:var(--columbia-heading)}
+.muted,.small.muted,.stage-note,.footer,.technical-details,.future-tools summary,.table-note{color:var(--columbia-gray)}
+button:hover{border-color:var(--columbia-blue);background:#eef6fc}.primary{background:var(--columbia-blue);border-color:var(--columbia-blue);color:white}.primary:hover{background:var(--columbia-heading);border-color:var(--columbia-heading);color:white}
+button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible,summary:focus-visible{outline:3px solid var(--columbia-cyan);outline-offset:3px}
+.operations button[aria-current=true]{background:#e7f3fb;color:var(--columbia-blue)}.visual-tabs button[aria-selected=true]{background:var(--columbia-blue);border-color:var(--columbia-blue);color:white}.tabs button[aria-selected=true]{color:var(--columbia-blue);box-shadow:inset 0 -3px var(--columbia-blue)}
+.viewer-top,.view-foot,.drawing-toolbar,.drawing-footer,.tabs{background:#f3f3f5}.viewer,.sidebar{border-color:var(--line);border-radius:6px}.tool.active{background:#edf6fc;border-left-color:var(--columbia-blue)}.toolstate{color:var(--columbia-heading)}.tool-icon{background:#e7f3fb;color:var(--columbia-heading)}
+/* Keep the legend matched to the actual Three.js toolpath, rather than the brand accent. */
+.stage-key .dot:not(.amber):not(.gray){background:#225faa}.stage-key .dot.amber{background:#d29138}.stage-key .dot.gray{background:#778998}
+@media(max-width:760px){.topbar{align-items:center}.topbar h1{font-size:17px}.brand{gap:14px}.brand-title{padding-left:14px}.brand-logo{width:112px;height:48px}}
+@media(max-width:520px){.topbar{padding:9px 14px;min-height:68px}.brand{gap:12px}.brand-title{padding-left:12px}.brand-logo{width:98px;height:42px}.topbar h1{font-size:15px;max-width:190px}}
+.topbar .small.muted{color:white}

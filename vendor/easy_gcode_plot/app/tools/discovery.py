@@ -1,0 +1,327 @@
+"""Conservative tool discovery from literal NC words and human comments.
+
+Only executable T words create candidates. Comments supply geometry, never
+execute expressions. Dimensions follow the units active at the T word.
+"""
+
+import math
+import re
+from copy import deepcopy
+from io import StringIO
+
+from app.gcode.kernel.frontend.lang import lex_words, strip_comments
+from app.gcode.kernel.frontend.sinumerik import parse_sinumerik_program
+from app.native import native_symbol
+from app.tools.definitions import (
+    DEFAULT_AUTO_TIP_ORIENTATION_BY_DIRECTION,
+    DEFAULT_MILLING_TOOL,
+    DEFAULT_TURNING_TOOL,
+)
+from app.tools.validation import normalized_program_milling_tools, normalized_tools
+
+_native_scan_source = native_symbol("discovery", "scan_source")
+
+_COMMENTS = re.compile(r"\(([^()]*)\)|;([^\r\n]*)")
+_COMMENT_TOOL = re.compile(r"\bT\s*(\d+)\b", re.IGNORECASE)
+_NUMBER = r"[+-]?(?:\d+(?:\.\d*)?|\.\d+)"
+_TYPE_HINTS = (
+    (r"\bTAP(?:PING)?\b", "tap"),
+    (r"\bTHREAD(?:ING)?\b", "thread"),
+    (r"\bGROOV(?:E|ING)\b", "groove"),
+    (r"\bDRILL(?:ING)?\b", "drill"),
+    (r"\bTAPER(?:ED)?\s+BALL(?:\s+END)?\s+MILL\b|\bTAPER_BALL_MILL\b", "taper_ball_mill"),
+    (r"\bBALL\b", "mill_ball"),
+    (r"\bFACE MILL\b", "face_mill"),
+    (r"\bSLOT MILL\b", "slot_mill"),
+    (r"\bCHAMFER\b", "chamfer_mill"),
+    (r"\bBULL\b", "mill_bull"),
+    (r"\bFLAT(?: END)? MILL\b", "mill_flat"),
+)
+_DRILL_CYCLES = frozenset({"81", "82", "83"})
+_TAP_CYCLES = frozenset({"84"})
+_TURNING_THREAD_CYCLES = frozenset({"32", "33", "76", "92"})
+
+
+def _tool_key(value, turning):
+    if not re.fullmatch(r"[+-]?\d+(?:\.0*)?", value):
+        return None
+    number = float(value)
+    if turning:
+        number = abs(number)
+    if not 1 <= number <= (9999 if turning else 99):
+        return None
+    return f"T{int(number):04d}" if turning else f"T{int(number)}"
+
+
+def _comments(line):
+    return [" ".join((match[1] if match[1] is not None else match[2]).split()) for match in _COMMENTS.finditer(line)]
+
+
+def _hint_text(description):
+    return description.upper().replace("_", " ")
+
+
+def _type_hint(description):
+    text = _hint_text(description)
+    return next((kind for pattern, kind in _TYPE_HINTS if re.search(pattern, text)), None)
+
+
+def _is_tool_comment(description):
+    return bool(_type_hint(description) or re.search(r"\b(?:TOOL|OD|ID)\b", _hint_text(description)))
+
+
+def _dimension(description, names, default, scale, *, allow_zero=False):
+    match = re.search(rf"(?<![A-Z0-9_])(?:{names})\s*=?\s*({_NUMBER})(?![\w.])", description.upper())
+    if match is None:
+        return default
+    value = float(match[1]) * scale
+    if not math.isfinite(value) or value < 0 or (value == 0 and not allow_zero):
+        return default
+    return value
+
+
+def _turning_spec(description, scale, operation_kind=None):
+    spec = deepcopy(DEFAULT_TURNING_TOOL)
+    kind = operation_kind or _type_hint(description)
+    if kind in {"groove", "thread", "drill", "tap"}:
+        spec["type"] = kind
+    application = "id" if re.search(r"\bID\b", _hint_text(description)) else "od"
+    if kind == "groove" and re.search(r"\bFACE\b", _hint_text(description)):
+        application = "face"
+    spec["applications"] = [application]
+    spec["tipOrientation"] = DEFAULT_AUTO_TIP_ORIENTATION_BY_DIRECTION.get(spec["type"], {}).get(application, 3)
+    spec["noseRadius"] = _dimension(description, "R|NR", 0.4, scale)
+    if kind == "groove":
+        spec["width"] = _dimension(description, "H|W|WIDTH", 3.0, scale)
+        spec["noseRadius"] = _dimension(description, "R|NR", 0.0, scale, allow_zero=True)
+    if kind in {"drill", "tap"}:
+        spec.update(diameter=_dimension(description, "D|DIA|DIAMETER", 10.0, scale), length=50.0, tipAngle=118.0)
+    return spec
+
+
+def _milling_spec(description, scale, operation_kind=None):
+    spec = deepcopy(DEFAULT_MILLING_TOOL)
+    kind = operation_kind or _type_hint(description)
+    if kind not in {None, "thread", "groove"}:
+        spec["type"] = kind
+    spec["diameter"] = _dimension(description, "D|DIA|DIAMETER", 10.0, scale)
+    radius = _dimension(description, "CR", 0.0, scale, allow_zero=True)
+    if 0 < radius <= spec["diameter"] / 2 and spec["type"] in {"mill_flat", "mill_bull"}:
+        spec.update(type="mill_bull", cornerRadius=radius)
+    lengths = _milling_comment_lengths(description, scale)
+    spec.update(lengths)
+    if "fluteLength" not in lengths:
+        spec.pop("fluteLength", None)
+        spec.pop("bodyLength", None)
+    if spec["type"] == "taper_ball_mill":
+        spec["taperAngle"] = _dimension(description, r"TAPER\s*ANGLE|ANGLE|B", 6.0, 1.0)
+    return spec
+
+
+def _milling_comment_lengths(description, scale):
+    """Use explicit FL/BL pairs; a total alone retains the unsplit legacy shape."""
+    flute_names = r"FL|FLUTELENGTH|FLUTE\s+LENGTH"
+    body_names = r"BL|BODYLENGTH|BODY\s+LENGTH"
+    flute = _dimension(description, flute_names, None, scale)
+    body = _dimension(description, body_names, None, scale, allow_zero=True)
+    if flute is not None and body is not None:
+        return {"fluteLength": flute, "bodyLength": body, "length": flute + body}
+    total = _dimension(description, "L|LENGTH", None, scale)
+    if total is not None or flute is not None or body is not None:
+        return {"length": total if total is not None else 50.0}
+    return {key: DEFAULT_MILLING_TOOL[key] for key in ("fluteLength", "bodyLength", "length")}
+
+
+def _cancel_checkpoint(index, cancelled):
+    if index % 256 == 0 and cancelled is not None and cancelled():
+        raise InterruptedError("Tool discovery cancelled")
+
+
+def _remember_tool_headers(headers, comments, turning):
+    for comment in comments:
+        for match in _COMMENT_TOOL.finditer(comment):
+            key = _tool_key(match[1], turning)
+            if key is not None:
+                headers.setdefault(key, comment)
+
+
+def _next_nearby_comment(previous, previous_line, index, words, comments, inline):
+    if any(word.letter == "T" for word in words):
+        return "", previous_line
+    if comments and not _COMMENT_TOOL.search(inline) and (not words or _is_tool_comment(inline)):
+        return inline, index
+    if any(word.letter in {"X", "Y", "Z"} for word in words):
+        return "", previous_line
+    return previous, previous_line
+
+
+def _scan_source_python(source, turning, default_unit_scale, cancelled=None):
+    """Collect tool headers, selections, and operation hints in one source pass."""
+    headers = {}
+    occurrences = []
+    operations = {}
+    active_tool = None
+    previous = ""
+    previous_line = -100
+    scale = default_unit_scale
+    for index, line in enumerate(StringIO(source)):
+        _cancel_checkpoint(index, cancelled)
+        comments = _comments(line)
+        _remember_tool_headers(headers, comments, turning)
+
+        words = lex_words(strip_comments(line).upper())
+        g65_call = _is_g65_call(words)
+        if not g65_call:
+            scale = _block_scale(words, scale)
+        selected = () if g65_call else tuple(_literal_tools(words, turning))
+        if selected:
+            active_tool = selected[-1]
+
+        kind = None if g65_call else _operation_kind(words, turning)
+        if active_tool is not None and kind is not None:
+            operations.setdefault(active_tool, kind)
+
+        inline = " ".join(comments)
+        nearby = previous if index - previous_line <= 8 else ""
+        for key in selected:
+            occurrences.append((key, inline, nearby, scale))
+
+        context_words = tuple(word for word in words if word.letter == "G") if g65_call else words
+        previous, previous_line = _next_nearby_comment(previous, previous_line, index, context_words, comments, inline)
+
+    return headers, occurrences, operations
+
+
+def _scan_source(source, turning, default_unit_scale, cancelled=None):
+    if _native_scan_source is not None:
+        return _native_scan_source(source, turning, default_unit_scale, cancelled)
+    return _scan_source_python(source, turning, default_unit_scale, cancelled)
+
+
+def _is_g65_call(words) -> bool:
+    for word in words:
+        if word.letter != "G":
+            continue
+        try:
+            if float(word.expr) == 65.0:
+                return True
+        except ValueError:
+            continue
+    return False
+
+
+def _block_scale(words, scale):
+    for word in words:
+        if word.letter == "G" and word.expr in {"20", "21"}:
+            scale = 25.4 if word.expr == "20" else 1.0
+    return scale
+
+
+def _literal_tools(words, turning):
+    for word in words:
+        if word.letter == "T":
+            key = _tool_key(word.expr, turning)
+            if key is not None:
+                yield key
+
+
+def _operation_kind(words, turning):
+    codes = {word.expr for word in words if word.letter == "G"}
+    if codes & _DRILL_CYCLES:
+        return "drill"
+    if codes & _TAP_CYCLES:
+        return "tap"
+    if turning and codes & _TURNING_THREAD_CYCLES:
+        return "thread"
+    return None
+
+
+def _native_modal_kind(syntax, previous):
+    if syntax is None:
+        return previous
+    if syntax.kind == "cycle":
+        return {81: "drill", 82: "drill", 83: "drill", 84: "tap"}.get(syntax.cycle_code)
+    return None if syntax.kind == "cycle_cancel" else previous
+
+
+def _native_node_operation(node, modal_kind):
+    if node.native_syntax is not None and node.native_syntax.kind == "cycle":
+        return modal_kind
+    if modal_kind and any(word.letter in {"X", "Y", "Z"} for word in node.words):
+        return modal_kind
+    return _operation_kind(node.words, False)
+
+
+def _program_operation_hints(program, turning, cancelled):
+    """Classify operations from the shared controller AST, never comment text."""
+    operations = {}
+    active_tool = None
+    modal_kind = None
+    for index, node in enumerate(program.ast.nodes):
+        _cancel_checkpoint(index, cancelled)
+        if _is_g65_call(node.words):
+            continue
+        for word in node.words:
+            if word.letter == "T":
+                active_tool = _tool_key(word.expr, turning)
+        syntax = node.native_syntax
+        if syntax is not None and syntax.named_tool is not None:
+            active_tool = None if turning else syntax.named_tool
+        modal_kind = _native_modal_kind(syntax, modal_kind)
+        kind = _operation_kind(node.words, True) if turning else _native_node_operation(node, modal_kind)
+        if active_tool is not None and kind is not None:
+            operations.setdefault(active_tool, kind)
+    return operations
+
+
+def _named_tool_occurrences(program, default_unit_scale, cancelled):
+    """Read executable named selections from the controller parser, not regexes."""
+    scale = default_unit_scale
+    previous = ""
+    previous_block = -100
+    for index, node in enumerate(program.ast.nodes):
+        _cancel_checkpoint(index, cancelled)
+        if _is_g65_call(node.words):
+            continue
+        scale = _block_scale(node.words, scale)
+        for word in node.words:
+            if word.letter == "G" and word.expr in {"700", "710"}:
+                scale = 25.4 if word.expr == "700" else 1.0
+        inline = " ".join(_comments(node.raw))
+        syntax = node.native_syntax
+        if syntax is not None and syntax.named_tool:
+            nearby = previous if node.block_index - previous_block <= 8 else ""
+            yield syntax.named_tool, inline, nearby, scale
+            previous = ""
+        elif inline and (not node.words or _is_tool_comment(inline)):
+            previous, previous_block = inline, node.block_index
+        elif any(word.letter in {"T", "X", "Y", "Z"} for word in node.words):
+            previous = ""
+
+
+def discover_tools(source, *, turning, default_unit_scale=1.0, cancelled=None, source_dialect="fanuc", program=None):
+    """Return source tool candidates and operation-based fallback geometry."""
+    headers, occurrences, operations = _scan_source(source, turning, default_unit_scale, cancelled)
+    if program is None and not turning and source_dialect == "sinumerik":
+        program = parse_sinumerik_program(source)
+    if program is not None:
+        operations = _program_operation_hints(program, turning, cancelled)
+        if not turning:
+            occurrences = [*occurrences, *_named_tool_occurrences(program, default_unit_scale, cancelled)]
+    descriptions = {}
+    for key, inline, nearby, scale in occurrences:
+        description = inline or headers.get(key, "") or nearby
+        if key not in descriptions or (not descriptions[key][0] and description):
+            descriptions[key] = description, scale
+    tools = {}
+    for key, (description, scale) in descriptions.items():
+        operation_kind = operations.get(key)
+        spec = (
+            _turning_spec(description, scale, operation_kind)
+            if turning
+            else _milling_spec(description, scale, operation_kind)
+        )
+        if description:
+            spec["description"] = description
+        tools[key] = spec
+    return normalized_tools(tools) if turning else normalized_program_milling_tools(tools)

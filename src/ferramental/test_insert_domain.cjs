@@ -1,0 +1,5 @@
+const assert=require('node:assert/strict'),D=require('./insert_domain.js');const store={};
+assert.equal(D.get(store,'mini-portal',3).count,0);for(let i=0;i<5;i++)assert.equal(D.record(store,'mini-portal',3,'add',{cavityId:i+1,jobId:'OS10713',at:'2026-10-11'}),true);
+assert.equal(D.get(store,'mini-portal',3).count,5);assert.equal(D.get(store,'portal-1',3).count,0);assert.equal(D.get(store,'mini-portal',1).count,0);
+D.record(store,'mini-portal',3,'change');assert.equal(D.get(store,'mini-portal',3).count,0);assert.equal(D.get(store,'mini-portal',3).cycle,2);D.undo(store,'mini-portal',3);assert.equal(D.get(store,'mini-portal',3).count,5);assert.equal(D.get(store,'mini-portal',3).cycle,1);
+const reload=JSON.parse(JSON.stringify(store));assert.equal(D.get(reload,'mini-portal',3).count,5);assert.equal(D.record(reload,'mini-portal',3,'fake'),false);for(let i=0;i<5;i++)D.record(reload,'mini-portal',3,'subtract');assert.equal(D.record(reload,'mini-portal',3,'subtract'),false);assert.equal(D.get(reload,'mini-portal',3).count,0);console.log('Manual insert count: record, reset, undo, isolation, reload and zero boundary passed.');

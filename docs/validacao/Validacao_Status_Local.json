@@ -1,0 +1,52 @@
+{
+  "manualStart": true,
+  "persists": true,
+  "stageIsolation": true,
+  "completionAndReset": true,
+  "simulationDoesNotStart": true,
+  "startDoesNotAdvanceProgress": true,
+  "thirdOperationUnknown": true,
+  "headerScopeRemoved": true,
+  "programs": [
+    "O002.TAP",
+    "O003.TAP",
+    "O004.TAP",
+    "O005.TAP",
+    "O006.TAP",
+    "O007.TAP",
+    "O008.TAP"
+  ],
+  "sizes": [
+    {
+      "width": 1920,
+      "height": 1080,
+      "stage": {
+        "x": 25,
+        "y": 1175.28125,
+        "width": 1232.65625,
+        "height": 620
+      }
+    },
+    {
+      "width": 1440,
+      "height": 900,
+      "stage": {
+        "x": 25,
+        "y": 1156.03125,
+        "width": 896.890625,
+        "height": 550
+      }
+    },
+    {
+      "width": 390,
+      "height": 844,
+      "stage": {
+        "x": 13,
+        "y": 2143.125,
+        "width": 364,
+        "height": 390
+      }
+    }
+  ],
+  "errors": []
+}

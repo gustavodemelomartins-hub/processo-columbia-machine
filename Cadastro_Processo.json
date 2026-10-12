@@ -270,7 +270,14 @@
       "orientation": {
         "rotation_x_degrees": 0,
         "provenance": "montagem ilustrativa conforme orientação do usuário; não inferida do TAP"
-      }
+      },
+      "instructions": [
+        "Montagem manual: elevar a peça para os quatro calços das extremidades, sem tombar novamente",
+        "Alinhar por fora e apertar as garras sobre os apoios",
+        "Conferir lado e posição conforme desenho 3D",
+        "Conferir X/Y no centro; presetar a ferramenta no topo da peça",
+        "Usar T9 e carregar O002.TAP"
+      ]
     },
     {
       "phase": 5,
@@ -301,12 +308,17 @@
       "orientation": {
         "rotation_x_degrees": 0,
         "provenance": "montagem ilustrativa conforme orientação do usuário; não inferida do TAP"
-      }
+      },
+      "instructions": [
+        "Verificar desgaste dos insertos de T3; virar ou trocar quando necessário",
+        "Usar T3 e executar o desbaste de O003.TAP",
+        "Registrar as cavidades feitas no contador de insertos"
+      ]
     },
     {
       "phase": 6,
       "group": 2,
-      "name": "Alívio Ø25",
+      "name": "Alívios com T12 e T4",
       "program": "O004.TAP",
       "program_revision": null,
       "setup": "quatro calços nas extremidades",
@@ -332,7 +344,14 @@
       "orientation": {
         "rotation_x_degrees": 0,
         "provenance": "montagem ilustrativa conforme orientação do usuário; não inferida do TAP"
-      }
+      },
+      "tools": [
+        12,
+        4
+      ],
+      "instructions": [
+        "Executar O004.TAP com T12 e T4; os alívios fazem parte do mesmo programa"
+      ]
     },
     {
       "phase": 7,
@@ -363,7 +382,9 @@
       "orientation": {
         "rotation_x_degrees": 0,
         "provenance": "montagem ilustrativa conforme orientação do usuário; não inferida do TAP"
-      }
+      },
+      "archived": true,
+      "merged_into_phase": 6
     },
     {
       "phase": 8,
@@ -396,7 +417,11 @@
       "orientation": {
         "rotation_x_degrees": 0,
         "provenance": "montagem ilustrativa conforme orientação do usuário; não inferida do TAP"
-      }
+      },
+      "instructions": [
+        "Usar T8 para o acabamento de O005.TAP",
+        "Proposta in-process: calibrar e validar uma cavidade antes das demais; consultar os detalhes"
+      ]
     },
     {
       "phase": 9,
@@ -427,7 +452,10 @@
       "orientation": {
         "rotation_x_degrees": 0,
         "provenance": "montagem ilustrativa conforme orientação do usuário; não inferida do TAP"
-      }
+      },
+      "instructions": [
+        "Usar T5 para os cantos Ø12 de O006.TAP"
+      ]
     },
     {
       "phase": 10,
@@ -460,7 +488,11 @@
       "orientation": {
         "rotation_x_degrees": 0,
         "provenance": "montagem ilustrativa conforme orientação do usuário; não inferida do TAP"
-      }
+      },
+      "instructions": [
+        "Executar O007.TAP com T5 e T6",
+        "Proposta in-process: calibrar T6 em uma cavidade e conferir a concordância com o acabamento de T8"
+      ]
     },
     {
       "phase": 11,
@@ -491,7 +523,10 @@
       "orientation": {
         "rotation_x_degrees": 0,
         "provenance": "montagem ilustrativa conforme orientação do usuário; não inferida do TAP"
-      }
+      },
+      "instructions": [
+        "Usar T4 para usinar o espaçador de O008.TAP"
+      ]
     }
   ],
   "reference_defaults": {
@@ -520,11 +555,27 @@
         "cutting_length_mm": null,
         "cutting_length_provenance": "não fornecido; cadastro de ferramenta real a confirmar",
         "mounting_mode": "standard",
-        "mounting_provenance": "Montagem padrão informada pelo usuário; comprimento físico não fornecido"
+        "mounting_provenance": "Montagem padrão informada pelo usuário; comprimento físico não fornecido",
+        "face_offset_limit_mm": 1,
+        "face_offset_limit_origin": "informação do operador · limite prático no corretor"
       },
       "9": {
-        "cutting_length_mm": null,
-        "cutting_length_provenance": "não fornecido; cadastro de ferramenta real a confirmar"
+        "cutting_length_mm": 30,
+        "cutting_length_provenance": "referência de corte útil informada pelo operador em 2026-10-12; não extraída do TAP",
+        "visual_reference": {
+          "stickout_mm": 40,
+          "range_mm": [
+            40,
+            45
+          ],
+          "source": "referência do operador; montagem real não medida",
+          "holder": {
+            "top_radius_mm": 22,
+            "bottom_radius_mm": 12,
+            "height_mm": 45,
+            "source": "representação genérica; dimensões não medidas"
+          }
+        }
       },
       "3": {
         "cutting_length_mm": null,
@@ -553,5 +604,76 @@
     }
   },
   "machine_id": "mini-portal",
-  "tooling_schema": "columbia-tooling/1"
+  "tooling_schema": "columbia-tooling/1",
+  "insert_usage": {
+    "tool_id": 3,
+    "review_after_cavities": 5,
+    "source": "referência aproximada do operador; desgaste varia com a forma",
+    "counting": "registro manual; simulação não incrementa",
+    "study": {
+      "counting": "manual; ciclo entre viradas ou trocas do conjunto T3",
+      "unit": "cavidades por ciclo",
+      "feedback": "valorizar registro e conferência; não premiar uso além do desgaste"
+    }
+  },
+  "stage_flow_policy": "one-program/v1",
+  "inprocess_proposals": {
+    "O005.TAP": {
+      "status": "proposta",
+      "source": "estratégia solicitada pelo operador; sequência não aplicada ao TAP",
+      "title": "Calibrar uma cavidade antes das demais",
+      "tool_id": 8,
+      "steps": [
+        "Executar os passes na primeira cavidade, mantendo 0,2 mm de sobremetal para calibração.",
+        "Medir a cavidade intermediária e calibrar o corretor considerando o diâmetro real da fresa reafiada.",
+        "Rodar mais um passe nessa cavidade para fechar a cota real do desenho.",
+        "Conferir a medida final e liberar a sequência revisada para as demais cavidades."
+      ],
+      "objective": "Reduzir repasses por meio da calibração na primeira cavidade.",
+      "calibration_allowance_mm": 0.2,
+      "allowance_basis": "sobremetal informado para calibração; distribuição por parede não definida",
+      "drawing_reference": {
+        "file": "FP16F 12V H8 - PB.pdf",
+        "page": 1,
+        "detail": "B · Cavidade",
+        "sha256": "afe0a225ed02cdc95adf4d8d9000afaf05444278e7b2ca0cc8dba57ce1d2d3c0",
+        "dimensions": [
+          {
+            "nominal_mm": 105.7,
+            "tolerance_plus_minus_mm": 0.1
+          },
+          {
+            "nominal_mm": 243.4,
+            "tolerance_plus_minus_mm": 0.1
+          }
+        ],
+        "source": "desenho original, leitura visual do detalhe B"
+      }
+    },
+    "O007.TAP": {
+      "status": "proposta",
+      "source": "estratégia solicitada pelo operador; sequência não aplicada ao TAP",
+      "title": "Calibrar T6 e eliminar o degrau",
+      "tool_id": 6,
+      "reference_tool_id": 8,
+      "steps": [
+        "Usinar o raio com T6 na mesma cavidade de referência acabada por T8, antes das demais.",
+        "Medir e conferir a concordância com o acabamento de T8 para calibrar o corretor de T6.",
+        "Dar o passe final e validar o raio, o contorno e a ausência de degrau nessa cavidade.",
+        "Após validar a primeira, liberar a sequência revisada para as demais cavidades."
+      ],
+      "objective": "Evitar repasses para corrigir o degrau entre T8 e T6."
+    }
+  },
+  "process_timing": {
+    "allowance_percent": 20,
+    "source": "margem de planejamento solicitada pelo operador",
+    "scope": "programas recebidos; O001 nas duas faces; terceira operação a definir"
+  },
+  "cutter_compensation": {
+    "machine_id": "mini-portal",
+    "mode": "radius_difference",
+    "source": "confirmado pelo operador: Ø25 para Ø23,5 → diferença de raio −0,75 mm",
+    "apply": "sugestão aceita manualmente; TAP e CNC não são alterados"
+  }
 }

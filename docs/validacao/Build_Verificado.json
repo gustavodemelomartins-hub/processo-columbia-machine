@@ -1,0 +1,11 @@
+{
+  "date": "2026-10-12",
+  "sha256": "89a7c5bdb060fa352ed734b34c3ecb1878c45d1d75ff489a3ddecaf10b36a373",
+  "bytes": 12728554,
+  "reproducesLocalPrototype": true,
+  "domainsPassed": 5,
+  "browserSuitesPassed": 5,
+  "parserTestsPassed": 2,
+  "originalTAPHashesPassed": 8,
+  "browserErrors": []
+}

@@ -1,0 +1,45 @@
+{
+  "url": "file:///C:/Users/User/Documents/Codex/2026-10-10/referenced-chatgpt-conversation-this-is-an/work/github-pages/index.html",
+  "exactDescentSeparateFromRecommendation": true,
+  "secondFaceNoRepeatedToolSetup": true,
+  "secondOperationStartsO002": true,
+  "manualAssemblyInInstructions": true,
+  "tableCanonicalPhysicalData": true,
+  "readonlySidebar": true,
+  "unknownPhysicalValuesNotInvented": true,
+  "actualDiameterDoesNotReplaceNominal": true,
+  "tipUnchangedByAssembly": true,
+  "manualStageProgressIndependentOfPreparation": true,
+  "archivedRecordsPreserved": true,
+  "playDoesNotComplete": true,
+  "allO001ToO008Preserved": true,
+  "technicalSourceLinesPreserved": true,
+  "drawingFivePagesPreserved": true,
+  "csv": true,
+  "machineProfilesIsolated": true,
+  "visibleChecklistAndPreparationRemoved": true,
+  "sizes": [
+    {
+      "w": 1920,
+      "h": 1080,
+      "stageWidth": 1232.65625,
+      "stageHeight": 620,
+      "ratio": 0.6420084635416666
+    },
+    {
+      "w": 1440,
+      "h": 900,
+      "stageWidth": 896.890625,
+      "stageHeight": 550,
+      "ratio": 0.6228407118055556
+    },
+    {
+      "w": 390,
+      "h": 844,
+      "stageWidth": 364,
+      "stageHeight": 390,
+      "ratio": 0.9333333333333333
+    }
+  ],
+  "errors": []
+}

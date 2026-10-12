@@ -1,31 +1,67 @@
 # Processo Columbia Machine
 
-Instrução digital de trabalho CNC — OS10-713 / Mini Portal. Evolução do protótipo existente com programas reais O001–O008.
+Protótipo industrial existente da OS 10-713, peça FP16F H8 12V, na **Mini Portal**. Processo, desenho, 3D, programas O001–O008 e ferramental funcionam localmente. Esta revisão contém as fontes completas usadas para gerar `index.html`.
 
-[Aplicação](https://gustavodemelomartins-hub.github.io/processo-columbia-machine/)
+## Abrir e usar
 
-## Uso atual
+Abra `index.html` no navegador. Escolha a operação e a etapa. A primeira operação tem duas faces com O001. A segunda tem sete etapas, O002 até O008; **O004 é uma etapa com T12 e T4**. A terceira permanece a confirmar.
 
-Escolha a operação e um mini box de etapa. A primeira operação tem dois faceamentos O001; a segunda começa diretamente em O002 e segue até O008, com duas etapas de O004. A montagem nos quatro calços aparece nas instruções de O002. Terceira operação a definir.
+**Iniciar etapa** registra “Em execução”. A caixa **Concluída** registra o término. Desmarcar a conclusão retorna a etapa a “Não iniciada”. Navegar, consultar o desenho e usar Play não registram produção. Os tempos previstos incluem 20% e o progresso acompanha apenas etapas concluídas, ponderadas pelo tempo. A previsão da peça recebida é 6 h 47 min; a terceira operação ainda não entra no total.
 
-Passos e referências acima da vista. Conferir orientação conforme desenho3D; X/Y no centro definido pela engenharia e preset da ferramenta no topo da peça. Segundo lado: tombar uma vez e ajustar corretor para fechar96 mm; elevar aos calços sem novo tombamento.
+Os registros, fotos e medidas ficam no navegador. Git versiona a aplicação, não os registros pessoais do operador. Abrir por outro endereço ou dispositivo pode usar outro armazenamento.
 
-3D grande, rotação, pan, zoom, Play e desenho de cinco páginas. A lateral mostra somente as ferramentas do programa atual, parâmetros reais e valores físicos da tabela. Detalhes técnicos trazem estratégias e linhas exatas L/N. Mini boxes permitem registrar conclusão manual; navegar e simular não conclui etapas nem exige checklist.
+## Ferramentas e processo
 
-## Ferramentas do trabalho
+- T e descrição em colunas separadas; tabela e lateral compartilham medidas, diâmetro real, corretor, Montada e Na máquina.
+- Ø25 nominal e Ø23,5 real sugerem **−0,75 mm**, diferença de raio confirmada para a Mini Portal. O botão Usar preenche o corretor mediante ação do operador; a sugestão depende da compensação lateral no TAP. Mudar a medida exige revisar o valor aplicado.
+- Uso atual/próxima etapa e situação física acompanham o processo. Fotos reais podem ser anexadas, substituídas e removidas por máquina/ferramenta.
+- Descida máxima extraída do TAP e montagem recomendada são conceitos separados. 99,97 + 10 → 110 mm, arredondando para cima. T1 exibe limite operacional de faceamento 1 mm, separado do Z nominal 0 do TAP.
+- O003: estudo manual de cavidades por virada/troca de insertos, histórico, média, desfazer e CSV. Consulta por cavidade mostra as linhas originais L/N; selecionar e simular não contam desgaste.
+- O005/O007: propostas de in-process para calibrar a primeira cavidade com sobremetal e depois concluir na medida do desenho. Os TAPs originais permanecem intactos. Cotas/tolerâncias finais vêm do desenho, não de um alvo fixo inventado.
+- T9: representação com corte 30 mm e montagem visual de referência 40 mm; a montagem medida tem prioridade. Representação não equivale a medição física.
 
-Tabela abaixo do processo, derivada dos programas: ferramenta, programas, descida máxima, montagem recomendada, montagem medida, diâmetro real, corretor, Montada e Na máquina. Editar diretamente; a lateral consulta a mesma atribuição. Ausência de medida/diâmetro/corretor aparece como Não informado. Sem workflow de preparação, magazine ou checklist na superfície atual.
+Mini Portal permanece isolada dos perfis Portal 1/2. Capacidade do magazine e posições físicas desconhecidas continuam nulas. Os modelos de ferramental estão preservados; o fluxo atual usa a lista simples, conforme as revisões do operador.
 
-Descida máxima preserva precisão do TAP. Recomendação arredonda para cima com margem padrão10 mm centralizada:99,97 +10 →110 mm. T1 mostra montagem padrão; não inventa medida física. Só calcular descida com trajetória/WCS resolvidos e Z0 no topo. Coordenada Z não é comprimento total de ferramenta; recomendação não valida colisões nem autoriza máquina.
+## Editar e gerar
 
-Diâmetro real informado fica separado do nominal. Montagem medida e diâmetro real alimentam a representação 3D sem alterar a ponta do percurso. Porta-ferramenta, peça e fixação são representações; não há remoção de material ou validação física de colisão.
+Requisitos: Python 3.11+ e Node.js 22+. As versões de Pillow e Playwright abaixo são as usadas nesta validação.
 
-## Dados e continuidade
+```sh
+python -m pip install -r requirements.txt
+npm install
+npx playwright install chromium
+python scripts/build.py
+```
 
-Registros persistem apenas no navegador/dispositivo. Dados antigos de preparação/checklist e máquina permanecem arquivados para compatibilidade. Mini Portal é a máquina do piloto; capacidade e posições físicas desconhecidas. Perfis provisórios Portal1/2 permanecem isolados e sem aplicação ao trabalho atual. Não há login, servidor, rede ou envio ao CNC.
+O build pode ser chamado de qualquer pasta. Ele lê `src/`, gera `index.html`, atualiza Cadastro_Processo.json, MachineProfiles.json e os derivados de estratégias/cavidades. Para mudar o comportamento, edite as fontes e execute o build; editar apenas um JSON ao lado do HTML não altera os dados incorporados.
 
-[Auditoria antes](docs/ui-audit-simple-before.md) · [Auditoria depois e validação](docs/ui-audit-simple-after.md). Capturas novas somente na entrega local.
+```sh
+npm run test:unit
+npm test
+python scripts/check_originals.py
+python scripts/test_parser.py
+```
 
-index.html é o HTML gerado pelo projeto original, com recursos incorporados. Cadastro_Processo.json é incorporado no build; editar só o JSON publicado não altera o HTML. Fontes do domínio ferramental em src/ferramental; demais fontes e testes no pacote de reprodução local. GitHub Pages publica main.
+Os testes de navegador abrem o HTML local e verificam fluxo, persistência, ferramentas, fotos, corretor, insertos, cálculos, desenho e 3D em 1920×1080, 1440×900 e 390×844. Resultados e capturas novos ficam em `artifacts/`, ignorado pelo Git. Evidências desta entrega estão em [docs/Entrega_2026-10-12.md](docs/Entrega_2026-10-12.md).
 
-Three.js, @sienci/gviewer e easy_gcode_plot: MIT; atribuições em Licencas. Logo/favicon Columbia: [fonte oficial](https://columbiamachine.com.br/). Não atribuída licença aberta aos ativos da empresa ou desenho. PDF preservado em Desenhos; TAPs originais imutáveis no projeto local.
+Em ambientes com navegador instalado fora do padrão, `COLUMBIA_CHROMIUM_PATH` escolhe o executável; `COLUMBIA_PLAYWRIGHT_MODULE` escolhe um módulo Playwright já instalado. Não são necessários no uso normal com npm.
+
+## Onde alterar
+
+| Arquivo/pasta | Responsabilidade |
+| --- | --- |
+| src/prototype-template.html | Estrutura existente, 3D, integração com percurso CNC |
+| src/operator_layer.js | Etapas, referências, instruções e status manual |
+| src/operator_process_config.json | Cadastro do processo, margens, referências e propostas |
+| src/tool_*_domain.js | Regras de descida, representação e corretor/uso |
+| src/job_timing_* | Previsão e progresso por tempo |
+| src/ferramental/ | Perfis, atribuições, tabela, fotos e domínio de insertos |
+| src/strategy_ui.js e insert_ui.js | Detalhes técnicos, estratégias, cavidades e desgaste |
+| src/strategy_data.json, cavity_data.json e cnc_payload.b64 | Dados derivados do TAP usados pelo build |
+| CNC/originais/ | O001–O008 imutáveis e inventário SHA-256 |
+| Desenhos/ | PDF original de cinco páginas |
+| scripts/ e vendor/easy_gcode_plot/ | Build, validação e snapshot do parser existente |
+
+Para revisar o parser, `scripts/cnc_adapter.py` usa os TAPs em CNC/originais e gera os relatórios/percurso. `scripts/build_strategy_data.py` e `scripts/build_cavity_data.py` regeneram derivados a partir desses relatórios. Essa é uma etapa de engenharia separada do build de interface; valide os dados gerados antes de aceitar mudanças no percurso.
+
+Three.js, @sienci/gviewer e easy_gcode_plot têm atribuições em Licencas/. O parser foi preservado no snapshot 98894b34fb80cc73f12c0ebf3a69e9baca7448f2. Logo, desenho e arquivos CNC da Columbia não recebem licença aberta por esta entrega.

@@ -1,0 +1,14 @@
+{
+  "name": "processo-columbia-machine",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "build": "python scripts/build.py",
+    "test": "node scripts/test.cjs",
+    "test:unit": "node scripts/test.cjs --unit",
+    "check:originals": "python scripts/check_originals.py"
+  },
+  "devDependencies": {
+    "playwright": "1.62.1"
+  }
+}
