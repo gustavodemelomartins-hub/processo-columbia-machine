@@ -3,54 +3,50 @@ const J=require('../../app/journey/journey_domain.js');
 const config=JSON.parse(fs.readFileSync(path.join(__dirname,'../../data/process.json'),'utf8'));
 const data=JSON.parse(fs.readFileSync(path.join(__dirname,'../../data/derived/project_data.json'),'utf8'));
 
-// Targets are read from existing fields; neither is chosen by the domain.
-const c=J.targetCandidates(config);
-assert.deepEqual(c.map(t=>[t.id,t.valueMm]),[['process',96],['drawing',95.75]]);
-assert.equal(J.confirmedTarget(config,J.emptyJourney()),null);
+// Single operational target: 95,75 mm before heat treatment. No engineering divergence, no questions.
+assert.equal(J.target(config).valueMm,95.75);assert.equal(config.drawing.thickness_mm.before_heat_treatment,95.75);
+assert.equal(config.open_questions,undefined);assert.equal(config.stage_guide,undefined);
+assert.equal(J.defaultFaceA(config),0.2);
 
-// Stock: total, symmetric reference (unconfirmed) and process method after Face A.
-const s=J.stockFor('101,8',96);assert.equal(s.valid,true);assert.equal(s.totalMm,5.8);assert.deepEqual([s.symmetric.faceAMm,s.symmetric.faceBMm,s.symmetric.confirmed],[2.9,2.9,false]);
-assert.equal(s.method.faceAMm,null);
-const m=J.stockFor(101.8,95.75,100.5);assert.equal(m.totalMm,6.05);assert.equal(m.method.faceAMm,1.3);assert.equal(m.method.faceBMm,4.75);
-assert.equal(J.stockFor('',96).valid,false);assert.equal(J.stockFor(95,96).valid,false);assert.equal(J.stockFor(95,96).totalMm,-1);
-assert.equal(J.stockFor(96,96).totalMm,0);
+// Stock: received − target; Face A cleans (editable, default 0,20); Face B closes the thickness.
+const s=J.stockFor(111,95.75,0.2);assert.equal(s.valid,true);assert.equal(s.totalMm,15.25);assert.equal(s.faceAMm,0.2);assert.equal(s.faceBMm,15.05);assert.equal(s.symmetricMm,7.625);
+const edited=J.stockFor('111,00',95.75,'1,5');assert.deepEqual([edited.faceAMm,edited.faceBMm],[1.5,13.75]);
+assert.equal(J.stockFor(111,95.75,16).valid,false);assert.equal(J.stockFor(111,95.75,-1).valid,false);
+assert.equal(J.stockFor('',95.75).valid,false);assert.equal(J.stockFor(95,95.75).valid,false);assert.equal(J.stockFor(95.75,95.75,0).faceBMm,0);
+const plan=J.stockPlan(config,{receiving:{receivedMm:111,faceAMm:null}});assert.deepEqual([plan.totalMm,plan.faceAMm,plan.faceBMm],[15.25,0.2,15.05]);
 
-// Progress counts receiving + 9 active phases + 2 controls; T.T. and 3rd op do not count.
+// Macro sequence: receiving → 1ª → 2ª → 3ª → T.T. → retorno pós-TT. Progress counts receiving + 9 program stages.
+assert.deepEqual(config.journey.nodes.map(n=>n.id),['receiving','op1','op2','op3','heat','post-heat']);
 const empty=J.emptyJourney();let p=J.progress(config,empty,{});
-assert.equal(p.total,12);assert.equal(p.done,0);assert.equal(p.current.type,'receiving');
+assert.equal(p.total,10);assert.equal(p.done,0);assert.equal(p.current.type,'receiving');
 let states=J.nodeStates(config,empty,{});
-assert.deepEqual(states.map(n=>n.status),['active','waiting','waiting','confirm','waiting','waiting','undefined']);
-assert.equal(J.overallStatus(config,empty,{}).label,'Aguardando recebimento');
+assert.deepEqual(states.map(n=>n.status),['active','waiting','waiting','later','later','later']);
 
-const j={...empty,receiving:{...empty.receiving,receivedMm:101.8,recordedAt:'2026-10-13T10:00:00Z'}};
+const j={...empty,receiving:{...empty.receiving,receivedMm:111,recordedAt:'2026-10-13T10:00:00Z'}};
 p=J.progress(config,j,{});assert.equal(p.done,1);assert.deepEqual([p.current.type,p.current.id],['phase',0]);
-assert.equal(J.overallStatus(config,j,{0:{started:true}}).label,'Em usinagem');
 states=J.nodeStates(config,j,{0:{started:true}});assert.equal(states[1].status,'running');
 const records={0:{completed:true},2:{completed:true}};
-p=J.progress(config,j,records);assert.equal(p.current.id,'control-op1');assert.equal(J.overallStatus(config,j,records).label,'Aguardando inspeção');
+p=J.progress(config,j,records);assert.deepEqual([p.current.type,p.current.id,p.done],['phase',4,3]);
 states=J.nodeStates(config,j,records);assert.equal(states[1].status,'done');assert.equal(states[2].status,'active');
-j.controls={'control-op1':{measuredMm:96.02,releasedAt:'2026-10-13T12:00:00Z'}};
-p=J.progress(config,j,records);assert.deepEqual([p.current.type,p.current.id,p.done],['phase',4,4]);
 
-// Next phase skips archived IDs and never enters the undefined 3rd operation.
-assert.equal(J.nextPhase(config,2),4);assert.equal(J.nextPhase(config,6),8);assert.equal(J.nextPhase(config,11),null);
+// Program order 1 → 8: next phase skips archived IDs and never enters the 3rd operation.
+assert.equal(J.nextPhase(config,0),2);assert.equal(J.nextPhase(config,2),4);assert.equal(J.nextPhase(config,6),8);assert.equal(J.nextPhase(config,11),null);
+assert.deepEqual(config.runtime.operations[1].phases.map(i=>data.programs[config.runtime.phases[i].program].file),['O002.TAP','O003.TAP','O004.TAP','O005.TAP','O006.TAP','O007.TAP','O008.TAP']);
 
-// Navigation-only records are not completion; time formatting.
+// Times: setup is a provisional estimate; machining comes from the TAP with margin.
+assert.equal(config.process_timing.setup_estimate_minutes,45);assert.equal(config.process_timing.allowance_percent,20);
 assert.equal(J.formatDuration(18*60000),'18 min');assert.equal(J.formatDuration(65*60000),'1 h 05 min');assert.equal(J.formatDuration(10000),'menos de 1 min');
 assert.equal(J.elapsedMs('2026-10-13T10:00:00Z','2026-10-13T10:30:00Z'),1800000);assert.equal(J.elapsedMs('x'),null);
 assert.equal(J.formatMm(101.8),'101,80');
 
-// Questions are structured and linked to nodes.
-assert.ok(config.open_questions.length>=10);assert.ok(J.questionsFor(config,['heat']).some(q=>q.id==='q-heat-treatment'));
-for(const n of config.journey.nodes)for(const q of n.questions)assert.ok(config.open_questions.some(x=>x.id===q),'pergunta inexistente '+q);
+// Part record from local records only.
+const pass=J.passport(config,j,{5:{completed:true,startedAt:'2026-10-13T14:32:00Z',completedAt:'2026-10-13T15:10:00Z'}},data);
+assert.equal(pass.target.valueMm,95.75);assert.deepEqual(pass.stock,{totalMm:15.25,faceAMm:0.2,faceBMm:15.05});
+assert.equal(pass.stages.find(s=>s.phase===5).elapsedMs,38*60000);assert.equal(pass.stages.find(s=>s.phase===5).program,'O003.TAP');
 
-// Passport assembles only local records; target stays unconfirmed until a human choice.
-const pass=J.passport(config,j,{5:{completed:true,startedAt:'2026-10-13T14:32:00Z',completedAt:'2026-10-13T15:10:00Z'}},{},data);
-assert.equal(pass.target.confirmed,null);assert.equal(pass.stages.find(s=>s.phase===5).realMs,38*60000);assert.equal(pass.stages.find(s=>s.phase===5).program,'O003.TAP');
-assert.equal(pass.controls['control-op1'].measuredMm,96.02);
-const chosen={...j,receiving:{...j.receiving,targetChoice:{id:'drawing',by:'Operador',at:'2026-10-13T10:05:00Z'}}};
-assert.equal(J.confirmedTarget(config,chosen).valueMm,95.75);
-
-// Storage normalization never throws on malformed data.
+// Storage normalization never throws; old control views and target choices are dropped.
 assert.deepEqual(J.normalize(null),J.emptyJourney());assert.equal(J.normalize({receiving:{receivedMm:'abc'}}).receiving.receivedMm,null);
-console.log('Journey: targets from data, stock/symmetric reference, process method, progress 12 items, node states, next stage, passport and normalization passed.');
+assert.equal(J.normalize({view:'control-op1'}).view,null);
+const old=J.normalize({view:'receiving',receiving:{receivedMm:101.8,recordedAt:'2026-10-13T10:00:00Z',targetChoice:{id:'process'}},controls:{afterFaceAMm:100}});
+assert.deepEqual(old.receiving,{receivedMm:101.8,recordedAt:'2026-10-13T10:00:00Z',faceAMm:null,note:''});
+console.log('Journey: 95,75 target, Face A 0,20 editable / Face B closes, macro sequence, progress 10 items, program order, times, part record and normalization passed.');

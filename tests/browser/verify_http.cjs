@@ -4,7 +4,7 @@ const url=process.env.COLUMBIA_LIVE_URL||'http://127.0.0.1:4173/work/columbia-re
 try{
  const page=await browser.newPage(),errors=[],requests=[];page.on('pageerror',e=>errors.push(e.message));page.on('requestfailed',r=>requests.push(r.url()));
  assert.equal((await page.goto(url)).status(),200);await page.waitForFunction(()=>window.columbiaDemo?.getCNC().rows.length);
- assert.match(await page.locator('#engineeringReview').textContent(),/95,75/);
+ assert.match(await page.locator('#rxFacts').textContent(),/95,75 mm/);assert.doesNotMatch(await page.evaluate(()=>document.body.innerText),/96,0|a confirmar/i);await page.evaluate(()=>columbiaJourney.openOperationView());
  for(const [w,h]of [[320,800],[390,844],[768,1024],[1440,900],[1920,1080]]){
   await page.setViewportSize({width:w,height:h});assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false,'horizontal overflow '+w);
  }

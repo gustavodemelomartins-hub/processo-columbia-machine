@@ -4,55 +4,66 @@ Guia curto para quem vai continuar o produto (programador, processista ou engenh
 
 ## A ideia
 
-A tela não é uma página de informações: é a **jornada da peça**. Uma OS percorre nós em sequência e, em cada etapa de usinagem, um roteiro de oito seções. A interface só interpreta `data/process.json`; nenhum valor de engenharia é escrito no código da tela.
+A tela é a **jornada da peça**, não um questionário. Cada tela responde só: o que vou fazer, como a peça fica montada, qual programa, qual ferramenta, quanto retirar, quantos passes, quanto tempo e o que vem depois. A interface interpreta `data/process.json`; nenhum valor de engenharia é escrito no código da tela.
 
-```
-Recebimento → 1ª operação (Face A, Face B) → Controle de espessura → Tratamento térmico (?) → 2ª operação (O002…O008) → Controle → 3ª operação (não definida)
+```text
+Recebimento → 1ª operação (Face A, Face B) → 2ª operação (O002…O008) → 3ª operação → Tratamento térmico → Retorno pós-TT
 ```
 
-Cada tela responde: **onde estou** (cabeçalho da OS + mapa da jornada), **o que fazer agora** (linha "Agora" + ação principal), **como fazer** (seção do roteiro) e **o que conferir antes de continuar** (lista à direita).
+3ª operação e Retorno pós-TT aparecem como "processo em levantamento" (neutro, sem alerta). O tratamento térmico é externo.
 
 ## Onde cada coisa vive
 
 | Conceito | Arquivo / chave | Observação |
 |---|---|---|
-| Peça, OS, desenho | `process.json` → `part`, `drawing` | Espessuras do desenho antes/depois do T.T. |
-| Recebimento | `receiving` | Rótulo da medida, candidatos de objetivo (`value_from` aponta para o dado de origem), regra de sobremetal, método do processo, referência simétrica (`confirmed: false`) |
-| Jornada | `journey.nodes` | `kind`: `receiving`, `operation`, `control`, `external`. `counts` define o que entra em "x de N etapas". Cada nó lista as perguntas em aberto que o afetam |
-| Operações e etapas | `runtime.operations`, `runtime.phases`, `steps` | IDs históricos preservados (1, 3 e 7 arquivados). `steps[].intent` dá tipo e objetivo; `steps[].timing.setup_minutes` = `null` (não informado) |
-| Roteiro da etapa | `stage_guide.sections` | Preparação, Fixação, Referenciamento, Ferramentas, Programa CNC, Usinagem, Inspeção, Conclusão |
-| Fixação | `fixture` | Calços, garras, alinhamento, orientação. `physical_collision_validation: false` |
-| Referências | `reference_defaults` + `steps[].references` | X0/Y0 centro, Z0 topo; exceção por etapa |
-| Ferramentas | `data/derived` (descida do TAP) + `tool_mounting` (margem, corte útil) | Descida máxima ≠ montagem recomendada = ceil(descida + margem) |
-| Tempos | `process_timing` + `data/derived/strategy_data.json` | Cabeçalho do TAP + 20%; faceamento por passes. Tempo real = carimbos manuais |
-| Inspeção | `steps[].inspection`, `inprocess_proposals`, `journey.nodes[].criteria` | `criteria: null` aparece como "Critério a confirmar" |
-| Pendências | `open_questions` | `id`, pergunta, contexto, nós afetados, fonte. Viram o painel "Informações a confirmar" |
+| Peça, OS, desenho | `process.json` → `part`, `drawing` | 95,75 mm antes do T.T.; 95,0 mm depois (desenho p.1) |
+| Espessura objetivo | `fixture.face_method.pre_heat_target_mm` = 95,75 | Verdade operacional desta peça. Sem divergência, sem confirmação |
+| Recebimento | `receiving` | Medida, objetivo (`target.value_from`), estratégia: Face A apenas limpa (`face_a.default_removal_mm` = 0,20, editável) e Face B fecha a espessura |
+| Jornada | `journey.nodes` | `kind`: `receiving`, `operation`, `external`, `placeholder`. `counts` define "x de N etapas" (10 hoje) |
+| Operações e etapas | `runtime.operations`, `runtime.phases`, `steps` | IDs históricos preservados (1, 3 e 7 arquivados). Ordem obrigatória O001 → O008 |
+| Fixação | `fixture` | Calços, garras, alinhamento, orientação |
+| Referências | `reference_defaults` + `steps[].references` | X0/Y0 centro, Z0 topo |
+| Ferramentas | `data/derived` (descida do TAP) + `tool_mounting` | Descida máxima ≠ montagem recomendada = ceil(descida + margem). Dados físicos ausentes ficam `null`; valores padrão usados para demonstração são marcados como provisórios |
+| Tempos | `process_timing` | Usinagem = cabeçalho do TAP + 20% (estimativa). Preparação = `setup_estimate_minutes` (45, provisório). Nada é apresentado como tempo real |
+| Propostas in-process | `inprocess_proposals` | O005 e O007 continuam como **propostas**; os TAPs não são alterados |
+
+Não há perguntas de descoberta, controles ou inspeção formal na V1. Perguntas ao responsável do projeto ficam em `docs/informacoes-a-confirmar.md`, fora da interface.
 
 ## Regras do domínio (`app/journey/journey_domain.js`)
 
-- `stockFor(recebida, objetivo, apósFaceA)` → sobremetal total; referência simétrica (½ por face, `confirmed:false`); método do processo (Face A = recebida − após A; Face B = após A − objetivo).
-- O sistema **nunca escolhe** entre 96,0 (processo) e 95,75 (desenho). Até alguém confirmar, os dois cálculos aparecem lado a lado. A confirmação exige nome e é local; a pendência de engenharia continua aberta.
-- `progress()` conta recebimento + etapas ativas das operações definidas + controles (12 hoje). Tratamento térmico e 3ª operação aparecem, mas não contam.
-- `nodeStates()` e `overallStatus()` derivam estados (Concluída, Atual, Em execução, Aguardando, A confirmar, Não definida) e o status geral (Aguardando recebimento, Em preparação, Em usinagem, Aguardando inspeção).
-- `nextPhase()` destaca a próxima etapa após a conclusão; ao fim de uma operação, aponta o controle.
-- `passport()` monta o passaporte da peça só com registros locais.
+- `stockFor(recebida, objetivo, faceA)` → sobremetal total = recebida − objetivo; Face B = total − Face A; `symmetricMm` só como opção secundária ("Dividir igualmente").
+- Exemplo: 111,00 − 95,75 = 15,25 mm; Face A 0,20 → Face B 15,05 mm.
+- `progress()` conta recebimento + 9 etapas de programa. `nodeStates()`: done, running, active, waiting, later.
+- `nextPhase()` segue a ordem; uma etapa só inicia depois das anteriores (a ação principal leva à etapa pendente).
+- `passport()` monta o registro da peça só com registros locais.
+
+## Ação principal (uma por estado)
+
+| Estado | Ação |
+|---|---|
+| Recebimento sem registro | Concluir recebimento |
+| Não iniciada | Iniciar operação |
+| Em andamento | Concluir operação |
+| Concluída | Ir para próxima etapa |
+
+Navegar, abrir detalhes e Play percurso **não** gravam execução.
 
 ## Registros (localStorage, chave `columbia-os10713-demo-v2`)
 
-- `state.journey`: `receiving` (espessura, hora, escolha de objetivo com responsável), `controls` (após Face A, medida de cada controle, liberação), `view` (nó aberto).
-- `state.operator[fase]`: `started`, `completed`, mais `startedAt`/`completedAt` (carimbos novos, aditivos) e `note`.
-- Navegar, trocar seção e Play percurso **não** gravam execução. Só gravam: Registrar recebimento, Confirmar objetivo, Iniciar etapa, Concluir etapa/Concluída, Registrar inspeção e liberar, e os campos de medida.
+- `state.journey.receiving`: `receivedMm`, `recordedAt`, `faceAMm` (null = valor inicial do cadastro).
+- `state.faceTiming.stockByStage` acompanha o recebimento automaticamente (Face A / Face B) para os passes e o tempo.
+- `state.operator[fase]`: `started`, `completed`, `startedAt`/`completedAt`, `note`.
+- Registros antigos de controle/objetivo são ignorados na leitura, sem apagar o resto.
 
 ## Como estender
 
-- **Nova etapa ou programa:** acrescentar em `steps` e `runtime.phases` com ID novo (nunca renumerar), incluir em `runtime.operations[n].phases`; o contrato (`scripts/project_contract.py`) valida.
-- **Definir a 3ª operação:** preencher `operation_groups[2]`, `runtime.operations[2]` (status ≠ `pending`) e mudar o nó `op3` para `counts: true`, `defined` removido.
-- **Fechar uma pendência:** gravar o dado na chave indicada em `source` da pergunta e remover a pergunta de `open_questions` (e dos `questions` dos nós). Ex.: tolerância → `journey.nodes[control-op1].tolerance_mm`.
-- **Mudar a aparência:** editar `design/tokens.json` (fonte única, espelhada no Design System "Columbia Processo") e `app/design/components.css`.
+- **Nova etapa ou programa:** acrescentar em `steps` e `runtime.phases` com ID novo (nunca renumerar) e incluir em `runtime.operations[n].phases`; o contrato (`scripts/project_contract.py`) valida.
+- **Definir a 3ª operação ou o retorno pós-TT:** cadastrar programas/etapas e passar o nó para `kind: operation`, `counts: true`.
+- **Login por funcionário:** previsto para depois; hoje os registros são locais e anônimos.
+- **Aparência:** `design/tokens.json` (fonte única) e `app/journey/journey.css`.
 
 ## Arquivos da camada de jornada
 
-- `app/journey/journey_domain.js` — regras puras (testadas em `tests/unit/test_journey_domain.cjs`).
-- `app/journey/journey_ui.js` — cabeçalho da OS, mapa, recebimento, controles, roteiro, 3D contextual, passaporte, pendências.
-- `app/journey/journey.css`, `app/design/components.css`, `design/tokens.json` (+ `scripts/design_tokens.py`).
-- `tests/browser/verify_journey.cjs` — fluxo completo em 5 larguras.
+- `app/journey/journey_domain.js` — regras puras (`tests/unit/test_journey_domain.cjs`).
+- `app/journey/journey_ui.js` — cabeçalho da OS, mapa, recebimento, painel da etapa, "Como fazer", 3D contextual, registro da peça.
+- `tests/browser/verify_journey.cjs` — jornada completa em 5 larguras.

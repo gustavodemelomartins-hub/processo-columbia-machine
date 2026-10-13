@@ -1,24 +1,30 @@
-# Informações industriais ainda não confirmadas
+# Perguntas para o responsável pelo projeto
 
-Lista gerada de `data/process.json` → `open_questions`. A interface mostra cada item como **Informação a confirmar**; nenhuma resposta foi presumida. Ao responder, grave o dado na chave indicada em *Fonte* e retire a pergunta do cadastro.
+Estas perguntas **não aparecem na interface do operador**. Servem para a próxima rodada de levantamento com o responsável pelo projeto, antes de implementar.
 
-| # | Pergunta | Contexto | Afeta | Fonte |
-|---|---|---|---|---|
-| 1 | Qual é a espessura correta antes do tratamento térmico: 96,0 mm (processo) ou 95,75 mm (desenho, página 1)? | O processo informa 96,0 mm; o desenho original indica 95,75 mm antes do T.T. e 95,0 mm depois. | Recebimento, 1ª operação, Controle | `engineering_review` |
-| 2 | O sobremetal é dividido igualmente entre as duas faces, ou a Face A apenas limpa e a Face B fecha a medida? | O método registrado hoje é: Face A até limpar, Face B fecha a espessura. A divisão simétrica aparece só como referência visual. | Recebimento, 1ª operação | `fixture.face_method` |
-| 3 | Qual é a tolerância de espessura após a primeira operação? | Nenhuma tolerância de espessura foi cadastrada para a 1ª operação. | Controle | `steps[2].inspection` |
-| 4 | Qual inspeção libera a segunda operação (instrumento, pontos de medição, quem libera)? | O controle após o faceamento registra a medida, mas o critério de liberação não foi definido. | Controle, 2ª operação | `journey.nodes.control-op1.criteria` |
-| 5 | Qual inspeção libera a peça após a segunda operação? | Não há critério de inspeção final cadastrado para a 2ª operação. | Controle | `journey.nodes.control-op2.criteria` |
-| 6 | Qual é o critério de inspeção de cada programa da 2ª operação (O002, O003, O004, O006, O008)? | Esses programas não têm inspeção cadastrada; O005 e O007 têm apenas proposta in-process. | 2ª operação | `steps[].inspection` |
-| 7 | Quais programas possuem tempo real conhecido? | Os tempos exibidos vêm do cabeçalho do TAP com margem de 20%. Nenhum tempo real foi registrado. | 1ª operação, 2ª operação | `process_timing` |
-| 8 | Qual é o tempo de preparação (montagem, fixação, referência) de cada operação? | Tempo de preparação não informado em nenhuma etapa. | 1ª operação, 2ª operação | `steps[].timing.setup_minutes` |
-| 9 | Existe ordem obrigatória entre os programas O002 a O008, ou algum pode ser trocado? | A sequência atual segue a numeração recebida. | 2ª operação | `runtime.operations[1].phases` |
-| 10 | Quando ocorre o tratamento térmico (após a 1ª operação, após a 2ª, ou em outro ponto) e quem libera o retorno? | O desenho cita espessuras antes e depois do T.T.; a posição do tratamento na sequência não foi informada. | Tratamento | `drawing.thickness_mm` |
-| 11 | Qual é a definição da terceira operação (programas, montagem, ferramentas)? | Nenhum programa ou montagem recebido para a 3ª operação. | 3ª operação | `operation_groups[2]` |
-| 12 | Qual folha e região do desenho correspondem a cada etapa? | Nenhuma etapa tem página ou região do desenho cadastrada. | 1ª operação, 2ª operação | `steps[].drawing_reference` |
-| 13 | Quais revisões de processo, desenho e programas estão aprovadas? | Revisões não informadas no cadastro. | Recebimento, 1ª operação, 2ª operação | `revision / drawing.revision / steps[].program_revision` |
-| 14 | Qual é o corte útil real de T1, T3, T12, T4, T8, T5 e T6? | Somente T9 tem corte útil informado (30 mm). | 1ª operação, 2ª operação | `tool_mounting.tools[].cutting_length_mm` |
-| 15 | As propostas in-process de O005 e O007 (parada e calibração em uma cavidade) serão adotadas? | As propostas estão cadastradas como sugestão do operador; o TAP não foi alterado. | 2ª operação | `inprocess_proposals` |
-| 16 | Os calços e garras ilustrados foram validados fisicamente (posição, altura, folga para a ferramenta)? | A montagem 3D é ilustrativa; não há verificação de colisão. | 1ª operação, 2ª operação | `fixture.physical_collision_validation` |
+## Já decidido (13/10/2026)
 
-Também continuam sinalizados na tela: divergência 96,0 × 95,75 mm (aviso de engenharia), validação física de calços/garras, ausência de colisão certificada no 3D e cadastro físico da Mini Portal (`data/machines.json`, campos `null`).
+| Tema | Decisão | Onde está no cadastro |
+|---|---|---|
+| Espessura antes do T.T. | 95,75 mm é a verdade operacional desta peça | `fixture.face_method.pre_heat_target_mm` |
+| Divisão do sobremetal | Face A apenas limpa (0,20 mm inicial, editável); Face B fecha a espessura. Divisão igual só como opção secundária | `receiving.stock_rule` |
+| Inspeção | Sem fluxo formal na V1; os próprios operadores medem, conferem e liberam | — |
+| Etapas de Controle | Fora da V1 até existir regra real | `journey.nodes` |
+| Tempos de programa | Estimativa do TAP + 20%; não há tempo real registrado | `process_timing` |
+| Preparação/setup | ~45 min estimados, provisório | `process_timing.setup_estimate_minutes` |
+| Ordem dos programas | Obrigatória: O001 → O002 → … → O008 | `runtime.operations[].phases` |
+| Tratamento térmico | Depois da 3ª operação; segue o retorno pós-TT | `journey.nodes` |
+| Propostas O005/O007 | Continuam como propostas, para avaliação; TAPs não alterados | `inprocess_proposals` |
+| Responsável/login | Sem nome nem aprovação adicional agora; login por funcionário fica para depois | — |
+
+## Ainda a levantar
+
+1. Programas, montagem e ferramentas da 3ª operação.
+2. Programas e setup do retorno pós-TT.
+3. Cadastro real das ferramentas (corte útil de T1, T3, T12, T4, T8, T5, T6; cabeçote e fresas).
+4. Tempos reais de usinagem e de preparação, quando forem medidos.
+5. Regra de inspeção dimensional, se e quando for reintroduzida (instrumento, pontos, tolerância).
+6. Folha e região do desenho para cada etapa.
+7. Revisões aprovadas de processo, desenho e programas.
+8. Validação física de calços e garras (posição, altura, folga).
+9. Cadastro físico da Mini Portal (`data/machines.json`, campos `null`).

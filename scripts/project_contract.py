@@ -34,12 +34,13 @@ def validate(root: Path, config: dict):
  def path(obj,dotted):
   for k in dotted.split('.'):obj=obj.get(k) if isinstance(obj,dict) else None
   return obj
- qids={q['id'] for q in config.get('open_questions',[])}
- require(len(qids)==len(config.get('open_questions',[])),'Pergunta em aberto repetida')
- for c in config['receiving']['target_candidates']:require(isinstance(path(config,c['value_from']),(int,float)),'Objetivo sem valor de origem: '+c['value_from'])
+ require('open_questions' not in config,'Perguntas de descoberta não fazem parte da interface operacional')
+ require(isinstance(path(config,config['receiving']['target']['value_from']),(int,float)),'Objetivo sem valor de origem')
+ require(path(config,config['receiving']['target']['value_from'])==config['drawing']['thickness_mm']['before_heat_treatment'],'Espessura antes do T.T. divergente do desenho')
+ face_a=config['receiving']['stock_rule']['face_a']['default_removal_mm'];require(isinstance(face_a,(int,float)) and face_a>=0,'Remoção inicial da Face A inválida')
  nodes=config['journey']['nodes'];require(len({n['id'] for n in nodes})==len(nodes),'Nó de jornada repetido')
+ require([n['id'] for n in nodes]==['receiving','op1','op2','op3','heat','post-heat'],'Sequência macro: recebimento, 1ª, 2ª, 3ª operação, tratamento térmico, retorno pós-TT')
  for n in nodes:
-  require(set(n.get('questions',[]))<=qids,'Pergunta inexistente no nó '+n['id'])
   if n['kind']=='operation':require(0<=n['operation']<len(config['runtime']['operations']),'Operação inexistente na jornada')
- require(config['receiving']['stock_rule']['symmetric_reference']['confirmed'] is False or 'q-stock-split' not in qids,'Divisão simétrica confirmada sem fechar a pergunta')
- require(len(config['stage_guide']['sections'])==8,'Roteiro da etapa deve ter 8 seções')
+ require(not any(n['kind']=='control' for n in nodes),'Etapas de controle fora da V1')
+ require(isinstance(config['process_timing'].get('setup_estimate_minutes'),(int,float)),'Preparação estimada ausente')

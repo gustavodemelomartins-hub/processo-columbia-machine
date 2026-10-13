@@ -26,11 +26,11 @@ npm run check
 npm test
 ```
 
-`check` valida contratos (inclusive jornada e perguntas em aberto), hashes de 8 TAPs + PDF + 7 fotos, parser e sete suítes de domínio/armazenamento. `npm test` executa também sete suítes de navegador (a de jornada percorre recebimento → controle → 2ª operação em 5 larguras); screenshots e relatórios ficam em artifacts/, ignorado pelo Git. A suíte HTTP adicional usa `COLUMBIA_LIVE_URL` e `node tests/browser/verify_http.cjs`, com o servidor iniciado. Ela confere URLs relativas, PDF, WebGL e larguras 320/390/768/1440/1920. Para usar navegador/runtime já instalado, existem COLUMBIA_CHROMIUM_PATH e COLUMBIA_PLAYWRIGHT_MODULE.
+`check` valida contratos (inclusive a sequência da jornada), hashes de 8 TAPs + PDF + 7 fotos, parser e sete suítes de domínio/armazenamento. `npm test` executa também sete suítes de navegador (a de jornada percorre recebimento → 1ª → 2ª → 3ª → T.T. → retorno pós-TT em 5 larguras); screenshots e relatórios ficam em artifacts/, ignorado pelo Git. A suíte HTTP adicional usa `COLUMBIA_LIVE_URL` e `node tests/browser/verify_http.cjs`, com o servidor iniciado. Ela confere URLs relativas, PDF, WebGL e larguras 320/390/768/1440/1920. Para usar navegador/runtime já instalado, existem COLUMBIA_CHROMIUM_PATH e COLUMBIA_PLAYWRIGHT_MODULE.
 
-## Jornada da OS (V1 visual)
+## Jornada da OS (V1 simplificada)
 
-A tela segue a peça: Recebimento e medição inicial → 1ª operação → Controle de espessura → Tratamento térmico (sequência a confirmar) → 2ª operação → Controle → 3ª operação (não definida). Cabeçalho permanente da OS, roteiro de 8 seções por etapa, 3D contextual, tempos com início/decorrido, passaporte da peça e lista de informações a confirmar. Veja docs/modelo-processo.md (como o processo está modelado), docs/informacoes-a-confirmar.md, docs/design-system.md e docs/ux-jornada.md.
+Recebimento → 1ª operação → 2ª operação → 3ª operação → Tratamento térmico → Retorno pós-TT. No recebimento o operador informa a espessura real; o sistema calcula o sobremetal até 95,75 mm (antes do T.T.), com Face A apenas limpando (0,20 mm, editável) e Face B fechando a espessura. Cada etapa mostra nome, objetivo, 3D, programa, ferramenta, sobremetal, redução por passe, passes e tempos estimados, com uma única ação principal (Iniciar operação → Concluir operação → Ir para próxima etapa). Sem perguntas, controles ou confirmações na tela; perguntas ao responsável ficam em docs/informacoes-a-confirmar.md. Veja docs/modelo-processo.md, docs/ux-jornada.md e docs/design-system.md.
 
 ## Editar
 
@@ -39,7 +39,7 @@ A tela segue a peça: Recebimento e medição inicial → 1ª operação → Con
 - **data/cnc/originals/**: TAPs recebidos, imutáveis; SHA256.json é o inventário recebido.
 - **data/derived/**: percurso, ferramentas e estratégias extraídos dos TAPs; não cadastrar medidas físicas aqui.
 - **app/**: interface e regras de domínio, separadas de dados e bibliotecas. app/journey contém a camada de jornada; app/design os componentes do design system.
-- **design/tokens.json**: tokens do Design System Columbia Processo (fonte única, gerada em CSS no build; fontes IBM Plex em assets/fonts).
+- **design/tokens.json**: tokens do Design System Columbia Processo (fonte única, gerada em CSS no build; fonte do sistema, sem fontes incorporadas).
 - **assets/**: PDF e renders do desenho, fotos originais e identidade visual.
 - **vendor/** e **licenses/**: bibliotecas existentes e atribuições.
 - **tests/**: testes por domínio e por fluxo de navegador.
@@ -49,9 +49,9 @@ O build incorpora os dados, imagens e bibliotecas no HTML para preservar o uso s
 
 ## Fluxo preservado
 
-Primeira operação: duas faces com O001. Segunda: sete etapas O002–O008; O004 chama T12 e T4 na mesma etapa. Montagem sobre quatro calços e referências estão em O002. Terceira operação continua A confirmar.
+Primeira operação: duas faces com O001. Segunda: sete etapas O002–O008; O004 chama T12 e T4 na mesma etapa. Montagem sobre quatro calços e referências estão em O002. Ordem obrigatória O001 → O008. Terceira operação e retorno pós-TT em levantamento.
 
-Escolher etapa, consultar desenho e Play não registram execução. Iniciar etapa e Concluída são ações manuais. Tempos recebem 20%; faceamento calcula ceil(sobremetal por face / redução por passe), com padrão informado de 0,7 mm. Sem medida o total fica A definir. Ferramentas mantêm Descida máxima no programa separada de Montagem recomendada: ceil(descida + margem), padrão de margem 10 mm. A medida real e a confirmação do conjunto têm prioridade. Compensação na Mini Portal usa (diâmetro real − nominal)/2 quando o programa contém compensação lateral; preencher depende de ação explícita.
+Escolher etapa, consultar desenho e Play não registram execução. Iniciar operação e Concluir operação são ações manuais. Tempos do TAP recebem 20% (estimativa); preparação estimada ~45 min (provisória); faceamento calcula ceil(sobremetal por face / redução por passe), com padrão de 0,7 mm editável. Ferramentas mantêm Descida máxima no programa separada de Montagem recomendada: ceil(descida + margem), padrão de margem 10 mm. A medida real e a confirmação do conjunto têm prioridade. Compensação na Mini Portal usa (diâmetro real − nominal)/2 quando o programa contém compensação lateral; preencher depende de ação explícita.
 
 Fotos/medidas/status persistem em localStorage na chave histórica columbia-os10713-demo-v2. Os IDs 1/3/7 continuam arquivados para migração. O mesmo site mantém a origem de armazenamento; arquivo local/localhost/dispositivo diferente têm registros separados. Um estado inválido pode ser recuperado; registros válidos e políticas de migração existentes são preservados.
 
@@ -72,6 +72,6 @@ Publique apenas após verificar se origin/main ainda é ancestral de HEAD. Aguar
 
 ## Limites reais
 
-Software funcional não significa processo liberado para máquina. PDF página 1 indica 95,75 mm antes do T.T. e 95,0 mm depois; o processo informado usa 96,0 mm antes. A divergência está visível e documentada, sem alteração automática do TAP. Revisão, tolerâncias, origens, fixação, colisões e medidas físicas exigem decisão da engenharia. 3D mostra montagem/percurso e não remove material nem certifica colisões. Terceira operação e cadastro físico da Mini Portal estão pendentes. O HTML ~12,7 MB pesa no primeiro carregamento; a apresentação local funciona sem CDN.
+Software funcional não significa processo liberado para máquina. Espessura antes do T.T.: 95,75 mm (desenho p.1, decisão do responsável); 95,0 mm depois. Os TAPs não são alterados. Tolerâncias, fixação, colisões e medidas físicas continuam fora da V1. 3D mostra montagem/percurso e não remove material nem certifica colisões. Terceira operação, retorno pós-TT e cadastro físico da Mini Portal em levantamento. O HTML ~12,7 MB pesa no primeiro carregamento; a apresentação local funciona sem CDN.
 
 Veja docs/arquitetura.md, docs/diagnostico-inicial.md, docs/dados-industriais.md, docs/publicacao.md, docs/backlog.md e docs/briefing-claude-design.md. O acervo anterior e backup integral ficam preservados; desenvolver somente nesta pasta oficial.

@@ -35,7 +35,6 @@ def compile_css(root: Path, embed_fonts=True) -> str:
    fam = s.get('family', g['family'])
    rule = 'font-family:var(--font-%s);font-size:%s;line-height:%s;font-weight:%s' % (fam, s['fontSize'], s['lineHeight'], s['fontWeight'])
    if s.get('letterSpacing'): rule += ';letter-spacing:' + s['letterSpacing']
-   if s['name'] == 'eyebrow': rule += ';text-transform:uppercase'
    if s['name'].startswith('value'): rule += ';font-variant-numeric:tabular-nums'
    out.append('.t-%s{%s}' % (s['name'], rule))
  return '\n'.join(out) + '\n'

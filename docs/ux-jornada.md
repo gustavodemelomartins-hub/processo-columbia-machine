@@ -1,30 +1,24 @@
-# Auditoria de UX e decisões — rodada Jornada da OS
+# UX da jornada — rodada de simplificação da V1
 
-## Antes
+## Problema da rodada anterior
 
-- Página longa de informações: cabeçalho de tempos, três cartões de operação, cartões de etapa, título, instruções, referência, 3D, ferramenta e tabela, todos com o mesmo peso visual.
-- Não havia início do processo: a peça "aparecia" já na primeira face; espessura recebida e sobremetal só existiam num formulário legado oculto.
-- O operador precisava ler ~30 informações para saber o que fazer; "Onde estou" dependia de achar o cartão azul.
-- Tratamento térmico e controles entre operações não apareciam; a 3ª operação era só um cartão cinza.
-- Tempos apenas planejados; nenhum registro de início/fim.
-- 3D sem relação com o que a pessoa estava lendo.
-- Pendências de engenharia espalhadas em textos de aviso.
+Tela carregada e burocrática: fonte IBM Plex com rótulos em caixa alta e mono, roteiro de 8 seções, alerta de divergência 96,0 × 95,75, confirmação com nome do responsável, 16 perguntas de descoberta na tela, etapas de Controle sem critério, ações duplicadas (Iniciar etapa + Próxima etapa + caixa Concluída) e estados "a confirmar" espalhados.
 
-## Depois
+## Agora
 
-1. **Cabeçalho permanente da OS**: OS, peça, máquina, etapa atual (clicável), progresso em segmentos (x de 12), tempo restante, status geral e contador de pendências.
-2. **Mapa da jornada**: Recebimento → 1ª operação → Controle → Tratamento (sequência a confirmar) → 2ª operação → Controle → 3ª operação (não definida). Os botões de operação existentes foram mantidos e incorporados ao mapa.
-3. **Recebimento e medição inicial**: espessura recebida, dois objetivos lado a lado (96,0 processo × 95,75 desenho) com cálculo de sobremetal para cada um, confirmação humana com responsável, seção esquemática da peça (Face A / material / peça final / material / Face B) com referência simétrica ou método do processo, e ação explícita para levar a referência ao tempo previsto.
-4. **Etapa atual**: contexto em caixa alta, título, objetivo da etapa, programa em mono, status, ação principal (Iniciar → Concluir) e bloco de tempo (estimado, preparação não informada, início, decorrido/real).
-5. **Roteiro em 8 seções** com "Agora: …" e "Conferir antes de continuar". Seções com lacunas mostram `?`.
-6. **3D contextual**: Fixação destaca calços e garras; Referenciamento mostra eixos X0/Y0/Z0 rotulados; Preparação de faceamento mostra a camada de sobremetal; Ferramentas posiciona a ferramenta; legenda de contexto e selo de não certificação.
-7. **Conclusão → próxima etapa** destacada (contorno tracejado no cartão e faixa com botão); ao fim da operação, a faixa aponta o controle.
-8. **Controles** com medida, Δ para cada objetivo, critério a confirmar e liberação manual registrada.
-9. **Passaporte da peça** e **Informações a confirmar** (16 perguntas estruturadas) no fim da página; passaporte exportável em JSON.
+1. **Tipografia da versão anterior** (Segoe UI / fonte do sistema), rótulos em caixa normal, sem mono na interface.
+2. **Cabeçalho da OS**: OS, peça, máquina, etapa atual, progresso (x de 10) e usinagem restante estimada.
+3. **Mapa**: Recebimento → 1ª → 2ª → 3ª operação → Tratamento térmico → Retorno pós-TT. Estado só por ícone (✓, número azul).
+4. **Recebimento**: espessura recebida → 95,75 mm → sobremetal total; Face A apenas limpa (0,20 mm, editável) e Face B fecha a espessura, recalculada na hora. Esquema bruto → sobremetal → peça final. "Dividir igualmente" é opção secundária.
+5. **Painel da etapa**: nome, objetivo, uma ação principal, programa, ferramenta, sobremetal, redução por passe, passes estimados, usinagem estimada (TAP + 20%) e preparação estimada (~45 min).
+6. **3D em destaque** (≥ 60% da largura no desktop) com legenda de contexto: face trabalhada em laranja, orientação, calços/garras, origem.
+7. **Como fazer** ao lado do 3D, com "Ver detalhes da operação" recolhido (posição, montagem, garras, alinhamento, referência, estratégias, proposta in-process, desenho).
+8. **Sem** perguntas, controles, inspeção formal, alertas amarelos ou confirmações obrigatórias.
+9. Registro da peça e arquivos técnicos recolhidos no fim da página.
 
 ## Preservado
 
-Duas faces O001; sete etapas O002–O008 com O004 único (T12/T4); IDs e chave de armazenamento; Play/navegação sem registro; tabela de ferramentas, fotos, diâmetro/corretor, insertos, in-process, estratégias L/N, desenho de 5 páginas; tempos +20% e faceamento por passes; aviso 96/95,75; terceira operação indefinida; checklist antigo não voltou (a lista "Conferir antes de continuar" é orientação, não caixa de seleção).
+Duas faces O001; O002–O008 com O004 único (T12/T4); ordem 1 → 8; IDs e chave de armazenamento; Play/navegação sem registro; tabela de ferramentas, fotos, diâmetro/corretor, insertos, estratégias L/N, propostas in-process O005/O007, desenho de 5 páginas; faceamento por passes (0,7 mm editável).
 
 ## Larguras validadas
 

@@ -175,7 +175,7 @@ renderOperationNavigation=function(){
  $("operations").innerHTML=processOperations.map(o=>'<div class="operation-item"><button data-operation="'+o.id+'" aria-current="'+(o.id===state.operation)+'" aria-label="'+esc(o.title)+'"><strong>'+esc(o.title)+'</strong><span>'+esc(o.id===2?'Aguardando definição':o.name)+'</span></button><div class="operation-estimate" data-operation-timing="'+o.id+'"></div><label class="operation-checkin" title="Registro manual de conclusão da operação"><input type="checkbox" data-operation-check="'+o.id+'" aria-label="Conclusão manual da '+esc(o.title)+'" '+(o.id===2?'disabled':'')+'><span>Operação OK</span></label></div>').join("");
  $("operations").querySelectorAll("button[data-operation]").forEach(b=>b.onclick=()=>selectOperation(Number(b.dataset.operation)));
  $("operations").querySelectorAll("[data-operation-check]").forEach(el=>el.onchange=()=>{state.operationCheckins[el.dataset.operationCheck]=el.checked;persist();renderOperationCheckins()});renderOperationCheckins();
- const notice=$("engineeringReview");notice.hidden=state.operation!==0;notice.textContent=OPERATOR_CONFIG.engineering_review.message;
+ $("engineeringReview").hidden=true;
  renderStageFlow();
 };
 renderOperationToolLine=function(){};

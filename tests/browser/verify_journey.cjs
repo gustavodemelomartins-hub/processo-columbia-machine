@@ -4,76 +4,75 @@ const url=process.env.COLUMBIA_LIVE_URL||'file:///'+process.cwd().replaceAll('\\
 (async()=>{const b=await chromium.launch({executablePath:process.env.COLUMBIA_CHROMIUM_PATH||undefined,args:['--enable-unsafe-swiftshader','--use-angle=swiftshader']});try{
  const ctx=await b.newContext({offline:!process.env.COLUMBIA_LIVE_URL,viewport:{width:1440,height:900}}),p=await ctx.newPage(),errors=[];p.on('pageerror',e=>errors.push(e.message));
  const load=async()=>{await p.goto(url);await p.waitForFunction(()=>window.columbiaDemo&&window.columbiaJourney);await p.evaluate(()=>columbiaDemo.cncReady);};await load();
- const journey=()=>p.evaluate(()=>columbiaJourney.state());
- // A new part starts at receiving; operation workspace is hidden, OS header is permanent.
+ const journey=()=>p.evaluate(()=>columbiaJourney.state()),text=s=>p.locator(s).textContent(),action=()=>p.locator('#stageAction');
+ const body=await p.evaluate(()=>document.body.innerText);
+ // No discovery questions, divergence, confirmations, controls or inspection flow in the operator UI.
+ for(const banned of [/a confirmar/i,/divergência/i,/96,0/,/Responsável/i,/Controle/,/Inspeção/,/Informação a confirmar/i])assert.doesNotMatch(body,banned,String(banned));
+ assert.equal(await p.locator('#questionsPanel,#stageGuide,#guideNav,#nextStageBanner').count(),0);
+ // System font, sentence case.
+ const font=await p.evaluate(()=>getComputedStyle(document.body).fontFamily);assert.match(font,/Segoe UI/);assert.doesNotMatch(font,/IBM Plex/);
+ assert.equal(await p.evaluate(()=>[...document.querySelectorAll('.osbar-label')].some(e=>getComputedStyle(e).textTransform==='uppercase')),false);
+ // A new part starts at receiving; macro sequence with T.T. after the 3rd operation.
  assert.equal(await p.evaluate(()=>document.body.dataset.journeyView),'receiving');
- assert.equal(await p.locator('#stageGuide').isVisible(),false);assert.equal(await p.locator('#osBar').isVisible(),true);
- assert.match(await p.locator('#osBar').textContent(),/OS 10-713/);assert.match(await p.locator('#osBar').textContent(),/0 de 12 etapas/);assert.match(await p.locator('#osBar').textContent(),/Aguardando recebimento/);
- assert.equal(await p.locator('#operations [data-journey-node]').count(),4);assert.equal(await p.locator('#operations .operation-item').count(),7);
- assert.match(await p.locator('[data-journey-node="heat"]').textContent(),/Sequência a confirmar/);assert.match(await p.locator('#operations .operation-item').nth(6).textContent(),/Processo ainda não definido/);
- // Divergence is shown; no target is chosen by the system.
- assert.match(await p.locator('#journeyStage').textContent(),/96,0 mm.*95,75 mm/s);assert.equal((await journey()).receiving.targetChoice,null);
- assert.equal(await p.locator('#recordReceiving').isDisabled(),true);
- await p.fill('#receivedThickness','101.8');await p.press('#receivedThickness','Tab');
- const stock=await p.locator('.stock-views').textContent();assert.match(stock,/5,8/);assert.match(stock,/6,05/);assert.match(stock,/2,9/);
- assert.match(await p.locator('#journeyStage').textContent(),/Divisão simétrica a confirmar/i);
- // Confirmation requires a responsible person.
- await p.click('[data-target-choice="drawing"]');assert.equal((await journey()).receiving.targetChoice,null);assert.equal(await p.locator('#targetConfirmer').getAttribute('aria-invalid'),'true');
- await p.fill('#targetConfirmer','Operador teste');await p.click('[data-target-choice="process"]');assert.equal((await journey()).receiving.targetChoice.id,'process');
- assert.equal(await p.locator('.stock-views figure').count(),1);assert.match(await p.locator('#journeyStage').textContent(),/pendência da engenharia continua aberta/);
- await p.click('[data-stock-method="process"]');assert.match(await p.locator('.stock-views').textContent(),/até limpar/);
- await p.click('#recordReceiving');assert.match(await p.locator('#osBar').textContent(),/1 de 12 etapas/);
- // Explicit action only: timing receives the symmetric reference.
- assert.equal(await p.evaluate(()=>columbiaDemo.jobTiming().groups[0].totalSeconds),null);
- await p.click('[data-stock-method="symmetric"]');await p.click('#applyStockTiming');assert.deepEqual(await p.evaluate(()=>[columbiaDemo.state.faceTiming.stockByStage[0],columbiaDemo.state.faceTiming.stockByStage[2]]),[2.9,2.9]);
+ assert.match(await text('#osBar'),/10-713/);assert.match(await text('#osBar'),/0 de 10 etapas/);
+ const map=(await p.locator('#operations > .operation-item strong').allTextContents());
+ assert.deepEqual(map,['Recebimento','1ª operação','2ª operação','3ª operação','Tratamento térmico','Retorno pós-TT']);
+ // Receiving: 111,00 → 15,25 total; Face A 0,20 (editable) → Face B 15,05. One action per state.
+ assert.equal(await p.locator('#receivingAction').isDisabled(),true);assert.equal(await p.locator('#receivingAction').textContent(),'Concluir recebimento');
+ assert.equal(await p.locator('#faceARemoval').inputValue(),'0.2');
+ await p.fill('#receivedThickness','111');
+ assert.match(await text('#rxFacts'),/95,75 mm.*15,25 mm/s);assert.equal(await text('#rxFaceB'),'15,05 mm');assert.match(await text('#rxSvg'),/Face A · 0,20 mm.*Face B · 15,05 mm/s);
+ await p.fill('#faceARemoval','1.25');assert.equal(await text('#rxFaceB'),'14,00 mm');
+ await p.fill('#faceARemoval','16');assert.match(await text('#rxMessage'),/entre 0 e 15,25/);assert.equal(await p.locator('#receivingAction').isDisabled(),true);
+ await p.fill('#faceARemoval','0.2');await p.locator('#faceARemoval').press('Tab');
+ await p.click('#rxSplit');assert.equal(await text('#rxFaceB'),'7,625 mm');await p.fill('#faceARemoval','0.2');await p.locator('#faceARemoval').press('Tab');
+ await p.click('#receivingAction');assert.equal(await p.locator('#receivingAction').textContent(),'Ir para próxima etapa');assert.match(await text('#osBar'),/1 de 10 etapas/);
+ assert.deepEqual(await p.evaluate(()=>[columbiaDemo.state.faceTiming.stockByStage[0],columbiaDemo.state.faceTiming.stockByStage[2]]),[0.2,15.05]);
  for(const [w,h] of [[1920,1080],[1440,900],[1024,768],[768,1024],[390,844]]){await p.setViewportSize({width:w,height:h});await p.evaluate(()=>scrollTo(0,0));assert.equal(await p.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false,'overflow receiving '+w);await p.screenshot({path:`artifacts/screens/journey-receiving-${w}.png`});}
  await p.setViewportSize({width:1440,height:900});
- // Into the first operation: stage header answers where/what/how/check.
- await p.click('[data-journey-next="op1"]');assert.equal(await p.evaluate(()=>document.body.dataset.journeyView),'operation');assert.equal(await p.locator('#stageGuide').isVisible(),true);
- assert.match(await p.locator('#stageEyebrow').textContent(),/1ª operação · etapa 1 de 2 · Faceamento/);assert.match(await p.locator('#guideNow').textContent(),/Agora/);
- assert.equal(await p.locator('#guideNav [data-guide]').count(),8);assert.ok((await p.locator('#guideCheck li').count())>0);
- assert.match(await p.locator('#stageTime').textContent(),/Preparação.*Não informado/s);
- await p.click('[data-guide="referencia"]');const origin=await p.locator('.ds-origin').textContent();assert.match(origin,/X0.*Centro da peça/s);assert.match(origin,/Z0.*topo da peça/is);
- assert.equal(await p.evaluate(()=>columbiaJourney.get3D().axes.visible),true);
- await p.click('[data-guide="fixacao"]');assert.equal(await p.evaluate(()=>columbiaJourney.get3D().axes.visible),false);assert.match(await p.locator('#viewerContext').textContent(),/calços e garras/);
- assert.match(await p.locator('.viewer-disclaimer').textContent(),/não certifica colisões/);
- // Browsing sections and playing the path never records execution.
- assert.equal(await p.evaluate(()=>columbiaDemo.state.operator['0']?.started??false),false);
- // Start → time stamp → complete → next stage highlighted.
- await p.click('#startStageExecution');assert.equal(await p.locator('#operationStatus').textContent(),'Em execução');
- const started=await p.evaluate(()=>columbiaDemo.state.operator['0'].startedAt);assert.ok(Date.parse(started));assert.match(await p.locator('#stageTime').textContent(),/Iniciada às\s*\d\d:\d\d/);
- assert.match(await p.locator('#osBar').textContent(),/Em usinagem/);
- await p.click('#completeStage');assert.equal(await p.locator('[data-stage-complete="0"]').isChecked(),true);
- assert.ok(Date.parse(await p.evaluate(()=>columbiaDemo.state.operator['0'].completedAt)));assert.equal(await p.locator('#nextStageBanner').isVisible(),true);
- assert.equal(await p.locator('[data-stage="2"]').getAttribute('data-next'),'true');assert.match(await p.locator('#nextStageBanner').textContent(),/Próxima etapa: O001.TAP/);
- await p.click('#openNextStage');assert.equal(await p.evaluate(()=>columbiaDemo.state.phase),2);
- await p.click('[data-guide="ferramentas"]');assert.match(await p.locator('.ds-toolcard').textContent(),/Faceamento no corretor.*Montagem recomendada/s);
- await p.locator('[data-stage-complete="2"]').check();
- // Last stage of op1 points to the control.
- assert.match(await p.locator('#nextStageBanner').textContent(),/Controle de espessura/);await p.click('[data-open-control="control-op1"]');
- assert.equal(await p.evaluate(()=>document.body.dataset.journeyView),'control-op1');assert.match(await p.locator('#journeyStage').textContent(),/Critério a confirmar/);
- await p.fill('#afterFaceA','100.5');await p.press('#afterFaceA','Tab');assert.match(await p.locator('#journeyStage').textContent(),/Retirado na Face A\s*1,3/);
- assert.equal(await p.locator('#releaseControl').isDisabled(),true);await p.fill('#controlMeasure','96.02');await p.press('#controlMeasure','Tab');assert.match(await p.locator('#journeyStage').textContent(),/\+0,02/);
- await p.click('#releaseControl');assert.match(await p.locator('#osBar').textContent(),/4 de 12 etapas/);assert.match(await p.locator('#osBar').textContent(),/2ª operação · Referência/);
- await p.click('[data-journey-next="op2"]');assert.equal(await p.evaluate(()=>columbiaDemo.state.phase),4);
- await p.click('[data-step="5"]');await p.click('[data-guide="ferramentas"]');const card=await p.locator('.ds-toolcard').textContent();assert.match(card,/Descida máxima no programa\s*99,97 mm/);assert.match(card,/Montagem recomendada\s*110 mm/);
- await p.click('[data-guide="programa"]');assert.match(await p.locator('.ds-titleblock').textContent(),/O003.TAP.*DESBASTE.*2 h 22 min 21 s/s);
- await p.click('[data-guide="inspecao"]');assert.match(await p.locator('#stageGuide').textContent(),/Critério de inspeção|Informação a confirmar/i);
- // Heat treatment and 3rd operation never invent a process.
- await p.click('[data-journey-open="heat"]');assert.match(await p.locator('#journeyStage').textContent(),/95,75.*95,0/s);assert.match(await p.locator('#journeyStage').textContent(),/Tratamento térmico a confirmar/i);
- await p.click('[data-operation="2"]');assert.match(await p.locator('#journeyStage').textContent(),/Processo ainda não definido/);assert.equal(await p.locator('#stageGuide').isVisible(),false);
- // Passport and questions.
- const pass=await p.evaluate(()=>columbiaJourney.passport());assert.equal(pass.receiving.receivedMm,101.8);assert.equal(pass.target.confirmed.valueMm,96);assert.equal(pass.stages.filter(s=>s.completed).length,2);assert.equal(pass.controls['control-op1'].measuredMm,96.02);
- assert.match(await p.locator('#passportBody').textContent(),/101,8 mm/);assert.match(await p.locator('#passportBody').textContent(),/Tempo ainda não informado/);
- const n=await p.evaluate(()=>PROCESS_CONFIG.open_questions.length);assert.equal(await p.locator('#questionsBody li').count(),n);assert.equal(await p.locator('#questionsCount').textContent(),String(n));
- const dl=p.waitForEvent('download');await p.click('#exportPassport');assert.match((await dl).suggestedFilename(),/Passaporte_OS10713\.json/);
- // Persistence across reload; existing records keep their views.
- await load();assert.equal((await journey()).receiving.receivedMm,101.8);assert.equal((await journey()).controls['control-op1'].measuredMm,96.02);
- assert.match(await p.locator('#osBar').textContent(),/4 de 12 etapas/);
- // Responsive operation view.
- await p.click('[data-operation="1"]');
- for(const [w,h] of [[1920,1080],[1440,900],[1024,768],[768,1024],[390,844]]){await p.setViewportSize({width:w,height:h});await p.evaluate(()=>scrollTo(0,0));assert.equal(await p.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false,'overflow operation '+w);await p.screenshot({path:`artifacts/screens/journey-operation-${w}.png`});await p.locator('#stageGuide').scrollIntoViewIfNeeded();await p.screenshot({path:`artifacts/screens/journey-guide-${w}.png`});for(const s of ['#startStageExecution','[data-guide="referencia"]','#guideNext'])assert.ok((await p.locator(s).boundingBox()).height>=44,s+' '+w);}
+ // 1ª operação: name, objective, program, tool, stock, reduction, passes, times, single action.
+ await p.click('#receivingAction');assert.equal(await p.evaluate(()=>document.body.dataset.journeyView),'operation');
+ const panel=await text('#stagePanel');
+ assert.match(panel,/1ª operação · etapa 1 de 2/);assert.match(panel,/Facear a primeira face/);assert.match(panel,/O001\.TAP/);assert.match(panel,/T1 · Girassol Ø100/);
+ assert.match(panel,/Passes estimados\s*~1/);assert.match(panel,/Usinagem estimada\s*~12 min/);assert.match(panel,/Preparação estimada\s*~45 min/);assert.doesNotMatch(panel,/tempo real/i);
+ assert.equal(await p.locator('[data-face-stock="0"]').inputValue(),'0.2');assert.equal(await p.locator('#faceReduction').inputValue(),'0.7');
+ assert.equal(await p.locator('#stagePanel button.ds-btn').count(),1);assert.equal(await action().textContent(),'Iniciar operação');
+ assert.equal(await p.locator('#prev:visible,#next:visible,[data-stage-complete]:visible,#startStageExecution:visible').count(),0);
+ assert.ok((await p.locator('#stageHow .how-list li').count())>0);assert.equal(await p.locator('#stageHow details').getAttribute('open'),null);
+ await p.click('#stageHow summary');assert.match(await text('#stageHow'),/Posição da peça.*Invertida/s);
+ assert.equal(await p.evaluate(()=>columbiaJourney.get3D().faceLayer.visible),true);assert.match(await text('#viewerContext'),/Face A/);
+ // Editing Face A on the stage recalculates Face B.
+ await p.fill('[data-face-stock="0"]','0.5');await p.locator('[data-face-stock="0"]').press('Tab');assert.equal(await p.evaluate(()=>columbiaDemo.state.faceTiming.stockByStage[2]),14.75);
+ await p.fill('[data-face-stock="0"]','0.2');await p.locator('[data-face-stock="0"]').press('Tab');
+ // Browsing and play never record execution.
+ await p.click('#animateCut');await p.click('#animateCut');assert.equal(await p.evaluate(()=>columbiaDemo.state.operator['0']?.started??false),false);
+ // Start → Concluir → Ir para próxima etapa; never two contradictory actions.
+ await action().click();assert.equal(await action().textContent(),'Concluir operação');assert.match(await text('#stageStatus'),/Em andamento desde \d\d:\d\d/);
+ assert.ok(Date.parse(await p.evaluate(()=>columbiaDemo.state.operator['0'].startedAt)));
+ await action().click();assert.equal(await action().textContent(),'Ir para próxima etapa');assert.match(await text('#stageStatus'),/Concluída às \d\d:\d\d/);
+ assert.equal(await p.locator('[data-stage-complete="0"]').isChecked(),true);assert.match(await text('#osBar'),/2 de 10 etapas/);
+ await action().click();assert.equal(await p.evaluate(()=>columbiaDemo.state.phase),2);
+ const faceB=await text('#stagePanel');assert.match(faceB,/fechar 95,75 mm/);assert.match(faceB,/15,05 mm/);assert.match(faceB,/~22/);assert.match(await text('#viewerContext'),/Face B/);
+ // Sequence 1 → 8: O003 waits for O002.
+ await p.click('[data-operation="1"]');await p.click('[data-step="5"]');assert.equal(await action().textContent(),'Ir para a etapa pendente');
+ await action().click();assert.equal(await p.evaluate(()=>columbiaDemo.state.phase),2);
+ await p.click('[data-operation="1"]');await p.click('[data-step="5"]');
+ const op2=await text('#stagePanel');assert.match(op2,/O003\.TAP/);assert.match(op2,/T3 · Alto avanço Ø32/);assert.match(op2,/~2 h 51 min/);assert.doesNotMatch(op2,/Passes estimados/);
+ assert.equal(await p.evaluate(()=>columbiaJourney.get3D().axes.visible),true);assert.match(await text('#viewerContext'),/calços/);
+ // In-process proposals stay as proposals.
+ await p.click('[data-step="8"]');await p.click('#stageHow summary');assert.match(await text('#stageHow'),/Proposta.*Calibrar uma cavidade/s);
+ // 3ª operação, T.T. and retorno pós-TT: neutral placeholders, no alerts.
+ await p.click('[data-operation="2"]');assert.equal(await p.evaluate(()=>document.body.dataset.journeyView),'op3');assert.match(await text('#journeyStage'),/Processo em levantamento/);
+ await p.click('#laterNext');assert.equal(await p.evaluate(()=>document.body.dataset.journeyView),'heat');assert.match(await text('#journeyStage'),/depois da 3ª operação.*95,75 mm.*95,00 mm/s);
+ await p.click('#laterNext');assert.equal(await p.evaluate(()=>document.body.dataset.journeyView),'post-heat');assert.match(await text('#journeyStage'),/Retorno pós-TT.*em levantamento/s);assert.equal(await p.locator('#laterNext').count(),0);
+ // Part record and persistence.
+ const pass=await p.evaluate(()=>columbiaJourney.passport());assert.equal(pass.receiving.receivedMm,111);assert.equal(pass.target.valueMm,95.75);assert.equal(pass.stages.filter(s=>s.completed).length,1);
+ const dl=p.waitForEvent('download');await p.click('#passportPanel summary');await p.click('#exportPassport');assert.match((await dl).suggestedFilename(),/Registro_OS10713\.json/);
+ await load();assert.equal((await journey()).receiving.receivedMm,111);assert.match(await text('#osBar'),/2 de 10 etapas/);
+ // Responsive operation view; the 3D keeps its prominence.
+ await p.evaluate(()=>columbiaJourney.openOperationView());await p.click('[data-operation="0"]');
+ for(const [w,h] of [[1920,1080],[1440,900],[1024,768],[768,1024],[390,844]]){await p.setViewportSize({width:w,height:h});await p.evaluate(()=>scrollTo(0,0));assert.equal(await p.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false,'overflow operation '+w);await p.screenshot({path:`artifacts/screens/journey-operation-${w}.png`});assert.ok((await action().boundingBox()).height>=44,'action '+w);const box=await p.locator('#stage').boundingBox();if(w>=1280)assert.ok(box.width/w>.6,'3D width '+w);}
  assert.deepEqual(errors,[]);
- fs.writeFileSync('artifacts/reports/Validacao_Jornada_Local.json',JSON.stringify({receivingTargetNotChosenBySystem:true,progress:'4 de 12',passportStages:pass.stages.length,questions:n,errors},null,2));
- console.log('Journey: receiving, divergence kept, target confirmed by a person, stock A/B, guided sections, 3D context, start/complete timestamps, next stage highlight, control, heat/3rd op TBC, passport, questions, persistence and 5 widths passed.');
+ fs.writeFileSync('artifacts/reports/Validacao_Jornada_Local.json',JSON.stringify({target:95.75,receivedExample:111,totalStock:15.25,faceA:0.2,faceB:15.05,progress:'2 de 10',singleAction:true,noQuestions:true,errors},null,2));
+ console.log('Journey: system font, no questions/divergence/controls, receiving 111 → 15,25 (A 0,20 editable / B 15,05), single action start/complete/next, order 1→8, 3D context, proposals, placeholders, record, persistence and 5 widths passed.');
 }finally{await b.close()}})().catch(e=>{console.error(e);process.exit(1)});

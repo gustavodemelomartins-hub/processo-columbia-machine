@@ -50,42 +50,26 @@ __JOURNEY_CSS__
   <div id="faceTimingSetup" hidden></div>
   <nav id="steps" aria-label="Escolher etapa"></nav>
  </section>
+ <section id="stagePanel" class="stage-panel" aria-label="Etapa atual" aria-live="polite"></section>
+ <div id="legacyStage" hidden>
  <div class="current-work">
   <div class="current-operation"><div class="operation-line"><span id="currentOperationNumber" class="tag"></span></div><h2 id="phaseTitle"></h2><p id="phaseSubtitle" hidden></p></div>
   <div class="current-program"><span class="small muted">Programa atual</span><strong id="currentProgram"></strong><span id="currentToolHint" class="small"></span></div>
   <div class="current-status"><span class="small muted">Status</span><strong id="operationStatus" aria-live="polite"></strong><button id="startStageExecution" type="button">Iniciar etapa</button></div>
  </div>
-
-
-</section>
-<section class="operation-instructions stage-guide" id="stageGuide" aria-label="Roteiro da etapa">
- <div class="guide-head"><div id="guideNow" class="guide-now" aria-live="polite"></div><nav id="guideNav" class="ds-stepper" role="tablist" aria-label="Seções da etapa"></nav></div>
- <div class="guide-body">
-  <div class="guide-main">
-   <div class="guide-panel" data-guide-panel="preparacao"><div class="guide-dynamic"></div>
-   <section class="now"><h3>O que fazer agora</h3><ol id="doNow"></ol><p id="engineeringReview" class="small operational-notice" role="note"></p></section>
-   </div>
-   <div class="guide-panel" data-guide-panel="fixacao" hidden><div class="guide-dynamic"></div></div>
-   <div class="guide-panel" data-guide-panel="referencia" hidden><div class="guide-dynamic"></div>
-   <section class="reference"><h3>Referência</h3><div class="zero-fields"><label>X0<input id="referenceX" readonly maxlength="100" placeholder="A confirmar" aria-label="Referência X0"><small id="referenceXState"></small></label><label>Y0<input id="referenceY" readonly maxlength="100" placeholder="A confirmar" aria-label="Referência Y0"><small id="referenceYState"></small></label><div><b>Z0</b><p id="referenceZ">Topo da peça</p><small id="referenceZState"></small></div></div><p id="referenceHint" class="small muted">Referência da engenharia. Conferir X/Y e Z na máquina antes de iniciar.</p></section>
-   </div>
-   <div class="guide-panel" data-guide-panel="ferramentas" hidden><div class="guide-dynamic"></div></div>
-   <div class="guide-panel" data-guide-panel="programa" hidden><div class="guide-dynamic"></div></div>
-   <div class="guide-panel" data-guide-panel="usinagem" hidden><div class="guide-dynamic"></div></div>
-   <div class="guide-panel" data-guide-panel="inspecao" hidden><div class="guide-dynamic"></div></div>
-   <div class="guide-panel" data-guide-panel="conclusao" hidden><div class="guide-dynamic"></div></div>
-  </div>
-  <aside id="guideCheck" class="guide-check" aria-label="Conferir antes de continuar"></aside>
+ <section class="now"><ol id="doNow"></ol><p id="engineeringReview" hidden></p></section>
+ <section class="reference"><input id="referenceX" readonly><small id="referenceXState"></small><input id="referenceY" readonly><small id="referenceYState"></small><p id="referenceZ"></p><small id="referenceZState"></small><p id="referenceHint"></p></section>
  </div>
- <div class="guide-foot"><button type="button" id="guidePrev" class="ds-btn" data-variant="ghost">← Seção anterior</button><button type="button" id="guideNext" class="ds-btn" data-variant="secondary">Próxima seção →</button></div>
 </section>
 <main class="main">
  <section class="viewer" aria-label="Referência visual">
-  <div class="viewer-top"><h3>Referência visual</h3><span class="viewer-disclaimer" role="note">Visualização orientativa — não certifica colisões</span><div class="visual-tabs" role="tablist" aria-label="Referência visual"><button id="view3D" role="tab" aria-controls="view3DPanel" aria-selected="true">3D</button><button id="viewDrawing" role="tab" aria-controls="drawingPanel" aria-selected="false">Desenho</button></div><button id="animateCut">Play percurso</button></div>
-  <div id="view3DPanel" role="tabpanel"><div class="stage" id="stage"><div class="pending-view" id="pendingView" hidden><h3>A confirmar</h3><p>Programas e montagem desta operação ainda não foram recebidos.</p></div><p id="viewerContext" class="viewer-context" aria-live="polite" hidden></p><div class="stage-key"><span><i class="dot"></i>Azul = corte</span><span><i class="dot amber"></i>Laranja = rápido</span><span><i class="dot gray"></i>Cinza = fixação ilustrativa</span></div></div><div class="view-foot"><span><span class="desktop-gesture">Arraste para girar · roda para aproximar</span><span class="mobile-gesture">Um dedo gira · dois dedos dão zoom</span></span><div class="view-actions"><div class="zoom3d"><button id="zoom3DOut" aria-label="Afastar vista 3D">−</button><button id="zoom3DIn" aria-label="Aproximar vista 3D">+</button></div><span id="playbackPreview" class="small" hidden></span></div></div><p id="toolHeightNotice" class="small operational-notice" aria-live="polite"></p><p id="pathNotice" class="small operational-notice" hidden></p></div>
+  <div class="viewer-top"><h3>Referência visual</h3><div class="visual-tabs" role="tablist" aria-label="Referência visual"><button id="view3D" role="tab" aria-controls="view3DPanel" aria-selected="true">3D</button><button id="viewDrawing" role="tab" aria-controls="drawingPanel" aria-selected="false">Desenho</button></div><button id="animateCut">Play percurso</button></div>
+  <div id="view3DPanel" role="tabpanel"><div class="stage" id="stage"><div class="pending-view" id="pendingView" hidden><h3>A confirmar</h3><p>Programas e montagem desta operação ainda não foram recebidos.</p></div><p id="viewerContext" class="viewer-context" aria-live="polite" hidden></p><div class="stage-key"><span><i class="dot"></i>Azul = corte</span><span><i class="dot amber"></i>Laranja = rápido</span><span><i class="dot gray"></i>Cinza = fixação ilustrativa</span></div></div><div class="view-foot"><span><span class="desktop-gesture">Arraste para girar · roda para aproximar</span><span class="viewer-disclaimer"> · Visualização orientativa; não certifica colisões</span><span class="mobile-gesture">Um dedo gira · dois dedos dão zoom</span></span><div class="view-actions"><div class="zoom3d"><button id="zoom3DOut" aria-label="Afastar vista 3D">−</button><button id="zoom3DIn" aria-label="Aproximar vista 3D">+</button></div><span id="playbackPreview" class="small" hidden></span></div></div><p id="toolHeightNotice" class="small operational-notice" aria-live="polite"></p><p id="pathNotice" class="small operational-notice" hidden></p></div>
   <div id="drawingPanel" role="tabpanel" hidden><div id="drawingHost"></div></div>
   <div class="drawing-reference" hidden><span id="drawingReference"></span><small id="drawingLink"></small></div>
  </section>
+ <div class="side-col">
+ <section id="stageHow" class="stage-how" aria-label="Como fazer"></section>
  <aside class="sidebar" aria-label="Ferramenta atual e parâmetros">
   <div class="tabs" role="tablist" aria-label="Dados da etapa"><button role="tab" data-tab="tools" aria-selected="true" aria-controls="toolsPanel">Ferramenta atual</button><button role="tab" data-tab="details" aria-selected="false" aria-controls="detailsPanel">Detalhes técnicos</button></div>
   <section class="panel" id="pendingPanel" role="tabpanel" hidden><h3 id="pendingPanelTitle">A confirmar</h3><p>Envie os programas e cadastre montagem, referências e conferências.</p></section>
@@ -93,6 +77,7 @@ __JOURNEY_CSS__
 
   <section class="panel" id="detailsPanel" role="tabpanel" hidden> <aside class="program-consultation" aria-label="Programa e parâmetros"><section id="programPanel" class="program-panel"><section id="strategyDetails" class="strategy-details"></section><details class="program-call-details"><summary>Chamadas do programa</summary><div id="programOverview"></div></details></section></aside></section>
  </aside>
+ </div>
 </main>
 <div id="legacyProcessRecords" hidden inert><details id="operationChecks" class="operation-checks"><summary>Checklist e conferência da etapa</summary>  <section class="panel" id="inspectionPanel" >
    <div class="section-line"><h3>Checklist de liberação</h3><strong id="readinessResult" class="small" aria-live="polite"></strong></div>
@@ -112,9 +97,8 @@ __JOURNEY_CSS__
   </section>
 </details></div>
 <section id="workToolsSection" class="work-tools" aria-label="Ferramentas do trabalho"><div class="section-line"><h3>Ferramentas do trabalho</h3><strong id="workToolCount"></strong></div><p id="toolTableMessage" role="status" class="small"></p><div id="workToolList"></div><div id="workToolEditor" hidden inert></div></section>
-<section class="journey-records" aria-label="Registro da peça e pendências">
-<details id="passportPanel" class="ds-panel journey-details" open><summary><span class="t-title-section">Passaporte da peça</span><span class="t-caption">Registro local desta OS: recebimento, objetivo, sobremetal, etapas, horários, inspeções e observações</span></summary><div class="journey-details-body"><div id="passportBody"></div><div class="checkpoint-actions"><button type="button" id="exportPassport" class="ds-btn" data-variant="secondary">Exportar passaporte (.json)</button><span class="t-caption">Fica neste navegador. Não há envio para rede, MES ou máquina.</span></div></div></details>
-<details id="questionsPanel" class="ds-panel journey-details"><summary><span class="t-title-section">Informações a confirmar <b id="questionsCount" class="ds-count"></b></span><span class="t-caption">O que ainda falta documentar no processo · nenhuma destas respostas foi presumida</span></summary><div class="journey-details-body"><div id="questionsBody"></div></div></details>
+<section class="journey-records" aria-label="Registro da peça">
+<details id="passportPanel" class="journey-details"><summary>Registro da peça</summary><div class="journey-details-body"><div id="passportBody"></div><div class="checkpoint-actions"><button type="button" id="exportPassport" class="ds-btn" data-variant="secondary">Exportar registro (.json)</button><span class="t-caption">Fica neste navegador.</span></div></div></details>
 </section>
 <details id="technicalDetails" class="technical-details"><summary>Arquivos e cadastros</summary><div class="technical-content">
 
