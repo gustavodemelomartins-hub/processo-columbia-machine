@@ -36,7 +36,7 @@ const url=process.env.COLUMBIA_LIVE_URL||'file:///'+process.cwd().replaceAll('\\
  assert.match(panel,/1ª operação · etapa 1 de 2/);assert.match(panel,/Facear a primeira face/);assert.match(panel,/O001\.TAP/);assert.match(panel,/T1 · Girassol Ø100/);
  assert.match(panel,/Passes estimados\s*~1/);assert.match(panel,/Usinagem estimada\s*~12 min/);assert.match(panel,/Preparação estimada\s*~45 min/);assert.doesNotMatch(panel,/tempo real/i);
  assert.equal(await p.locator('[data-face-stock="0"]').inputValue(),'0.2');assert.equal(await p.locator('#faceReduction').inputValue(),'0.7');
- assert.equal(await p.locator('#stagePanel button.ds-btn').count(),1);assert.equal(await action().textContent(),'Iniciar operação');
+ assert.equal(await p.locator('#stagePanel button.ds-btn').count(),1);assert.equal(await p.locator('#stagePanel [data-variant=primary]').count(),1);assert.equal(await action().textContent(),'Iniciar operação');
  assert.equal(await p.locator('#prev:visible,#next:visible,[data-stage-complete]:visible,#startStageExecution:visible').count(),0);
  assert.ok((await p.locator('#stageHow .how-list li').count())>0);assert.equal(await p.locator('#stageHow details').getAttribute('open'),null);
  await p.click('#stageHow summary');assert.match(await text('#stageHow'),/Posição da peça.*Invertida/s);
@@ -44,6 +44,20 @@ const url=process.env.COLUMBIA_LIVE_URL||'file:///'+process.cwd().replaceAll('\\
  // Editing Face A on the stage recalculates Face B.
  await p.fill('[data-face-stock="0"]','0.5');await p.locator('[data-face-stock="0"]').press('Tab');assert.equal(await p.evaluate(()=>columbiaDemo.state.faceTiming.stockByStage[2]),14.75);
  await p.fill('[data-face-stock="0"]','0.2');await p.locator('[data-face-stock="0"]').press('Tab');
+ // Layout: right of the 3D only "Como fazer"; technical tabs full width below the 3D.
+ assert.equal(await p.locator('.main .sidebar, .side-col .tabs, .side-col #toolList, .side-col #insertStudy').count(),0);assert.equal(await p.locator('.side-col > *').count(),1);
+ assert.deepEqual(await p.locator('#techSection [data-tab]').allTextContents(),['Ferramenta','Vida do insert','Programa/TAP','Histórico']);
+ const main=await p.locator('.main').boundingBox(),tech=await p.locator('#techSection').boundingBox();assert.ok(tech.y>=main.y+main.height-1);assert.ok(tech.width>1300);
+ // Origin axes are discreet: short thin axes, small letters, no boxed labels.
+ const axes=await p.evaluate(()=>{const a=columbiaJourney.get3D().axes,sprites=a.children.filter(c=>c.isSprite);return {len:Math.max(...a.children.filter(c=>c.isLine).map(l=>l.geometry.attributes.position.getX(1)**2+l.geometry.attributes.position.getY(1)**2+l.geometry.attributes.position.getZ(1)**2).map(Math.sqrt)),scale:Math.max(...sprites.map(s=>s.scale.x))}});assert.ok(axes.len<=160&&axes.scale<=50,JSON.stringify(axes));
+ // Insert life on facing: one click per pass, turn/replace close the edge; optional and never blocking.
+ assert.match(await text('#stagePanel .sp-insert'),/Passes nesta aresta: 0/);assert.equal(await p.locator('[data-quick-insert="turn"]').isDisabled(),true);
+ for(let i=0;i<8;i++)await p.click('[data-quick-insert="add"]');assert.equal(await text('#quickInsertCount'),'8');assert.match(await text('.sp-insert'),/5,60 mm/);
+ await p.click('[data-quick-insert="turn"]');assert.equal(await text('#quickInsertCount'),'0');assert.match(await text('.sp-insert'),/Aresta 1 · 8 passes · 5,6 mm removidos · virada/);
+ for(let i=0;i<7;i++)await p.click('[data-quick-insert="add"]');await p.click('[data-quick-insert="replace"]');
+ let edge=await p.evaluate(()=>columbiaDemo.insertUsage(1).cycles);assert.deepEqual(edge.map(c=>[c.count,c.unit,c.removedMm,c.kind,c.program,c.operation,c.toolId]),[[8,'pass',5.6,'turn','O001.TAP',1,1],[7,'pass',4.9,'replace','O001.TAP',1,1]]);assert.ok(edge.every(c=>Date.parse(c.at)));
+ await p.click('[data-tab="insert"]');assert.match(await text('#insertStudy'),/Passes nesta aresta/);assert.match(await text('#insertStudy'),/2 arestas registradas.*Média 7,5 passes\/aresta.*10,5 mm removidos/s);
+ await p.click('[data-quick-insert="add"]');await p.click('[data-quick-insert="undo"]');assert.equal(await text('#quickInsertCount'),'0');
  // Browsing and play never record execution.
  await p.click('#animateCut');await p.click('#animateCut');assert.equal(await p.evaluate(()=>columbiaDemo.state.operator['0']?.started??false),false);
  // Start → Concluir → Ir para próxima etapa; never two contradictory actions.
@@ -57,6 +71,10 @@ const url=process.env.COLUMBIA_LIVE_URL||'file:///'+process.cwd().replaceAll('\\
  await p.click('[data-operation="1"]');await p.click('[data-step="5"]');assert.equal(await action().textContent(),'Ir para a etapa pendente');
  await action().click();assert.equal(await p.evaluate(()=>columbiaDemo.state.phase),2);
  await p.click('[data-operation="1"]');await p.click('[data-step="5"]');
+ // Insert life on cavities (O003 · T3): same concept, cavities per edge; recording works even before starting.
+ assert.match(await text('.sp-insert'),/Vida do insert · T3.*Cavidades nesta aresta: 0/s);for(let i=0;i<5;i++)await p.click('[data-quick-insert="add"]');await p.click('[data-quick-insert="turn"]');
+ const cav=await p.evaluate(()=>columbiaDemo.insertUsage(3).cycles.at(-1));assert.deepEqual([cav.count,cav.cavities,cav.unit,cav.removedMm,cav.program,cav.kind],[5,5,'cavity',null,'O003.TAP','turn']);
+ await p.click('[data-tab="details"]');assert.equal(await p.locator('#cavityConsultation [data-cavity]').count(),12);assert.equal(await p.locator('#cavityConsultation #insertCount').count(),0);
  const op2=await text('#stagePanel');assert.match(op2,/O003\.TAP/);assert.match(op2,/T3 · Alto avanço Ø32/);assert.match(op2,/~2 h 51 min/);assert.doesNotMatch(op2,/Passes estimados/);
  assert.equal(await p.evaluate(()=>columbiaJourney.get3D().axes.visible),true);assert.match(await text('#viewerContext'),/calços/);
  // In-process proposals stay as proposals.
@@ -67,7 +85,7 @@ const url=process.env.COLUMBIA_LIVE_URL||'file:///'+process.cwd().replaceAll('\\
  await p.click('#laterNext');assert.equal(await p.evaluate(()=>document.body.dataset.journeyView),'post-heat');assert.match(await text('#journeyStage'),/Retorno pós-TT.*em levantamento/s);assert.equal(await p.locator('#laterNext').count(),0);
  // Part record and persistence.
  const pass=await p.evaluate(()=>columbiaJourney.passport());assert.equal(pass.receiving.receivedMm,111);assert.equal(pass.target.valueMm,95.75);assert.equal(pass.stages.filter(s=>s.completed).length,1);
- const dl=p.waitForEvent('download');await p.click('#passportPanel summary');await p.click('#exportPassport');assert.match((await dl).suggestedFilename(),/Registro_OS10713\.json/);
+ const dl=p.waitForEvent('download');await p.click('[data-tab="history"]');await p.click('#exportPassport');assert.match((await dl).suggestedFilename(),/Registro_OS10713\.json/);
  await load();assert.equal((await journey()).receiving.receivedMm,111);assert.match(await text('#osBar'),/2 de 10 etapas/);
  // Responsive operation view; the 3D keeps its prominence.
  await p.evaluate(()=>columbiaJourney.openOperationView());await p.click('[data-operation="0"]');

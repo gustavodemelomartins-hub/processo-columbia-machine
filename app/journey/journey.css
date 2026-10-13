@@ -234,3 +234,39 @@ body.industrial .stage-box[data-status=running] .stage-number{background:var(--c
 body.industrial .ds-osbar .osbar-current{background:transparent}
 body.industrial .ds-osbar .osbar-current:hover{background:var(--columbia-blue-tint)}
 @media(max-width:760px){.osbar-current{flex-basis:100%}body.industrial .ds-journey .operation-item{min-width:176px}}
+
+/* Right column: only "Como fazer". The 3D gains width and height. */
+body.industrial .main{grid-template-columns:minmax(0,1fr) 360px}
+@media(min-width:1700px){body.industrial .main{grid-template-columns:minmax(0,1fr) 400px}}
+@media(min-width:1101px){body.industrial .stage,body.industrial .drawing-viewport{height:600px}}
+@media(min-width:1700px){body.industrial .stage,body.industrial .drawing-viewport{height:660px}}
+@media(max-width:1100px){body.industrial .main{grid-template-columns:1fr}}
+
+/* Quick insert life row (stage panel) */
+.sp-insert{display:flex;flex-wrap:wrap;align-items:center;gap:var(--space-2) var(--space-4);margin-top:var(--space-3);padding-top:var(--space-3);border-top:1px solid var(--line);font:400 15px/20px var(--font-sans);color:var(--ink-muted)}
+.sp-insert[hidden]{display:none}
+.sp-insert-title{color:var(--ink);font-weight:500}
+.sp-quick{min-height:var(--control-height-compact);padding:0 var(--space-4);border:1px solid var(--columbia-blue);border-radius:var(--radius-md);background:var(--surface-panel);color:var(--columbia-blue-strong);font:600 15px/1 var(--font-sans);cursor:pointer}
+.sp-quick:hover{background:var(--columbia-blue-tint)}
+.sp-insert-count b{color:var(--ink);font-size:18px;font-variant-numeric:tabular-nums}
+.sp-insert-more{display:inline-flex;gap:var(--space-4)}
+.sp-insert-more .ds-link{min-height:var(--control-height-compact);font-size:15px}
+.sp-insert-more .ds-link:disabled{color:var(--ink-subtle);text-decoration:none;cursor:default}
+.sp-insert-last{margin-left:auto;font-size:14px}
+
+/* Technical section below the 3D, full width */
+body.industrial .tech-section{max-width:calc(var(--page-max) - 2 * var(--page-gutter));width:calc(100% - 2 * var(--page-gutter));margin:var(--space-4) auto 0;border:1px solid var(--line);border-radius:var(--radius-md);background:var(--surface-panel);overflow:hidden}
+body.industrial .tech-section .tabs{display:flex;justify-content:flex-start;border-bottom:1px solid var(--line);background:var(--surface-panel)}
+body.industrial .tech-section .tabs button{flex:0 0 auto;min-height:var(--control-height);padding:0 var(--space-5);font-size:15px}
+body.industrial .tech-section .panel{height:auto!important;max-height:none!important;overflow:visible;padding:var(--space-5) var(--space-6)}
+body.industrial .tech-section #toolList{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(420px,100%),1fr));gap:var(--space-4)}
+body.industrial .tech-section #toolList .tool{margin:0;padding:var(--space-4);border:1px solid var(--line);border-radius:var(--radius-md)}
+body.industrial .tech-section #historyPanel h3{margin:0 0 var(--space-3);font:600 17px/22px var(--font-sans)}
+body.industrial .tech-section .insert-counter{max-width:880px}
+.insert-none{margin:0 0 var(--space-2)}
+@media(max-width:760px){body.industrial .tech-section .tabs{overflow-x:auto}body.industrial .tech-section .tabs button{padding:0 var(--space-3)}body.industrial .tech-section .panel{padding:var(--space-4)}.sp-insert-last{margin-left:0}}
+@media(min-width:1000px){
+ body.industrial .tech-section .insert-counter{display:grid;grid-template-columns:minmax(0,440px) minmax(0,1fr);column-gap:var(--space-12);max-width:none;align-items:start}
+ body.industrial .tech-section .insert-counter>*{grid-column:1}
+ body.industrial .tech-section .insert-counter>.insert-study-history{grid-column:2;grid-row:1/span 12;margin-top:0}
+}

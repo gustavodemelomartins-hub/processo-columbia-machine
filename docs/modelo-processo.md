@@ -25,6 +25,7 @@ Recebimento → 1ª operação (Face A, Face B) → 2ª operação (O002…O008)
 | Referências | `reference_defaults` + `steps[].references` | X0/Y0 centro, Z0 topo |
 | Ferramentas | `data/derived` (descida do TAP) + `tool_mounting` | Descida máxima ≠ montagem recomendada = ceil(descida + margem). Dados físicos ausentes ficam `null`; valores padrão usados para demonstração são marcados como provisórios |
 | Tempos | `process_timing` | Usinagem = cabeçalho do TAP + 20% (estimativa). Preparação = `setup_estimate_minutes` (45, provisório). Nada é apresentado como tempo real |
+| Vida do insert | `insert_usage.studies` + `app/ferramental/insert_domain.js` | Um único conceito de ciclo por aresta (virada/troca a virada/troca). Faceamento O001/T1 conta passes (calcula mm removidos pela redução por passe); O003/T3 conta cavidades. Registro opcional, nunca bloqueia |
 | Propostas in-process | `inprocess_proposals` | O005 e O007 continuam como **propostas**; os TAPs não são alterados |
 
 Não há perguntas de descoberta, controles ou inspeção formal na V1. Perguntas ao responsável do projeto ficam em `docs/informacoes-a-confirmar.md`, fora da interface.
@@ -36,6 +37,10 @@ Não há perguntas de descoberta, controles ou inspeção formal na V1. Pergunta
 - `progress()` conta recebimento + 9 etapas de programa. `nodeStates()`: done, running, active, waiting, later.
 - `nextPhase()` segue a ordem; uma etapa só inicia depois das anteriores (a ação principal leva à etapa pendente).
 - `passport()` monta o registro da peça só com registros locais.
+
+## Vida do insert
+
+Cada ciclo fechado guarda, sem digitação do operador: operação, programa, etapa, ferramenta, tipo (`pass` ou `cavity`), quantidade, redução por passe e material removido (passes), evento final (`turn`/`replace`) e data/hora. Registro em um clique no painel da etapa (+ Registrar passe / + Registrar cavidade; Virar insert; Trocar insert; Desfazer). Histórico, média por aresta, ajuste de quantidade e exportação CSV ficam na aba **Vida do insert** abaixo do 3D. Ciclos antigos do T3 (campo `cavities`) continuam válidos.
 
 ## Ação principal (uma por estado)
 

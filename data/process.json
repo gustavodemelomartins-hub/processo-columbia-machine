@@ -727,7 +727,26 @@
       "counting": "manual; ciclo entre viradas ou trocas do conjunto T3",
       "unit": "cavidades por ciclo",
       "feedback": "valorizar registro e conferência; não premiar uso além do desgaste"
-    }
+    },
+    "concept": "vida do insert: ciclo por aresta, de uma virada/troca até a próxima; registro opcional, nunca bloqueia a operação",
+    "studies": [
+      {
+        "tool_id": 1,
+        "program": "O001.TAP",
+        "operation": 1,
+        "unit": "pass",
+        "review_after": null,
+        "label": "Faceamento · passes por aresta"
+      },
+      {
+        "tool_id": 3,
+        "program": "O003.TAP",
+        "operation": 2,
+        "unit": "cavity",
+        "review_after": 5,
+        "label": "Desbaste das cavidades · cavidades por aresta"
+      }
+    ]
   },
   "stage_flow_policy": "one-program/v1",
   "inprocess_proposals": {

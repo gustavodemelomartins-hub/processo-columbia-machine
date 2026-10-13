@@ -247,6 +247,7 @@ function renderStagePanel(){
  jSetHTML(head,'<div class="sp-title"><span class="sp-eyebrow">'+jOrdinal(s.op.id)+' · etapa '+s.index+' de '+s.total+'</span><h2>'+esc(phases[id].title)+'</h2>'+(cfg?.intent?.objective?'<p>'+esc(cfg.intent.objective)+'</p>':'')+'</div>'+
    '<div class="sp-action"><span class="sp-status-line"><span class="sp-status" id="stageStatus" data-status="'+(t.completed?'done':t.started?'running':'idle')+'">'+esc(jStatusText(t))+'</span>'+(t.completed?' · <button type="button" class="ds-link" id="stageReopen">Reabrir</button>':'')+'</span><button type="button" class="ds-btn" data-variant="primary" id="stageAction" data-action="'+action[0]+'">'+action[1]+'</button></div>');
  jKeepFocus(dl,()=>jSetHTML(dl,metrics));
+ renderQuickInsert(host);
  $('stageAction').onclick=()=>{
   const a=$('stageAction').dataset.action;
   if(a==='start')$('startStageExecution').click();
@@ -262,6 +263,18 @@ function renderStagePanel(){
   saveFaceTiming(input,sid);journeyRender();
  });
  if($('faceReduction'))$('faceReduction').onchange=e=>{saveFaceTiming(e.target);journeyRender();};
+}
+// Insert life, one click at the machine: optional, never blocks start/complete.
+function renderQuickInsert(host){
+ let row=host.querySelector('.sp-insert');if(!row){row=document.createElement('div');row.className='sp-insert';host.append(row);}
+ const st=typeof currentInsertStudy==='function'?currentInsertStudy():null;row.hidden=!st;if(!st){jSetHTML(row,'');return}
+ const u=insertUsage(st.tool_id),pass=st.unit==='pass',last=u.cycles.at(-1),red=number(state.faceTiming.reductionPerPassMm);
+ jSetHTML(row,'<span class="sp-insert-title">Vida do insert · T'+st.tool_id+'</span>'+
+  '<button type="button" class="sp-quick" data-quick-insert="add">'+(pass?'+ Registrar passe':'+ Registrar cavidade')+'</button>'+
+  '<span class="sp-insert-count">'+(pass?'Passes nesta aresta':'Cavidades nesta aresta')+': <b id="quickInsertCount">'+u.count+'</b>'+(pass&&red>0&&u.count?' · '+jMm(u.count*red):'')+'</span>'+
+  '<span class="sp-insert-more"><button type="button" class="ds-link" data-quick-insert="turn"'+(u.count?'':' disabled')+'>Virar insert</button><button type="button" class="ds-link" data-quick-insert="replace"'+(u.count?'':' disabled')+'>Trocar insert</button>'+(u.events.length?'<button type="button" class="ds-link" data-quick-insert="undo">Desfazer</button>':'')+'</span>'+
+  (last?'<span class="sp-insert-last">Última: '+esc(insertCycleLine(st,last))+' · '+insertKindLabel(last.kind).toLowerCase()+'</span>':''));
+ row.querySelectorAll('[data-quick-insert]').forEach(b=>b.onclick=()=>{if(recordInsert(st,b.dataset.quickInsert)){insertStudyUI.message='';renderQuickInsert(host);renderInsertStudy();}});
 }
 function jSetComplete(id,done){
  const box=document.querySelector('[data-stage-complete="'+id+'"]');
@@ -302,19 +315,20 @@ function renderStageHow(){
 /* ---------- 3D in context: face being machined, orientation, mounting, origin ---------- */
 let journeyAxes=null,journeyFaceLayer=null;
 function jAxisColor(name){return new THREE.Color(getComputedStyle(document.documentElement).getPropertyValue('--'+name).trim()||'#888');}
-function jLabelSprite(text,color){const c=document.createElement('canvas');c.width=192;c.height=96;const g=c.getContext('2d');g.fillStyle='rgba(255,255,255,.92)';g.fillRect(0,0,192,96);g.strokeStyle=color;g.lineWidth=6;g.strokeRect(3,3,186,90);g.fillStyle=color;g.font='600 52px "Segoe UI", sans-serif';g.textAlign='center';g.textBaseline='middle';g.fillText(text,96,52);const s=new THREE.Sprite(new THREE.SpriteMaterial({map:new THREE.CanvasTexture(c),depthTest:false}));s.scale.set(150,75,1);s.renderOrder=10;return s;}
+// Small letter without a box, so the origin never covers the part.
+function jLabelSprite(text,color){const c=document.createElement('canvas');c.width=64;c.height=64;const g=c.getContext('2d');g.font='600 44px "Segoe UI", sans-serif';g.textAlign='center';g.textBaseline='middle';g.lineWidth=8;g.strokeStyle='rgba(255,255,255,.9)';g.strokeText(text,32,34);g.fillStyle=color;g.fillText(text,32,34);const s=new THREE.Sprite(new THREE.SpriteMaterial({map:new THREE.CanvasTexture(c),depthTest:false}));s.scale.set(44,44,1);s.renderOrder=10;return s;}
 function jEnsure3D(){
  if(typeof scene==='undefined'||!scene)return false;
  if(!journeyAxes){
   journeyAxes=new THREE.Group();journeyAxes.name='journey-origin-axes';journeyAxes.userData={role:'reference-axes',provenance:'reference_defaults; ilustrativo'};
-  for(const [axis,dir,label] of [['axis-x',[1,0,0],'X0'],['axis-y',[0,0,-1],'Y0'],['axis-z',[0,1,0],'Z0']]){
-   const color=jAxisColor(axis),end=new THREE.Vector3(...dir).multiplyScalar(260);
+  for(const [axis,dir,label] of [['axis-x',[1,0,0],'X'],['axis-y',[0,0,-1],'Y'],['axis-z',[0,1,0],'Z']]){
+   const color=jAxisColor(axis),end=new THREE.Vector3(...dir).multiplyScalar(130);
    const line=new THREE.Line(new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(),end]),new THREE.LineBasicMaterial({color,depthTest:false}));line.renderOrder=9;journeyAxes.add(line);
-   const cone=new THREE.Mesh(new THREE.ConeGeometry(12,36,16),new THREE.MeshBasicMaterial({color,depthTest:false}));cone.position.copy(end);cone.renderOrder=9;
+   const cone=new THREE.Mesh(new THREE.ConeGeometry(5,16,12),new THREE.MeshBasicMaterial({color,depthTest:false}));cone.position.copy(end);cone.renderOrder=9;
    if(dir[0])cone.rotation.z=-Math.PI/2;else if(dir[2])cone.rotation.x=-Math.PI/2;journeyAxes.add(cone);
-   const sprite=jLabelSprite(label,'#'+color.getHexString());sprite.position.copy(end.clone().multiplyScalar(1.28));journeyAxes.add(sprite);
+   const sprite=jLabelSprite(label,'#'+color.getHexString());sprite.position.copy(end.clone().multiplyScalar(1.22));journeyAxes.add(sprite);
   }
-  const dot=new THREE.Mesh(new THREE.SphereGeometry(14,20,12),new THREE.MeshBasicMaterial({color:0x0a3250,depthTest:false}));dot.renderOrder=9;journeyAxes.add(dot);
+  const dot=new THREE.Mesh(new THREE.SphereGeometry(6,16,10),new THREE.MeshBasicMaterial({color:0x0a3250,depthTest:false}));dot.renderOrder=9;journeyAxes.add(dot);
   journeyAxes.visible=false;scene.add(journeyAxes);
  }
  if(!journeyFaceLayer){
@@ -328,6 +342,7 @@ function journey3D(){
  if(!jEnsure3D())return;
  const operation=jMode()==='operation',p=phases[state.phase],top=plateBottom+OPERATOR_CONFIG.simulation.part_mm.thickness;
  journeyAxes.position.set(0,top,0);journeyAxes.visible=operation&&engineeringReferences().center;
+ if(typeof zeroMarker!=='undefined'&&zeroMarker)zeroMarker.visible=false;
  journeyFaceLayer.position.set(0,top+5,0);journeyFaceLayer.visible=operation&&p?.kind==='face';
  const caption=!operation?'':state.phase===FACE_IDS[0]?'Face A em laranja · peça invertida, sobre a mesa':state.phase===FACE_IDS[1]?'Face B em laranja · peça tombada, sobre a mesa':'Peça sobre 4 calços com 4 garras · X0 Y0 no centro, Z0 no topo';
  const el=$('viewerContext');if(el){el.textContent=caption;el.hidden=!caption;}
@@ -354,7 +369,7 @@ function renderPassport(){
 let journeyRendering=false;
 function journeyRender(){
  if(journeyRendering)return;journeyRendering=true;
- try{jStampTimes();decorateJourneyMap();decorateStageCards();renderOsBar();renderJourneyView();renderStagePanel();renderStageHow();renderPassport();journey3D();}
+ try{jStampTimes();decorateJourneyMap();decorateStageCards();renderOsBar();renderJourneyView();renderStagePanel();renderStageHow();renderPassport();if(typeof renderInsertStudy==='function'&&!$('insertPanel')?.hidden)renderInsertStudy();journey3D();}
  finally{journeyRendering=false;}
 }
 const journeyOriginalRenderOperational=renderOperational;

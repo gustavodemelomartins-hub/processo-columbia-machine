@@ -183,8 +183,10 @@ tab=function(name){
  if(name==='setup')name='tools';
  if(name==='inspection'){$('operationChecks').open=true;name='tools'}
  if(name==='files'){$('technicalDetails').open=true;$('filesPanel').hidden=false;return}
+ if(!['tools','insert','details','history'].includes(name))name='tools';
+ for(const n of ['tools','insert','details','history'])$(n+'Panel').hidden=name!==n;
  document.querySelectorAll('[data-tab]').forEach(b=>b.setAttribute('aria-selected',b.dataset.tab===name));
- $('toolsPanel').hidden=name!=='tools';$('detailsPanel').hidden=name!=='details';
+ if(name==='insert'&&typeof renderInsertStudy==='function')renderInsertStudy();
  $('inspectionPanel').hidden=state.operation===2;$('operationChecks').hidden=state.operation===2;
  $('pendingPanel').hidden=true;$('setupPanel').hidden=false;$('filesPanel').hidden=false;
 };

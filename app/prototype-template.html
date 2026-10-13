@@ -70,15 +70,17 @@ __JOURNEY_CSS__
  </section>
  <div class="side-col">
  <section id="stageHow" class="stage-how" aria-label="Como fazer"></section>
- <aside class="sidebar" aria-label="Ferramenta atual e parâmetros">
-  <div class="tabs" role="tablist" aria-label="Dados da etapa"><button role="tab" data-tab="tools" aria-selected="true" aria-controls="toolsPanel">Ferramenta atual</button><button role="tab" data-tab="details" aria-selected="false" aria-controls="detailsPanel">Detalhes técnicos</button></div>
+ </div>
+</main>
+<section id="techSection" class="sidebar tech-section" aria-label="Ferramenta, vida do insert, programa e histórico">
+  <div class="tabs" role="tablist" aria-label="Dados da etapa"><button role="tab" data-tab="tools" aria-selected="true" aria-controls="toolsPanel">Ferramenta</button><button role="tab" data-tab="insert" aria-selected="false" aria-controls="insertPanel">Vida do insert</button><button role="tab" data-tab="details" aria-selected="false" aria-controls="detailsPanel">Programa/TAP</button><button role="tab" data-tab="history" aria-selected="false" aria-controls="historyPanel">Histórico</button></div>
   <section class="panel" id="pendingPanel" role="tabpanel" hidden><h3 id="pendingPanelTitle">A confirmar</h3><p>Envie os programas e cadastre montagem, referências e conferências.</p></section>
   <section class="panel" id="toolsPanel" role="tabpanel"><div class="section-line"><h3 id="toolsTitle" hidden>Ferramentas</h3><span id="readyCount" class="small"></span></div><p id="toolsIntro" class="small muted"></p><div id="toolList"></div><p id="toolIdentityNote" class="small operational-notice" hidden>Conferir T12: R0,8 no nome; raio 0 na coluna do programa.</p></section>
 
+  <section class="panel" id="insertPanel" role="tabpanel" hidden><div id="insertStudy"></div></section>
   <section class="panel" id="detailsPanel" role="tabpanel" hidden> <aside class="program-consultation" aria-label="Programa e parâmetros"><section id="programPanel" class="program-panel"><section id="strategyDetails" class="strategy-details"></section><details class="program-call-details"><summary>Chamadas do programa</summary><div id="programOverview"></div></details></section></aside></section>
- </aside>
- </div>
-</main>
+  <section class="panel" id="historyPanel" role="tabpanel" hidden><h3>Registro da peça</h3><div id="passportBody"></div><div class="checkpoint-actions"><button type="button" id="exportPassport" class="ds-btn" data-variant="secondary">Exportar registro (.json)</button><span class="t-caption">Fica neste navegador.</span></div></section>
+</section>
 <div id="legacyProcessRecords" hidden inert><details id="operationChecks" class="operation-checks"><summary>Checklist e conferência da etapa</summary>  <section class="panel" id="inspectionPanel" >
    <div class="section-line"><h3>Checklist de liberação</h3><strong id="readinessResult" class="small" aria-live="polite"></strong></div>
    <p id="readinessMissing" class="small muted"></p><div id="releaseChecklist"></div>
@@ -97,9 +99,6 @@ __JOURNEY_CSS__
   </section>
 </details></div>
 <section id="workToolsSection" class="work-tools" aria-label="Ferramentas do trabalho"><div class="section-line"><h3>Ferramentas do trabalho</h3><strong id="workToolCount"></strong></div><p id="toolTableMessage" role="status" class="small"></p><div id="workToolList"></div><div id="workToolEditor" hidden inert></div></section>
-<section class="journey-records" aria-label="Registro da peça">
-<details id="passportPanel" class="journey-details"><summary>Registro da peça</summary><div class="journey-details-body"><div id="passportBody"></div><div class="checkpoint-actions"><button type="button" id="exportPassport" class="ds-btn" data-variant="secondary">Exportar registro (.json)</button><span class="t-caption">Fica neste navegador.</span></div></div></details>
-</section>
 <details id="technicalDetails" class="technical-details"><summary>Arquivos e cadastros</summary><div class="technical-content">
 
 
