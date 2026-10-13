@@ -6,4 +6,4 @@ Preservar um caso real na Mini Portal, duas faces O001, sete etapas O002–O008 
 
 Nenhuma rede, autenticação, conexão CNC ou múltiplas máquinas na V1. Perfis antigos ficam isolados. Renderer, TAPs, parser, desenho e registros existentes preservados. Divergência 96 versus95,75 antes do T.T. é da engenharia, não corrigir silenciosamente. Terceira operação indefinida. Não recolocar checklist antigo de preparação.
 
-Depois de editar: npm run build, npm run check, npm test; verificar screenshots/3D/desenho/mobile, hash dos originais e fontes de L/N. Publicar só no Pages existente por push fast-forward. docs/briefing-claude-design.md rege a próxima fase visual.
+Depois de editar: npm run build, npm run check, npm test; verificar screenshots/3D/desenho/mobile, hash dos originais e fontes de L/N. Publicar só no Pages existente por push fast-forward. Visual: design/tokens.json é a fonte única (espelhada no Design System Columbia Processo); não espalhar cores/medidas no CSS. Jornada: data/process.json → receiving, journey, stage_guide, open_questions; o sistema nunca escolhe 96 ou 95,75 sozinho; dados ausentes viram Informação a confirmar. Leia docs/modelo-processo.md.

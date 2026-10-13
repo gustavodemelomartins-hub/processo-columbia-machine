@@ -27,6 +27,10 @@ O cadastro data/process.json usa steps para dados industriais e runtime para apr
 
 scripts/project_contract.py rejeita ferramentas desconhecidas, programas divergentes, IDs/etapas repetidos ou arquivados ativos, máquina inexistente, calços/espessura divergentes e alteração de originais. scripts/build.py expande os fragmentos internos do template e deixa as bibliotecas de terceiros intactas. Falhas interrompem o build antes de gravar index.html.
 
+## Camada de jornada
+
+app/journey/journey_domain.js (regras puras: objetivos candidatos, sobremetal, progresso, estados dos nós, próxima etapa, passaporte) e app/journey/journey_ui.js (cabeçalho da OS, mapa, recebimento, controles, roteiro de 8 seções, 3D contextual, passaporte, pendências) entram depois do operator layer pelo token __JOURNEY_LAYER__. Envolvem renderOperational, renderOperationNavigation, renderJobTiming e init3d sem alterar seus contratos. Estilos: design/tokens.json → scripts/design_tokens.py → __DS_TOKENS_CSS__; app/design/components.css; app/journey/journey.css (último). Registros novos: state.journey e startedAt/completedAt aditivos em state.operator.
+
 ## Fronteiras mantidas
 
 Parser → derivados é uma mudança de engenharia, separada da apresentação. Para regenerar: python scripts/cnc_adapter.py, python scripts/build_strategy_data.py, python scripts/build_cavity_data.py, depois validar parser/linhas/hash e build. Execute da raiz. Relatórios históricos em data/derived/cnc são evidência; não são cadastro editável.

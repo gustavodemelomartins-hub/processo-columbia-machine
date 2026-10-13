@@ -3,6 +3,7 @@ from pathlib import Path
 import json, re, base64, io
 from PIL import Image
 from project_contract import validate
+from design_tokens import compile_css
 ROOT=Path(__file__).resolve().parents[1]
 
 def read(path):return (ROOT/path).read_text(encoding='utf-8-sig')
@@ -36,8 +37,11 @@ files={
  'TOOL_PHOTO_UI':'app/ferramental/tool_photo_ui.js','INSERT_UI':'app/insert_ui.js',
  'INSERT_DOMAIN':'app/ferramental/insert_domain.js','CAVITY_DATA':'data/derived/cavity_data.json',
  'JOB_TIMING_DOMAIN':'app/job_timing_domain.js','JOB_TIMING_UI':'app/job_timing_ui.js',
+ 'JOURNEY_LAYER':'app/journey/journey_ui.js','JOURNEY_DOMAIN':'app/journey/journey_domain.js',
+ 'DS_COMPONENTS_CSS':'app/design/components.css','JOURNEY_CSS':'app/journey/journey.css',
 }
 values.update({key:read(path) for key,path in files.items()})
+values['DS_TOKENS_CSS']=compile_css(ROOT)
 token=re.compile(r'__([A-Z_]+)__')
 expanding=[]
 def expand(match):
@@ -46,7 +50,7 @@ def expand(match):
  if key not in values:raise ValueError('Token de build desconhecido: '+key)
  if key in expanding:raise ValueError('Ciclo de tokens: '+str(expanding+[key]))
  expanding.append(key)
- value=token.sub(expand,values[key]) if key in {'OPERATOR_LAYER','INSERT_UI','TOOLING_UI'} else values[key]
+ value=token.sub(expand,values[key]) if key in {'OPERATOR_LAYER','INSERT_UI','TOOLING_UI','JOURNEY_LAYER'} else values[key]
  expanding.pop()
  return value
 html=token.sub(expand,read('app/prototype-template.html'))

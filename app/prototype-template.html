@@ -34,12 +34,17 @@ __OPERATOR_CSS__
 __COLUMBIA_BRAND_CSS__
 __INDUSTRIAL_CSS__
 __TOOLING_CSS__
+__DS_TOKENS_CSS__
+__DS_COMPONENTS_CSS__
+__JOURNEY_CSS__
 </style><link rel="icon" type="image/png" href="__COLUMBIA_FAVICON__">
 </head><body class="industrial">
 <header class="topbar"><div class="brand"><div class="brand-identity"><img class="brand-logo" src="__COLUMBIA_LOGO__" alt="Columbia Machine Brasil"><strong id="workOrder">OS 10-713</strong></div><div class="brand-title"><h1>Processo Columbia Machine</h1></div></div><div class="tooling-entry"><strong id="jobMachineName">MINI PORTAL</strong><button id="openFerramental">Ferramentas</button></div></header>
+<div id="osBar" class="ds-osbar" role="region" aria-label="Resumo da OS" aria-live="polite"></div>
 <section class="process" aria-label="Operação atual">
  <section class="job-timing" id="jobTiming" aria-label="Previsão de usinagem da peça"></section>
  <nav id="operations" class="operations" aria-label="Escolher operação"></nav>
+ <section id="journeyStage" class="journey-stage" aria-live="polite" hidden></section>
  <section class="stage-flow" id="operationDetail" aria-labelledby="stageFlowTitle">
   <div class="stage-flow-heading"><div><h3 id="stageFlowTitle">Etapas da operação</h3><p id="stageProgress" aria-live="polite"></p></div><div class="stage-navigation"><button id="prev">← Etapa</button><button id="next">Próxima etapa →</button></div></div>
   <div id="faceTimingSetup" hidden></div>
@@ -53,15 +58,31 @@ __TOOLING_CSS__
 
 
 </section>
-<section class="operation-instructions" aria-label="Instruções e referências"> <div class="preparation">
-  <section class="now"><h3>O que fazer agora</h3><ol id="doNow"></ol><p id="engineeringReview" class="small operational-notice" role="note"></p></section>
-  <section class="reference"><h3>Referência</h3><div class="zero-fields"><label>X0<input id="referenceX" readonly maxlength="100" placeholder="A confirmar" aria-label="Referência X0"><small id="referenceXState"></small></label><label>Y0<input id="referenceY" readonly maxlength="100" placeholder="A confirmar" aria-label="Referência Y0"><small id="referenceYState"></small></label><div><b>Z0</b><p id="referenceZ">Topo da peça</p><small id="referenceZState"></small></div></div><p id="referenceHint" class="small muted">Referência da engenharia. Conferir X/Y e Z na máquina antes de iniciar.</p></section>
+<section class="operation-instructions stage-guide" id="stageGuide" aria-label="Roteiro da etapa">
+ <div class="guide-head"><div id="guideNow" class="guide-now" aria-live="polite"></div><nav id="guideNav" class="ds-stepper" role="tablist" aria-label="Seções da etapa"></nav></div>
+ <div class="guide-body">
+  <div class="guide-main">
+   <div class="guide-panel" data-guide-panel="preparacao"><div class="guide-dynamic"></div>
+   <section class="now"><h3>O que fazer agora</h3><ol id="doNow"></ol><p id="engineeringReview" class="small operational-notice" role="note"></p></section>
+   </div>
+   <div class="guide-panel" data-guide-panel="fixacao" hidden><div class="guide-dynamic"></div></div>
+   <div class="guide-panel" data-guide-panel="referencia" hidden><div class="guide-dynamic"></div>
+   <section class="reference"><h3>Referência</h3><div class="zero-fields"><label>X0<input id="referenceX" readonly maxlength="100" placeholder="A confirmar" aria-label="Referência X0"><small id="referenceXState"></small></label><label>Y0<input id="referenceY" readonly maxlength="100" placeholder="A confirmar" aria-label="Referência Y0"><small id="referenceYState"></small></label><div><b>Z0</b><p id="referenceZ">Topo da peça</p><small id="referenceZState"></small></div></div><p id="referenceHint" class="small muted">Referência da engenharia. Conferir X/Y e Z na máquina antes de iniciar.</p></section>
+   </div>
+   <div class="guide-panel" data-guide-panel="ferramentas" hidden><div class="guide-dynamic"></div></div>
+   <div class="guide-panel" data-guide-panel="programa" hidden><div class="guide-dynamic"></div></div>
+   <div class="guide-panel" data-guide-panel="usinagem" hidden><div class="guide-dynamic"></div></div>
+   <div class="guide-panel" data-guide-panel="inspecao" hidden><div class="guide-dynamic"></div></div>
+   <div class="guide-panel" data-guide-panel="conclusao" hidden><div class="guide-dynamic"></div></div>
+  </div>
+  <aside id="guideCheck" class="guide-check" aria-label="Conferir antes de continuar"></aside>
  </div>
+ <div class="guide-foot"><button type="button" id="guidePrev" class="ds-btn" data-variant="ghost">← Seção anterior</button><button type="button" id="guideNext" class="ds-btn" data-variant="secondary">Próxima seção →</button></div>
 </section>
 <main class="main">
  <section class="viewer" aria-label="Referência visual">
-  <div class="viewer-top"><h3>Referência visual</h3><div class="visual-tabs" role="tablist" aria-label="Referência visual"><button id="view3D" role="tab" aria-controls="view3DPanel" aria-selected="true">3D</button><button id="viewDrawing" role="tab" aria-controls="drawingPanel" aria-selected="false">Desenho</button></div><button id="animateCut">Play percurso</button></div>
-  <div id="view3DPanel" role="tabpanel"><div class="stage" id="stage"><div class="pending-view" id="pendingView" hidden><h3>A confirmar</h3><p>Programas e montagem desta operação ainda não foram recebidos.</p></div><div class="stage-key"><span><i class="dot"></i>Azul = corte</span><span><i class="dot amber"></i>Laranja = rápido</span><span><i class="dot gray"></i>Cinza = fixação ilustrativa</span></div></div><div class="view-foot"><span><span class="desktop-gesture">Arraste para girar · roda para aproximar</span><span class="mobile-gesture">Um dedo gira · dois dedos dão zoom</span></span><div class="view-actions"><div class="zoom3d"><button id="zoom3DOut" aria-label="Afastar vista 3D">−</button><button id="zoom3DIn" aria-label="Aproximar vista 3D">+</button></div><span id="playbackPreview" class="small" hidden></span></div></div><p id="toolHeightNotice" class="small operational-notice" aria-live="polite"></p><p id="pathNotice" class="small operational-notice" hidden></p></div>
+  <div class="viewer-top"><h3>Referência visual</h3><span class="viewer-disclaimer" role="note">Visualização orientativa — não certifica colisões</span><div class="visual-tabs" role="tablist" aria-label="Referência visual"><button id="view3D" role="tab" aria-controls="view3DPanel" aria-selected="true">3D</button><button id="viewDrawing" role="tab" aria-controls="drawingPanel" aria-selected="false">Desenho</button></div><button id="animateCut">Play percurso</button></div>
+  <div id="view3DPanel" role="tabpanel"><div class="stage" id="stage"><div class="pending-view" id="pendingView" hidden><h3>A confirmar</h3><p>Programas e montagem desta operação ainda não foram recebidos.</p></div><p id="viewerContext" class="viewer-context" aria-live="polite" hidden></p><div class="stage-key"><span><i class="dot"></i>Azul = corte</span><span><i class="dot amber"></i>Laranja = rápido</span><span><i class="dot gray"></i>Cinza = fixação ilustrativa</span></div></div><div class="view-foot"><span><span class="desktop-gesture">Arraste para girar · roda para aproximar</span><span class="mobile-gesture">Um dedo gira · dois dedos dão zoom</span></span><div class="view-actions"><div class="zoom3d"><button id="zoom3DOut" aria-label="Afastar vista 3D">−</button><button id="zoom3DIn" aria-label="Aproximar vista 3D">+</button></div><span id="playbackPreview" class="small" hidden></span></div></div><p id="toolHeightNotice" class="small operational-notice" aria-live="polite"></p><p id="pathNotice" class="small operational-notice" hidden></p></div>
   <div id="drawingPanel" role="tabpanel" hidden><div id="drawingHost"></div></div>
   <div class="drawing-reference" hidden><span id="drawingReference"></span><small id="drawingLink"></small></div>
  </section>
@@ -91,6 +112,10 @@ __TOOLING_CSS__
   </section>
 </details></div>
 <section id="workToolsSection" class="work-tools" aria-label="Ferramentas do trabalho"><div class="section-line"><h3>Ferramentas do trabalho</h3><strong id="workToolCount"></strong></div><p id="toolTableMessage" role="status" class="small"></p><div id="workToolList"></div><div id="workToolEditor" hidden inert></div></section>
+<section class="journey-records" aria-label="Registro da peça e pendências">
+<details id="passportPanel" class="ds-panel journey-details" open><summary><span class="t-title-section">Passaporte da peça</span><span class="t-caption">Registro local desta OS: recebimento, objetivo, sobremetal, etapas, horários, inspeções e observações</span></summary><div class="journey-details-body"><div id="passportBody"></div><div class="checkpoint-actions"><button type="button" id="exportPassport" class="ds-btn" data-variant="secondary">Exportar passaporte (.json)</button><span class="t-caption">Fica neste navegador. Não há envio para rede, MES ou máquina.</span></div></div></details>
+<details id="questionsPanel" class="ds-panel journey-details"><summary><span class="t-title-section">Informações a confirmar <b id="questionsCount" class="ds-count"></b></span><span class="t-caption">O que ainda falta documentar no processo · nenhuma destas respostas foi presumida</span></summary><div class="journey-details-body"><div id="questionsBody"></div></div></details>
+</section>
 <details id="technicalDetails" class="technical-details"><summary>Arquivos e cadastros</summary><div class="technical-content">
 
 
@@ -384,6 +409,7 @@ $("animateCut").onclick=()=>{
 };
 
 __OPERATOR_LAYER__
+__JOURNEY_LAYER__
 try{init3d()}catch(e){console.error(e);$("stage").insertAdjacentHTML("beforeend",'<div class="error"><h3>Vista 3D indisponível neste navegador</h3><p>Abra o protótipo no Edge ou Chrome com aceleração gráfica habilitada. O checklist e as referências continuam disponíveis.</p></div>')}
 if(state.operation===2)selectOperation(2);else selectPhase(state.phase);
 window.columbiaDemo={cncReady,getCNC:()=>({file:cncFile,rows:cncRows,toolpath:cncToolpath}),processOperations,selectedOperation,selectOperation,state,phases,DATA,selectPhase,view,facePlan,faceAccepted,reachTarget,getRenderer:()=>renderer,getAssembly:()=>({clamps,supports,strapClamps,alignmentMarks,part,zeroMarker,tool,plateBottom}),placeTool,toolDimensions,refreshToolVisual,operatorReady,operatorStatus,operatorRecord,requiredTools,toolConfirmed,drawingViewer,operatorConfig:OPERATOR_CONFIG,mountingRule,displayedProgramFile,lengthEvidenceCache,tooling,toolingUI,openToolPreparation,cavitySelection,selectCavity,cavityEntry,insertUsage,getCavityView:()=>({camera,meshes:cavityMeshes}),jobTiming,ToolRepresentationRule,JobTimingDomain,InsertUsageDomain,ToolWorkDomain,toolWorkStatus,offsetSuggestion,toolPhoto};

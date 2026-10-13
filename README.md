@@ -26,7 +26,11 @@ npm run check
 npm test
 ```
 
-`check` valida contratos, hashes de 8 TAPs + PDF + 7 fotos, parser e seis suítes de domínio/armazenamento. `npm test` executa também seis suítes de navegador; screenshots e relatórios ficam em artifacts/, ignorado pelo Git. A suíte HTTP adicional usa `COLUMBIA_LIVE_URL` e `node tests/browser/verify_http.cjs`, com o servidor iniciado. Ela confere URLs relativas, PDF, WebGL e larguras 320/390/768/1440/1920. Para usar navegador/runtime já instalado, existem COLUMBIA_CHROMIUM_PATH e COLUMBIA_PLAYWRIGHT_MODULE.
+`check` valida contratos (inclusive jornada e perguntas em aberto), hashes de 8 TAPs + PDF + 7 fotos, parser e sete suítes de domínio/armazenamento. `npm test` executa também sete suítes de navegador (a de jornada percorre recebimento → controle → 2ª operação em 5 larguras); screenshots e relatórios ficam em artifacts/, ignorado pelo Git. A suíte HTTP adicional usa `COLUMBIA_LIVE_URL` e `node tests/browser/verify_http.cjs`, com o servidor iniciado. Ela confere URLs relativas, PDF, WebGL e larguras 320/390/768/1440/1920. Para usar navegador/runtime já instalado, existem COLUMBIA_CHROMIUM_PATH e COLUMBIA_PLAYWRIGHT_MODULE.
+
+## Jornada da OS (V1 visual)
+
+A tela segue a peça: Recebimento e medição inicial → 1ª operação → Controle de espessura → Tratamento térmico (sequência a confirmar) → 2ª operação → Controle → 3ª operação (não definida). Cabeçalho permanente da OS, roteiro de 8 seções por etapa, 3D contextual, tempos com início/decorrido, passaporte da peça e lista de informações a confirmar. Veja docs/modelo-processo.md (como o processo está modelado), docs/informacoes-a-confirmar.md, docs/design-system.md e docs/ux-jornada.md.
 
 ## Editar
 
@@ -34,7 +38,8 @@ npm test
 - **data/machines.json**: cadastro histórico preservado; apenas mini-portal é usada no piloto. Dados físicos desconhecidos são null.
 - **data/cnc/originals/**: TAPs recebidos, imutáveis; SHA256.json é o inventário recebido.
 - **data/derived/**: percurso, ferramentas e estratégias extraídos dos TAPs; não cadastrar medidas físicas aqui.
-- **app/**: interface e regras de domínio, separadas de dados e bibliotecas.
+- **app/**: interface e regras de domínio, separadas de dados e bibliotecas. app/journey contém a camada de jornada; app/design os componentes do design system.
+- **design/tokens.json**: tokens do Design System Columbia Processo (fonte única, gerada em CSS no build; fontes IBM Plex em assets/fonts).
 - **assets/**: PDF e renders do desenho, fotos originais e identidade visual.
 - **vendor/** e **licenses/**: bibliotecas existentes e atribuições.
 - **tests/**: testes por domínio e por fluxo de navegador.

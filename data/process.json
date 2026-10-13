@@ -153,7 +153,17 @@
         "Montar e presetar T1",
         "Carregar {program}",
         "Ajustar o corretor e facear até limpar"
-      ]
+      ],
+      "intent": {
+        "type": "Faceamento",
+        "objective": "Limpar a primeira face (Face A) ajustando o corretor.",
+        "source": "fixture.face_method.first_face"
+      },
+      "timing": {
+        "setup_minutes": null,
+        "setup_source": "não informado",
+        "machining": "process_timing (cabeçalho do TAP + margem)"
+      }
     },
     {
       "phase": 1,
@@ -224,7 +234,17 @@
         "Tombar uma vez; realinhar por fora e prender as mesmas garras",
         "Conferir lado e posição conforme desenho 3D",
         "Ajustar o corretor e fechar {pre_heat_target} mm; manter posição para elevar aos calços"
-      ]
+      ],
+      "intent": {
+        "type": "Faceamento",
+        "objective": "Tombar uma vez e fechar a espessura objetivo na segunda face (Face B).",
+        "source": "fixture.face_method.second_face"
+      },
+      "timing": {
+        "setup_minutes": null,
+        "setup_source": "não informado",
+        "machining": "process_timing (cabeçalho do TAP + margem)"
+      }
     },
     {
       "phase": 3,
@@ -295,7 +315,17 @@
         "Conferir lado e posição conforme desenho 3D",
         "Conferir X/Y no centro; presetar a ferramenta no topo da peça",
         "Usar T9 e carregar O002.TAP"
-      ]
+      ],
+      "intent": {
+        "type": "Referência",
+        "objective": "Montar sobre os calços e executar a marcação de referência da segunda operação.",
+        "source": "runtime.phases[4] e estratégia do TAP"
+      },
+      "timing": {
+        "setup_minutes": null,
+        "setup_source": "não informado",
+        "machining": "process_timing (cabeçalho do TAP + margem)"
+      }
     },
     {
       "phase": 5,
@@ -331,7 +361,17 @@
         "Verificar desgaste dos insertos de T3; virar ou trocar quando necessário",
         "Usar T3 e executar o desbaste de O003.TAP",
         "Registrar as cavidades feitas no contador de insertos"
-      ]
+      ],
+      "intent": {
+        "type": "Desbaste",
+        "objective": "Usinar a janela completa no desbaste.",
+        "source": "runtime.phases[5].inspect e estratégia do TAP"
+      },
+      "timing": {
+        "setup_minutes": null,
+        "setup_source": "não informado",
+        "machining": "process_timing (cabeçalho do TAP + margem)"
+      }
     },
     {
       "phase": 6,
@@ -369,7 +409,17 @@
       ],
       "instructions": [
         "Executar O004.TAP com T12 e T4; os alívios fazem parte do mesmo programa"
-      ]
+      ],
+      "intent": {
+        "type": "Alívio",
+        "objective": "Executar os alívios com T12 e T4 no mesmo programa.",
+        "source": "steps[6].instructions e estratégias do TAP"
+      },
+      "timing": {
+        "setup_minutes": null,
+        "setup_source": "não informado",
+        "machining": "process_timing (cabeçalho do TAP + margem)"
+      }
     },
     {
       "phase": 7,
@@ -439,7 +489,17 @@
       "instructions": [
         "Usar T8 para o acabamento de O005.TAP",
         "Proposta in-process: calibrar e validar uma cavidade antes das demais; consultar os detalhes"
-      ]
+      ],
+      "intent": {
+        "type": "Acabamento",
+        "objective": "Acabar as cavidades com compensação G41.",
+        "source": "runtime.phases[8] e estratégias do TAP"
+      },
+      "timing": {
+        "setup_minutes": null,
+        "setup_source": "não informado",
+        "machining": "process_timing (cabeçalho do TAP + margem)"
+      }
     },
     {
       "phase": 9,
@@ -473,7 +533,17 @@
       },
       "instructions": [
         "Usar T5 para os cantos Ø12 de O006.TAP"
-      ]
+      ],
+      "intent": {
+        "type": "Cantos",
+        "objective": "Usinar os cantos com a fresa Ø12.",
+        "source": "runtime.phases[9] e estratégia do TAP"
+      },
+      "timing": {
+        "setup_minutes": null,
+        "setup_source": "não informado",
+        "machining": "process_timing (cabeçalho do TAP + margem)"
+      }
     },
     {
       "phase": 10,
@@ -510,7 +580,17 @@
       "instructions": [
         "Executar O007.TAP com T5 e T6",
         "Proposta in-process: calibrar T6 em uma cavidade e conferir a concordância com o acabamento de T8"
-      ]
+      ],
+      "intent": {
+        "type": "Cantos e raios",
+        "objective": "Usinar os cantos com T5 e os raios com T6.",
+        "source": "steps[10].instructions e estratégias do TAP"
+      },
+      "timing": {
+        "setup_minutes": null,
+        "setup_source": "não informado",
+        "machining": "process_timing (cabeçalho do TAP + margem)"
+      }
     },
     {
       "phase": 11,
@@ -544,7 +624,17 @@
       },
       "instructions": [
         "Usar T4 para usinar o espaçador de O008.TAP"
-      ]
+      ],
+      "intent": {
+        "type": "Espaçador",
+        "objective": "Usinar o espaçador.",
+        "source": "runtime.phases[11] e estratégia do TAP"
+      },
+      "timing": {
+        "setup_minutes": null,
+        "setup_source": "não informado",
+        "machining": "process_timing (cabeçalho do TAP + margem)"
+      }
     }
   ],
   "reference_defaults": {
@@ -703,6 +793,376 @@
     "source": "confirmado pelo operador: Ø25 para Ø23,5 → diferença de raio −0,75 mm",
     "apply": "sugestão aceita manualmente; TAP e CNC não são alterados"
   },
+  "receiving": {
+    "title": "Recebimento e medição inicial",
+    "objective": "Medir a peça recebida antes da usinagem e calcular quanto material retirar.",
+    "measure": {
+      "label": "Espessura recebida",
+      "unit": "mm",
+      "source": "medição do operador no recebimento; registrada neste navegador"
+    },
+    "target_candidates": [
+      {
+        "id": "process",
+        "label": "Processo",
+        "detail": "meta antes do T.T. informada no processo",
+        "value_from": "fixture.face_method.pre_heat_target_mm"
+      },
+      {
+        "id": "drawing",
+        "label": "Desenho p.1",
+        "detail": "cota antes do T.T. no desenho original",
+        "value_from": "drawing.thickness_mm.before_heat_treatment"
+      }
+    ],
+    "target_confirmation": {
+      "status": "pendente",
+      "rule": "Nenhum dos dois valores é escolhido pelo sistema. A escolha registrada nesta peça é uma confirmação humana local e não encerra a pendência da engenharia.",
+      "question": "q-target-thickness"
+    },
+    "stock_rule": {
+      "formula": "sobremetal total = espessura recebida − espessura objetivo",
+      "process_method": {
+        "face_a": "Facear até limpar, ajustando o corretor (retirada medida após a face).",
+        "face_b": "Tombar uma vez e fechar a espessura objetivo.",
+        "source": "fixture.face_method"
+      },
+      "symmetric_reference": {
+        "enabled": true,
+        "confirmed": false,
+        "description": "Referência visual: metade do sobremetal por face. Não é regra do processo até confirmação.",
+        "question": "q-stock-split"
+      }
+    },
+    "faces": {
+      "a": {
+        "label": "Face A",
+        "stage": 0
+      },
+      "b": {
+        "label": "Face B",
+        "stage": 2
+      }
+    }
+  },
+  "journey": {
+    "schema": "columbia-journey/1",
+    "progress_rule": "Conta recebimento, etapas ativas das operações definidas e controles. Tratamento térmico e terceira operação aparecem, mas não entram na contagem até serem definidos.",
+    "nodes": [
+      {
+        "id": "receiving",
+        "kind": "receiving",
+        "short": "Recebimento",
+        "title": "Recebimento e medição inicial",
+        "counts": true,
+        "questions": [
+          "q-target-thickness",
+          "q-stock-split"
+        ]
+      },
+      {
+        "id": "op1",
+        "kind": "operation",
+        "operation": 0,
+        "short": "1ª operação",
+        "title": "Faceamento das duas faces",
+        "counts": true,
+        "questions": []
+      },
+      {
+        "id": "control-op1",
+        "kind": "control",
+        "short": "Controle",
+        "title": "Controle de espessura",
+        "after": "op1",
+        "counts": true,
+        "measure": {
+          "label": "Espessura medida após a 1ª operação",
+          "unit": "mm"
+        },
+        "compare_with": "receiving.target_candidates",
+        "criteria": null,
+        "tolerance_mm": null,
+        "questions": [
+          "q-target-thickness",
+          "q-thickness-tolerance",
+          "q-release-op1"
+        ]
+      },
+      {
+        "id": "heat",
+        "kind": "external",
+        "short": "Tratamento",
+        "title": "Tratamento térmico",
+        "counts": false,
+        "sequence_confirmed": false,
+        "evidence": "Desenho p.1 cota a espessura antes e depois do T.T.; o processo reserva sobremetal para depois do T.T.",
+        "evidence_from": [
+          "drawing.thickness_mm",
+          "fixture.face_method.allowance_for_after_heat_mm"
+        ],
+        "questions": [
+          "q-heat-treatment"
+        ]
+      },
+      {
+        "id": "op2",
+        "kind": "operation",
+        "operation": 1,
+        "short": "2ª operação",
+        "title": "Usinagem sobre calços",
+        "counts": true,
+        "questions": [
+          "q-program-order"
+        ]
+      },
+      {
+        "id": "control-op2",
+        "kind": "control",
+        "short": "Controle",
+        "title": "Controle após a 2ª operação",
+        "after": "op2",
+        "counts": true,
+        "measure": null,
+        "criteria": null,
+        "tolerance_mm": null,
+        "questions": [
+          "q-release-op2"
+        ]
+      },
+      {
+        "id": "op3",
+        "kind": "operation",
+        "operation": 2,
+        "short": "3ª operação",
+        "title": "Processo ainda não definido",
+        "counts": false,
+        "defined": false,
+        "questions": [
+          "q-op3"
+        ]
+      }
+    ]
+  },
+  "stage_guide": {
+    "policy": "guided-sections/v1",
+    "note": "Seções de consulta. Navegar entre seções não registra execução; somente Iniciar etapa e Concluída registram.",
+    "sections": [
+      {
+        "id": "preparacao",
+        "title": "Preparação",
+        "prompt": "Ler o objetivo e as instruções da etapa"
+      },
+      {
+        "id": "fixacao",
+        "title": "Fixação",
+        "prompt": "Posicionar, alinhar e prender a peça"
+      },
+      {
+        "id": "referencia",
+        "title": "Referenciamento",
+        "prompt": "Conferir X0, Y0 e Z0 na máquina"
+      },
+      {
+        "id": "ferramentas",
+        "title": "Ferramentas",
+        "prompt": "Conferir montagem e medida das ferramentas"
+      },
+      {
+        "id": "programa",
+        "title": "Programa CNC",
+        "prompt": "Carregar e conferir o programa"
+      },
+      {
+        "id": "usinagem",
+        "title": "Usinagem",
+        "prompt": "Iniciar a etapa e acompanhar o tempo"
+      },
+      {
+        "id": "inspecao",
+        "title": "Inspeção",
+        "prompt": "Medir e registrar conforme o critério"
+      },
+      {
+        "id": "conclusao",
+        "title": "Conclusão",
+        "prompt": "Concluir e seguir para a próxima etapa"
+      }
+    ]
+  },
+  "open_questions": [
+    {
+      "id": "q-target-thickness",
+      "question": "Qual é a espessura correta antes do tratamento térmico: 96,0 mm (processo) ou 95,75 mm (desenho, página 1)?",
+      "context": "O processo informa 96,0 mm; o desenho original indica 95,75 mm antes do T.T. e 95,0 mm depois.",
+      "affects": [
+        "receiving",
+        "op1",
+        "control-op1"
+      ],
+      "source": "engineering_review",
+      "status": "a confirmar"
+    },
+    {
+      "id": "q-stock-split",
+      "question": "O sobremetal é dividido igualmente entre as duas faces, ou a Face A apenas limpa e a Face B fecha a medida?",
+      "context": "O método registrado hoje é: Face A até limpar, Face B fecha a espessura. A divisão simétrica aparece só como referência visual.",
+      "affects": [
+        "receiving",
+        "op1"
+      ],
+      "source": "fixture.face_method",
+      "status": "a confirmar"
+    },
+    {
+      "id": "q-thickness-tolerance",
+      "question": "Qual é a tolerância de espessura após a primeira operação?",
+      "context": "Nenhuma tolerância de espessura foi cadastrada para a 1ª operação.",
+      "affects": [
+        "control-op1"
+      ],
+      "source": "steps[2].inspection",
+      "status": "a confirmar"
+    },
+    {
+      "id": "q-release-op1",
+      "question": "Qual inspeção libera a segunda operação (instrumento, pontos de medição, quem libera)?",
+      "context": "O controle após o faceamento registra a medida, mas o critério de liberação não foi definido.",
+      "affects": [
+        "control-op1",
+        "op2"
+      ],
+      "source": "journey.nodes.control-op1.criteria",
+      "status": "a confirmar"
+    },
+    {
+      "id": "q-release-op2",
+      "question": "Qual inspeção libera a peça após a segunda operação?",
+      "context": "Não há critério de inspeção final cadastrado para a 2ª operação.",
+      "affects": [
+        "control-op2"
+      ],
+      "source": "journey.nodes.control-op2.criteria",
+      "status": "a confirmar"
+    },
+    {
+      "id": "q-stage-inspection",
+      "question": "Qual é o critério de inspeção de cada programa da 2ª operação (O002, O003, O004, O006, O008)?",
+      "context": "Esses programas não têm inspeção cadastrada; O005 e O007 têm apenas proposta in-process.",
+      "affects": [
+        "op2"
+      ],
+      "source": "steps[].inspection",
+      "status": "a confirmar"
+    },
+    {
+      "id": "q-program-times",
+      "question": "Quais programas possuem tempo real conhecido?",
+      "context": "Os tempos exibidos vêm do cabeçalho do TAP com margem de 20%. Nenhum tempo real foi registrado.",
+      "affects": [
+        "op1",
+        "op2"
+      ],
+      "source": "process_timing",
+      "status": "a confirmar"
+    },
+    {
+      "id": "q-setup-times",
+      "question": "Qual é o tempo de preparação (montagem, fixação, referência) de cada operação?",
+      "context": "Tempo de preparação não informado em nenhuma etapa.",
+      "affects": [
+        "op1",
+        "op2"
+      ],
+      "source": "steps[].timing.setup_minutes",
+      "status": "a confirmar"
+    },
+    {
+      "id": "q-program-order",
+      "question": "Existe ordem obrigatória entre os programas O002 a O008, ou algum pode ser trocado?",
+      "context": "A sequência atual segue a numeração recebida.",
+      "affects": [
+        "op2"
+      ],
+      "source": "runtime.operations[1].phases",
+      "status": "a confirmar"
+    },
+    {
+      "id": "q-heat-treatment",
+      "question": "Quando ocorre o tratamento térmico (após a 1ª operação, após a 2ª, ou em outro ponto) e quem libera o retorno?",
+      "context": "O desenho cita espessuras antes e depois do T.T.; a posição do tratamento na sequência não foi informada.",
+      "affects": [
+        "heat"
+      ],
+      "source": "drawing.thickness_mm",
+      "status": "a confirmar"
+    },
+    {
+      "id": "q-op3",
+      "question": "Qual é a definição da terceira operação (programas, montagem, ferramentas)?",
+      "context": "Nenhum programa ou montagem recebido para a 3ª operação.",
+      "affects": [
+        "op3"
+      ],
+      "source": "operation_groups[2]",
+      "status": "a confirmar"
+    },
+    {
+      "id": "q-drawing-regions",
+      "question": "Qual folha e região do desenho correspondem a cada etapa?",
+      "context": "Nenhuma etapa tem página ou região do desenho cadastrada.",
+      "affects": [
+        "op1",
+        "op2"
+      ],
+      "source": "steps[].drawing_reference",
+      "status": "a confirmar"
+    },
+    {
+      "id": "q-revisions",
+      "question": "Quais revisões de processo, desenho e programas estão aprovadas?",
+      "context": "Revisões não informadas no cadastro.",
+      "affects": [
+        "receiving",
+        "op1",
+        "op2"
+      ],
+      "source": "revision / drawing.revision / steps[].program_revision",
+      "status": "a confirmar"
+    },
+    {
+      "id": "q-cutting-lengths",
+      "question": "Qual é o corte útil real de T1, T3, T12, T4, T8, T5 e T6?",
+      "context": "Somente T9 tem corte útil informado (30 mm).",
+      "affects": [
+        "op1",
+        "op2"
+      ],
+      "source": "tool_mounting.tools[].cutting_length_mm",
+      "status": "a confirmar"
+    },
+    {
+      "id": "q-inprocess",
+      "question": "As propostas in-process de O005 e O007 (parada e calibração em uma cavidade) serão adotadas?",
+      "context": "As propostas estão cadastradas como sugestão do operador; o TAP não foi alterado.",
+      "affects": [
+        "op2"
+      ],
+      "source": "inprocess_proposals",
+      "status": "a confirmar"
+    },
+    {
+      "id": "q-fixture",
+      "question": "Os calços e garras ilustrados foram validados fisicamente (posição, altura, folga para a ferramenta)?",
+      "context": "A montagem 3D é ilustrativa; não há verificação de colisão.",
+      "affects": [
+        "op1",
+        "op2"
+      ],
+      "source": "fixture.physical_collision_validation",
+      "status": "a confirmar"
+    }
+  ],
   "runtime": {
     "storage_key": "columbia-os10713-demo-v2",
     "phases": [

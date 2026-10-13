@@ -30,3 +30,16 @@ def validate(root: Path, config: dict):
   require(hashlib.sha256((root/name).read_bytes()).hexdigest()==expected,'Original alterado: '+name)
  for name in programs:require((root/'data/cnc/originals'/name).exists(),'TAP original ausente: '+name)
  require((root/'assets/drawings/originals'/config['drawing']['file']).exists(),'Desenho ausente')
+ # Journey layer: every reference must resolve to existing data; nothing is invented in the UI.
+ def path(obj,dotted):
+  for k in dotted.split('.'):obj=obj.get(k) if isinstance(obj,dict) else None
+  return obj
+ qids={q['id'] for q in config.get('open_questions',[])}
+ require(len(qids)==len(config.get('open_questions',[])),'Pergunta em aberto repetida')
+ for c in config['receiving']['target_candidates']:require(isinstance(path(config,c['value_from']),(int,float)),'Objetivo sem valor de origem: '+c['value_from'])
+ nodes=config['journey']['nodes'];require(len({n['id'] for n in nodes})==len(nodes),'Nó de jornada repetido')
+ for n in nodes:
+  require(set(n.get('questions',[]))<=qids,'Pergunta inexistente no nó '+n['id'])
+  if n['kind']=='operation':require(0<=n['operation']<len(config['runtime']['operations']),'Operação inexistente na jornada')
+ require(config['receiving']['stock_rule']['symmetric_reference']['confirmed'] is False or 'q-stock-split' not in qids,'Divisão simétrica confirmada sem fechar a pergunta')
+ require(len(config['stage_guide']['sections'])==8,'Roteiro da etapa deve ter 8 seções')
