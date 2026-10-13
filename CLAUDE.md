@@ -1,19 +1,9 @@
-# Continuidade — Processo Columbia Machine
+# Continuidade do protótipo Columbia
 
-Trabalhe neste frontend existente. A fonte editável está em src/; index.html é gerado por python scripts/build.py. README.md descreve responsabilidades e comandos. Não reconstruir o aplicativo para mudanças pontuais.
+A pasta oficial é software dentro de Processo Columbia Machine. Leia README.md e docs/arquitetura.md. app/ contém interface e domínios; data/process.json é o cadastro; index.html é gerado. Não reconstruir o aplicativo nem editar o HTML de saída.
 
-Decisões atuais do operador:
-- Piloto na Mini Portal; capacidade/posição física desconhecidas permanecem null. T lógico não é posição física.
-- Primeira operação: duas faces O001. Segunda: sete programas O002–O008; O004 é uma única etapa com duas ferramentas. Instruções de montagem/referência ficam em O002; depois instruções específicas.
-- Lista simples de ferramentas, campos físicos e fotos; não restabelecer o workflow antigo de preparação/checklist. T e descrição separados. A lateral lê a mesma atribuição da tabela.
-- Corretor na Mini Portal: (diâmetro real − nominal)/2; Ø25→23,5 resulta −0,75. Preenchimento explícito, sem sobrescrever automaticamente. Nominal do TAP permanece separado da medida real.
-- Descidas resolvidas do TAP preservam precisão; montagem recomendada usa ceil(descida+margem). Não significa garantia contra colisão. T1: limite operacional 1 mm, Z nominal do TAP 0.
-- Faceamento: O001 representa um passe, não o total da face. Redução padrão confirmada 0,7 mm, editável. Passes = ceil(sobremetal informado por face / redução); falta de medida deixa o total desconhecido. Não presumir um passe nem inferir sobremetal do TAP. O progresso usa quantidade de etapas enquanto o tempo estiver desconhecido, depois pondera pelo tempo. Registros de conclusão são preservados.
-- Status por registro manual: Iniciar etapa→Em execução; Concluída→Concluída. Navegar/Play não iniciam nem concluem produção. Progresso ponderado por tempo com +20%, O001 duas vezes/O004 uma vez; terceira operação desconhecida.
-- In-process de O005/O007 é proposta de engenharia, sem alteração de TAP. Calibrar primeira cavidade com sobremetal antes do passe final, que fecha a cota/tolerância do desenho. Não fixar 105,5 como cota final nem inventar tolerâncias.
-- Estudo de insertos T3 é manual; consulta/Play não somam cavidades. Linhas de consulta por cavidade mantêm vínculo/hash do original.
-- T9: corte visual de referência 30 mm, saída visual 40 mm; comprimento medido tem prioridade. Foto real pertence à ferramenta/máquina e fica no navegador.
+Preservar um caso real na Mini Portal, duas faces O001, sete etapas O002–O008 e O004 único com T12/T4. IDs persistidos e chave columbia-os10713-demo-v2 não mudam sem migração. Play/navegação não registram execução. Manter campos Descida máxima no programa / Montagem recomendada separados; dados físicos desconhecidos null. Montagem recomendada ceil(descida+margem), padrão10; T1 limite operacional1 separado de Z nominal0; corretor Mini Portal (real−nominal)/2, ação explícita. Faceamento por sobremetal e ceil/0,7 editável; sem medida tempo A definir; margem de tempo20%. Não preencher fotos/medidas de testes na entrega.
 
-Preservar parser, TAPs originais, 3D grande, toolpath, desenho, responsividade, armazenamento/migrações existentes e registros históricos. Não adicionar rede, login, servidor ou envio ao CNC nesta entrega. Regras ficam em domínios; componentes leem dados compartilhados.
+Nenhuma rede, autenticação, conexão CNC ou múltiplas máquinas na V1. Perfis antigos ficam isolados. Renderer, TAPs, parser, desenho e registros existentes preservados. Divergência 96 versus95,75 antes do T.T. é da engenharia, não corrigir silenciosamente. Terceira operação indefinida. Não recolocar checklist antigo de preparação.
 
-Depois de editar: build, testes relevantes, hashes dos originais e inspeção das capturas em 1920×1080/mobile. npm test contém os fluxos atuais; artefatos novos ficam em artifacts/. Não incorporar medidas ou fotos de fixtures ao HTML.
+Depois de editar: npm run build, npm run check, npm test; verificar screenshots/3D/desenho/mobile, hash dos originais e fontes de L/N. Publicar só no Pages existente por push fast-forward. docs/briefing-claude-design.md rege a próxima fase visual.
