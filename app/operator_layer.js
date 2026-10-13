@@ -3,7 +3,7 @@ __TOOL_VISUAL_DOMAIN__
 __JOB_TIMING_DOMAIN__
 __TOOL_WORK_DOMAIN__
 // Operator layer reuses the CNC kernel, trajectories, fixture geometry and process phases.
-const OPERATOR_CONFIG=__OPERATOR_CONFIG__;
+const OPERATOR_CONFIG=PROCESS_CONFIG;
 const STRATEGY_DATA=__STRATEGY_DATA__;
 __STRATEGY_UI__
 const DRAWING_PAGES=__DRAWING_PAGES__;
@@ -75,7 +75,7 @@ for(const t of DATA.tools){const as=tooling.assembly(tooling.jobMachineId,t.id);
 
 function renderOperationCheckins(){document.querySelectorAll('[data-operation-check]').forEach(el=>{const id=Number(el.dataset.operationCheck);el.checked=!!state.operationCheckins[id];const text=el.closest('label').querySelector('span');text.textContent=id===2?'A confirmar':el.checked?'✓ OK':'OK';el.closest('.operation-item').dataset.complete=String(el.checked);})}
 
-persist=function(){try{localStorage.setItem("columbia-os10713-demo-v2",JSON.stringify(Object.fromEntries(Object.entries({...state,stopped:false}).filter(([k])=>!["checks","stickouts","cuttingLengths"].includes(k)))));if($("storageNotice"))$("storageNotice").textContent="Registros salvos neste navegador.";return true}catch{if($("storageNotice"))$("storageNotice").textContent="Não foi possível salvar neste navegador. Confira o espaço disponível.";return false}};
+persist=function(){try{localStorage.setItem(PROCESS_CONFIG.runtime.storage_key,JSON.stringify(Object.fromEntries(Object.entries({...state,stopped:false}).filter(([k])=>!["checks","stickouts","cuttingLengths"].includes(k)))));if($("storageNotice"))$("storageNotice").textContent="Registros salvos neste navegador.";return true}catch{if($("storageNotice"))$("storageNotice").textContent="Não foi possível salvar neste navegador. Confira o espaço disponível.";return false}};
 function engineeringReferences(phase=state.operation===2?null:state.phase){
  if(phase===null)return{x:"",y:"",z:"",center:false};
  const cfg=OPERATOR_CONFIG.steps.find(s=>s.phase===Number(phase)),defaults=OPERATOR_CONFIG.reference_defaults||{};
@@ -175,6 +175,7 @@ renderOperationNavigation=function(){
  $("operations").innerHTML=processOperations.map(o=>'<div class="operation-item"><button data-operation="'+o.id+'" aria-current="'+(o.id===state.operation)+'" aria-label="'+esc(o.title)+'"><strong>'+esc(o.title)+'</strong><span>'+esc(o.id===2?'Aguardando definição':o.name)+'</span></button><div class="operation-estimate" data-operation-timing="'+o.id+'"></div><label class="operation-checkin" title="Registro manual de conclusão da operação"><input type="checkbox" data-operation-check="'+o.id+'" aria-label="Conclusão manual da '+esc(o.title)+'" '+(o.id===2?'disabled':'')+'><span>Operação OK</span></label></div>').join("");
  $("operations").querySelectorAll("button[data-operation]").forEach(b=>b.onclick=()=>selectOperation(Number(b.dataset.operation)));
  $("operations").querySelectorAll("[data-operation-check]").forEach(el=>el.onchange=()=>{state.operationCheckins[el.dataset.operationCheck]=el.checked;persist();renderOperationCheckins()});renderOperationCheckins();
+ const notice=$("engineeringReview");notice.hidden=state.operation!==0;notice.textContent=OPERATOR_CONFIG.engineering_review.message;
  renderStageFlow();
 };
 renderOperationToolLine=function(){};
@@ -242,9 +243,7 @@ function stepsNow(){
  if(state.operation===2)return ["Montagem e programas a confirmar"];
  const tools=requiredTools().map(id=>'T'+id).join(' / ');
  const reference=engineeringReferences().center?'Conferir X/Y no centro; presetar a ferramenta no topo da peça':'Conferir X/Y conforme engenharia; presetar a ferramenta no topo da peça';
- if(state.phase===2)return ['Tombar uma vez; realinhar por fora e prender as mesmas garras','Conferir lado e posição conforme desenho 3D','Ajustar o corretor e fechar 96,0 mm; manter posição para elevar aos calços'];
- if(state.phase===0)return ['Começar invertida; alinhar por fora e prender as garras','Conferir lado e posição conforme desenho 3D',reference,'Montar e presetar T1','Carregar '+displayedProgramFile(),'Ajustar o corretor e facear até limpar'];
- return stageConfig()?.instructions||['Usar '+tools+' e carregar '+displayedProgramFile()];
+ return (stageConfig()?.instructions||['Usar '+tools+' e carregar {program}']).map(text=>text.replaceAll('{program}',displayedProgramFile()||'A confirmar').replaceAll('{reference}',reference).replaceAll('{pre_heat_target}',fmtTarget(OPERATOR_CONFIG.fixture.face_method.pre_heat_target_mm)));
 }
 function renderOperational(){
  if(!$("operationStatus"))return;
@@ -302,7 +301,7 @@ $("reachMargin").oninput=e=>{
 };
 $("references").onclick=()=>modal("Referências arquivadas",'<p>Fotos e desenho originais preservados no projeto. A consulta ao desenho está na aba Desenho da referência visual.</p>');
 function makeDrawingViewer(host,page=0,expanded=false){
- host.innerHTML='<div class="drawing-toolbar"><label>Página <select data-draw="page" aria-label="Página do desenho">'+DRAWING_PAGES.map((p,i)=>'<option value="'+i+'"> '+p.page+' / '+DRAWING_PAGES.length+'</option>').join("")+'</select></label><div class="drawing-buttons"><button data-draw="minus" aria-label="Reduzir desenho">−</button><button data-draw="plus" aria-label="Ampliar zoom do desenho">+</button><button data-draw="fit">Ajustar à tela</button>'+(!expanded?'<button data-draw="expand">Ampliar</button>':'')+'</div></div><div class="drawing-viewport" tabindex="0" aria-label="Desenho: arraste para mover, roda para zoom"><img draggable="false" alt=""></div><div class="drawing-footer">Arraste para mover · roda para zoom · <a href="Desenhos/'+encodeURIComponent(OPERATOR_CONFIG.drawing.file)+'" target="_blank">PDF original</a></div>';
+ host.innerHTML='<div class="drawing-toolbar"><label>Página <select data-draw="page" aria-label="Página do desenho">'+DRAWING_PAGES.map((p,i)=>'<option value="'+i+'"> '+p.page+' / '+DRAWING_PAGES.length+'</option>').join("")+'</select></label><div class="drawing-buttons"><button data-draw="minus" aria-label="Reduzir desenho">−</button><button data-draw="plus" aria-label="Ampliar zoom do desenho">+</button><button data-draw="fit">Ajustar à tela</button>'+(!expanded?'<button data-draw="expand">Ampliar</button>':'')+'</div></div><div class="drawing-viewport" tabindex="0" aria-label="Desenho: arraste para mover, roda para zoom"><img draggable="false" alt=""></div><div class="drawing-footer">Arraste para mover · roda para zoom · <a href="assets/drawings/originals/'+encodeURIComponent(OPERATOR_CONFIG.drawing.file)+'" target="_blank">PDF original</a></div>';
  const viewport=host.querySelector(".drawing-viewport"),img=viewport.querySelector("img"),select=host.querySelector("select");
  let index=page,scale=1,fitScale=1,x=0,y=0,drag=null,lastWidth=0,lastHeight=0;
  function paint(){img.style.transform="translate("+x+"px,"+y+"px) scale("+scale+")"}
@@ -350,7 +349,7 @@ init3d=function(){
  scene.add(zeroMarker);updateAssembly();
 };
 const originalUpdateAssembly=updateAssembly;
-updateAssembly=function(){originalUpdateAssembly();if(zeroMarker){zeroMarker.visible=state.operation!==2&&engineeringReferences().center;zeroMarker.position.set(0,plateBottom+96,0);draw()}renderOperational()};
+updateAssembly=function(){originalUpdateAssembly();if(zeroMarker){zeroMarker.visible=state.operation!==2&&engineeringReferences().center;zeroMarker.position.set(0,plateBottom+PROCESS_CONFIG.simulation.part_mm.thickness,0);draw()}renderOperational()};
 
 
 __TOOLING_UI__

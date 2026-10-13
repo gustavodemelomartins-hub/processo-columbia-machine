@@ -1,4 +1,4 @@
-const {chromium}=require('../scripts/browser_runtime.cjs');
+const {chromium}=require('../../scripts/browser_runtime.cjs');
 const assert=require('node:assert/strict'),fs=require('node:fs');
 (async()=>{const b=await chromium.launch({executablePath:process.env.COLUMBIA_CHROMIUM_PATH||undefined,args:['--enable-unsafe-swiftshader','--use-angle=swiftshader']});try{
  const p=await b.newPage({viewport:{width:1920,height:1080},offline:true}),errors=[];p.on('pageerror',e=>errors.push(e.message));const url=process.env.COLUMBIA_LIVE_URL||'file:///'+process.cwd().replaceAll('\\','/')+'/index.html';

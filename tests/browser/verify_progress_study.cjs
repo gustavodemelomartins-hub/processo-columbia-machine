@@ -1,11 +1,11 @@
-const{chromium}=require('../scripts/browser_runtime.cjs');
+const{chromium}=require('../../scripts/browser_runtime.cjs');
 const fs=require('fs'),assert=require('node:assert/strict');
 (async()=>{const b=await chromium.launch({executablePath:process.env.COLUMBIA_CHROMIUM_PATH||undefined,args:['--enable-unsafe-swiftshader','--use-angle=swiftshader']});try{
  const ctx=await b.newContext({offline:true,viewport:{width:1920,height:1080},acceptDownloads:true}),p=await ctx.newPage(),errors=[];p.on('pageerror',e=>{errors.push(e.message);console.error('PAGE ERROR',e.stack)});
  const url='file:///'+process.cwd().replaceAll('\\','/')+'/index.html';await p.goto(url);await p.waitForFunction(()=>window.columbiaDemo?.getCNC().rows.length);
  const timing=()=>p.evaluate(()=>columbiaDemo.jobTiming());const missing=await timing();assert.equal(missing.totalSeconds,null);assert.equal(missing.groups[0].unknownStages,2);for(const id of[0,2]){const input=p.locator(`[data-face-stock="${id}"]`);await input.fill('0.7');await input.press('Tab');}const initial=await timing();
  assert.equal(initial.totalStages,9);assert.equal(initial.percent,0);assert.equal(initial.groups[0].stages.length,2);assert.equal(initial.groups[1].stages.length,7);assert.equal(initial.groups[2].totalSeconds,null);
- const data=JSON.parse(fs.readFileSync('src/strategy_data.json','utf8')),expected=Object.entries(data).reduce((sum,[file,s])=>sum+Math.ceil(s.time_header_seconds*1.2)*(file==='O001.TAP'?2:1),0);
+ const data=JSON.parse(fs.readFileSync('data/derived/strategy_data.json','utf8')),expected=Object.entries(data).reduce((sum,[file,s])=>sum+Math.ceil(s.time_header_seconds*1.2)*(file==='O001.TAP'?2:1),0);
  assert.equal(initial.totalSeconds,expected);assert.equal(await p.locator('.job-time-scope').count(),0);assert.equal(initial.groups[1].stages.find(s=>s.id===5).plannedSeconds,10250);
  await p.click('[data-operation="1"]');assert.equal(await p.locator('.stage-time').count(),7);assert.equal(await p.locator('#steps strong').allTextContents().then(a=>a.filter(s=>s==='O004.TAP').length),1);
  await p.locator('[data-stage-complete="5"]').check();const one=await timing();assert.equal(one.completedSeconds,10250);assert.equal(one.remainingSeconds,expected-10250);assert.equal(Number(await p.locator('#jobTimeProgress').getAttribute('value')),Math.floor(10250*100/expected));

@@ -1,4 +1,4 @@
-const assert=require('node:assert/strict'),fs=require('node:fs'),D=require('./tooling_domain.js'),P=JSON.parse(fs.readFileSync(__dirname+'/machine_profiles.json','utf8'));
+const assert=require('node:assert/strict'),fs=require('node:fs'),D=require('../../app/ferramental/tooling_domain.js'),P=JSON.parse(fs.readFileSync(__dirname+'/../../data/machines.json','utf8'));
 assert.equal(D.positive(true),null);assert.equal(D.positive('Infinity'),null);assert.equal(D.positive(''),null);assert.equal(D.positive('-1'),null);
 const tools=[{id:3,name:'ALTO AVANCO D32',diameter:32,radius:3,programs:['O003.TAP']},{id:6,name:'TOPO D10',diameter:10,radius:0,programs:['O007.TAP']}];
 const d=D.create({tools,jobId:'os-10713',profiles:P,legacy:{checks:{3:{mounted:true,length:true,offset:true,machine:true}},stickouts:{3:'110'}}});

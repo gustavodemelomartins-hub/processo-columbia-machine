@@ -5,11 +5,11 @@ sys.path.insert(0,str(root/'vendor/easy_gcode_plot'))
 from app.gcode.program_execution import execute_program
 class ParserAndSources(unittest.TestCase):
  def test_sources_and_strategy_lines(self):
-  hashes=json.loads((root/'CNC/originais/SHA256.json').read_text())
-  strategies=json.loads((root/'src/strategy_data.json').read_text(encoding='utf8'))
+  hashes=json.loads((root/'data/cnc/originals/SHA256.json').read_text())
+  strategies=json.loads((root/'data/derived/strategy_data.json').read_text(encoding='utf8'))
   self.assertEqual(len(strategies),8)
   for name,expected in hashes.items():
-   original=root/'CNC/originais'/name;raw=original.read_bytes()
+   original=root/'data/cnc/originals'/name;raw=original.read_bytes()
    self.assertEqual(hashlib.sha256(raw).hexdigest(),expected)
    self.assertEqual(strategies[name]['sha256'],expected)
    lines=raw.decode('utf8').splitlines()
@@ -19,7 +19,7 @@ class ParserAndSources(unittest.TestCase):
      if record:self.assertEqual(lines[record['line']-1],record['code'])
  def test_face_and_two_tool_program(self):
   for name,motions,tools in [('O001.TAP',25,{'T1'}),('O004.TAP',1060,{'T12','T4'})]:
-   result,_,_=execute_program((root/'CNC/originais'/name).read_text(),language='fanuc_mill')
+   result,_,_=execute_program((root/'data/cnc/originals'/name).read_text(),language='fanuc_mill')
    self.assertTrue(result.complete);self.assertEqual(len(result.motions),motions)
    self.assertEqual({m.tool for m in result.motions if m.tool},tools)
 if __name__=='__main__':unittest.main()

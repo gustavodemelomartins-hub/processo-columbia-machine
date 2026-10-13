@@ -11,7 +11,12 @@
     "revision": null,
     "pages": 5,
     "principal": true,
-    "source": "desenho técnico original; visualização por render derivado"
+    "source": "desenho técnico original; visualização por render derivado",
+    "thickness_mm": {
+      "before_heat_treatment": 95.75,
+      "after_heat_treatment": 95,
+      "source": "PDF original, página 1, seção lateral e cota Antes T.T./Depois T.T."
+    }
   },
   "operation_groups": [
     {
@@ -50,7 +55,7 @@
         5,
         6
       ],
-      "program_set_status": "parcial; demais programas aguardando envio"
+      "program_set_status": "completo para o piloto: O002 a O008 recebidos"
     },
     {
       "number": 3,
@@ -140,7 +145,15 @@
       "orientation": {
         "rotation_x_degrees": 180,
         "provenance": "montagem ilustrativa conforme orientação do usuário; não inferida do TAP"
-      }
+      },
+      "instructions": [
+        "Começar invertida; alinhar por fora e prender as garras",
+        "Conferir lado e posição conforme desenho 3D",
+        "{reference}",
+        "Montar e presetar T1",
+        "Carregar {program}",
+        "Ajustar o corretor e facear até limpar"
+      ]
     },
     {
       "phase": 1,
@@ -206,7 +219,12 @@
       "orientation": {
         "rotation_x_degrees": 0,
         "provenance": "montagem ilustrativa conforme orientação do usuário; não inferida do TAP"
-      }
+      },
+      "instructions": [
+        "Tombar uma vez; realinhar por fora e prender as mesmas garras",
+        "Conferir lado e posição conforme desenho 3D",
+        "Ajustar o corretor e fechar {pre_heat_target} mm; manter posição para elevar aos calços"
+      ]
     },
     {
       "phase": 3,
@@ -684,5 +702,248 @@
     "mode": "radius_difference",
     "source": "confirmado pelo operador: Ø25 para Ø23,5 → diferença de raio −0,75 mm",
     "apply": "sugestão aceita manualmente; TAP e CNC não são alterados"
+  },
+  "runtime": {
+    "storage_key": "columbia-os10713-demo-v2",
+    "phases": [
+      {
+        "title": "Facear a primeira face",
+        "sub": "Setup 1 · Conferir o lado pelas cavidades. Prender nas mesmas extremidades da segunda operação e usar O001.",
+        "tools": [
+          1
+        ],
+        "program": 0,
+        "setup": "mesa",
+        "inspect": "Conferir a face usinada e a medida antes de repetir o faceamento do outro lado.",
+        "kind": "face"
+      },
+      {
+        "title": "Tombar para a face oposta",
+        "sub": "Etapa incorporada ao segundo faceamento; registro legado preservado.",
+        "tools": [
+          1
+        ],
+        "program": null,
+        "setup": "virada",
+        "inspect": "Conferir a orientação antes da próxima montagem. Esta virada não está indicada por M0 nos arquivos.",
+        "kind": "setup"
+      },
+      {
+        "title": "Facear o segundo lado e fechar 96,0 mm",
+        "sub": "Setup 1 · O001 novamente. Conferir a espessura final antes de subir a peça nos calços.",
+        "tools": [
+          1
+        ],
+        "program": 0,
+        "setup": "mesa",
+        "inspect": "Fechar e registrar a espessura na aba Montagem. Esta etapa ainda utiliza somente O001.",
+        "kind": "face"
+      },
+      {
+        "title": "Montar sobre os calços",
+        "sub": "Quatro apoios nas extremidades, sob os pontos de aperto. Alinhar e definir a origem.",
+        "tools": [],
+        "program": null,
+        "setup": "calcos",
+        "inspect": "Confirmar os apoios, a fixação e a origem com a montagem real.",
+        "kind": "setup"
+      },
+      {
+        "title": "Marcação e referência",
+        "sub": "T9 · Fresa de topo Ø12. Operação identificada como referência no O002.",
+        "tools": [
+          9
+        ],
+        "program": 1,
+        "setup": "calcos",
+        "inspect": "Conferir a referência inicial antes de continuar. Região e critério de conferência a definir.",
+        "kind": "cut"
+      },
+      {
+        "title": "Desbaste",
+        "sub": "T3 · Alto avanço Ø32. Preparar as ferramentas dos alívios enquanto este ciclo acontece.",
+        "tools": [
+          3
+        ],
+        "program": 2,
+        "setup": "calcos",
+        "inspect": "Usinar a janela completa no desbaste. Nesta revisão, o in-process fica no acabamento e nos cantos.",
+        "kind": "cut"
+      },
+      {
+        "title": "Alívios com T12 e T4",
+        "sub": "T12 Ø25 e T4 Ø16 são chamadas do mesmo O004.TAP.",
+        "tools": [
+          12,
+          4
+        ],
+        "program": 3,
+        "setup": "calcos",
+        "inspect": "Executar os alívios com T12. A conferência in-process está proposta no acabamento e nos cantos.",
+        "kind": "cut"
+      },
+      {
+        "title": "Alívio com cabeçote Ø16",
+        "sub": "T4 · Turbo Ø16. Segunda ferramenta do O004.",
+        "tools": [
+          4
+        ],
+        "program": 3,
+        "setup": "calcos",
+        "inspect": "Executar os alívios com T4. Seguir para o acabamento com a fresa Ø25.",
+        "kind": "cut"
+      },
+      {
+        "title": "Acabamento da cavidade",
+        "sub": "T8 · Fresa longa Ø25. O005 usa G41 e seleciona D8.",
+        "tools": [
+          8
+        ],
+        "program": 4,
+        "setup": "calcos",
+        "inspect": "Concluir os passes de uma cavidade de teste; propor retirada e M0; medir, conferir a compensação e só então repetir nas demais.",
+        "kind": "finish"
+      },
+      {
+        "title": "Cantos com fresa Ø12",
+        "sub": "T5 · Fresa longa Ø12 nos O006 e O007. Primeira ferramenta do par de alívio.",
+        "tools": [
+          5
+        ],
+        "program": 5,
+        "setup": "calcos",
+        "inspect": "Primeira etapa do par de fresas de canto. A conferência combinada do degrau está proposta após a fresa Ø10, na próxima etapa.",
+        "kind": "pair"
+      },
+      {
+        "title": "Cantos com fresa Ø10",
+        "sub": "T6 · Fresa longa Ø10 no O007. Conferência proposta após o par T5/T6.",
+        "tools": [
+          5,
+          6
+        ],
+        "program": 6,
+        "setup": "calcos",
+        "inspect": "Após as duas fresas, propor M0 e verificar se existe degrau. Registrar o ajuste e revisar a retomada antes de repetir nas outras regiões.",
+        "kind": "finish"
+      },
+      {
+        "title": "Usinar o espaçador",
+        "sub": "T4 · Turbo Ø16. Operação identificada como espaçador no O008.",
+        "tools": [
+          4
+        ],
+        "program": 7,
+        "setup": "calcos",
+        "inspect": "Conferir a região inicial do espaçador. Critério e posição de medição ainda serão definidos.",
+        "kind": "cut"
+      }
+    ],
+    "labels": [
+      "1º lado",
+      "Tombar peça",
+      "2º lado / 96 mm",
+      "Calços e origem",
+      "Referência",
+      "Desbaste",
+      "Alívios Ø25 / Ø16",
+      "Alívio Ø16",
+      "Acabamento / teste",
+      "Cantos Ø12",
+      "Cantos Ø10 / teste",
+      "Espaçador"
+    ],
+    "tool_names": {
+      "1": "Girassol Ø100",
+      "3": "Alto avanço Ø32",
+      "4": "Turbo Ø16",
+      "5": "Topo Ø12 longa",
+      "6": "Topo Ø10 longa",
+      "8": "Topo Ø25 longa",
+      "9": "Topo Ø12",
+      "12": "Abacaxi Ø25 · R0,8 no nome"
+    },
+    "operations": [
+      {
+        "id": 0,
+        "title": "Primeira operação",
+        "name": "Faceamento das duas faces",
+        "programs": [
+          0
+        ],
+        "phases": [
+          0,
+          2
+        ],
+        "tools": [
+          1
+        ],
+        "status": "received",
+        "description": "O001 nas duas faces · fechar a espessura antes do tratamento"
+      },
+      {
+        "id": 1,
+        "title": "Segunda operação",
+        "name": "Usinagem sobre calços",
+        "programs": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ],
+        "phases": [
+          4,
+          5,
+          6,
+          8,
+          9,
+          10,
+          11
+        ],
+        "tools": [
+          9,
+          3,
+          12,
+          4,
+          8,
+          5,
+          6
+        ],
+        "status": "received",
+        "description": "O002–O008 recebidos · conjunto completo do piloto"
+      },
+      {
+        "id": 2,
+        "title": "Terceira operação",
+        "name": "A definir",
+        "programs": [],
+        "phases": [],
+        "tools": [],
+        "status": "pending",
+        "description": "Aguardando programas e definição do processo"
+      }
+    ]
+  },
+  "simulation": {
+    "status": "ilustrativa; sem certificação de colisão",
+    "part_mm": {
+      "width": 1104.9,
+      "depth": 568.3,
+      "thickness": 96
+    },
+    "support_top_y": 212,
+    "table_top_y": 132,
+    "outline_mm": {
+      "width": 1105,
+      "depth": 568.3,
+      "source": "aproximação de contorno retangular já usada na ilustração; não substitui CAD"
+    }
+  },
+  "engineering_review": {
+    "status": "pendente",
+    "message": "Meta informada pelo processo: 96,0 mm. Desenho, página 1: 95,75 mm antes do T.T. Confirmar a revisão com a engenharia antes da usinagem."
   }
 }

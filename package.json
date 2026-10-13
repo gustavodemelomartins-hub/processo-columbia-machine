@@ -1,12 +1,16 @@
 {
   "name": "processo-columbia-machine",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
     "build": "python scripts/build.py",
     "test": "node scripts/test.cjs",
     "test:unit": "node scripts/test.cjs --unit",
-    "check:originals": "python scripts/check_originals.py"
+    "check:originals": "python scripts/check_originals.py",
+    "dev": "python -m http.server 4173 --bind 127.0.0.1",
+    "test:contract": "python scripts/test_project.py",
+    "test:parser": "python scripts/test_parser.py",
+    "check": "python scripts/test_project.py && python scripts/check_originals.py && python scripts/test_parser.py && node scripts/test.cjs --unit"
   },
   "devDependencies": {
     "playwright": "1.62.1"

@@ -1,6 +1,6 @@
 from pathlib import Path
 import json,gzip,re,collections,bisect
-p=Path('CNC/viewer/O003.json');d=json.loads(p.read_text(encoding='utf8') if p.exists() else gzip.decompress(p.with_suffix('.json.gz').read_bytes()));contours=json.loads(Path('src/project_data.json').read_text(encoding='utf8'))['contours'];lines=d['source_lines']
+p=Path('data/derived/cnc/viewer/O003.json');d=json.loads(p.read_text(encoding='utf8') if p.exists() else gzip.decompress(p.with_suffix('.json.gz').read_bytes()));contours=json.loads(Path('data/derived/project_data.json').read_text(encoding='utf8'))['contours'];lines=d['source_lines']
 def ref(n):
  code=lines[n-1];m=re.match(r'\s*N(\d+)',code);return {'line':n,'n':int(m[1])if m else None,'code':code}
 def inside(x,y,c):
@@ -30,5 +30,5 @@ for k,rows in enumerate(ranges):
  entries.append({'cavityId':winner+1 if resolved else None,'sequence':k+1,'geometricMatch':resolved,'sampleAgreement':round(ratio,4),'z10Before':ref(anchors[k]),'positionXY':ref(xy)if xy else None,'firstG1':ref(first[8])if first else None,'z10After':ref(anchors[k+1]),'feedAtEntry':first[10]if first else None,'wcs':sorted({'G'+str(r[13])for r in rows}),'tools':sorted({r[7]for r in rows})})
 result={'file':'O003.TAP','sha256':d['meta']['sha256'],'provenance':'Z10 e G1 extraídos do TAP; associação espacial aos contornos ilustrativos','entries':entries}
 assert len(entries)==12 and {e['cavityId']for e in entries}==set(range(1,13))
-Path('src/cavity_data.json').write_text(json.dumps(result,ensure_ascii=False,separators=(',',':')),encoding='utf8');Path('CNC/Cavidades_O003.json').write_text(json.dumps(result,ensure_ascii=False,indent=2),encoding='utf8')
+Path('data/derived/cavity_data.json').write_text(json.dumps(result,ensure_ascii=False,separators=(',',':')),encoding='utf8');Path('data/derived/cnc/Cavidades_O003.json').write_text(json.dumps(result,ensure_ascii=False,indent=2),encoding='utf8')
 print([(e['cavityId'],e['sampleAgreement'],e['z10Before']['line'],e['firstG1']['line'],e['z10After']['line'])for e in entries])

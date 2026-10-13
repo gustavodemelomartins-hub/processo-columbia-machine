@@ -1,4 +1,4 @@
-const{chromium}=require('../scripts/browser_runtime.cjs');const fs=require('fs'),assert=require('node:assert/strict');
+const{chromium}=require('../../scripts/browser_runtime.cjs');const fs=require('fs'),assert=require('node:assert/strict');
 (async()=>{const b=await chromium.launch({executablePath:process.env.COLUMBIA_CHROMIUM_PATH||undefined,args:['--enable-unsafe-swiftshader','--use-angle=swiftshader']});try{
  const p=await b.newPage({offline:true,viewport:{width:1920,height:1080}}),errors=[];p.on('pageerror',e=>{errors.push(e.message);console.error(e.stack)});await p.goto('file:///'+process.cwd().replaceAll('\\','/')+'/index.html');await p.waitForFunction(()=>window.columbiaDemo?.getCNC().rows.length);
  const field=(id,f)=>p.locator(`[data-table-tool="${id}"][data-field="${f}"]`),commit=async(id,f,v)=>{await field(id,f).fill(v);await field(id,f).press('Tab');};

@@ -1,4 +1,4 @@
-const assert=require('assert');const Rule=require('./tool_length_domain.js');
+const assert=require('assert');const Rule=require('../../app/tool_length_domain.js');
 for(const [z,expected] of [[-99.97,110],[-83.2,94],[-104,114],[-99.1,110],[-100,110],[-93.4,104]]){const r=Rule.evaluate({zMin:z,resolved:true,topZero:true,margin:10});assert.equal(r.maximumDescent,-z);assert.equal(r.recommended,expected);assert.ok(r.recommended>=r.exactRequired)}
 assert.equal(Rule.evaluate({zMin:-60,resolved:true,topZero:true,margin:3}).recommended,63);
 for(const overrides of [{resolved:false},{topZero:false},{zMin:NaN},{margin:-1},{margin:null}])assert.equal(Rule.evaluate({zMin:-99.97,resolved:true,topZero:true,margin:10,...overrides}).recommended,null);

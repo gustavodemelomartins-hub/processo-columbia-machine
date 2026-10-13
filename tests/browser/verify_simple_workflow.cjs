@@ -1,4 +1,4 @@
-const{chromium}=require('../scripts/browser_runtime.cjs');
+const{chromium}=require('../../scripts/browser_runtime.cjs');
 const fs=require('node:fs'),assert=require('node:assert/strict');
 const url=process.env.COLUMBIA_LIVE_URL||'file:///'+process.cwd().replaceAll('\\','/')+'/index.html';
 (async()=>{const b=await chromium.launch({executablePath:process.env.COLUMBIA_CHROMIUM_PATH||undefined,args:['--enable-unsafe-swiftshader','--use-angle=swiftshader']});try{
