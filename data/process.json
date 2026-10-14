@@ -139,6 +139,44 @@
       "allowance_for_after_heat_mm": 0.75,
       "provenance": "processo descrito pelo usuário; ajustes reais do corretor não estão no TAP",
       "target_source": "desenho original, página 1: 95,75 mm antes do T.T.; 95,0 mm depois"
+    },
+    "inner_clamps": {
+      "description": "quatro garras de barra com rasgo, parafuso e porca, no meio da peça, apoiadas nas nervuras",
+      "stages": [
+        17,
+        18,
+        19,
+        20,
+        23,
+        24
+      ],
+      "stages_source": "Gustavo, 14/10/2026 05:18 e 12:28: garras por dentro em O0014–O0017 e a partir da orelha 1 (O0020)",
+      "reference_photo": "data/cnc/recebidos/2026-10-14_OS10713_O0014-O0021/referencias/IMG_9422.jpeg",
+      "strap_mm": {
+        "length": 200,
+        "width": 50,
+        "thickness": 20
+      },
+      "coordinates_mm": [
+        {
+          "x": -310,
+          "y": -125
+        },
+        {
+          "x": -310,
+          "y": 45
+        },
+        {
+          "x": 310,
+          "y": -45
+        },
+        {
+          "x": 310,
+          "y": 125
+        }
+      ],
+      "provenance": "derivado dos programas: posições fora dos percursos de O0014–O0017, O0020 e O0021 (todo movimento abaixo de Z+60, raio da ferramenta + 5 mm), com o parafuso sobre uma cavidade. Coordenadas no sistema do programa (X, Y). Ilustrativo; tamanho da barra estimado da foto; conferir na máquina",
+      "check": "python scripts/check_inner_clamps.py"
     }
   },
   "steps": [

@@ -299,7 +299,7 @@ function renderStageHow(){
   '<details class="op-details"><summary>Ver detalhes da operação</summary><dl class="op-details-list">'+
    jDetailRow('Posição da peça',esc(position))+
    jDetailRow('Montagem',esc(onSupports?fx.supports:'Sobre a mesa'))+
-   (onSupports?jDetailRow('Garras',esc(fx.top_clamps)):'')+
+   (fx.inner_clamps.stages.includes(state.phase)?jDetailRow('Garras',esc(fx.inner_clamps.description)):onSupports?jDetailRow('Garras',esc(fx.top_clamps)):'')+
    jDetailRow('Alinhamento',esc(fx.alignment.value))+
    jDetailRow('Referência','X0 '+esc(refs.x||'—')+' · Y0 '+esc(refs.y||'—')+' · Z0 '+esc(refs.z||'—')+(meta?.wcs?.length?' · '+esc(meta.wcs.join(' / ')):''))+
    jDetailRow('Estratégias no programa',esc((prog?.operations||[]).map(o=>o.replace(/^_+/,'')).join(' · ')))+
@@ -344,7 +344,7 @@ function journey3D(){
  journeyAxes.position.set(0,top,0);journeyAxes.visible=operation&&engineeringReferences().center;
  if(typeof zeroMarker!=='undefined'&&zeroMarker)zeroMarker.visible=false;
  journeyFaceLayer.position.set(0,top+5,0);journeyFaceLayer.visible=operation&&p?.kind==='face';
- const caption=!operation?'':state.phase===FACE_IDS[0]?'Face A em laranja · peça invertida, sobre a mesa':state.phase===FACE_IDS[1]?'Face B em laranja · peça tombada, sobre a mesa':state.operation===2?'Peça tombada, direto na mesa · X0 Y0 no centro, Z0 no topo':'Peça sobre 4 calços com 4 garras · X0 Y0 no centro, Z0 no topo';
+ const caption=!operation?'':state.phase===FACE_IDS[0]?'Face A em laranja · peça invertida, sobre a mesa':state.phase===FACE_IDS[1]?'Face B em laranja · peça tombada, sobre a mesa':(state.operation===2?'Peça tombada, direto na mesa':'Peça sobre 4 calços')+(OPERATOR_CONFIG.fixture.inner_clamps.stages.includes(state.phase)?' · garras por dentro':' · 4 garras')+' · X0 Y0 no centro, Z0 no topo';
  const el=$('viewerContext');if(el){el.textContent=caption;el.hidden=!caption;}
  draw();
 }
