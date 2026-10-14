@@ -32,3 +32,5 @@
 @media(max-width:800px){.industrial .tool-readiness-summary{flex-direction:column;align-items:stretch;gap:12px}.industrial .tool-readiness-summary>div{min-width:0}.industrial .tool-readiness-summary p{line-height:1.5}}
 @media(max-width:600px){.industrial .tool-photo-dialog{padding:16px}.industrial .tool-photo-head{align-items:flex-start}.industrial .tool-photo-head h3{font-size:19px}.industrial .tool-photo-head button{font-size:16px;padding:8px}}
 .industrial .work-tool-table th,.industrial .work-tool-table td{padding:10px}.industrial .tool-use-badge{margin:3px 0}.industrial .tool-mount-progress progress{margin:4px 0}
+/* Priority by remaining programs and mounting advice from the measured length. */
+.industrial .tool-priority,.industrial .mount-advice{display:block;font-size:15px;font-weight:400;color:var(--ink-muted);margin-top:4px;line-height:1.35}.industrial .mount-advice{margin-top:6px}.industrial .mount-advice[data-advice=pull]{color:var(--status-blocked);font-weight:600}.industrial .mount-advice[data-advice=ok]{color:var(--status-done)}

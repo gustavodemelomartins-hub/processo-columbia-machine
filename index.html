@@ -207,6 +207,8 @@ button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,te
 @media(max-width:800px){.industrial .tool-readiness-summary{flex-direction:column;align-items:stretch;gap:12px}.industrial .tool-readiness-summary>div{min-width:0}.industrial .tool-readiness-summary p{line-height:1.5}}
 @media(max-width:600px){.industrial .tool-photo-dialog{padding:16px}.industrial .tool-photo-head{align-items:flex-start}.industrial .tool-photo-head h3{font-size:19px}.industrial .tool-photo-head button{font-size:16px;padding:8px}}
 .industrial .work-tool-table th,.industrial .work-tool-table td{padding:10px}.industrial .tool-use-badge{margin:3px 0}.industrial .tool-mount-progress progress{margin:4px 0}
+/* Priority by remaining programs and mounting advice from the measured length. */
+.industrial .tool-priority,.industrial .mount-advice{display:block;font-size:15px;font-weight:400;color:var(--ink-muted);margin-top:4px;line-height:1.35}.industrial .mount-advice{margin-top:6px}.industrial .mount-advice[data-advice=pull]{color:var(--status-blocked);font-weight:600}.industrial .mount-advice[data-advice=ok]{color:var(--status-done)}
 
 /* Columbia Processo — generated from design/tokens.json */
 :root{
@@ -1944,6 +1946,8 @@ function offsetSuggestionMarkup(id){
 function toolUseMarkup(id){const s=toolWorkStatus(id);return '<span class="tool-use-badge" data-relation="'+s.usage.relation+'">'+s.usage.label+'</span><div class="tool-mount-progress"><span>'+s.physical.label+'</span><progress max="2" value="'+s.physical.count+'" aria-label="Montagem T'+id+': '+s.physical.count+' de 2, montada e na máquina">'+s.physical.count+'/2</progress></div>';}
 function renderToolWorkStatus(){
  const section=$('workToolsSection');if(!section)return;
+ // Finishing a stage changes the priority order: redraw the table once (it calls back here with the new order).
+ if($('workToolList')?.dataset.order!==undefined&&$('workToolList').dataset.order!==toolPriority().order.join(','))return renderWorkTools();
  let host=$('toolReadinessSummary');if(!host){host=document.createElement('div');host.id='toolReadinessSummary';host.className='tool-readiness-summary';section.querySelector('.section-line').after(host);}
  const count=DATA.tools.filter(t=>toolWorkStatus(t.id).physical.both).length;
  const all=toolWorkStages(),index=state.operation===PENDING_OPERATION?-1:all.findIndex(s=>s.id===state.phase),next=index<0?null:all.slice(index+1).find(s=>state.operator[String(s.id)]?.completed!==true);
@@ -1951,6 +1955,21 @@ function renderToolWorkStatus(){
  for(const t of DATA.tools){const node=document.querySelector('[data-tool-work-status="'+t.id+'"]');if(node)node.innerHTML=toolUseMarkup(t.id);const row=document.querySelector('[data-work-tool="'+t.id+'"]');if(row)row.dataset.next=String(toolWorkStatus(t.id).usage.relation==='next');}
 }
 
+// Priority follows the remaining journey: the first unfinished stage onward, in program order.
+function toolPriority(){
+ const upcoming=toolWorkStages().filter(s=>state.operator[String(s.id)]?.completed!==true),order=[],files={};
+ for(const s of upcoming)for(const id of s.tools){if(!order.includes(id))order.push(id);if(s.file)(files[id]??=[]).includes(s.file)||files[id].push(s.file);}
+ return {order,files};
+}
+// Measured mounting against each remaining program: the first program it cannot reach asks to pull the tool out.
+function mountAdvice(t,files=[]){
+ const mount=physicalToolData(t.id).mount;if(toolIsStandard(t)||mount===null||!files.length)return null;
+ const needs=files.map(file=>({file,need:mountingRule(t,file).recommended})).filter(n=>n.need!==null);if(!needs.length)return null;
+ const short=needs.find(n=>mount<n.need),max=Math.max(...needs.map(n=>n.need)),margin=adoptedMargin(t),name=f=>f.replace('.TAP',''),mm=n=>exactLength(Math.round(n*1e6)/1e6);
+ if(short)return {kind:'pull',text:'Puxar '+mm(short.need-mount)+' para fora antes do '+name(short.file)+' (mín. '+mm(short.need)+')'};
+ if(margin!==null&&mount-max>margin)return {kind:'shorten',text:'Pode encurtar até '+mm(max)+' (sobra '+mm(mount-max)+')'};
+ return {kind:'ok',text:'Atende até o '+name(needs.at(-1).file)};
+}
 function operationalToolDescent(t,r){return ToolLengthRule.presentation(r,{standard:toolIsStandard(t),faceOffsetLimit:OPERATOR_CONFIG.tool_mounting.tools[t.id]?.face_offset_limit_mm??null});}
 function toolRow(id,file){
  const t=DATA.tools.find(t=>t.id===Number(id)),r=mountingRule(t,file),physical=physicalToolData(id),meta=cncData?.[file]?.meta.tools.find(v=>v.t_number===Number(id));
@@ -1962,12 +1981,14 @@ function toolRow(id,file){
 }
 function renderWorkTools(){
  $('jobMachineName').textContent=tooling.profile(tooling.jobMachineId).name;$('workToolCount').textContent=DATA.tools.length+' ferramentas';
- const active=programTools();
- $('workToolList').innerHTML='<div class="work-tool-table-scroll" tabindex="0" role="region" aria-label="Tabela de ferramentas; rolagem horizontal em telas menores"><table class="work-tool-table"><thead><tr>'+['T','Descrição','Programas','Descida máxima','Montagem recomendada','Montagem medida (mm)','Ø real (mm)','Corretor','Montada','Na máquina'].map(label=>'<th scope="col">'+label+'</th>').join('')+'</tr></thead><tbody>'+DATA.tools.map(t=>{
-  const a=physicalToolData(t.id),r=mountingRule(t),shown=operationalToolDescent(t,r);
+ const active=programTools(),priority=toolPriority(),rank=t=>{const i=priority.order.indexOf(t.id);return i<0?Infinity:i};
+ const tools=[...DATA.tools].sort((a,b)=>rank(a)-rank(b));
+ $('workToolList').dataset.order=priority.order.join(',');
+ $('workToolList').innerHTML='<div class="work-tool-table-scroll" tabindex="0" role="region" aria-label="Tabela de ferramentas; rolagem horizontal em telas menores"><table class="work-tool-table"><thead><tr>'+['T','Descrição','Programas','Descida máxima','Montagem recomendada','Montagem medida (mm)','Ø real (mm)','Corretor','Montada','Na máquina'].map(label=>'<th scope="col">'+label+'</th>').join('')+'</tr></thead><tbody>'+tools.map(t=>{
+  const a=physicalToolData(t.id),r=mountingRule(t),shown=operationalToolDescent(t,r),n=rank(t),advice=mountAdvice(t,priority.files[t.id]);
   const field=(name,value,type='number')=>'<input type="'+type+'" '+(type==='number'?'min="0.001" step="any"':'maxlength="40"')+' data-table-tool="'+t.id+'" data-field="'+name+'" value="'+esc(value??'')+'" placeholder="Não informado" aria-label="'+({measuredLength:'Montagem medida',measuredDiameter:'Diâmetro real',offset:'Corretor'})[name]+' T'+t.id+'">';
   const check=(name,checked,label)=>'<label class="table-check"><input type="checkbox" data-table-tool="'+t.id+'" data-field="'+name+'" '+(checked?'checked':'')+' aria-label="'+label+' T'+t.id+'"></label>';
-  return '<tr data-work-tool="'+t.id+'" data-current="'+active.includes(t.id)+'"><th scope="row"><b>T'+t.id+'</b></th><td class="tool-description"><div class="tool-desc-content"><span class="tool-description-name">'+esc(toolNames[t.id]||t.name)+'</span>'+toolPhotoMarkup(t.id,'table')+'</div></td><td><div>'+t.programs.map(p=>esc(p.replace('.TAP',''))).join('<br>')+'</div><div data-tool-work-status="'+t.id+'">'+toolUseMarkup(t.id)+'</div></td><td>'+exactLength(shown.value)+(shown.kind==='process'?'<small class="process-descent">Corretor · Z nominal 0 mm</small>':'')+'</td><td><strong>'+mountingLabel(t,r)+'</strong></td><td>'+field('measuredLength',a.mount)+'</td><td>'+field('measuredDiameter',a.diameter)+'</td><td>'+field('offset',a.offset,'text')+offsetSuggestionMarkup(t.id)+'</td><td>'+check('mounted',a.mounted,'Montada')+'</td><td>'+check('inMachine',a.machine,'Na máquina')+'</td></tr>';
+  return '<tr data-work-tool="'+t.id+'" data-current="'+active.includes(t.id)+'" data-priority="'+(n===Infinity?'':n+1)+'"><th scope="row"><b>T'+t.id+'</b><small class="tool-priority">'+(n===Infinity?'Sem uso pela frente':(n+1)+'ª a usar')+'</small></th><td class="tool-description"><div class="tool-desc-content"><span class="tool-description-name">'+esc(toolNames[t.id]||t.name)+'</span>'+toolPhotoMarkup(t.id,'table')+'</div></td><td><div>'+t.programs.map(p=>esc(p.replace('.TAP',''))).join('<br>')+'</div><div data-tool-work-status="'+t.id+'">'+toolUseMarkup(t.id)+'</div></td><td>'+exactLength(shown.value)+(shown.kind==='process'?'<small class="process-descent">Corretor · Z nominal 0 mm</small>':'')+'</td><td><strong>'+mountingLabel(t,r)+'</strong></td><td>'+field('measuredLength',a.mount)+(advice?'<small class="mount-advice" data-advice="'+advice.kind+'">'+esc(advice.text)+'</small>':'')+'</td><td>'+field('measuredDiameter',a.diameter)+'</td><td>'+field('offset',a.offset,'text')+offsetSuggestionMarkup(t.id)+'</td><td>'+check('mounted',a.mounted,'Montada')+'</td><td>'+check('inMachine',a.machine,'Na máquina')+'</td></tr>';
  }).join('')+'</tbody></table></div>';
  $('toolTableMessage').textContent=toolingUI.message;
  $('workToolList').querySelectorAll('[data-table-tool]').forEach(input=>input.onchange=()=>{

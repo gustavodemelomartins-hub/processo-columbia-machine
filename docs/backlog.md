@@ -12,3 +12,4 @@
 7. Processo gerado automaticamente quando o programador envia os programas; uma tela de revisão onde ele posiciona as garras no 3D e escreve observações. A primeira versão dessa tela entra nas próximas rodadas, com os próximos programas.
 8. Padrão de setup para esta família de peças (grids): o mesmo jeito de fixar e sequenciar se repete.
 9. Depois: gerar um processo completo a partir do desenho ou do modelo 3D de qualquer peça.
+10. Magazine da máquina cadastrado (posições físicas da Mini Portal, como o magazine virtual do Workflow Vision). Gustavo achou interessante em 14/10/2026; por enquanto a lista em ordem de uso atende.
