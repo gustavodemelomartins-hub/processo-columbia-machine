@@ -10,7 +10,7 @@ Legenda: **E** extraído do arquivo · **C** confirmado pelo Gustavo · **D** de
 |---|---|---|---|---|---|
 | L01 — 09/10/2026 | FP 16F H8 12V · OS 10-713 | O001–O008.TAP | `D:\OS 10713\` (inventário `docs/historico-processo/Inventario_Arquivos_Recebidos.csv`) | `data/cnc/originals/` (SHA-256 em `SHA256.json`) | Incorporado ao processo |
 | L02 — 14/10/2026 | FP 16F H8 12V · OS 10-713 | O009, O0010, O0011, O0012, O0013 | anexos da conversa, 14/10 | `data/cnc/recebidos/2026-10-14_OS10713_mesmo-setup-O009-O0013/` | Incorporado à 2ª operação (etapas 12–16), mesmo setup (C, Gustavo 14/10); ordem e divergências pendentes |
-| L03 — 14/10/2026 | FP 16F H8 12V · OS 10-713 (não declarado) | O0014–O0021 | anexos da conversa, 14/10 05:13, sem texto | `data/cnc/recebidos/2026-10-14_OS10713_O0014-O0021/` | Recebido; operação e setup pendentes. Não incorporado ao processo |
+| L03 — 14/10/2026 | FP 16F H8 12V · OS 10-713 (não declarado) | O0014–O0021 | anexos da conversa, 14/10 05:13, sem texto | `data/cnc/recebidos/2026-10-14_OS10713_O0014-O0021/` | O0014–O0017: garras por dentro, nos calços (C, Gustavo 14/10 05:18). O0018–O0021: provável setup na mesa após o tombo, pendente. Não incorporado |
 
 ## L01 — o que cada programa comprova (E)
 
@@ -84,6 +84,8 @@ Programas de 13.10.2026 (cabeçalho), G54, Z0 topo. Enviados sem texto; nenhum v
 | O0021 | aa8633029cb0… | 0 h 33 min 1 s | T9 TOPO D12MM | ACABA REBAIXO L2 G41 | T9 3183 / 1273 | -9,51 | L2 | Z até −9,51 com muitos níveis (superfície/rampa) |
 
 Leitura do conjunto (H): os comentários do CAM usam **L1** e **L2**. O009 (REBAIXO L1, Z −6,347) bate com "6,4 (Rebaixo Inf.)" do desenho p.2; O0020/O0021 (REBAIXO L2, Z −9,507) batem com "9,5 (Rebaixo Sup.)" da p.1. O006/O007 são CANTO/RAIO L1 e O0019 repete os mesmos percursos como L2. Isso sugere L1 = lado já usinado na 2ª operação e L2 = lado oposto, depois de tombar (3ª operação?). O0014, O0015, O0017 e O0018 não têm marcador. Hipótese, não confirmada.
+
+Confirmado pelo Gustavo (14/10 05:18): O0014 a O0017 rodam com as **garras por dentro** da peça, ainda nos calços. Depois a peça é tirada, tombada e rebarbada embaixo; os calços saem e ela é montada direto na mesa com as 4 garras por fora, alinhada e zerada por fora; em seguida as garras voltam para dentro, uma de cada vez. Foto da montagem prometida.
 
 Ferramentas novas neste lote: T2 Girassol Ø63 R6 e T10 Chanfrador 30° 1F Ø25.
 

@@ -26,6 +26,8 @@ Estas perguntas **não aparecem na interface do operador**. Servem para a próxi
 | Estratégia de sobremetal | Depende do caso (limpar uma face e fechar na outra, ou dividir). O padrão desta peça continua Face A limpa / Face B fecha | `receiving.stock_rule` |
 | Medições na produção | Opcionais; nunca bloqueiam o fluxo | — |
 | Programas novos | Vínculo com operação só com evidência; numeração do arquivo não prova sequência | `docs/rastreabilidade/MATRIZ_PROGRAMAS.md` |
+| O0014–O0017 | Operação com as garras por dentro da peça, ainda no alto, sobre os calços (Gustavo, 05:18) | `docs/rastreabilidade/MATRIZ_PROGRAMAS.md` |
+| Depois de O0017 | Tirar a peça, tombar, rebarbar bem a parte de baixo, retirar os calços, limpar a mesa e montar a peça direto na mesa com as mesmas 4 garras por fora; nesta peça alinhar e zerar por fora. Depois as garras voltam para dentro, trocando uma de cada vez (tira uma de fora, põe uma dentro) | — |
 
 ## Ainda a levantar
 
@@ -45,7 +47,8 @@ Estas perguntas **não aparecem na interface do operador**. Servem para a próxi
 14. O009 tem blocos `GG53` (linhas 10, 16, 5715). O comando da Mini Portal aceita?
 15. O0012 escareador: desenho pede Ø15,5 × 90°; em Z −6 um cone de 90° com ponta teórica marca Ø12. Como T14 é presetado (ponta ou diâmetro de referência)?
 16. A face para cima na 2ª operação é o lado "Grid inferior" do desenho (p.2)? Se sim, o Rebaixo Superior 9,5 (p.1) é da 3ª operação?
-17. O0014–O0021 (enviados sem texto em 14/10): em qual operação/setup entra cada um? Leitura dos TAPs: O0016 é L1; O0019, O0020 e O0021 são L2; O0014, O0015, O0017 e O0018 não dizem o lado.
+17. O0014–O0021: O0014–O0017 já confirmados (garras por dentro, nos calços). Falta: O0014–O0017 são a continuação da 2ª operação ou uma operação própria? E O0018–O0021 rodam no setup na mesa, depois do tombo? Leitura dos TAPs: O0016 é L1; O0019, O0020 e O0021 são L2; O0014, O0015, O0017 e O0018 não dizem o lado.
 18. L1/L2 nos comentários do CAM significam lado 1 (2ª operação) e lado 2 (peça tombada)? O lado 2 é a 3ª operação?
 19. O0015 (externo X) desce até Z −89,973 e O0017 acaba o externo X só até Z −54,997, enquanto o externo Y vai a −98,97 (O0014) e −86,997 (O0017). As alturas diferentes por eixo são intencionais (abas/orelhas)?
+20. "Ouvinte um" na mensagem de 14/10 05:18 (provável transcrição de voz): é "orelha 1" (percurso ORELHA 1 L2 do O0020) ou "orelha L1" (O0016)? É nesse ponto que as garras voltam para dentro?
 
