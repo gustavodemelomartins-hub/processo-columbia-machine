@@ -167,6 +167,8 @@ function keepNavigationVisible(){
 }
 window.addEventListener("resize",()=>requestAnimationFrame(keepNavigationVisible));
 const stageLabels=["Facear a primeira face","Tombar a peça","Facear o segundo lado e medir","Montar nos calços","Referência","Desbaste","Alívios Ø25 / Ø16","Alívio Ø16","Acabamento / teste","Cantos Ø12","Cantos Ø10 / teste","Espaçador"];
+// Etapas cadastradas depois do piloto (O009 em diante) vêm de data/process.json.
+PROCESS_CONFIG.runtime.labels.slice(stageLabels.length).forEach(label=>stageLabels.push(label));
 function renderOperationToolLine(){
  const op=selectedOperation();$("operationToolsLabel").textContent=op.tools.length?"Ferramentas da "+(op.id+1)+"ª operação":"Ferramentas a definir";
  $("operationTools").innerHTML=op.tools.length?op.tools.map(id=>{
@@ -195,6 +197,7 @@ function renderProgramList(){
 }
 
 const operationGroups=[{key:"face",title:"Setup 1 · Faceamento",ids:[1],phases:[0,1,2]},{key:"reference",title:"Referência",ids:[9],phases:[4]},{key:"rough",title:"Desbaste",ids:[3],phases:[5]},{key:"relief",title:"Alívios",ids:[12,4],phases:[6,7]},{key:"finish",title:"Acabamento",ids:[8],phases:[8]},{key:"corners",title:"Cantos e raios",ids:[5,6],phases:[9,10]},{key:"spacer",title:"Espaçador",ids:[4],phases:[11]}];
+PROCESS_CONFIG.runtime.phases.forEach((phase,i)=>{if(i>11&&phase.program!==null)operationGroups.push({key:"stage-"+i,title:PROCESS_CONFIG.steps[i].intent.type,ids:phase.tools,phases:[i]})});
 function reachTarget(t){return t.depthMm!==null&&t.depthMm>0&&!t.depthIssues.length&&state.margin!==null?t.depthMm+state.margin:null}
 function reachMarkup(t){const r=reachTarget(t),actual=number(state.stickouts[t.id]),source=t.depthSource;let text=source?"Z mínimo extraído do programa "+fmt(source.z)+" mm · "+source.file.replace(".TAP",""):"Z não interpretado";if(r===null)text+='<p>Faceamento / alcance exige avaliação da montagem.</p>';else text+='<p>Alcance preliminar: '+fmt(t.depthMm)+' + '+fmt(state.margin)+' = <b>'+fmt(r)+' mm</b></p>';text+='<p class="reach-note">'+(state.topZero?"Z0 no topo marcado como conferido.":"Cálculo condicionado a Z0 no topo, a conferir.")+'</p>';if(r!==null)text+='<input type="number" step="0.01" min="0" data-stickout="'+t.id+'" aria-label="Comprimento livre medido T'+t.id+'" placeholder="Comprimento livre medido (mm)" value="'+(actual===null?"":actual)+'"><p class="'+(actual!==null&&actual<r?"below":"reach-note")+'">'+(actual===null?"Registrar e conferir o conjunto real.":actual<r?"Abaixo do cálculo preliminar.":"Alcance preliminar atendido; colisões não verificadas.")+'</p>';return'<div class="reach">'+text+'</div>';}
 

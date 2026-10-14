@@ -218,7 +218,7 @@ body.industrial #revisionLine{visibility:hidden}
  .sp-title h2,.view-title{font-size:23px;line-height:29px}
  .sp-metrics{grid-template-columns:repeat(2,minmax(0,1fr));row-gap:var(--space-4)}
  .sp-metric,.sp-metric:first-child{padding:0 var(--space-3) 0 0;border-left:0}
- .rx-faces,.rx-facts{grid-template-columns:1fr}
+ .rx-faces,.rx-facts{grid-template-columns:minmax(0,1fr)}
  .journey-details>summary,.journey-details-body{padding-left:var(--space-4);padding-right:var(--space-4)}
  .ds-table tbody th{width:auto}
 }

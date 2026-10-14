@@ -4,7 +4,7 @@ Frontend estático, sem framework novo. Mantém o renderer Three.js, o component
 
 ```mermaid
 flowchart LR
-  TAP[8 TAPs imutáveis] --> Parser[cnc_adapter.py / parser preservado]
+  TAP[13 TAPs imutáveis] --> Parser[cnc_adapter.py / parser preservado]
   Parser --> Derivados[data/derived]
   Processo[data/process.json] --> Build[scripts/build.py]
   Maquina[data/machines.json] --> Build

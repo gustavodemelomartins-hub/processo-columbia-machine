@@ -82,7 +82,7 @@ def analyze(file,index):
     assert sha(path)==before,'Source changed'
     print(file,len(result.motions),'motions',len(rows),'segments',len(diagnostics),'diagnostics',flush=True)
     return meta,{'segments':rows,'meta':meta,'source_lines':lines}
-files=args.files or [f'O{i:03}.TAP' for i in range(1,9)]
+files=args.files or list(json.loads((ROOT/'SHA256.json').read_text()))
 programs=[];viewer={}
 for i,file in enumerate(files,1):
     m,v=analyze(file,i);programs.append(m);viewer[file]=v
@@ -94,7 +94,7 @@ for p in programs:
         u=unique[tid];u['programs'].append(p['file']);u['rpm']=sorted(set(u['rpm']+t['rpm']));u['feeds_mm_min']=sorted(set(u['feeds_mm_min']+t['feeds_mm_min']))
 commit='98894b34fb80cc73f12c0ebf3a69e9baca7448f2' # pinned upstream snapshot; archive intentionally omits .git
 config=json.loads(Path('data/process.json').read_text(encoding='utf8'))
-manifest={'schema':'columbia-cnc-manifest-v1','project':'Processo Columbia Machine','part':config['part']['name'],'order':config['part']['order'],'engine':{'name':'easy_gcode_plot','version':'1.9.8','commit':commit,'language':'fanuc_mill','correction_enabled':True,'arc_chord_error_viewer_mm':.02},'programs':programs,'unique_tools':list(unique.values()),'sequence_provenance':'ordem dos arquivos O001–O008 proposta para o processo; comentários PERCURSO extraídos','process':{'provenance':'dados de processo / validação humana','pre_heat_thickness_mm':config['fixture']['face_method']['pre_heat_target_mm'],'post_heat_thickness_mm':config['fixture']['face_method']['final_target_mm'],'drawing_pre_heat_thickness_mm':config['drawing']['thickness_mm']['before_heat_treatment'],'revision_note':config['engineering_review']['message'],'setup1':['O001 primeira face','tombar manualmente','O001 segunda face'],'setup2':'subir nos calços e executar O002–O008; fixação e lado da peça exigem validação humana','stops':'M0 propostos; não existem nos originais','overlay_origin':'G54 visual em XY centro, Z topo; cadastro e relação G53 não fornecidos'}}
+manifest={'schema':'columbia-cnc-manifest-v1','project':'Processo Columbia Machine','part':config['part']['name'],'order':config['part']['order'],'engine':{'name':'easy_gcode_plot','version':'1.9.8','commit':commit,'language':'fanuc_mill','correction_enabled':True,'arc_chord_error_viewer_mm':.02},'programs':programs,'unique_tools':list(unique.values()),'sequence_provenance':'ordem do cadastro de originais (SHA256.json); vínculo com etapas em data/process.json; comentários PERCURSO extraídos','process':{'provenance':'dados de processo / validação humana','pre_heat_thickness_mm':config['fixture']['face_method']['pre_heat_target_mm'],'post_heat_thickness_mm':config['fixture']['face_method']['final_target_mm'],'drawing_pre_heat_thickness_mm':config['drawing']['thickness_mm']['before_heat_treatment'],'revision_note':config['engineering_review']['message'],'setup1':['O001 primeira face','tombar manualmente','O001 segunda face'],'setup2':'subir nos calços e executar O002–O008; fixação e lado da peça exigem validação humana','stops':'M0 propostos; não existem nos originais','overlay_origin':'G54 visual em XY centro, Z topo; cadastro e relação G53 não fornecidos'}}
 manifest['process']['operation_groups']=config['operation_groups']
 dump(OUT/'Manifesto_Peca.json',manifest)
 packed=base64.b64encode(gzip.compress(json.dumps(viewer,separators=(',',':'),ensure_ascii=False).encode())).decode()

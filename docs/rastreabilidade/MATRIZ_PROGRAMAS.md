@@ -9,7 +9,7 @@ Legenda: **E** extraído do arquivo · **C** confirmado pelo Gustavo · **D** de
 | Lote | Peça / OS | Arquivos | Origem informada | Onde está | Situação |
 |---|---|---|---|---|---|
 | L01 — 09/10/2026 | FP 16F H8 12V · OS 10-713 | O001–O008.TAP | `D:\OS 10713\` (inventário `docs/historico-processo/Inventario_Arquivos_Recebidos.csv`) | `data/cnc/originals/` (SHA-256 em `SHA256.json`) | Incorporado ao processo |
-| L02 — 14/10/2026 | FP 16F H8 12V · OS 10-713 | O009, O0010, O0011, O0012, O0013 | anexos da conversa, 14/10 | `data/cnc/recebidos/2026-10-14_OS10713_mesmo-setup-O009-O0013/` | Em análise; mesmo setup da 2ª operação (C, Gustavo 14/10) |
+| L02 — 14/10/2026 | FP 16F H8 12V · OS 10-713 | O009, O0010, O0011, O0012, O0013 | anexos da conversa, 14/10 | `data/cnc/recebidos/2026-10-14_OS10713_mesmo-setup-O009-O0013/` | Incorporado à 2ª operação (etapas 12–16), mesmo setup (C, Gustavo 14/10); ordem e divergências pendentes |
 
 ## L01 — o que cada programa comprova (E)
 
@@ -55,13 +55,13 @@ Programas de 13.10.2026 (cabeçalho). Todos em **G54**, Z0 topo. Fichas completa
 
 ## L02 — vínculo e divergências
 
-| Programa | Operação → etapa | Fonte | Desenho | Divergência ou dúvida (valores e fontes) |
+| Programa | Operação → etapa (`data/process.json`) | Fonte | Desenho | Divergência ou dúvida (valores e fontes) |
 |---|---|---|---|---|
-| O009 | 2ª op, depois de O008 | C operação (Gustavo 14/10); ordem P | p.2 Rebaixo Inf. 6,4 ↔ Z −6,347 (≈ 1/4") | `GG53` pode gerar alarme no comando |
-| O0010 | 2ª op | C / ordem P | não encontrada no texto do desenho | Gravação em Z −6,35 cai no fundo do rebaixo do O009 (Z −6,347): ~0,003 mm de profundidade |
-| O0011 | 2ª op | C / ordem P | p.2 Seção M-M (furos), passo 244,5 ↔ 244,475 | Broca a Z −46 para rosca ↧39 (coerente) |
-| O0012 | 2ª op | C / ordem P | p.2 ⌵ Ø15,5 ↧1 × 90° | Com ponta teórica em Z −6, cone de 90° marca Ø12, menor que o furo Ø13,5. Depende do preset de T14 |
-| O0013 | 2ª op | C / ordem P | p.2 5/8 UNC ↧39 | **Rosca até Z −10 no TAP × ↧39 no desenho** |
+| O009 | 2ª op → fase 12 | C operação (Gustavo 14/10); ordem P | p.2 Rebaixo Inf. 6,4 ↔ Z −6,347 (≈ 1/4") | `GG53` pode gerar alarme no comando |
+| O0010 | 2ª op → fase 13 | C / ordem P | não encontrada no texto do desenho | Gravação em Z −6,35 cai no fundo do rebaixo do O009 (Z −6,347): ~0,003 mm de profundidade |
+| O0011 | 2ª op → fase 14 | C / ordem P | p.2 Seção M-M (furos), passo 244,5 ↔ 244,475 | Broca a Z −46 para rosca ↧39 (coerente) |
+| O0012 | 2ª op → fase 15 | C / ordem P | p.2 ⌵ Ø15,5 ↧1 × 90° | Com ponta teórica em Z −6, cone de 90° marca Ø12, menor que o furo Ø13,5. Depende do preset de T14 |
+| O0013 | 2ª op → fase 16 | C / ordem P | p.2 5/8 UNC ↧39 | **Rosca até Z −10 no TAP × ↧39 no desenho** |
 
 Ordem proposta O009 → O0010 → O0011 → O0012 → O0013 (S): segue os nomes e também a lógica de usinagem (rebaixo antes da gravação no fundo dele; centro → broca → escareador → macho). Não foi informada pelo Gustavo.
 

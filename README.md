@@ -26,7 +26,7 @@ npm run check
 npm test
 ```
 
-`check` valida contratos (inclusive a sequência da jornada), hashes de 8 TAPs + PDF + 7 fotos, parser e sete suítes de domínio/armazenamento. `npm test` executa também sete suítes de navegador (a de jornada percorre recebimento → 1ª → 2ª → 3ª → T.T. → retorno pós-TT em 5 larguras); screenshots e relatórios ficam em artifacts/, ignorado pelo Git. A suíte HTTP adicional usa `COLUMBIA_LIVE_URL` e `node tests/browser/verify_http.cjs`, com o servidor iniciado. Ela confere URLs relativas, PDF, WebGL e larguras 320/390/768/1440/1920. Para usar navegador/runtime já instalado, existem COLUMBIA_CHROMIUM_PATH e COLUMBIA_PLAYWRIGHT_MODULE.
+`check` valida contratos (inclusive a sequência da jornada), hashes de 13 TAPs + PDF + 7 fotos, parser e sete suítes de domínio/armazenamento. `npm test` executa também sete suítes de navegador (a de jornada percorre recebimento → 1ª → 2ª → 3ª → T.T. → retorno pós-TT em 5 larguras); screenshots e relatórios ficam em artifacts/, ignorado pelo Git. A suíte HTTP adicional usa `COLUMBIA_LIVE_URL` e `node tests/browser/verify_http.cjs`, com o servidor iniciado. Ela confere URLs relativas, PDF, WebGL e larguras 320/390/768/1440/1920. Para usar navegador/runtime já instalado, existem COLUMBIA_CHROMIUM_PATH e COLUMBIA_PLAYWRIGHT_MODULE.
 
 ## Jornada da OS (V1 simplificada)
 
@@ -49,7 +49,7 @@ O build incorpora os dados, imagens e bibliotecas no HTML para preservar o uso s
 
 ## Fluxo preservado
 
-Primeira operação: duas faces com O001. Segunda: sete etapas O002–O008; O004 chama T12 e T4 na mesma etapa. Montagem sobre quatro calços e referências estão em O002. Ordem obrigatória O001 → O008. Terceira operação e retorno pós-TT em levantamento.
+Primeira operação: duas faces com O001. Segunda: doze etapas, O002–O008 e O009–O0013 (mesmo setup, recebidos em 14/10/2026); O004 chama T12 e T4 na mesma etapa. Montagem sobre quatro calços e referências estão em O002. Ordem obrigatória O001 → O008; O009 → O0013 seguem na ordem dos nomes até confirmação (docs/informacoes-a-confirmar.md). Terceira operação e retorno pós-TT em levantamento.
 
 Escolher etapa, consultar desenho e Play não registram execução. Iniciar operação e Concluir operação são ações manuais. Tempos do TAP recebem 20% (estimativa); preparação estimada ~45 min (provisória); faceamento calcula ceil(sobremetal por face / redução por passe), com padrão de 0,7 mm editável. Ferramentas mantêm Descida máxima no programa separada de Montagem recomendada: ceil(descida + margem), padrão de margem 10 mm. A medida real e a confirmação do conjunto têm prioridade. Compensação na Mini Portal usa (diâmetro real − nominal)/2 quando o programa contém compensação lateral; preencher depende de ação explícita.
 

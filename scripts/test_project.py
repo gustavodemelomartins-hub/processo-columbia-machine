@@ -9,7 +9,8 @@ class ProcessContract(unittest.TestCase):
   validate(ROOT,config)
   self.assertEqual(config['machine_id'],'mini-portal')
   self.assertEqual(config['runtime']['storage_key'],'columbia-os10713-demo-v2')
-  self.assertEqual(config['runtime']['operations'][1]['phases'],[4,5,6,8,9,10,11])
+  self.assertEqual(config['runtime']['operations'][1]['phases'],[4,5,6,8,9,10,11,12,13,14,15,16])
+  self.assertEqual([config['steps'][i]['program'] for i in range(12,17)],['O009.TAP','O0010.TAP','O0011.TAP','O0012.TAP','O0013.TAP'])
   self.assertEqual(config['runtime']['phases'][6]['tools'],[12,4])
   for s in config['steps']:self.assertNotIn('Ã',s['name'])
   bad=copy.deepcopy(config);bad['runtime']['phases'][6]['tools']=[999]
