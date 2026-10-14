@@ -2,6 +2,7 @@
   "arquivo": "O0011.TAP",
   "bytes": 1147,
   "linhas": 59,
+  "codificacao": "utf-8",
   "sha256": "a8b3b723f1f0d0d079838a6a4376b60d0fb830cd0cbd0d0ad945af4072b3c183",
   "proveniencia": "extraído do texto do programa (scripts/ficha_programa.py); não simulado",
   "nome_no_programa": {

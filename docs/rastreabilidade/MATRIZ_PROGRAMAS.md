@@ -10,6 +10,7 @@ Legenda: **E** extraído do arquivo · **C** confirmado pelo Gustavo · **D** de
 |---|---|---|---|---|---|
 | L01 — 09/10/2026 | FP 16F H8 12V · OS 10-713 | O001–O008.TAP | `D:\OS 10713\` (inventário `docs/historico-processo/Inventario_Arquivos_Recebidos.csv`) | `data/cnc/originals/` (SHA-256 em `SHA256.json`) | Incorporado ao processo |
 | L02 — 14/10/2026 | FP 16F H8 12V · OS 10-713 | O009, O0010, O0011, O0012, O0013 | anexos da conversa, 14/10 | `data/cnc/recebidos/2026-10-14_OS10713_mesmo-setup-O009-O0013/` | Incorporado à 2ª operação (etapas 12–16), mesmo setup (C, Gustavo 14/10); ordem e divergências pendentes |
+| L03 — 14/10/2026 | FP 16F H8 12V · OS 10-713 (não declarado) | O0014–O0021 | anexos da conversa, 14/10 05:13, sem texto | `data/cnc/recebidos/2026-10-14_OS10713_O0014-O0021/` | Recebido; operação e setup pendentes. Não incorporado ao processo |
 
 ## L01 — o que cada programa comprova (E)
 
@@ -66,6 +67,25 @@ Programas de 13.10.2026 (cabeçalho). Todos em **G54**, Z0 topo. Fichas completa
 Ordem proposta O009 → O0010 → O0011 → O0012 → O0013 (S): segue os nomes e também a lógica de usinagem (rebaixo antes da gravação no fundo dele; centro → broca → escareador → macho). Não foi informada pelo Gustavo.
 
 Leitura de face (H): a folha 2 do desenho se chama "Usinagem grid inferior" e traz o rebaixo e os furos que estes programas fazem, com Z0 no topo do mesmo setup. Isso sugere que a face voltada para cima na 2ª operação corresponde ao lado "inferior" do desenho e que o Rebaixo Superior 9,5 (folha 1, ainda sem programa) fica para a 3ª operação. Hipótese, não confirmada.
+
+## L03 — o que cada programa comprova (E)
+
+Programas de 13.10.2026 (cabeçalho), G54, Z0 topo. Enviados sem texto; nenhum vínculo com operação foi feito.
+
+| Programa | SHA-256 | Tempo no cabeçalho | Ferramenta | Percursos | S / F | Z mín. | Marcador de lado no CAM | Observações |
+|---|---|---|---|---|---|---|---|---|
+| O0014 | 26442f62836a… | 0 h 44 min 54 s | T3 ALTO AVANCO D32MM | EXTERNO Y | T3 1800 / 4800 | -98,97 | — | X ±542,7 · Y ±300,1; passos de 1 mm; Z abaixo da espessura 95,75 |
+| O0015 | e1028829d9d7… | 0 h 24 min 12 s | T3 ALTO AVANCO D32MM | EXTERNO X | T3 1800 / 4800 | -89,973 | — | X ±568,4 · Y ±291,8; deixa ~5,8 mm em relação a 95,75 |
+| O0016 | 52f07ccae217… | 0 h 17 min 28 s | T2 GIRASSOL D63MM | ORELHA L1 | T2 1350 / 1000 | -23,535 | L1 | X ±561,7 · Y ±176 |
+| O0017 | 24e18f71929b… | 0 h 13 min 57 s | T8 TOPO D25MM LONGA | PRÉ-ACAB. / ACAB. EXTERNO X (Z −54,997) e Y (Z −86,997), G41 | T8 800 / 400 | -86,997 | — | Arquivo Windows-1252 (não UTF-8) |
+| O0018 | 0d3a32ad570a… | 0 h 24 min 27 s | T10 CHANFRADOR 30G 1F | CHANFRO (Z −4 e −4,997) | T10 2700 / 700 | -4,997 | — | X ±459,5 · Y ±217,1; desenho p.1 "3,0 × 30° (Chanfro cavidades)" |
+| O0019 | b30c13a1043c… | 1 h 7 min 2 s | T5 TOPO D12MM LONGA, T6 TOPO D10MM LONGA | CANTO 1/2 R6 L2 (T5 Z −45); CANTO R5 L2, RAIO 0,2/0,1/0,0 L2 G41 (T6 Z −50) | T5 1200 / 400; T6 1200 / 400 | -50 | L2 | Espelha O006/O007, que são L1 |
+| O0020 | 49c4cd4e0de7… | 1 h 17 min 31 s | T2 GIRASSOL D63MM | ORELHA 1 L2 (Z −9,498); ORELHA 2 L2 (Z −42,836); REBAIXO L2_1/2/3 (Z −9,507) | T2 1000 / 1200 | -42,836 | L2 | Rebaixo ≈ "9,5 (Rebaixo Sup.)" do desenho p.1 |
+| O0021 | aa8633029cb0… | 0 h 33 min 1 s | T9 TOPO D12MM | ACABA REBAIXO L2 G41 | T9 3183 / 1273 | -9,51 | L2 | Z até −9,51 com muitos níveis (superfície/rampa) |
+
+Leitura do conjunto (H): os comentários do CAM usam **L1** e **L2**. O009 (REBAIXO L1, Z −6,347) bate com "6,4 (Rebaixo Inf.)" do desenho p.2; O0020/O0021 (REBAIXO L2, Z −9,507) batem com "9,5 (Rebaixo Sup.)" da p.1. O006/O007 são CANTO/RAIO L1 e O0019 repete os mesmos percursos como L2. Isso sugere L1 = lado já usinado na 2ª operação e L2 = lado oposto, depois de tombar (3ª operação?). O0014, O0015, O0017 e O0018 não têm marcador. Hipótese, não confirmada.
+
+Ferramentas novas neste lote: T2 Girassol Ø63 R6 e T10 Chanfrador 30° 1F Ø25.
 
 ## Operações sem programa
 

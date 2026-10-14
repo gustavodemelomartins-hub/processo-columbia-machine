@@ -1,0 +1,82 @@
+{
+  "arquivo": "O0015.TAP",
+  "bytes": 174603,
+  "linhas": 7233,
+  "codificacao": "utf-8",
+  "sha256": "e1028829d9d755c3ff1fe07b2c864ac8fe674277e3c3035ae57096d5aabe50d8",
+  "proveniencia": "extraído do texto do programa (scripts/ficha_programa.py); não simulado",
+  "nome_no_programa": {
+    "valor": "O0015",
+    "linha": 2
+  },
+  "data_no_programa": {
+    "valor": "13.10.2026 AS 11:35:42",
+    "linha": 3
+  },
+  "tempo_estimado_cabecalho": {
+    "segundos": 1452,
+    "texto": "TEMPO ESTIMADO : 0 HOURS 24 MIN 12 SEC",
+    "linha": 4,
+    "natureza": "estimativa do CAM no cabeçalho; não é tempo real"
+  },
+  "ferramentas_cabecalho": [
+    {
+      "t": 3,
+      "nome": "3-ALTO AVANCO D32MM",
+      "diametro_mm": 32.0,
+      "raio_ponta_mm": 3.0,
+      "linha": 8
+    }
+  ],
+  "trocas_ferramenta": [
+    {
+      "t": 3,
+      "linha": 15,
+      "bloco": "N9M6"
+    }
+  ],
+  "percursos": [
+    {
+      "nome": "EXTERNO X",
+      "linha": 18,
+      "ferramenta": 3
+    }
+  ],
+  "rotacoes_S": {
+    "3": [
+      1800.0
+    ]
+  },
+  "avancos_F": {
+    "3": [
+      4800.0
+    ]
+  },
+  "sistemas_coordenadas": {
+    "G54": 19
+  },
+  "compensacao_raio": [],
+  "compensacao_comprimento": [
+    {
+      "linha": 21,
+      "ferramenta": 3,
+      "bloco": "N15G43G0Z150.H#1D#1"
+    }
+  ],
+  "ciclos_fixos": {},
+  "m_especiais": [],
+  "z_programado_por_ferramenta": {
+    "3": {
+      "min": {
+        "z": -89.973,
+        "linha": 3584,
+        "bloco": "N3578G1Z-89.973"
+      },
+      "max": {
+        "z": 150.0,
+        "linha": 21
+      }
+    }
+  },
+  "alertas_leitura": []
+}

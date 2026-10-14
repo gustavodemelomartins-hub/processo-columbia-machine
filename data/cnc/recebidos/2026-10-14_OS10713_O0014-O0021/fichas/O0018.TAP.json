@@ -1,0 +1,82 @@
+{
+  "arquivo": "O0018.TAP",
+  "bytes": 134877,
+  "linhas": 5476,
+  "codificacao": "utf-8",
+  "sha256": "0d3a32ad570a34a03ed1f8e01a12be1c50183b7b6dbcec6c84534e8ff5791c9f",
+  "proveniencia": "extraído do texto do programa (scripts/ficha_programa.py); não simulado",
+  "nome_no_programa": {
+    "valor": "O0018",
+    "linha": 2
+  },
+  "data_no_programa": {
+    "valor": "13.10.2026 AS 11:35:43",
+    "linha": 3
+  },
+  "tempo_estimado_cabecalho": {
+    "segundos": 1467,
+    "texto": "TEMPO ESTIMADO : 0 HOURS 24 MIN 27 SEC",
+    "linha": 4,
+    "natureza": "estimativa do CAM no cabeçalho; não é tempo real"
+  },
+  "ferramentas_cabecalho": [
+    {
+      "t": 10,
+      "nome": "10-CHANFRADOR 30G 1F",
+      "diametro_mm": 25.0,
+      "raio_ponta_mm": 0.0,
+      "linha": 8
+    }
+  ],
+  "trocas_ferramenta": [
+    {
+      "t": 10,
+      "linha": 15,
+      "bloco": "N9M6"
+    }
+  ],
+  "percursos": [
+    {
+      "nome": "CHANFRO",
+      "linha": 18,
+      "ferramenta": 10
+    }
+  ],
+  "rotacoes_S": {
+    "10": [
+      2700.0
+    ]
+  },
+  "avancos_F": {
+    "10": [
+      700.0
+    ]
+  },
+  "sistemas_coordenadas": {
+    "G54": 19
+  },
+  "compensacao_raio": [],
+  "compensacao_comprimento": [
+    {
+      "linha": 21,
+      "ferramenta": 10,
+      "bloco": "N15G43G0Z10.H#1D#1"
+    }
+  ],
+  "ciclos_fixos": {},
+  "m_especiais": [],
+  "z_programado_por_ferramenta": {
+    "10": {
+      "min": {
+        "z": -4.997,
+        "linha": 271,
+        "bloco": "N265G1Z-4.997"
+      },
+      "max": {
+        "z": 10.0,
+        "linha": 21
+      }
+    }
+  },
+  "alertas_leitura": []
+}

@@ -45,3 +45,7 @@ Estas perguntas **não aparecem na interface do operador**. Servem para a próxi
 14. O009 tem blocos `GG53` (linhas 10, 16, 5715). O comando da Mini Portal aceita?
 15. O0012 escareador: desenho pede Ø15,5 × 90°; em Z −6 um cone de 90° com ponta teórica marca Ø12. Como T14 é presetado (ponta ou diâmetro de referência)?
 16. A face para cima na 2ª operação é o lado "Grid inferior" do desenho (p.2)? Se sim, o Rebaixo Superior 9,5 (p.1) é da 3ª operação?
+17. O0014–O0021 (enviados sem texto em 14/10): em qual operação/setup entra cada um? Leitura dos TAPs: O0016 é L1; O0019, O0020 e O0021 são L2; O0014, O0015, O0017 e O0018 não dizem o lado.
+18. L1/L2 nos comentários do CAM significam lado 1 (2ª operação) e lado 2 (peça tombada)? O lado 2 é a 3ª operação?
+19. O0015 (externo X) desce até Z −89,973 e O0017 acaba o externo X só até Z −54,997, enquanto o externo Y vai a −98,97 (O0014) e −86,997 (O0017). As alturas diferentes por eixo são intencionais (abas/orelhas)?
+

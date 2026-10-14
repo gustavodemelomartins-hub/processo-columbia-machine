@@ -2,6 +2,7 @@
   "arquivo": "O0013.TAP",
   "bytes": 888,
   "linhas": 43,
+  "codificacao": "utf-8",
   "sha256": "5bfb590abf84c32a9bc5652d705c48b75ebb601f589cb4d2553bee2740241abf",
   "proveniencia": "extraído do texto do programa (scripts/ficha_programa.py); não simulado",
   "nome_no_programa": {

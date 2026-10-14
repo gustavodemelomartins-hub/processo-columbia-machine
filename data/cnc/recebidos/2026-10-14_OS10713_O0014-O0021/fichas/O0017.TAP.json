@@ -1,0 +1,158 @@
+{
+  "arquivo": "O0017.TAP",
+  "bytes": 6677,
+  "linhas": 303,
+  "codificacao": "cp1252 (não é UTF-8; lido como Windows-1252)",
+  "sha256": "24e18f71929b8c07fc77cf1448d37d75916ebd0398fca038c51826291f930fb5",
+  "proveniencia": "extraído do texto do programa (scripts/ficha_programa.py); não simulado",
+  "nome_no_programa": {
+    "valor": "O0017",
+    "linha": 2
+  },
+  "data_no_programa": {
+    "valor": "13.10.2026 AS 11:35:42",
+    "linha": 3
+  },
+  "tempo_estimado_cabecalho": {
+    "segundos": 837,
+    "texto": "TEMPO ESTIMADO : 0 HOURS 13 MIN 57 SEC",
+    "linha": 4,
+    "natureza": "estimativa do CAM no cabeçalho; não é tempo real"
+  },
+  "ferramentas_cabecalho": [
+    {
+      "t": 8,
+      "nome": "8-TOPO D25MM LONGA",
+      "diametro_mm": 25.0,
+      "raio_ponta_mm": 0.0,
+      "linha": 8
+    }
+  ],
+  "trocas_ferramenta": [
+    {
+      "t": 8,
+      "linha": 15,
+      "bloco": "N9M6"
+    }
+  ],
+  "percursos": [
+    {
+      "nome": "PRÉ-ACABAMENTO EXTERNO X_G41",
+      "linha": 18,
+      "ferramenta": 8
+    },
+    {
+      "nome": "__ACABAMENTO EXTERNO X_G41",
+      "linha": 112,
+      "ferramenta": 8
+    },
+    {
+      "nome": "__PRÉ-ACABAMENTO EXTERNO Y_G41",
+      "linha": 204,
+      "ferramenta": 8
+    },
+    {
+      "nome": "__ACABAMENTO EXTERNO Y_G41",
+      "linha": 252,
+      "ferramenta": 8
+    }
+  ],
+  "rotacoes_S": {
+    "8": [
+      800.0
+    ]
+  },
+  "avancos_F": {
+    "8": [
+      400.0
+    ]
+  },
+  "sistemas_coordenadas": {
+    "G54": 19
+  },
+  "compensacao_raio": [
+    {
+      "g": "G41",
+      "linha": 25,
+      "ferramenta": 8
+    },
+    {
+      "g": "G41",
+      "linha": 47,
+      "ferramenta": 8
+    },
+    {
+      "g": "G41",
+      "linha": 69,
+      "ferramenta": 8
+    },
+    {
+      "g": "G41",
+      "linha": 91,
+      "ferramenta": 8
+    },
+    {
+      "g": "G41",
+      "linha": 117,
+      "ferramenta": 8
+    },
+    {
+      "g": "G41",
+      "linha": 139,
+      "ferramenta": 8
+    },
+    {
+      "g": "G41",
+      "linha": 161,
+      "ferramenta": 8
+    },
+    {
+      "g": "G41",
+      "linha": 183,
+      "ferramenta": 8
+    },
+    {
+      "g": "G41",
+      "linha": 209,
+      "ferramenta": 8
+    },
+    {
+      "g": "G41",
+      "linha": 231,
+      "ferramenta": 8
+    },
+    {
+      "g": "G41",
+      "linha": 257,
+      "ferramenta": 8
+    },
+    {
+      "g": "G41",
+      "linha": 279,
+      "ferramenta": 8
+    }
+  ],
+  "compensacao_comprimento": [
+    {
+      "linha": 21,
+      "ferramenta": 8,
+      "bloco": "N15G43G0Z150.H#1D#1"
+    }
+  ],
+  "ciclos_fixos": {},
+  "m_especiais": [],
+  "z_programado_por_ferramenta": {
+    "8": {
+      "min": {
+        "z": -86.997,
+        "linha": 208,
+        "bloco": "N202G1Z-86.997"
+      },
+      "max": {
+        "z": 150.0,
+        "linha": 21
+      }
+    }
+  },
+  "alertas_leitura": []
+}

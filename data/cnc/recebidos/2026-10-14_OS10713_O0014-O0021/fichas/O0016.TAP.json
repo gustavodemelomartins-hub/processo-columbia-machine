@@ -1,0 +1,82 @@
+{
+  "arquivo": "O0016.TAP",
+  "bytes": 28163,
+  "linhas": 1137,
+  "codificacao": "utf-8",
+  "sha256": "52f07ccae217a0eac09778186541d90b246ea674dd852dc3aa0471bbd458bb0c",
+  "proveniencia": "extraído do texto do programa (scripts/ficha_programa.py); não simulado",
+  "nome_no_programa": {
+    "valor": "O0016",
+    "linha": 2
+  },
+  "data_no_programa": {
+    "valor": "13.10.2026 AS 11:35:43",
+    "linha": 3
+  },
+  "tempo_estimado_cabecalho": {
+    "segundos": 1048,
+    "texto": "TEMPO ESTIMADO : 0 HOURS 17 MIN 28 SEC",
+    "linha": 4,
+    "natureza": "estimativa do CAM no cabeçalho; não é tempo real"
+  },
+  "ferramentas_cabecalho": [
+    {
+      "t": 2,
+      "nome": "2-GIRASSOL D63MM",
+      "diametro_mm": 63.0,
+      "raio_ponta_mm": 6.0,
+      "linha": 8
+    }
+  ],
+  "trocas_ferramenta": [
+    {
+      "t": 2,
+      "linha": 15,
+      "bloco": "N9M6"
+    }
+  ],
+  "percursos": [
+    {
+      "nome": "ORELHA L1",
+      "linha": 18,
+      "ferramenta": 2
+    }
+  ],
+  "rotacoes_S": {
+    "2": [
+      1350.0
+    ]
+  },
+  "avancos_F": {
+    "2": [
+      1000.0
+    ]
+  },
+  "sistemas_coordenadas": {
+    "G54": 19
+  },
+  "compensacao_raio": [],
+  "compensacao_comprimento": [
+    {
+      "linha": 21,
+      "ferramenta": 2,
+      "bloco": "N15G43G0Z150.H#1D#1"
+    }
+  ],
+  "ciclos_fixos": {},
+  "m_especiais": [],
+  "z_programado_por_ferramenta": {
+    "2": {
+      "min": {
+        "z": -23.535,
+        "linha": 553,
+        "bloco": "N547G1Z-23.535"
+      },
+      "max": {
+        "z": 150.0,
+        "linha": 21
+      }
+    }
+  },
+  "alertas_leitura": []
+}

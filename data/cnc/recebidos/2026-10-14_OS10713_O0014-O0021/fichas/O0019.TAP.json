@@ -1,0 +1,1947 @@
+{
+  "arquivo": "O0019.TAP",
+  "bytes": 131039,
+  "linhas": 5661,
+  "codificacao": "utf-8",
+  "sha256": "b30c13a1043c1dcb87344576a3796a9f324b18e424245504bbc01088ebc8717b",
+  "proveniencia": "extraído do texto do programa (scripts/ficha_programa.py); não simulado",
+  "nome_no_programa": {
+    "valor": "O0019",
+    "linha": 2
+  },
+  "data_no_programa": {
+    "valor": "13.10.2026 AS 11:35:42",
+    "linha": 3
+  },
+  "tempo_estimado_cabecalho": {
+    "segundos": 4022,
+    "texto": "TEMPO ESTIMADO : 1 HOURS 7 MIN 2 SEC",
+    "linha": 4,
+    "natureza": "estimativa do CAM no cabeçalho; não é tempo real"
+  },
+  "ferramentas_cabecalho": [
+    {
+      "t": 5,
+      "nome": "5-TOPO D12MM LONGA",
+      "diametro_mm": 12.0,
+      "raio_ponta_mm": 0.0,
+      "linha": 8
+    },
+    {
+      "t": 6,
+      "nome": "6-TOPO D10MM LONGA",
+      "diametro_mm": 10.0,
+      "raio_ponta_mm": 0.0,
+      "linha": 9
+    }
+  ],
+  "trocas_ferramenta": [
+    {
+      "t": 5,
+      "linha": 16,
+      "bloco": "N9M6"
+    },
+    {
+      "t": 6,
+      "linha": 211,
+      "bloco": "N204M6"
+    }
+  ],
+  "percursos": [
+    {
+      "nome": "CANTO 1 R6 L2",
+      "linha": 19,
+      "ferramenta": 5
+    },
+    {
+      "nome": "__CANTO 2 R6 L2",
+      "linha": 77,
+      "ferramenta": 5
+    },
+    {
+      "nome": "__CANTO R5 L2",
+      "linha": 214,
+      "ferramenta": 6
+    },
+    {
+      "nome": "__RAIO 0,2 L2_G41",
+      "linha": 272,
+      "ferramenta": 6
+    },
+    {
+      "nome": "__RAIO 0,1 L2_G41",
+      "linha": 2032,
+      "ferramenta": 6
+    },
+    {
+      "nome": "__RAIO 0,0 L2_G41",
+      "linha": 3795,
+      "ferramenta": 6
+    }
+  ],
+  "rotacoes_S": {
+    "5": [
+      1200.0
+    ],
+    "6": [
+      1200.0
+    ]
+  },
+  "avancos_F": {
+    "5": [
+      400.0
+    ],
+    "6": [
+      400.0
+    ]
+  },
+  "sistemas_coordenadas": {
+    "G54": 20
+  },
+  "compensacao_raio": [
+    {
+      "g": "G41",
+      "linha": 277,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 296,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 305,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 314,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 333,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 354,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 363,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 372,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 381,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 389,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 409,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 428,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 447,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 466,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 474,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 482,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 490,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 499,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 520,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 536,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 545,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 564,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 583,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 592,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 601,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 617,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 635,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 644,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 653,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 661,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 669,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 687,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 705,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 722,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 741,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 750,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 769,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 778,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 786,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 805,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 823,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 842,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 860,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 869,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 878,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 886,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 895,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 916,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 935,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 944,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 964,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 984,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 993,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 1002,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 1018,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 1039,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 1048,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 1056,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 1064,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 1072,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 1090,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 1109,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 1127,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 1144,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 1153,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 1161,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 1169,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 1178,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 1196,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 1212,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 1221,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 1240,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 1258,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 1267,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 1284,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 1293,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 1302,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 1321,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 1339,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 1357,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 1375,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 1393,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 1413,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 1431,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 1450,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 1468,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 1487,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 1496,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 1514,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 1523,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 1540,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 1549,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 1568,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 1588,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 1608,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 1617,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 1635,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 1654,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 1672,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 1689,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 1707,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 1727,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 1747,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 1766,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 1785,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 1804,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 1824,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 1843,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 1862,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 1881,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 1890,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 1899,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 1918,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 1935,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 1944,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 1962,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 1971,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 1988,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 1996,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 2014,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 2037,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 2045,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 2064,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 2084,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 2102,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 2111,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 2120,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 2138,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 2158,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 2167,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 2176,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 2185,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 2194,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 2213,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 2231,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 2249,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 2268,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 2277,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 2286,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 2294,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 2303,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 2324,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 2341,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 2350,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 2369,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 2387,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 2395,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 2404,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 2421,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 2440,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 2449,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 2457,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 2466,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 2475,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 2493,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 2511,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 2531,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 2549,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 2557,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 2577,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 2586,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 2594,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 2613,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 2632,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 2651,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 2669,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 2677,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 2686,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 2695,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 2704,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 2724,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 2742,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 2750,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 2769,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 2787,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 2795,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 2804,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 2821,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 2842,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 2851,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 2860,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 2869,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 2877,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 2897,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 2916,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 2934,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 2953,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 2961,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 2970,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 2979,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 2988,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 3007,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 3024,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 3033,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 3052,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 3070,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 3078,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 3098,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 3106,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 3114,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 3132,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 3152,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 3170,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 3188,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 3206,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 3225,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 3242,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 3261,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 3280,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 3299,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 3307,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 3316,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 3335,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 3354,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 3372,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 3380,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 3400,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 3419,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 3437,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 3456,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 3474,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 3493,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 3512,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 3530,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 3548,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 3567,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 3586,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 3605,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 3624,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 3642,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 3650,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 3659,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 3676,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 3696,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 3704,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 3723,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 3731,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 3751,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 3759,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 3777,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 3800,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 3819,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 3830,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 3849,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 3860,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 3871,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 3890,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 3909,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 3927,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 3945,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 3956,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 3967,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 3979,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 3991,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 4008,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 4026,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 4038,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 4049,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 4061,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 4072,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 4090,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 4108,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 4127,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 4146,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 4157,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 4175,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 4186,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 4204,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 4222,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 4233,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 4244,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 4262,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 4281,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 4299,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 4317,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 4336,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 4353,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 4364,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 4375,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 4387,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 4398,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 4416,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 4434,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 4445,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 4464,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 4482,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 4493,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 4504,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 4523,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 4542,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 4553,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 4564,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 4575,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 4586,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 4604,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 4622,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 4641,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 4660,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 4671,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 4689,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 4700,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 4712,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 4731,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 4750,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 4768,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 4786,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 4798,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 4810,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 4821,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 4833,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 4852,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 4870,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 4881,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 4901,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 4919,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 4931,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 4942,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 4960,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 4978,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 4989,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 5000,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 5011,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 5023,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 5041,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 5059,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 5078,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 5096,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 5115,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 5134,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 5145,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 5163,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 5174,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 5192,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 5211,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 5228,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 5247,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 5265,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 5283,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 5301,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 5318,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 5336,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 5355,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 5373,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 5391,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 5409,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 5427,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 5439,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 5457,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 5477,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 5488,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 5506,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 5517,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 5535,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 5553,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 5564,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 5582,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 5593,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 5612,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 5623,
+      "ferramenta": 6
+    },
+    {
+      "g": "G41",
+      "linha": 5642,
+      "ferramenta": 6
+    }
+  ],
+  "compensacao_comprimento": [
+    {
+      "linha": 22,
+      "ferramenta": 5,
+      "bloco": "N15G43G0Z10.H#1D#1"
+    },
+    {
+      "linha": 218,
+      "ferramenta": 6,
+      "bloco": "N211G43G0Z10.H#1D#1"
+    }
+  ],
+  "ciclos_fixos": {
+    "G81": {
+      "ocorrencias": 3,
+      "primeira_linha": 25
+    }
+  },
+  "m_especiais": [],
+  "z_programado_por_ferramenta": {
+    "5": {
+      "min": {
+        "z": -45.0,
+        "linha": 25,
+        "bloco": "N18G81G98X-218.385Y58.795Z-45.R2.F400"
+      },
+      "max": {
+        "z": 10.0,
+        "linha": 22
+      }
+    },
+    "6": {
+      "min": {
+        "z": -50.0,
+        "linha": 220,
+        "bloco": "N213G81G98X-223.474Y32.244Z-50.R2.F400"
+      },
+      "max": {
+        "z": 10.0,
+        "linha": 218
+      }
+    }
+  },
+  "alertas_leitura": []
+}

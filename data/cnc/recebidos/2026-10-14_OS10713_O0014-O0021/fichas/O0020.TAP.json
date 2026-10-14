@@ -1,0 +1,102 @@
+{
+  "arquivo": "O0020.TAP",
+  "bytes": 400527,
+  "linhas": 14254,
+  "codificacao": "utf-8",
+  "sha256": "49c4cd4e0de77f50ab8ab6f137183fb11732271d39a99b7dd876bf4dc0182402",
+  "proveniencia": "extraído do texto do programa (scripts/ficha_programa.py); não simulado",
+  "nome_no_programa": {
+    "valor": "O0020",
+    "linha": 2
+  },
+  "data_no_programa": {
+    "valor": "13.10.2026 AS 11:35:43",
+    "linha": 3
+  },
+  "tempo_estimado_cabecalho": {
+    "segundos": 4651,
+    "texto": "TEMPO ESTIMADO : 1 HOURS 17 MIN 31 SEC",
+    "linha": 4,
+    "natureza": "estimativa do CAM no cabeçalho; não é tempo real"
+  },
+  "ferramentas_cabecalho": [
+    {
+      "t": 2,
+      "nome": "2-GIRASSOL D63MM",
+      "diametro_mm": 63.0,
+      "raio_ponta_mm": 6.0,
+      "linha": 8
+    }
+  ],
+  "trocas_ferramenta": [
+    {
+      "t": 2,
+      "linha": 15,
+      "bloco": "N9M6"
+    }
+  ],
+  "percursos": [
+    {
+      "nome": "ORELHA 1 L2",
+      "linha": 18,
+      "ferramenta": 2
+    },
+    {
+      "nome": "__ORELHA 2 L2",
+      "linha": 1858,
+      "ferramenta": 2
+    },
+    {
+      "nome": "__REBAIXO L2_1",
+      "linha": 3432,
+      "ferramenta": 2
+    },
+    {
+      "nome": "__REBAIXO L2_2",
+      "linha": 4123,
+      "ferramenta": 2
+    },
+    {
+      "nome": "__REBAIXO L2_3",
+      "linha": 7944,
+      "ferramenta": 2
+    }
+  ],
+  "rotacoes_S": {
+    "2": [
+      1000.0
+    ]
+  },
+  "avancos_F": {
+    "2": [
+      1200.0
+    ]
+  },
+  "sistemas_coordenadas": {
+    "G54": 19
+  },
+  "compensacao_raio": [],
+  "compensacao_comprimento": [
+    {
+      "linha": 21,
+      "ferramenta": 2,
+      "bloco": "N15G43G0Z150.H#1D#1"
+    }
+  ],
+  "ciclos_fixos": {},
+  "m_especiais": [],
+  "z_programado_por_ferramenta": {
+    "2": {
+      "min": {
+        "z": -42.836,
+        "linha": 2621,
+        "bloco": "N2615G1Z-42.836"
+      },
+      "max": {
+        "z": 150.0,
+        "linha": 21
+      }
+    }
+  },
+  "alertas_leitura": []
+}

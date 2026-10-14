@@ -37,10 +37,13 @@ def num(v):
 
 def analyze(path):
     raw = path.read_bytes()
-    text = raw.decode('utf8', errors='replace')
+    try:
+        text, encoding = raw.decode('utf8'), 'utf-8'
+    except UnicodeDecodeError:
+        text, encoding = raw.decode('cp1252', errors='replace'), 'cp1252 (não é UTF-8; lido como Windows-1252)'
     lines = text.splitlines()
     out = {
-        'arquivo': path.name, 'bytes': len(raw), 'linhas': len(lines),
+        'arquivo': path.name, 'bytes': len(raw), 'linhas': len(lines), 'codificacao': encoding,
         'sha256': hashlib.sha256(raw).hexdigest(),
         'proveniencia': 'extraído do texto do programa (scripts/ficha_programa.py); não simulado',
         'nome_no_programa': None, 'data_no_programa': None, 'tempo_estimado_cabecalho': None,
@@ -121,7 +124,7 @@ def md(f):
     t = f['tempo_estimado_cabecalho']
     rows = [
         f"# Ficha de entrada — {f['arquivo']}", '',
-        f"SHA-256 `{f['sha256']}` · {f['bytes']} bytes · {f['linhas']} linhas.",
+        f"SHA-256 `{f['sha256']}` · {f['bytes']} bytes · {f['linhas']} linhas · codificação {f['codificacao']}.",
         f"Proveniência: {f['proveniencia']}.", '',
         '| Item | Valor extraído | Linha |', '|---|---|---|',
         f"| Nome no programa | {(f['nome_no_programa'] or {}).get('valor', 'não encontrado')} | {(f['nome_no_programa'] or {}).get('linha', '—')} |",

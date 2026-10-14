@@ -1,0 +1,88 @@
+{
+  "arquivo": "O0021.TAP",
+  "bytes": 252394,
+  "linhas": 8994,
+  "codificacao": "utf-8",
+  "sha256": "aa8633029cb0c1cc4b5cf67ee861ad4070c1af2862dde493874722e10ff5aa0a",
+  "proveniencia": "extraído do texto do programa (scripts/ficha_programa.py); não simulado",
+  "nome_no_programa": {
+    "valor": "O0021",
+    "linha": 2
+  },
+  "data_no_programa": {
+    "valor": "13.10.2026 AS 11:35:44",
+    "linha": 3
+  },
+  "tempo_estimado_cabecalho": {
+    "segundos": 1981,
+    "texto": "TEMPO ESTIMADO : 0 HOURS 33 MIN 1 SEC",
+    "linha": 4,
+    "natureza": "estimativa do CAM no cabeçalho; não é tempo real"
+  },
+  "ferramentas_cabecalho": [
+    {
+      "t": 9,
+      "nome": "9-TOPO D12MM",
+      "diametro_mm": 12.0,
+      "raio_ponta_mm": 0.0,
+      "linha": 8
+    }
+  ],
+  "trocas_ferramenta": [
+    {
+      "t": 9,
+      "linha": 15,
+      "bloco": "N9M6"
+    }
+  ],
+  "percursos": [
+    {
+      "nome": "ACABA REBAIXO L2_G41",
+      "linha": 18,
+      "ferramenta": 9
+    }
+  ],
+  "rotacoes_S": {
+    "9": [
+      3183.0
+    ]
+  },
+  "avancos_F": {
+    "9": [
+      1273.0
+    ]
+  },
+  "sistemas_coordenadas": {
+    "G54": 19
+  },
+  "compensacao_raio": [
+    {
+      "g": "G41",
+      "linha": 25,
+      "ferramenta": 9
+    }
+  ],
+  "compensacao_comprimento": [
+    {
+      "linha": 21,
+      "ferramenta": 9,
+      "bloco": "N15G43G0Z150.H#1D#1"
+    }
+  ],
+  "ciclos_fixos": {},
+  "m_especiais": [],
+  "z_programado_por_ferramenta": {
+    "9": {
+      "min": {
+        "z": -9.51,
+        "linha": 8397,
+        "bloco": "N8391G1X125.162Y-186.376Z-9.51"
+      },
+      "max": {
+        "z": 150.0,
+        "linha": 21
+      }
+    }
+  },
+  "alertas_leitura": []
+}
