@@ -6,3 +6,9 @@
 4. Performance: reduzir HTML ~12,7 MB, extrair assets pesados e carregar por demanda, mantendo pacote offline e links relativos. Extrair renderer monolítico apenas com provas de equivalência.
 5. Visual: refinamento pelo briefing separado, sem trocar arquitetura/fluxo/dados industriais. Validar notebook e celular no ambiente real de apresentação.
 6. Produção, fora da V1: licenças e autorização corporativa para exposição de documentos industriais, publicação sob domínio interno se necessário; estudo de backend, rede, login e múltiplas máquinas somente depois de fechar o piloto. Não há integração de fábrica implementada.
+
+## Direção informada pelo Gustavo em 14/10/2026 (planejada, não aprovada como requisito)
+
+7. Processo gerado automaticamente quando o programador envia os programas; uma tela de revisão onde ele posiciona as garras no 3D e escreve observações. A primeira versão dessa tela entra nas próximas rodadas, com os próximos programas.
+8. Padrão de setup para esta família de peças (grids): o mesmo jeito de fixar e sequenciar se repete.
+9. Depois: gerar um processo completo a partir do desenho ou do modelo 3D de qualquer peça.

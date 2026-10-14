@@ -38,5 +38,10 @@ Estas perguntas **não aparecem na interface do operador**. Servem para a próxi
 7. Revisões aprovadas de processo, desenho e programas.
 8. Validação física de calços e garras (posição, altura, folga).
 9. Cadastro físico da Mini Portal (`data/machines.json`, campos `null`).
-10. Lote de ~10 programas anunciado em 14/10: peça/OS, operação (3ª operação, retorno pós-TT ou outra peça) e origem dos arquivos.
+10. O009–O0013 (14/10): a ordem de execução é O009 → O0010 → O0011 → O0012 → O0013, logo depois do O008?
 11. O004/T12: o nome no cabeçalho diz "ABACAXI D25MM R0.8", mas a coluna de raio da mesma tabela diz 0 (O004.TAP, linha 8). Qual vale para a ferramenta real? Impacto: apenas cadastro/visual da ferramenta; o percurso não muda.
+12. O0013 rosca 5/8-11 UNC até Z −10, mas o desenho (p.2) pede ↧39 e a broca do O0011 vai a Z −46. Qual profundidade vale? Impacto: rosca 29 mm mais curta que o desenho.
+13. O0010 grava "OS 10713" em Z −6,35, sobre o fundo do rebaixo do O009 (Z −6,347). A gravação fica com ~0,003 mm. É intencional?
+14. O009 tem blocos `GG53` (linhas 10, 16, 5715). O comando da Mini Portal aceita?
+15. O0012 escareador: desenho pede Ø15,5 × 90°; em Z −6 um cone de 90° com ponta teórica marca Ø12. Como T14 é presetado (ponta ou diâmetro de referência)?
+16. A face para cima na 2ª operação é o lado "Grid inferior" do desenho (p.2)? Se sim, o Rebaixo Superior 9,5 (p.1) é da 3ª operação?

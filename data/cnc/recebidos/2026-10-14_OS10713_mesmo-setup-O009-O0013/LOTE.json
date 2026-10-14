@@ -1,0 +1,118 @@
+{
+  "lote": "2026-10-14_OS10713_mesmo-setup-O009-O0013",
+  "recebido_em": "2026-10-14",
+  "enviado_por": "Gustavo",
+  "origem": "anexos da conversa do projeto, 14/10/2026 04:36 (O009.TAP, O0010.TAP, O0011.TAP, O0012.TAP, O0013.TAP)",
+  "peca": "FP 16F H8 12V",
+  "os": "OS 10-713 (nome interno e gravação 'OS 10713' no O0010; vínculo à peça informado pelo Gustavo)",
+  "desenho": {
+    "arquivo": "FP16F 12V H8 - PB.pdf",
+    "revisao": null,
+    "folha_relacionada": "p.2 'Usinagem grid inferior' (Rebaixo Inf. 6,4; 5/8 UNC ↧39; escareado Ø15,5 ↧1 × 90°; passo 244,5) — relação por comparação de cotas, a confirmar"
+  },
+  "contexto_informado": "Essas daqui são operações que ainda continuam com esse mesmo setup. Então, já pode fazer o sistema a partir do processo dessas telas.",
+  "arquivos": [
+    {
+      "arquivo": "O009.TAP",
+      "sha256": "2d61821acfe813d2a3d8925d315a6d21f792d4d0c252f721f8b8f82dfd304b0f",
+      "funcao_extraida": "REBAIXO 1 L1 / REBAIXO 2 L1 com T12 (comentários PERCURSO)",
+      "operacao": {
+        "valor": "2ª operação (mesmo setup sobre calços)",
+        "status": "confirmado",
+        "fonte": "Gustavo, 14/10/2026"
+      },
+      "etapa": {
+        "valor": "depois de O008, na ordem O009→O0013",
+        "status": "pendente",
+        "fonte": "ordem dos nomes + coerência tecnológica (rebaixo antes da gravação no fundo dele; centro → broca → escareador → macho); não informada pelo Gustavo"
+      },
+      "limitacoes": [
+        "Nome T12 diz R0.8; coluna TOOL TIP RADIUS diz 0 (linha 8), igual ao O004"
+      ],
+      "duvidas": [
+        "Blocos com 'GG53' nas linhas 10, 16 e 5715 (N4, N10, N5709). Roda assim na Mini Portal?"
+      ]
+    },
+    {
+      "arquivo": "O0010.TAP",
+      "sha256": "86b1fd0b703183a1f8cb97ce34e25bc7a8036d14e4c506ed60242ae8e365b312",
+      "funcao_extraida": "GRAVACAO com T11 broca de centro",
+      "operacao": {
+        "valor": "2ª operação (mesmo setup sobre calços)",
+        "status": "confirmado",
+        "fonte": "Gustavo, 14/10/2026"
+      },
+      "etapa": {
+        "valor": "depois de O008, na ordem O009→O0013",
+        "status": "pendente",
+        "fonte": "ordem dos nomes + coerência tecnológica (rebaixo antes da gravação no fundo dele; centro → broca → escareador → macho); não informada pelo Gustavo"
+      },
+      "limitacoes": [],
+      "duvidas": [
+        "Gravação em Z-6,35 (aproximação Z-4,35) cai sobre o fundo do rebaixo do O009 (Z-6,347): só ~0,003 mm abaixo do fundo"
+      ]
+    },
+    {
+      "arquivo": "O0011.TAP",
+      "sha256": "a8b3b723f1f0d0d079838a6a4376b60d0fb830cd0cbd0d0ad945af4072b3c183",
+      "funcao_extraida": "FUROS DE CENTRO (G81 Z-0,5) e FUROS P/ ROSCA 5/8-11 UNC (G83 Z-46) com T22 Ø13,5",
+      "operacao": {
+        "valor": "2ª operação (mesmo setup sobre calços)",
+        "status": "confirmado",
+        "fonte": "Gustavo, 14/10/2026"
+      },
+      "etapa": {
+        "valor": "depois de O008, na ordem O009→O0013",
+        "status": "pendente",
+        "fonte": "ordem dos nomes + coerência tecnológica (rebaixo antes da gravação no fundo dele; centro → broca → escareador → macho); não informada pelo Gustavo"
+      },
+      "limitacoes": [],
+      "duvidas": []
+    },
+    {
+      "arquivo": "O0012.TAP",
+      "sha256": "daaef872c2f3a35ce0fb33d5b484996583de92d046f7a5a4a9a168ab1a176093",
+      "funcao_extraida": "ESCARIADOR com T14 45G Ø56 (G81 Z-6)",
+      "operacao": {
+        "valor": "2ª operação (mesmo setup sobre calços)",
+        "status": "confirmado",
+        "fonte": "Gustavo, 14/10/2026"
+      },
+      "etapa": {
+        "valor": "depois de O008, na ordem O009→O0013",
+        "status": "pendente",
+        "fonte": "ordem dos nomes + coerência tecnológica (rebaixo antes da gravação no fundo dele; centro → broca → escareador → macho); não informada pelo Gustavo"
+      },
+      "limitacoes": [],
+      "duvidas": [
+        "Desenho pede escareado Ø15,5 × 90°; com ponta teórica em Z-6 um cone de 90° marca Ø12 (< furo Ø13,5). Depende de como T14 é presetado"
+      ]
+    },
+    {
+      "arquivo": "O0013.TAP",
+      "sha256": "5bfb590abf84c32a9bc5652d705c48b75ebb601f589cb4d2553bee2740241abf",
+      "funcao_extraida": "ROSCA 5/8-11 UNC com T13 macho (M01 antes, G95, G84 Z-10 F2,309)",
+      "operacao": {
+        "valor": "2ª operação (mesmo setup sobre calços)",
+        "status": "confirmado",
+        "fonte": "Gustavo, 14/10/2026"
+      },
+      "etapa": {
+        "valor": "depois de O008, na ordem O009→O0013",
+        "status": "pendente",
+        "fonte": "ordem dos nomes + coerência tecnológica (rebaixo antes da gravação no fundo dele; centro → broca → escareador → macho); não informada pelo Gustavo"
+      },
+      "limitacoes": [],
+      "duvidas": [
+        "Rosca até Z-10 no TAP; desenho p.2 indica 5/8 UNC ↧39 e a broca do O0011 vai a Z-46"
+      ]
+    }
+  ],
+  "status_permitidos": [
+    "extraido",
+    "confirmado",
+    "derivado",
+    "sugestao",
+    "pendente"
+  ]
+}

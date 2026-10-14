@@ -1,0 +1,81 @@
+{
+  "arquivo": "O0010.TAP",
+  "bytes": 3815,
+  "linhas": 173,
+  "sha256": "86b1fd0b703183a1f8cb97ce34e25bc7a8036d14e4c506ed60242ae8e365b312",
+  "proveniencia": "extraído do texto do programa (scripts/ficha_programa.py); não simulado",
+  "nome_no_programa": {
+    "valor": "O0010",
+    "linha": 2
+  },
+  "data_no_programa": {
+    "valor": "13.10.2026 AS 11:35:43",
+    "linha": 3
+  },
+  "tempo_estimado_cabecalho": {
+    "segundos": 5,
+    "texto": "TEMPO ESTIMADO : 0 HOURS 0 MIN 5 SEC",
+    "linha": 4,
+    "natureza": "estimativa do CAM no cabeçalho; não é tempo real"
+  },
+  "ferramentas_cabecalho": [
+    {
+      "t": 11,
+      "nome": "11-BROCA DE CENTRO",
+      "diametro_mm": 5.0,
+      "raio_ponta_mm": 0.0,
+      "linha": 8
+    }
+  ],
+  "trocas_ferramenta": [
+    {
+      "t": 11,
+      "linha": 15,
+      "bloco": "N9M6"
+    }
+  ],
+  "percursos": [
+    {
+      "nome": "GRAVACAO",
+      "linha": 18,
+      "ferramenta": 11
+    }
+  ],
+  "rotacoes_S": {
+    "11": [
+      8000.0
+    ]
+  },
+  "avancos_F": {
+    "11": [
+      500.0
+    ]
+  },
+  "sistemas_coordenadas": {
+    "G54": 19
+  },
+  "compensacao_raio": [],
+  "compensacao_comprimento": [
+    {
+      "linha": 21,
+      "ferramenta": 11,
+      "bloco": "N15G43G0Z10.H#1D#1"
+    }
+  ],
+  "ciclos_fixos": {},
+  "m_especiais": [],
+  "z_programado_por_ferramenta": {
+    "11": {
+      "min": {
+        "z": -6.35,
+        "linha": 24,
+        "bloco": "N18G1Z-6.35F500"
+      },
+      "max": {
+        "z": 10.0,
+        "linha": 21
+      }
+    }
+  },
+  "alertas_leitura": []
+}

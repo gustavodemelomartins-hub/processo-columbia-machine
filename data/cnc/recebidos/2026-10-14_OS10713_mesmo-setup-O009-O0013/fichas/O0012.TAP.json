@@ -1,0 +1,86 @@
+{
+  "arquivo": "O0012.TAP",
+  "bytes": 894,
+  "linhas": 41,
+  "sha256": "daaef872c2f3a35ce0fb33d5b484996583de92d046f7a5a4a9a168ab1a176093",
+  "proveniencia": "extraído do texto do programa (scripts/ficha_programa.py); não simulado",
+  "nome_no_programa": {
+    "valor": "O0012",
+    "linha": 2
+  },
+  "data_no_programa": {
+    "valor": "13.10.2026 AS 11:35:43",
+    "linha": 3
+  },
+  "tempo_estimado_cabecalho": {
+    "segundos": 83,
+    "texto": "TEMPO ESTIMADO : 0 HOURS 1 MIN 23 SEC",
+    "linha": 4,
+    "natureza": "estimativa do CAM no cabeçalho; não é tempo real"
+  },
+  "ferramentas_cabecalho": [
+    {
+      "t": 14,
+      "nome": "14-ESCARIADOR 45G D56MM",
+      "diametro_mm": 56.0,
+      "raio_ponta_mm": 0.0,
+      "linha": 8
+    }
+  ],
+  "trocas_ferramenta": [
+    {
+      "t": 14,
+      "linha": 15,
+      "bloco": "N9M6"
+    }
+  ],
+  "percursos": [
+    {
+      "nome": "ESCARIADOR",
+      "linha": 18,
+      "ferramenta": 14
+    }
+  ],
+  "rotacoes_S": {
+    "14": [
+      500.0
+    ]
+  },
+  "avancos_F": {
+    "14": [
+      70.0
+    ]
+  },
+  "sistemas_coordenadas": {
+    "G54": 19
+  },
+  "compensacao_raio": [],
+  "compensacao_comprimento": [
+    {
+      "linha": 21,
+      "ferramenta": 14,
+      "bloco": "N15G43G0Z150.H#1D#1"
+    }
+  ],
+  "ciclos_fixos": {
+    "G81": {
+      "ocorrencias": 1,
+      "primeira_linha": 24
+    }
+  },
+  "m_especiais": [],
+  "z_programado_por_ferramenta": {
+    "14": {
+      "min": {
+        "z": -6.0,
+        "linha": 24,
+        "bloco": "N18G81G98X-244.475Y-265.112Z-6.R1.F70"
+      },
+      "max": {
+        "z": 150.0,
+        "linha": 21
+      }
+    }
+  },
+  "alertas_leitura": []
+}

@@ -1,0 +1,95 @@
+{
+  "arquivo": "O0011.TAP",
+  "bytes": 1147,
+  "linhas": 59,
+  "sha256": "a8b3b723f1f0d0d079838a6a4376b60d0fb830cd0cbd0d0ad945af4072b3c183",
+  "proveniencia": "extraído do texto do programa (scripts/ficha_programa.py); não simulado",
+  "nome_no_programa": {
+    "valor": "O0011",
+    "linha": 2
+  },
+  "data_no_programa": {
+    "valor": "13.10.2026 AS 11:35:42",
+    "linha": 3
+  },
+  "tempo_estimado_cabecalho": {
+    "segundos": 297,
+    "texto": "TEMPO ESTIMADO : 0 HOURS 4 MIN 57 SEC",
+    "linha": 4,
+    "natureza": "estimativa do CAM no cabeçalho; não é tempo real"
+  },
+  "ferramentas_cabecalho": [
+    {
+      "t": 22,
+      "nome": "22-BROCA MD D13,5MM",
+      "diametro_mm": 13.5,
+      "raio_ponta_mm": 0.0,
+      "linha": 8
+    }
+  ],
+  "trocas_ferramenta": [
+    {
+      "t": 22,
+      "linha": 15,
+      "bloco": "N9M6"
+    }
+  ],
+  "percursos": [
+    {
+      "nome": "FUROS DE CENTRO",
+      "linha": 18,
+      "ferramenta": 22
+    },
+    {
+      "nome": "__FUROS P/ ROSCA 5/8-11 UNC",
+      "linha": 38,
+      "ferramenta": 22
+    }
+  ],
+  "rotacoes_S": {
+    "22": [
+      1650.0
+    ]
+  },
+  "avancos_F": {
+    "22": [
+      165.0
+    ]
+  },
+  "sistemas_coordenadas": {
+    "G54": 19
+  },
+  "compensacao_raio": [],
+  "compensacao_comprimento": [
+    {
+      "linha": 21,
+      "ferramenta": 22,
+      "bloco": "N15G43G0Z150.H#1D#1"
+    }
+  ],
+  "ciclos_fixos": {
+    "G81": {
+      "ocorrencias": 1,
+      "primeira_linha": 24
+    },
+    "G83": {
+      "ocorrencias": 1,
+      "primeira_linha": 42
+    }
+  },
+  "m_especiais": [],
+  "z_programado_por_ferramenta": {
+    "22": {
+      "min": {
+        "z": -46.0,
+        "linha": 42,
+        "bloco": "N36G83G98X-244.475Y-265.112Z-46.Q2.R1.F165"
+      },
+      "max": {
+        "z": 150.0,
+        "linha": 21
+      }
+    }
+  },
+  "alertas_leitura": []
+}

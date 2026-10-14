@@ -1,0 +1,92 @@
+{
+  "arquivo": "O0013.TAP",
+  "bytes": 888,
+  "linhas": 43,
+  "sha256": "5bfb590abf84c32a9bc5652d705c48b75ebb601f589cb4d2553bee2740241abf",
+  "proveniencia": "extraído do texto do programa (scripts/ficha_programa.py); não simulado",
+  "nome_no_programa": {
+    "valor": "O0013",
+    "linha": 2
+  },
+  "data_no_programa": {
+    "valor": "13.10.2026 AS 11:35:42",
+    "linha": 3
+  },
+  "tempo_estimado_cabecalho": {
+    "segundos": 303,
+    "texto": "TEMPO ESTIMADO : 0 HOURS 5 MIN 3 SEC",
+    "linha": 4,
+    "natureza": "estimativa do CAM no cabeçalho; não é tempo real"
+  },
+  "ferramentas_cabecalho": [
+    {
+      "t": 13,
+      "nome": "13-MACHO 5/8-11UNC",
+      "diametro_mm": 13.8,
+      "raio_ponta_mm": 0.0,
+      "linha": 8
+    }
+  ],
+  "trocas_ferramenta": [
+    {
+      "t": 13,
+      "linha": 15,
+      "bloco": "N9M6"
+    }
+  ],
+  "percursos": [
+    {
+      "nome": "ROSCA 5/8-11 UNC",
+      "linha": 18,
+      "ferramenta": 13
+    }
+  ],
+  "rotacoes_S": {
+    "13": [
+      185.0
+    ]
+  },
+  "avancos_F": {
+    "13": [
+      2.309
+    ]
+  },
+  "sistemas_coordenadas": {
+    "G54": 19
+  },
+  "compensacao_raio": [],
+  "compensacao_comprimento": [
+    {
+      "linha": 21,
+      "ferramenta": 13,
+      "bloco": "N15G43G0Z150.H#1D#1"
+    }
+  ],
+  "ciclos_fixos": {
+    "G84": {
+      "ocorrencias": 1,
+      "primeira_linha": 26
+    }
+  },
+  "m_especiais": [
+    {
+      "m": "01",
+      "linha": 24,
+      "bloco": "N18M01"
+    }
+  ],
+  "z_programado_por_ferramenta": {
+    "13": {
+      "min": {
+        "z": -10.0,
+        "linha": 26,
+        "bloco": "N20G84G98X-244.475Y-265.112Z-10.R1.F2.309"
+      },
+      "max": {
+        "z": 150.0,
+        "linha": 21
+      }
+    }
+  },
+  "alertas_leitura": []
+}

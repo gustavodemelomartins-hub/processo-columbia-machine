@@ -69,6 +69,8 @@ def analyze(path):
         m = re.search(r'PERCURSO\s*-\s*([^)]*)', line)
         if m: out['percursos'].append({'nome': m[1].strip(), 'linha': i, 'ferramenta': tool})
         code = strip_comments(line)
+        dup = re.search(r'([A-Z])\1(?=[-+\d.#])', code)
+        if dup: out['alertas_leitura'].append({'linha': i, 'texto': f"endereço repetido '{dup[1]}{dup[1]}' no bloco `{line.strip()}`: confirmar se o comando aceita"})
         for k, v in re.findall(r'#(\d+)\s*=\s*([-+]?\d*\.?\d+)', code):
             variables['#' + k] = v
         words = WORD.findall(re.sub(r'#\d+\s*=\s*[-+]?\d*\.?\d+', '', code))
