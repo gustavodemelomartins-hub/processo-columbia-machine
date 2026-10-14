@@ -2650,7 +2650,10 @@ function jEnsure3D(){
  }
  if(!journeyFaceLayer){
   const w=OPERATOR_CONFIG.simulation.part_mm.width,d=OPERATOR_CONFIG.simulation.part_mm.depth;
-  journeyFaceLayer=new THREE.Mesh(new THREE.BoxGeometry(w+4,10,d+4),new THREE.MeshStandardMaterial({color:jAxisColor('stock-remove'),transparent:true,opacity:.55,depthWrite:false}));
+  // Light tint plus an outline: marks the face to remove without hiding how the part sits on the machine.
+  const box=new THREE.BoxGeometry(w+4,10,d+4);
+  journeyFaceLayer=new THREE.Mesh(box,new THREE.MeshStandardMaterial({color:jAxisColor('stock-remove'),transparent:true,opacity:.16,depthWrite:false}));
+  journeyFaceLayer.add(new THREE.LineSegments(new THREE.EdgesGeometry(box),new THREE.LineBasicMaterial({color:jAxisColor('stock-remove')})));
   journeyFaceLayer.name='journey-face-layer';journeyFaceLayer.userData={role:'material-to-remove',scale:'espessura exagerada; ilustrativo'};journeyFaceLayer.visible=false;scene.add(journeyFaceLayer);
  }
  return true;
@@ -2663,7 +2666,7 @@ function journey3D(){
  journeyAxes.position.set(0,top,0);journeyAxes.visible=operation&&jZeroStage()&&engineeringReferences().center;
  if(typeof zeroMarker!=='undefined'&&zeroMarker)zeroMarker.visible=false;
  journeyFaceLayer.position.set(0,top+5,0);journeyFaceLayer.visible=operation&&p?.kind==='face';
- const caption=!operation?'':state.phase===FACE_IDS[0]?'Face A em laranja · peça invertida, sobre a mesa':state.phase===FACE_IDS[1]?'Face B em laranja · peça tombada, sobre a mesa':(state.operation===2?'Peça tombada, direto na mesa':'Peça sobre 4 calços')+(OPERATOR_CONFIG.fixture.inner_clamps.stages.includes(state.phase)?' · garras por dentro':' · 4 garras')+(jZeroStage()?' · X0 Y0 no centro, Z0 no topo':'');
+ const caption=!operation?'':state.phase===FACE_IDS[0]?'Face A contornada em laranja · peça invertida, sobre a mesa':state.phase===FACE_IDS[1]?'Face B contornada em laranja · peça tombada, sobre a mesa':(state.operation===2?'Peça tombada, direto na mesa':'Peça sobre 4 calços')+(OPERATOR_CONFIG.fixture.inner_clamps.stages.includes(state.phase)?' · garras por dentro':' · 4 garras')+(jZeroStage()?' · X0 Y0 no centro, Z0 no topo':'');
  const el=$('viewerContext');if(el){el.textContent=caption;el.hidden=!caption;}
  draw();
 }
