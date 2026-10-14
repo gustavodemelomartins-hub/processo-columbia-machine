@@ -4,7 +4,7 @@ const cavitySelection={id:null};let cavityMeshes=[];
 // Insert life studies (passes on facing, cavities on O003) share one edge-cycle domain.
 const INSERT_STUDIES=OPERATOR_CONFIG.insert_usage.studies||[];
 const insertUsage=(toolId=3)=>InsertUsageDomain.get(tooling.store,tooling.jobMachineId,toolId);
-function currentInsertStudy(){if(state.operation===2)return null;const file=displayedProgramFile();return INSERT_STUDIES.find(st=>st.program===file)||null;}
+function currentInsertStudy(){if(state.operation===PENDING_OPERATION)return null;const file=displayedProgramFile();return INSERT_STUDIES.find(st=>st.program===file)||null;}
 function insertUnitWord(st,n){const u=InsertUsageDomain.UNITS[st.unit];return n===1?u.one:u.many;}
 function insertContext(st){return {unit:st.unit,context:{operation:state.operation+1,program:st.program,stage:state.phase,reductionPerPassMm:st.unit==='pass'?number(state.faceTiming.reductionPerPassMm):null},jobId:tooling.jobId,cavityId:cavitySelection.id};}
 // One-click record shared by the stage panel and the insert life tab. Never blocks the operation.

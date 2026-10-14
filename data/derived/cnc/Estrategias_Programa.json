@@ -2180,5 +2180,890 @@
     "time_work_trajectory_seconds": 868.3469,
     "estimate_assumptions": "Estimativa da trajetória de trabalho amostrada pelo motor; rápido 10.000 mm/min. Sem aceleração, trocas, paradas ou movimentos G53 não localizados.",
     "restart_note": "Linhas servem para localizar trechos; não são pontos de retomada aprovados. Repassar exige conferir estado modal, G54, H/D e altura segura com a engenharia."
+  },
+  "O0018.TAP": {
+    "sha256": "0d3a32ad570a34a03ed1f8e01a12be1c50183b7b6dbcec6c84534e8ff5791c9f",
+    "strategies": [
+      {
+        "index": 0,
+        "name": "CHANFRO",
+        "provenance": "extraído do programa",
+        "comment": {
+          "line": 18,
+          "n": 12,
+          "code": "N12(PERCURSO - CHANFRO )"
+        },
+        "source_end_line": 5476,
+        "first_motion": {
+          "line": 23,
+          "n": 17,
+          "code": "N17G0Z-2."
+        },
+        "first_cut": {
+          "line": 24,
+          "n": 18,
+          "code": "N18G1Z-4.F700"
+        },
+        "last_motion": {
+          "line": 5471,
+          "n": 5465,
+          "code": "N5465G0Z10."
+        },
+        "tool_change": {
+          "line": 15,
+          "n": 9,
+          "code": "N9M6",
+          "t_number": 10
+        },
+        "tools": [
+          10
+        ],
+        "rpm": [
+          2700.0
+        ],
+        "feeds_mm_min": [
+          700.0
+        ],
+        "wcs": [
+          "G54"
+        ],
+        "compensation_codes": [],
+        "z_programmed_cut_mm": {
+          "min": -4.997,
+          "max": -2.0
+        },
+        "time_estimate_seconds": 1472.7593,
+        "unknown_feed_segments": 0,
+        "ap": {
+          "values_mm": [],
+          "status": "não determinado",
+          "reason": "Não informado no comentário. Material e engajamento reais não determinados pela trajetória."
+        },
+        "ae": {
+          "values_mm": [],
+          "status": "não determinado",
+          "reason": "Não informado no comentário. Material e engajamento reais não determinados pela trajetória."
+        }
+      }
+    ],
+    "tool_changes": [
+      {
+        "line": 15,
+        "n": 9,
+        "code": "N9M6",
+        "t_number": 10
+      }
+    ],
+    "time_header_seconds": 1467,
+    "time_engine_seconds": 1475.557924011613,
+    "time_work_trajectory_seconds": 1472.7593,
+    "estimate_assumptions": "Estimativa da trajetória de trabalho amostrada pelo motor; rápido 10.000 mm/min. Sem aceleração, trocas, paradas ou movimentos G53 não localizados.",
+    "restart_note": "Linhas servem para localizar trechos; não são pontos de retomada aprovados. Repassar exige conferir estado modal, G54, H/D e altura segura com a engenharia."
+  },
+  "O0019.TAP": {
+    "sha256": "b30c13a1043c1dcb87344576a3796a9f324b18e424245504bbc01088ebc8717b",
+    "strategies": [
+      {
+        "index": 0,
+        "name": "CANTO 1 R6 L2",
+        "provenance": "extraído do programa",
+        "comment": {
+          "line": 19,
+          "n": 12,
+          "code": "N12(PERCURSO - CANTO 1 R6 L2)"
+        },
+        "source_end_line": 76,
+        "first_motion": {
+          "line": 25,
+          "n": 18,
+          "code": "N18G81G98X-218.385Y58.795Z-45.R2.F400"
+        },
+        "first_cut": {
+          "line": 25,
+          "n": 18,
+          "code": "N18G81G98X-218.385Y58.795Z-45.R2.F400"
+        },
+        "last_motion": {
+          "line": 76,
+          "n": 69,
+          "code": "N69G0X233.254Y0.612"
+        },
+        "tool_change": {
+          "line": 16,
+          "n": 9,
+          "code": "N9M6",
+          "t_number": 5
+        },
+        "tools": [
+          5
+        ],
+        "rpm": [
+          1200.0
+        ],
+        "feeds_mm_min": [
+          400.0
+        ],
+        "wcs": [
+          "G54"
+        ],
+        "compensation_codes": [],
+        "z_programmed_cut_mm": {
+          "min": -45.0,
+          "max": 2.0
+        },
+        "time_estimate_seconds": 376.4582,
+        "unknown_feed_segments": 0,
+        "ap": {
+          "values_mm": [],
+          "status": "não determinado",
+          "reason": "Não informado no comentário. Material e engajamento reais não determinados pela trajetória."
+        },
+        "ae": {
+          "values_mm": [],
+          "status": "não determinado",
+          "reason": "Não informado no comentário. Material e engajamento reais não determinados pela trajetória."
+        }
+      },
+      {
+        "index": 1,
+        "name": "__CANTO 2 R6 L2",
+        "provenance": "extraído do programa",
+        "comment": {
+          "line": 77,
+          "n": 70,
+          "code": "N70(PERCURSO - __CANTO 2 R6 L2)"
+        },
+        "source_end_line": 213,
+        "first_motion": {
+          "line": 81,
+          "n": 74,
+          "code": "N74G81G98X233.254Y0.612Z-45.R2.F400"
+        },
+        "first_cut": {
+          "line": 81,
+          "n": 74,
+          "code": "N74G81G98X233.254Y0.612Z-45.R2.F400"
+        },
+        "last_motion": {
+          "line": 204,
+          "n": 197,
+          "code": "N197G0X-223.474Y32.244"
+        },
+        "tool_change": {
+          "line": 16,
+          "n": 9,
+          "code": "N9M6",
+          "t_number": 5
+        },
+        "tools": [
+          5
+        ],
+        "rpm": [
+          1200.0
+        ],
+        "feeds_mm_min": [
+          400.0
+        ],
+        "wcs": [
+          "G54"
+        ],
+        "compensation_codes": [
+          "G40"
+        ],
+        "z_programmed_cut_mm": {
+          "min": -45.0,
+          "max": 2.0
+        },
+        "time_estimate_seconds": 925.6356,
+        "unknown_feed_segments": 0,
+        "ap": {
+          "values_mm": [],
+          "status": "não determinado",
+          "reason": "Não informado no comentário. Material e engajamento reais não determinados pela trajetória."
+        },
+        "ae": {
+          "values_mm": [],
+          "status": "não determinado",
+          "reason": "Não informado no comentário. Material e engajamento reais não determinados pela trajetória."
+        }
+      },
+      {
+        "index": 2,
+        "name": "__CANTO R5 L2",
+        "provenance": "extraído do programa",
+        "comment": {
+          "line": 214,
+          "n": 207,
+          "code": "N207(PERCURSO - __CANTO R5 L2)"
+        },
+        "source_end_line": 271,
+        "first_motion": {
+          "line": 220,
+          "n": 213,
+          "code": "N213G81G98X-223.474Y32.244Z-50.R2.F400"
+        },
+        "first_cut": {
+          "line": 220,
+          "n": 213,
+          "code": "N213G81G98X-223.474Y32.244Z-50.R2.F400"
+        },
+        "last_motion": {
+          "line": 271,
+          "n": 264,
+          "code": "N264G0X-280.51Y-199.689"
+        },
+        "tool_change": {
+          "line": 211,
+          "n": 204,
+          "code": "N204M6",
+          "t_number": 6
+        },
+        "tools": [
+          6
+        ],
+        "rpm": [
+          1200.0
+        ],
+        "feeds_mm_min": [
+          400.0
+        ],
+        "wcs": [
+          "G54"
+        ],
+        "compensation_codes": [],
+        "z_programmed_cut_mm": {
+          "min": -50.0,
+          "max": 2.0
+        },
+        "time_estimate_seconds": 416.6224,
+        "unknown_feed_segments": 0,
+        "ap": {
+          "values_mm": [],
+          "status": "não determinado",
+          "reason": "Não informado no comentário. Material e engajamento reais não determinados pela trajetória."
+        },
+        "ae": {
+          "values_mm": [],
+          "status": "não determinado",
+          "reason": "Não informado no comentário. Material e engajamento reais não determinados pela trajetória."
+        }
+      },
+      {
+        "index": 3,
+        "name": "__RAIO 0,2 L2_G41",
+        "provenance": "extraído do programa",
+        "comment": {
+          "line": 272,
+          "n": 265,
+          "code": "N265(PERCURSO - __RAIO 0,2 L2_G41)"
+        },
+        "source_end_line": 2031,
+        "first_motion": {
+          "line": 275,
+          "n": 268,
+          "code": "N268G0Z-47.997"
+        },
+        "first_cut": {
+          "line": 276,
+          "n": 269,
+          "code": "N269G1Z-49.997F400"
+        },
+        "last_motion": {
+          "line": 2031,
+          "n": 2024,
+          "code": "N2024G0X-453.885Y-194.251"
+        },
+        "tool_change": {
+          "line": 211,
+          "n": 204,
+          "code": "N204M6",
+          "t_number": 6
+        },
+        "tools": [
+          6
+        ],
+        "rpm": [
+          1200.0
+        ],
+        "feeds_mm_min": [
+          400.0
+        ],
+        "wcs": [
+          "G54"
+        ],
+        "compensation_codes": [
+          "G40",
+          "G41"
+        ],
+        "z_programmed_cut_mm": {
+          "min": -49.997,
+          "max": -47.997
+        },
+        "time_estimate_seconds": 830.1679,
+        "unknown_feed_segments": 0,
+        "ap": {
+          "values_mm": [],
+          "status": "não determinado",
+          "reason": "Não informado no comentário. Material e engajamento reais não determinados pela trajetória."
+        },
+        "ae": {
+          "values_mm": [],
+          "status": "não determinado",
+          "reason": "Não informado no comentário. Material e engajamento reais não determinados pela trajetória."
+        }
+      },
+      {
+        "index": 4,
+        "name": "__RAIO 0,1 L2_G41",
+        "provenance": "extraído do programa",
+        "comment": {
+          "line": 2032,
+          "n": 2025,
+          "code": "N2025(PERCURSO - __RAIO 0,1 L2_G41)"
+        },
+        "source_end_line": 3794,
+        "first_motion": {
+          "line": 2035,
+          "n": 2028,
+          "code": "N2028G0Z-47.997"
+        },
+        "first_cut": {
+          "line": 2036,
+          "n": 2029,
+          "code": "N2029G1Z-49.997"
+        },
+        "last_motion": {
+          "line": 3794,
+          "n": 3787,
+          "code": "N3787G0X409.779Y-139.476"
+        },
+        "tool_change": {
+          "line": 211,
+          "n": 204,
+          "code": "N204M6",
+          "t_number": 6
+        },
+        "tools": [
+          6
+        ],
+        "rpm": [
+          1200.0
+        ],
+        "feeds_mm_min": [
+          400.0
+        ],
+        "wcs": [
+          "G54"
+        ],
+        "compensation_codes": [
+          "G40",
+          "G41"
+        ],
+        "z_programmed_cut_mm": {
+          "min": -49.997,
+          "max": -47.997
+        },
+        "time_estimate_seconds": 827.8469,
+        "unknown_feed_segments": 0,
+        "ap": {
+          "values_mm": [],
+          "status": "não determinado",
+          "reason": "Não informado no comentário. Material e engajamento reais não determinados pela trajetória."
+        },
+        "ae": {
+          "values_mm": [],
+          "status": "não determinado",
+          "reason": "Não informado no comentário. Material e engajamento reais não determinados pela trajetória."
+        }
+      },
+      {
+        "index": 5,
+        "name": "__RAIO 0,0 L2_G41",
+        "provenance": "extraído do programa",
+        "comment": {
+          "line": 3795,
+          "n": 3788,
+          "code": "N3788(PERCURSO - __RAIO 0,0 L2_G41)"
+        },
+        "source_end_line": 5661,
+        "first_motion": {
+          "line": 3798,
+          "n": 3791,
+          "code": "N3791G0Z-47.997"
+        },
+        "first_cut": {
+          "line": 3799,
+          "n": 3792,
+          "code": "N3792G1Z-49.997"
+        },
+        "last_motion": {
+          "line": 5656,
+          "n": 5649,
+          "code": "N5649G0G40Z10."
+        },
+        "tool_change": {
+          "line": 211,
+          "n": 204,
+          "code": "N204M6",
+          "t_number": 6
+        },
+        "tools": [
+          6
+        ],
+        "rpm": [
+          1200.0
+        ],
+        "feeds_mm_min": [
+          400.0
+        ],
+        "wcs": [
+          "G54"
+        ],
+        "compensation_codes": [
+          "G40",
+          "G41"
+        ],
+        "z_programmed_cut_mm": {
+          "min": -49.997,
+          "max": -47.997
+        },
+        "time_estimate_seconds": 832.7465,
+        "unknown_feed_segments": 0,
+        "ap": {
+          "values_mm": [],
+          "status": "não determinado",
+          "reason": "Não informado no comentário. Material e engajamento reais não determinados pela trajetória."
+        },
+        "ae": {
+          "values_mm": [],
+          "status": "não determinado",
+          "reason": "Não informado no comentário. Material e engajamento reais não determinados pela trajetória."
+        }
+      }
+    ],
+    "tool_changes": [
+      {
+        "line": 16,
+        "n": 9,
+        "code": "N9M6",
+        "t_number": 5
+      },
+      {
+        "line": 211,
+        "n": 204,
+        "code": "N204M6",
+        "t_number": 6
+      }
+    ],
+    "time_header_seconds": 4022,
+    "time_engine_seconds": 4211.122513049414,
+    "time_work_trajectory_seconds": 4209.4775,
+    "estimate_assumptions": "Estimativa da trajetória de trabalho amostrada pelo motor; rápido 10.000 mm/min. Sem aceleração, trocas, paradas ou movimentos G53 não localizados.",
+    "restart_note": "Linhas servem para localizar trechos; não são pontos de retomada aprovados. Repassar exige conferir estado modal, G54, H/D e altura segura com a engenharia."
+  },
+  "O0020.TAP": {
+    "sha256": "49c4cd4e0de77f50ab8ab6f137183fb11732271d39a99b7dd876bf4dc0182402",
+    "strategies": [
+      {
+        "index": 0,
+        "name": "ORELHA 1 L2",
+        "provenance": "extraído do programa",
+        "comment": {
+          "line": 18,
+          "n": 12,
+          "code": "N12(PERCURSO - ORELHA 1 L2)"
+        },
+        "source_end_line": 1857,
+        "first_motion": {
+          "line": 23,
+          "n": 17,
+          "code": "N17G0Z1.048"
+        },
+        "first_cut": {
+          "line": 24,
+          "n": 18,
+          "code": "N18G1Z-0.952F1200"
+        },
+        "last_motion": {
+          "line": 1857,
+          "n": 1851,
+          "code": "N1851G0X561.666Y-175.626"
+        },
+        "tool_change": {
+          "line": 15,
+          "n": 9,
+          "code": "N9M6",
+          "t_number": 2
+        },
+        "tools": [
+          2
+        ],
+        "rpm": [
+          1000.0
+        ],
+        "feeds_mm_min": [
+          1200.0
+        ],
+        "wcs": [
+          "G54"
+        ],
+        "compensation_codes": [],
+        "z_programmed_cut_mm": {
+          "min": -9.498,
+          "max": 1.048
+        },
+        "time_estimate_seconds": 432.2919,
+        "unknown_feed_segments": 0,
+        "ap": {
+          "values_mm": [],
+          "status": "não determinado",
+          "reason": "Não informado no comentário. Material e engajamento reais não determinados pela trajetória."
+        },
+        "ae": {
+          "values_mm": [],
+          "status": "não determinado",
+          "reason": "Não informado no comentário. Material e engajamento reais não determinados pela trajetória."
+        }
+      },
+      {
+        "index": 1,
+        "name": "__ORELHA 2 L2",
+        "provenance": "extraído do programa",
+        "comment": {
+          "line": 1858,
+          "n": 1852,
+          "code": "N1852(PERCURSO - __ORELHA 2 L2)"
+        },
+        "source_end_line": 3431,
+        "first_motion": {
+          "line": 1861,
+          "n": 1855,
+          "code": "N1855G0Z-7.968"
+        },
+        "first_cut": {
+          "line": 1862,
+          "n": 1856,
+          "code": "N1856G1Z-9.968"
+        },
+        "last_motion": {
+          "line": 3431,
+          "n": 3425,
+          "code": "N3425G0X584.624Y-254.633"
+        },
+        "tool_change": {
+          "line": 15,
+          "n": 9,
+          "code": "N9M6",
+          "t_number": 2
+        },
+        "tools": [
+          2
+        ],
+        "rpm": [
+          1000.0
+        ],
+        "feeds_mm_min": [
+          1200.0
+        ],
+        "wcs": [
+          "G54"
+        ],
+        "compensation_codes": [],
+        "z_programmed_cut_mm": {
+          "min": -42.836,
+          "max": -7.968
+        },
+        "time_estimate_seconds": 1247.5287,
+        "unknown_feed_segments": 0,
+        "ap": {
+          "values_mm": [],
+          "status": "não determinado",
+          "reason": "Não informado no comentário. Material e engajamento reais não determinados pela trajetória."
+        },
+        "ae": {
+          "values_mm": [],
+          "status": "não determinado",
+          "reason": "Não informado no comentário. Material e engajamento reais não determinados pela trajetória."
+        }
+      },
+      {
+        "index": 2,
+        "name": "__REBAIXO L2_1",
+        "provenance": "extraído do programa",
+        "comment": {
+          "line": 3432,
+          "n": 3426,
+          "code": "N3426(PERCURSO - __REBAIXO L2_1)"
+        },
+        "source_end_line": 4122,
+        "first_motion": {
+          "line": 3435,
+          "n": 3429,
+          "code": "N3429G0Z1.048"
+        },
+        "first_cut": {
+          "line": 3436,
+          "n": 3430,
+          "code": "N3430G1Z-0.952"
+        },
+        "last_motion": {
+          "line": 4122,
+          "n": 4116,
+          "code": "N4116G0X569.121Y-165.942"
+        },
+        "tool_change": {
+          "line": 15,
+          "n": 9,
+          "code": "N9M6",
+          "t_number": 2
+        },
+        "tools": [
+          2
+        ],
+        "rpm": [
+          1000.0
+        ],
+        "feeds_mm_min": [
+          1200.0
+        ],
+        "wcs": [
+          "G54"
+        ],
+        "compensation_codes": [],
+        "z_programmed_cut_mm": {
+          "min": -9.507,
+          "max": 1.048
+        },
+        "time_estimate_seconds": 314.3646,
+        "unknown_feed_segments": 0,
+        "ap": {
+          "values_mm": [],
+          "status": "não determinado",
+          "reason": "Não informado no comentário. Material e engajamento reais não determinados pela trajetória."
+        },
+        "ae": {
+          "values_mm": [],
+          "status": "não determinado",
+          "reason": "Não informado no comentário. Material e engajamento reais não determinados pela trajetória."
+        }
+      },
+      {
+        "index": 3,
+        "name": "__REBAIXO L2_2",
+        "provenance": "extraído do programa",
+        "comment": {
+          "line": 4123,
+          "n": 4117,
+          "code": "N4117(PERCURSO - __REBAIXO L2_2)"
+        },
+        "source_end_line": 7943,
+        "first_motion": {
+          "line": 4126,
+          "n": 4120,
+          "code": "N4120G0Z1.048"
+        },
+        "first_cut": {
+          "line": 4127,
+          "n": 4121,
+          "code": "N4121G1Z-0.952"
+        },
+        "last_motion": {
+          "line": 7943,
+          "n": 7937,
+          "code": "N7937G0X-222.635Y-243.927"
+        },
+        "tool_change": {
+          "line": 15,
+          "n": 9,
+          "code": "N9M6",
+          "t_number": 2
+        },
+        "tools": [
+          2
+        ],
+        "rpm": [
+          1000.0
+        ],
+        "feeds_mm_min": [
+          1200.0
+        ],
+        "wcs": [
+          "G54"
+        ],
+        "compensation_codes": [],
+        "z_programmed_cut_mm": {
+          "min": -9.507,
+          "max": 1.048
+        },
+        "time_estimate_seconds": 1067.9946,
+        "unknown_feed_segments": 0,
+        "ap": {
+          "values_mm": [],
+          "status": "não determinado",
+          "reason": "Não informado no comentário. Material e engajamento reais não determinados pela trajetória."
+        },
+        "ae": {
+          "values_mm": [],
+          "status": "não determinado",
+          "reason": "Não informado no comentário. Material e engajamento reais não determinados pela trajetória."
+        }
+      },
+      {
+        "index": 4,
+        "name": "__REBAIXO L2_3",
+        "provenance": "extraído do programa",
+        "comment": {
+          "line": 7944,
+          "n": 7938,
+          "code": "N7938(PERCURSO - __REBAIXO L2_3)"
+        },
+        "source_end_line": 14254,
+        "first_motion": {
+          "line": 7947,
+          "n": 7941,
+          "code": "N7941G0Z1.048"
+        },
+        "first_cut": {
+          "line": 7948,
+          "n": 7942,
+          "code": "N7942G1X-245.965Y-252.384Z0.614"
+        },
+        "last_motion": {
+          "line": 14249,
+          "n": 14243,
+          "code": "N14243G0Z150."
+        },
+        "tool_change": {
+          "line": 15,
+          "n": 9,
+          "code": "N9M6",
+          "t_number": 2
+        },
+        "tools": [
+          2
+        ],
+        "rpm": [
+          1000.0
+        ],
+        "feeds_mm_min": [
+          1200.0
+        ],
+        "wcs": [
+          "G54"
+        ],
+        "compensation_codes": [],
+        "z_programmed_cut_mm": {
+          "min": -9.507,
+          "max": 1.048
+        },
+        "time_estimate_seconds": 1621.9447,
+        "unknown_feed_segments": 0,
+        "ap": {
+          "values_mm": [],
+          "status": "não determinado",
+          "reason": "Não informado no comentário. Material e engajamento reais não determinados pela trajetória."
+        },
+        "ae": {
+          "values_mm": [],
+          "status": "não determinado",
+          "reason": "Não informado no comentário. Material e engajamento reais não determinados pela trajetória."
+        }
+      }
+    ],
+    "tool_changes": [
+      {
+        "line": 15,
+        "n": 9,
+        "code": "N9M6",
+        "t_number": 2
+      }
+    ],
+    "time_header_seconds": 4651,
+    "time_engine_seconds": 4689.6283275614205,
+    "time_work_trajectory_seconds": 4684.1245,
+    "estimate_assumptions": "Estimativa da trajetória de trabalho amostrada pelo motor; rápido 10.000 mm/min. Sem aceleração, trocas, paradas ou movimentos G53 não localizados.",
+    "restart_note": "Linhas servem para localizar trechos; não são pontos de retomada aprovados. Repassar exige conferir estado modal, G54, H/D e altura segura com a engenharia."
+  },
+  "O0021.TAP": {
+    "sha256": "aa8633029cb0c1cc4b5cf67ee861ad4070c1af2862dde493874722e10ff5aa0a",
+    "strategies": [
+      {
+        "index": 0,
+        "name": "ACABA REBAIXO L2_G41",
+        "provenance": "extraído do programa",
+        "comment": {
+          "line": 18,
+          "n": 12,
+          "code": "N12(PERCURSO - ACABA REBAIXO L2_G41)"
+        },
+        "source_end_line": 8994,
+        "first_motion": {
+          "line": 23,
+          "n": 17,
+          "code": "N17G0Z1.32"
+        },
+        "first_cut": {
+          "line": 24,
+          "n": 18,
+          "code": "N18G1Z-0.68F1273"
+        },
+        "last_motion": {
+          "line": 8989,
+          "n": 8983,
+          "code": "N8983G0G40Z150."
+        },
+        "tool_change": {
+          "line": 15,
+          "n": 9,
+          "code": "N9M6",
+          "t_number": 9
+        },
+        "tools": [
+          9
+        ],
+        "rpm": [
+          3183.0
+        ],
+        "feeds_mm_min": [
+          1273.0
+        ],
+        "wcs": [
+          "G54"
+        ],
+        "compensation_codes": [
+          "G40",
+          "G41"
+        ],
+        "z_programmed_cut_mm": {
+          "min": -9.51,
+          "max": 1.32
+        },
+        "time_estimate_seconds": 1982.4735,
+        "unknown_feed_segments": 0,
+        "ap": {
+          "values_mm": [],
+          "status": "não determinado",
+          "reason": "Não informado no comentário. Material e engajamento reais não determinados pela trajetória."
+        },
+        "ae": {
+          "values_mm": [],
+          "status": "não determinado",
+          "reason": "Não informado no comentário. Material e engajamento reais não determinados pela trajetória."
+        }
+      }
+    ],
+    "tool_changes": [
+      {
+        "line": 15,
+        "n": 9,
+        "code": "N9M6",
+        "t_number": 9
+      }
+    ],
+    "time_header_seconds": 1981,
+    "time_engine_seconds": 1985.6838197682762,
+    "time_work_trajectory_seconds": 1982.4735,
+    "estimate_assumptions": "Estimativa da trajetória de trabalho amostrada pelo motor; rápido 10.000 mm/min. Sem aceleração, trocas, paradas ou movimentos G53 não localizados.",
+    "restart_note": "Linhas servem para localizar trechos; não são pontos de retomada aprovados. Repassar exige conferir estado modal, G54, H/D e altura segura com a engenharia."
   }
 }

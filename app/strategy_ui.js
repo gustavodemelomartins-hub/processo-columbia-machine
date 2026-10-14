@@ -1,7 +1,7 @@
 const programCallCache=new Map();
 function renderProgramOverview(){
  const host=$('programOverview');if(!host)return;const data=cncData?.[cncFile],strategy=STRATEGY_DATA[cncFile];
- if(!data||state.operation===2){host.innerHTML='<p>Programa: A confirmar.</p>';return}
+ if(!data||state.operation===PENDING_OPERATION){host.innerHTML='<p>Programa: A confirmar.</p>';return}
  const manual=phases[state.phase].kind==='setup',ids=DATA.programs.find(p=>p.file===cncFile)?.tools||[];
  if(!programCallCache.has(cncFile)){const calls=[];data.source_lines.forEach((code,i)=>{const plain=code.replace(/\([^)]*\)/g,'');if(/(?:M(?:97|98|198)|G65)(?![\d.])/.test(plain)){const n=/^\s*N(\d+)/.exec(code);calls.push({line:i+1,n:n?Number(n[1]):null,code})}});programCallCache.set(cncFile,calls)}
  const subcalls=programCallCache.get(cncFile);
@@ -23,7 +23,7 @@ function renderInprocessProposal(file){
 }
 function renderStrategyDetails(){
  const host=$('strategyDetails');if(!host)return;const d=STRATEGY_DATA[cncFile];
- if(!d||state.operation===2){host.innerHTML='<p>Programa: A confirmar.</p>';return}
+ if(!d||state.operation===PENDING_OPERATION){host.innerHTML='<p>Programa: A confirmar.</p>';return}
  const selected=phases[state.phase].tools,header=d.time_header_seconds!==null&&d.time_header_seconds!==undefined,seconds=header?d.time_header_seconds:d.time_work_trajectory_seconds;
  host.innerHTML='<section class="time-summary"><span>'+(OPERATOR_CONFIG.process_timing.face_milling.stage_ids.includes(state.phase)?'Tempo de um passe':'Tempo de usinagem estimado')+'</span><strong>'+strategyTime(seconds)+'</strong><small>'+(header?'Estimativa do arquivo CNC':'Estimativa da trajetória')+'</small></section>'+renderInprocessProposal(cncFile)+(cncFile==='O003.TAP'?'<div id="cavityConsultation"></div>':'')+'<details class="strategy-group" '+(cncFile==='O003.TAP'||OPERATOR_CONFIG.inprocess_proposals?.[cncFile]?'':'open')+'><summary>Estratégias e linhas</summary><div class="strategy-table-wrap"><table class="strategy-table"><thead><tr><th>Estratégia</th><th>Ferramenta e parâmetros</th><th>Linhas e tempo</th></tr></thead><tbody>'+d.strategies.map(s=>{
   const matching=s.tools.some(t=>selected.includes(t));const toolDetails=s.tools.map(id=>'T'+id+' · '+esc(toolNames[id]||'Ferramenta')).join('<br>');

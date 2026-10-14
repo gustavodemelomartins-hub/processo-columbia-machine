@@ -7,10 +7,10 @@ Guia curto para quem vai continuar o produto (programador, processista ou engenh
 A tela é a **jornada da peça**, não um questionário. Cada tela responde só: o que vou fazer, como a peça fica montada, qual programa, qual ferramenta, quanto retirar, quantos passes, quanto tempo e o que vem depois. A interface interpreta `data/process.json`; nenhum valor de engenharia é escrito no código da tela.
 
 ```text
-Recebimento → 1ª operação (Face A, Face B) → 2ª operação (O002…O008) → 3ª operação → Tratamento térmico → Retorno pós-TT
+Recebimento → 1ª operação (Face A, Face B) → 2ª operação (O002…O0017) → 3ª operação (O0018…O0021, na mesa) → Tratamento térmico → Retorno pós-TT
 ```
 
-3ª operação e Retorno pós-TT aparecem como "processo em levantamento" (neutro, sem alerta). O tratamento térmico é externo.
+Retorno pós-TT aparece como "processo em levantamento" (neutro, sem alerta). O tratamento térmico é externo.
 
 ## Onde cada coisa vive
 
@@ -20,7 +20,7 @@ Recebimento → 1ª operação (Face A, Face B) → 2ª operação (O002…O008)
 | Espessura objetivo | `fixture.face_method.pre_heat_target_mm` = 95,75 | Verdade operacional desta peça. Sem divergência, sem confirmação |
 | Recebimento | `receiving` | Medida, objetivo (`target.value_from`), estratégia: Face A apenas limpa (`face_a.default_removal_mm` = 0,20, editável) e Face B fecha a espessura |
 | Jornada | `journey.nodes` | `kind`: `receiving`, `operation`, `external`, `placeholder`. `counts` define "x de N etapas" (19 hoje) |
-| Operações e etapas | `runtime.operations`, `runtime.phases`, `steps` | IDs históricos preservados (1, 3 e 7 arquivados). Ordem obrigatória O001 → O008, seguida de O009 → O0013 e O0014 → O0017 (14/10) |
+| Operações e etapas | `runtime.operations`, `runtime.phases`, `steps` | IDs históricos preservados (1, 3 e 7 arquivados). Ordem obrigatória O001 → O008, seguida de O009 → O0013 e O0014 → O0017 (14/10); 3ª operação O0018 → O0021 (14/10) |
 | Fixação | `fixture` | Calços, garras, alinhamento, orientação |
 | Referências | `reference_defaults` + `steps[].references` | X0/Y0 centro, Z0 topo |
 | Ferramentas | `data/derived` (descida do TAP) + `tool_mounting` | Descida máxima ≠ montagem recomendada = ceil(descida + margem). Dados físicos ausentes ficam `null`; valores padrão usados para demonstração são marcados como provisórios |
@@ -63,7 +63,7 @@ Navegar, abrir detalhes e Play percurso **não** gravam execução.
 ## Como estender
 
 - **Nova etapa ou programa:** acrescentar em `steps` e `runtime.phases` com ID novo (nunca renumerar) e incluir em `runtime.operations[n].phases`; o contrato (`scripts/project_contract.py`) valida.
-- **Definir a 3ª operação ou o retorno pós-TT:** cadastrar programas/etapas e passar o nó para `kind: operation`, `counts: true`.
+- **Definir o retorno pós-TT:** cadastrar programas/etapas e passar o nó para `kind: operation`, `counts: true`.
 - **Login por funcionário:** previsto para depois; hoje os registros são locais e anônimos.
 - **Aparência:** `design/tokens.json` (fonte única) e `app/journey/journey.css`.
 

@@ -29,10 +29,11 @@ Estas perguntas **não aparecem na interface do operador**. Servem para a próxi
 | O0014–O0017 | Operação com as garras por dentro da peça, ainda no alto, sobre os calços (Gustavo, 05:18) | `docs/rastreabilidade/MATRIZ_PROGRAMAS.md` |
 | Depois de O0017 | Tirar a peça, tombar, rebarbar bem a parte de baixo, retirar os calços, limpar a mesa e montar a peça direto na mesa com as mesmas 4 garras por fora; nesta peça alinhar e zerar por fora. Depois as garras voltam para dentro, trocando uma de cada vez (tira uma de fora, põe uma dentro) | — |
 | Organização das operações | O0014–O0017 ficam no fim da 2ª operação (troca de garras, ainda nos calços). O setup na mesa, depois do tombo, é a 3ª operação (Gustavo, 14/10 12:25) | `data/process.json` (2ª op); 3ª op ainda sem programas vinculados |
+| 3ª operação | O0018 → O0021 rodam na mesa, nessa ordem. "Ouvinte um" = orelha 1 (O0020): antes dela as garras voltam para dentro, uma de cada vez (Gustavo, 14/10 12:28) | `data/process.json` fases 21–24 |
 
 ## Ainda a levantar
 
-1. Programas, montagem e ferramentas da 3ª operação.
+1. Tempos de preparação e medidas físicas da 3ª operação (como nas demais).
 2. Programas e setup do retorno pós-TT.
 3. Cadastro real das ferramentas (corte útil de T1, T3, T12, T4, T8, T5, T6; cabeçote e fresas).
 4. Tempos reais de usinagem e de preparação, quando forem medidos.
@@ -48,8 +49,8 @@ Estas perguntas **não aparecem na interface do operador**. Servem para a próxi
 14. O009 tem blocos `GG53` (linhas 10, 16, 5715). O comando da Mini Portal aceita?
 15. O0012 escareador: desenho pede Ø15,5 × 90°; em Z −6 um cone de 90° com ponta teórica marca Ø12. Como T14 é presetado (ponta ou diâmetro de referência)?
 16. A face para cima na 2ª operação é o lado "Grid inferior" do desenho (p.2)? Se sim, o Rebaixo Superior 9,5 (p.1) é da 3ª operação?
-17. O0014–O0021: O0014–O0017 confirmados no fim da 2ª operação; o setup na mesa é a 3ª operação (14/10 12:25). Falta: O0018–O0021 rodam todos na 3ª operação, e nessa ordem? Leitura dos TAPs: O0016 é L1; O0019, O0020 e O0021 são L2; O0014, O0015, O0017 e O0018 não dizem o lado.
+17. O0014–O0021: O0014–O0017 confirmados no fim da 2ª operação; o setup na mesa é a 3ª operação (14/10 12:25). O0018 → O0021 na mesa confirmados (14/10 12:28). Leitura dos TAPs: O0016 é L1; O0019, O0020 e O0021 são L2; O0014, O0015, O0017 e O0018 não dizem o lado.
 18. L1/L2 nos comentários do CAM significam lado 1 (2ª operação) e lado 2 (peça tombada, 3ª operação)?
 19. O0015 (externo X) desce até Z −89,973 e O0017 acaba o externo X só até Z −54,997, enquanto o externo Y vai a −98,97 (O0014) e −86,997 (O0017). As alturas diferentes por eixo são intencionais (abas/orelhas)?
-20. "Ouvinte um" na mensagem de 14/10 05:18 (provável transcrição de voz): é "orelha 1" (percurso ORELHA 1 L2 do O0020) ou "orelha L1" (O0016)? É nesse ponto que as garras voltam para dentro?
+20. ~~"Ouvinte um" = orelha 1?~~ Respondido em 14/10 12:28: é a orelha 1 do O0020; as garras voltam para dentro antes dela.
 

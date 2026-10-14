@@ -79,7 +79,7 @@ function renderOsBar(){
  $('goCurrentStage').onclick=()=>jGoTo(p.current);
 }
 function jGoTo(item){
- if(!item){state.journey.view=null;persist();selectOperation(2);journeyRender();return}
+ if(!item){if(PENDING_OPERATION<0){jOpenView('heat');return}state.journey.view=null;persist();selectOperation(PENDING_OPERATION);journeyRender();return}
  if(item.type==='phase'){state.journey.view=null;persist();selectPhase(item.id);journeyRender();}
  else jOpenView(item.id);
 }
@@ -187,7 +187,7 @@ function renderReceiving(host){
 
 /* ---------- Nodes still being surveyed: 3ª operação, tratamento térmico, retorno pós-TT ---------- */
 const LATER={
- op3:{title:'3ª operação',lead:'Processo em levantamento. Programas, montagem e ferramentas desta operação ainda serão coletados.',next:'heat'},
+ ...(PENDING_OPERATION<0?{}:{op3:{title:'3ª operação',lead:'Processo em levantamento. Programas, montagem e ferramentas desta operação ainda serão coletados.',next:'heat'}}),
  heat:{title:'Tratamento térmico',lead:'Processo externo, depois da 3ª operação.',next:'post-heat'},
  'post-heat':{title:'Retorno pós-TT',lead:'Processo em levantamento. Depois do tratamento existe outro setup; os programas ainda serão coletados.',next:null}
 };
@@ -199,7 +199,7 @@ function renderLater(host,id){
  '</div>');
  if($('laterNext'))$('laterNext').onclick=()=>jOpenView(v.next);
 }
-function jMode(){const v=state.journey.view;return v&&(v==='receiving'||LATER[v])?v:state.operation===2?'op3':'operation';}
+function jMode(){const v=state.journey.view;return v&&(v==='receiving'||LATER[v])?v:state.operation===PENDING_OPERATION?'op3':'operation';}
 function renderJourneyView(){
  const host=$('journeyStage');if(!host)return;
  const mode=jMode();document.body.dataset.journeyView=mode;
@@ -213,7 +213,7 @@ function jGoNextFrom(from){
  state.journey.view=null;persist();
  if(from==='receiving'){selectPhase(processOperations[0].phases[0]);journeyRender();window.scrollTo({top:0});return}
  const next=J.nextPhase(OPERATOR_CONFIG,state.phase);
- if(next!==null)selectPhase(next);else selectOperation(2);
+ if(next!==null)selectPhase(next);else if(PENDING_OPERATION<0){jOpenView('heat');return}else selectOperation(PENDING_OPERATION);
  journeyRender();window.scrollTo({top:0});
 }
 function jStatusText(t){
@@ -294,7 +294,7 @@ function renderStageHow(){
  const onSupports=(cfg?.setup||'').includes('calcos')||state.operation===1;
  const proposal=OPERATOR_CONFIG.inprocess_proposals?.[file];
  const wasOpen=!!host.querySelector('details[open]');
- const position=cfg?.orientation?.rotation_x_degrees===180?'Invertida — '+fx.orientation_sequence.first_face:state.operation===0?'Tombada — '+fx.orientation_sequence.after_tumble:'Sobre calços — '+fx.orientation_sequence.after_tumble;
+ const position=cfg?.orientation?.label||(cfg?.orientation?.rotation_x_degrees===180?'Invertida — '+fx.orientation_sequence.first_face:state.operation===0?'Tombada — '+fx.orientation_sequence.after_tumble:'Sobre calços — '+fx.orientation_sequence.after_tumble);
  const fresh=jSetHTML(host,'<h3>Como fazer</h3><ol class="how-list">'+stepsNow().map(s=>'<li>'+esc(s)+'</li>').join('')+'</ol>'+
   '<details class="op-details"><summary>Ver detalhes da operação</summary><dl class="op-details-list">'+
    jDetailRow('Posição da peça',esc(position))+
@@ -344,7 +344,7 @@ function journey3D(){
  journeyAxes.position.set(0,top,0);journeyAxes.visible=operation&&engineeringReferences().center;
  if(typeof zeroMarker!=='undefined'&&zeroMarker)zeroMarker.visible=false;
  journeyFaceLayer.position.set(0,top+5,0);journeyFaceLayer.visible=operation&&p?.kind==='face';
- const caption=!operation?'':state.phase===FACE_IDS[0]?'Face A em laranja · peça invertida, sobre a mesa':state.phase===FACE_IDS[1]?'Face B em laranja · peça tombada, sobre a mesa':'Peça sobre 4 calços com 4 garras · X0 Y0 no centro, Z0 no topo';
+ const caption=!operation?'':state.phase===FACE_IDS[0]?'Face A em laranja · peça invertida, sobre a mesa':state.phase===FACE_IDS[1]?'Face B em laranja · peça tombada, sobre a mesa':state.operation===2?'Peça tombada, direto na mesa · X0 Y0 no centro, Z0 no topo':'Peça sobre 4 calços com 4 garras · X0 Y0 no centro, Z0 no topo';
  const el=$('viewerContext');if(el){el.textContent=caption;el.hidden=!caption;}
  draw();
 }

@@ -25,7 +25,7 @@ state.toolMountPolicy=OPERATOR_CONFIG.tool_mounting.policy;
 function adoptedMargin(t){const n=number(Object.hasOwn(state.toolMargins,t.id)?state.toolMargins[t.id]:state.margin);return n!==null&&Number.isFinite(n)&&n>=0?n:null}
 const lengthEvidenceCache=new Map();
 function displayedProgramFile(){
- if(state.operation===2)return null;const p=phases[state.phase];
+ if(state.operation===PENDING_OPERATION)return null;const p=phases[state.phase];
  const preview=p.program!==null?p:phases.find((v,i)=>i>state.phase&&selectedOperation().phases.includes(i)&&v.program!==null);
  return preview?DATA.programs[preview.program].file:null;
 }
@@ -76,14 +76,14 @@ for(const t of DATA.tools){const as=tooling.assembly(tooling.jobMachineId,t.id);
 function renderOperationCheckins(){document.querySelectorAll('[data-operation-check]').forEach(el=>{const id=Number(el.dataset.operationCheck);el.checked=!!state.operationCheckins[id];const text=el.closest('label').querySelector('span');text.textContent=id===2?'A confirmar':el.checked?'✓ OK':'OK';el.closest('.operation-item').dataset.complete=String(el.checked);})}
 
 persist=function(){try{localStorage.setItem(PROCESS_CONFIG.runtime.storage_key,JSON.stringify(Object.fromEntries(Object.entries({...state,stopped:false}).filter(([k])=>!["checks","stickouts","cuttingLengths"].includes(k)))));if($("storageNotice"))$("storageNotice").textContent="Registros salvos neste navegador.";return true}catch{if($("storageNotice"))$("storageNotice").textContent="Não foi possível salvar neste navegador. Confira o espaço disponível.";return false}};
-function engineeringReferences(phase=state.operation===2?null:state.phase){
+function engineeringReferences(phase=state.operation===PENDING_OPERATION?null:state.phase){
  if(phase===null)return{x:"",y:"",z:"",center:false};
  const cfg=OPERATOR_CONFIG.steps.find(s=>s.phase===Number(phase)),defaults=OPERATOR_CONFIG.reference_defaults||{};
  const value=axis=>{const entry=cfg?.references?.[axis]??defaults[axis];return typeof entry==="string"?entry:entry?.value??""};
  const x=value("x0"),y=value("y0"),z=value("z0");
  return{x,y,z,center:x.toLowerCase()==="centro da peça"&&y.toLowerCase()==="centro da peça"};
 }
-function operatorRecord(key=state.operation===2?"pending":String(state.phase)){
+function operatorRecord(key=state.operation===PENDING_OPERATION?"pending":String(state.phase)){
  const isNew=!Object.hasOwn(state.operator,key),r=state.operator[key]??={};r.checks??={};r.refs??={x:"",y:""};r.note??="";
  if(key!=="pending"){
   const orientation=OPERATOR_CONFIG.steps.find(s=>s.phase===Number(key))?.orientation?.rotation_x_degrees??0;
@@ -95,7 +95,7 @@ function operatorRecord(key=state.operation===2?"pending":String(state.phase)){
 }
 function stageConfig(){return OPERATOR_CONFIG.steps.find(p=>p.phase===state.phase)}
 function requiredTools(){
- if(state.operation===2||phases[state.phase].kind==="setup")return[];
+ if(state.operation===PENDING_OPERATION||phases[state.phase].kind==="setup")return[];
  return DATA.programs[phases[state.phase].program]?.tools||[];
 }
 function measuredLength(id){const n=number(state.stickouts[id]);return Number.isFinite(n)&&n>0?n:null}
@@ -114,14 +114,14 @@ function releaseItems(phase=state.phase){
 }
 function thicknessPlanConfirmed(){return facePlan().valid&&(Number.isFinite(number(state.face.first))||Number.isFinite(number(state.face.afterFirst)))}
 function operatorReady(){
- if(state.operation===2)return false;
+ if(state.operation===PENDING_OPERATION)return false;
  const r=operatorRecord();return releaseItems().every(i=>r.checks[i.key])&&!!r.refs.x.trim()&&!!r.refs.y.trim()&&requiredTools().every(id=>toolConfirmed(id));
 }
 function operatorStatus(){
- if(state.operation===2)return "A confirmar";
+ if(state.operation===PENDING_OPERATION)return "A confirmar";
  const r=operatorRecord();return r.completed?"Concluída":r.started?"Em execução":"Não iniciada";
 }
-function invalidateRecord(r){r.started=false;r.completed=false;r.finalConfirmed=false;const key=Object.keys(state.operator).find(k=>state.operator[k]===r);if(key!==undefined&&key!=="pending")state.operationCheckins[Number(key)<3?0:1]=false}
+function invalidateRecord(r){r.started=false;r.completed=false;r.finalConfirmed=false;const key=Object.keys(state.operator).find(k=>state.operator[k]===r);if(key!==undefined&&key!=="pending")state.operationCheckins[operationOfPhase(Number(key))]=false}
 function invalidateTools(id){
  for(const [key,r] of Object.entries(state.operator)){
   const phase=Number(key);if(!Number.isInteger(phase)||!phases[phase])continue;
@@ -159,7 +159,7 @@ function renderStageProgress(){
  if(!$("stageProgress"))return;
  const op=selectedOperation();let completed=0;
  $("steps").querySelectorAll('[data-step]').forEach(b=>{
-  const id=Number(b.dataset.step),progress=stageProgressState(id),current=id===state.phase&&state.operation!==2;
+  const id=Number(b.dataset.step),progress=stageProgressState(id),current=id===state.phase&&state.operation!==PENDING_OPERATION;
   const card=b.closest("[data-stage]");completed+=Number(progress.completed);card.dataset.status=progress.kind;card.dataset.current=current;
   b.setAttribute('aria-current',current?'step':'false');
   b.querySelector('.stage-current').hidden=!current;card.querySelector('[data-stage-complete]').checked=progress.completed;card.querySelector('.stage-state').textContent=progress.completed?'✓ Concluída':'Concluída';
@@ -187,7 +187,7 @@ tab=function(name){
  for(const n of ['tools','insert','details','history'])$(n+'Panel').hidden=name!==n;
  document.querySelectorAll('[data-tab]').forEach(b=>b.setAttribute('aria-selected',b.dataset.tab===name));
  if(name==='insert'&&typeof renderInsertStudy==='function')renderInsertStudy();
- $('inspectionPanel').hidden=state.operation===2;$('operationChecks').hidden=state.operation===2;
+ $('inspectionPanel').hidden=state.operation===PENDING_OPERATION;$('operationChecks').hidden=state.operation===PENDING_OPERATION;
  $('pendingPanel').hidden=true;$('setupPanel').hidden=false;$('filesPanel').hidden=false;
 };
 function exactLength(n){return n===null?'A confirmar':Number(n).toLocaleString('pt-BR',{maximumFractionDigits:6})+' mm'}
@@ -217,7 +217,7 @@ renderTools=function(){
  const ids=programTools(),file=displayedProgramFile(),required=requiredTools();
  if(document.activeElement!==$("reachMargin"))$("reachMargin").value=state.margin??"";
  $("toolsTitle").textContent=ids.length===1?'Ferramenta atual':'Ferramentas deste programa';
- $("toolsIntro").hidden=state.operation!==2&&phases[state.phase].kind!=="setup";$("toolsIntro").textContent=state.operation===2?'Programa a confirmar':phases[state.phase].kind==='setup'?'Prévia durante montagem manual':'Extraído do programa';
+ $("toolsIntro").hidden=state.operation!==PENDING_OPERATION&&phases[state.phase].kind!=="setup";$("toolsIntro").textContent=state.operation===PENDING_OPERATION?'Programa a confirmar':phases[state.phase].kind==='setup'?'Prévia durante montagem manual':'Extraído do programa';
  $("readyCount").textContent=ids.length?ids.filter(id=>toolConfirmed(id,file)).length+' de '+ids.length+' conferida(s)':'';
  $("toolList").innerHTML=ids.length?ids.map(id=>toolRow(id,file)).join(''):'<p>Ferramentas a confirmar.</p>';
  $("toolIdentityNote").hidden=!ids.includes(12);
@@ -236,20 +236,20 @@ const engineeringSetup=renderSetup;
 renderSetup=function(){engineeringSetup();$("setupPanel").hidden=false;renderOperational()};
 const engineeringInspection=renderInspection;
 renderInspection=function(){
- engineeringInspection();const has=[8,10].includes(state.phase)&&state.operation!==2;
+ engineeringInspection();const has=[8,10].includes(state.phase)&&state.operation!==PENDING_OPERATION;
  $("legacyInspection").hidden=!has;
  $("release").disabled=!has||!["dimension","offset","resume"].every(f=>inspectRecord()[f])||!String(inspectRecord().measured||"").trim();
  renderOperational();
 };
 function stepsNow(){
- if(state.operation===2)return ["Montagem e programas a confirmar"];
+ if(state.operation===PENDING_OPERATION)return ["Montagem e programas a confirmar"];
  const tools=requiredTools().map(id=>'T'+id).join(' / ');
  const reference=engineeringReferences().center?'Conferir X/Y no centro; presetar a ferramenta no topo da peça':'Conferir X/Y conforme engenharia; presetar a ferramenta no topo da peça';
  return (stageConfig()?.instructions||['Usar '+tools+' e carregar {program}']).map(text=>text.replaceAll('{program}',displayedProgramFile()||'A confirmar').replaceAll('{reference}',reference).replaceAll('{pre_heat_target}',fmtTarget(OPERATOR_CONFIG.fixture.face_method.pre_heat_target_mm)));
 }
 function renderOperational(){
  if(!$("operationStatus"))return;
- const pending=state.operation===2,r=operatorRecord(),cfg=stageConfig();
+ const pending=state.operation===PENDING_OPERATION,r=operatorRecord(),cfg=stageConfig();
  $("workOrder").textContent=OPERATOR_CONFIG.part.order_display;renderOperationCheckins();
  $("currentOperationNumber").textContent=(state.operation+1)+"ª operação";
  $("currentProgram").textContent=pending?'A confirmar':displayedProgramFile();$("currentToolHint").hidden=true;
@@ -268,7 +268,7 @@ function renderOperational(){
  const m=cncData?.[cncFile]?.meta;$("pathNotice").hidden=pending||!m?.compensation_states.includes('UNVERIFIED');$("pathNotice").textContent='Compensação real da ferramenta: conferir antes de usar.';
  renderProgramOverview();renderStrategyDetails();renderStageProgress();
 }
-$("startStageExecution").onclick=()=>{if(state.operation===2)return;const r=operatorRecord();if(r.started||r.completed)return;r.started=true;r.executionSource="registro manual da etapa";persist();renderOperational()};
+$("startStageExecution").onclick=()=>{if(state.operation===PENDING_OPERATION)return;const r=operatorRecord();if(r.started||r.completed)return;r.started=true;r.executionSource="registro manual da etapa";persist();renderOperational()};
 $("operationNote").oninput=e=>{operatorRecord().note=e.target.value;persist();renderOperational()};
 $("startOperation").onclick=()=>{if(!operatorReady())return;operatorRecord().started=true;operatorRecord().completed=false;persist();renderOperational()};
 $("completeOperation").onclick=()=>{if($("completeOperation").disabled)return;operatorRecord().completed=true;persist();renderOperational()};
@@ -281,8 +281,8 @@ selectPhase=function(i,options){
 };
 // Visible process order skips archived phase 1 without changing IDs of machining phases.
 const visiblePhaseIds=()=>processOperations.slice(0,2).flatMap(o=>o.phases);
-$('prev').onclick=()=>{if(state.operation===2){selectOperation(1);return}const ids=visiblePhaseIds(),i=ids.indexOf(state.phase);selectPhase(ids[Math.max(0,i-1)])};
-$('next').onclick=()=>{if(state.operation===2)return;const ids=visiblePhaseIds(),i=ids.indexOf(state.phase);if(i<ids.length-1)selectPhase(ids[i+1])};
+$('prev').onclick=()=>{if(state.operation===PENDING_OPERATION){selectOperation(PENDING_OPERATION-1);return}const ids=visiblePhaseIds(),i=ids.indexOf(state.phase);selectPhase(ids[Math.max(0,i-1)])};
+$('next').onclick=()=>{if(state.operation===PENDING_OPERATION)return;const ids=visiblePhaseIds(),i=ids.indexOf(state.phase);if(i<ids.length-1)selectPhase(ids[i+1])};
 const originalSelectOperation=selectOperation;
 selectOperation=function(id){originalSelectOperation(id);renderOperational();applyVisualMode(false)};
 const originalRelease=$("release").onclick;
@@ -351,7 +351,7 @@ init3d=function(){
  scene.add(zeroMarker);updateAssembly();
 };
 const originalUpdateAssembly=updateAssembly;
-updateAssembly=function(){originalUpdateAssembly();if(zeroMarker){zeroMarker.visible=state.operation!==2&&engineeringReferences().center;zeroMarker.position.set(0,plateBottom+PROCESS_CONFIG.simulation.part_mm.thickness,0);draw()}renderOperational()};
+updateAssembly=function(){originalUpdateAssembly();if(zeroMarker){zeroMarker.visible=state.operation!==PENDING_OPERATION&&engineeringReferences().center;zeroMarker.position.set(0,plateBottom+PROCESS_CONFIG.simulation.part_mm.thickness,0);draw()}renderOperational()};
 
 
 __TOOLING_UI__

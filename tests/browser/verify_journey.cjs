@@ -14,7 +14,7 @@ const url=process.env.COLUMBIA_LIVE_URL||'file:///'+process.cwd().replaceAll('\\
  assert.equal(await p.evaluate(()=>[...document.querySelectorAll('.osbar-label')].some(e=>getComputedStyle(e).textTransform==='uppercase')),false);
  // A new part starts at receiving; macro sequence with T.T. after the 3rd operation.
  assert.equal(await p.evaluate(()=>document.body.dataset.journeyView),'receiving');
- assert.match(await text('#osBar'),/10-713/);assert.match(await text('#osBar'),/0 de 19 etapas/);
+ assert.match(await text('#osBar'),/10-713/);assert.match(await text('#osBar'),/0 de 23 etapas/);
  const map=(await p.locator('#operations > .operation-item strong').allTextContents());
  assert.deepEqual(map,['Recebimento','1ª operação','2ª operação','3ª operação','Tratamento térmico','Retorno pós-TT']);
  // Receiving: 111,00 → 15,25 total; Face A 0,20 (editable) → Face B 15,05. One action per state.
@@ -26,7 +26,7 @@ const url=process.env.COLUMBIA_LIVE_URL||'file:///'+process.cwd().replaceAll('\\
  await p.fill('#faceARemoval','16');assert.match(await text('#rxMessage'),/entre 0 e 15,25/);assert.equal(await p.locator('#receivingAction').isDisabled(),true);
  await p.fill('#faceARemoval','0.2');await p.locator('#faceARemoval').press('Tab');
  await p.click('#rxSplit');assert.equal(await text('#rxFaceB'),'7,625 mm');await p.fill('#faceARemoval','0.2');await p.locator('#faceARemoval').press('Tab');
- await p.click('#receivingAction');assert.equal(await p.locator('#receivingAction').textContent(),'Ir para próxima etapa');assert.match(await text('#osBar'),/1 de 19 etapas/);
+ await p.click('#receivingAction');assert.equal(await p.locator('#receivingAction').textContent(),'Ir para próxima etapa');assert.match(await text('#osBar'),/1 de 23 etapas/);
  assert.deepEqual(await p.evaluate(()=>[columbiaDemo.state.faceTiming.stockByStage[0],columbiaDemo.state.faceTiming.stockByStage[2]]),[0.2,15.05]);
  for(const [w,h] of [[1920,1080],[1440,900],[1024,768],[768,1024],[390,844]]){await p.setViewportSize({width:w,height:h});await p.evaluate(()=>scrollTo(0,0));assert.equal(await p.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false,'overflow receiving '+w);await p.screenshot({path:`artifacts/screens/journey-receiving-${w}.png`});}
  await p.setViewportSize({width:1440,height:900});
@@ -64,7 +64,7 @@ const url=process.env.COLUMBIA_LIVE_URL||'file:///'+process.cwd().replaceAll('\\
  await action().click();assert.equal(await action().textContent(),'Concluir operação');assert.match(await text('#stageStatus'),/Em andamento desde \d\d:\d\d/);
  assert.ok(Date.parse(await p.evaluate(()=>columbiaDemo.state.operator['0'].startedAt)));
  await action().click();assert.equal(await action().textContent(),'Ir para próxima etapa');assert.match(await text('#stageStatus'),/Concluída às \d\d:\d\d/);
- assert.equal(await p.locator('[data-stage-complete="0"]').isChecked(),true);assert.match(await text('#osBar'),/2 de 19 etapas/);
+ assert.equal(await p.locator('[data-stage-complete="0"]').isChecked(),true);assert.match(await text('#osBar'),/2 de 23 etapas/);
  await action().click();assert.equal(await p.evaluate(()=>columbiaDemo.state.phase),2);
  const faceB=await text('#stagePanel');assert.match(faceB,/fechar 95,75 mm/);assert.match(faceB,/15,05 mm/);assert.match(faceB,/~22/);assert.match(await text('#viewerContext'),/Face B/);
  // Sequence 1 → 8: O003 waits for O002.
@@ -79,18 +79,18 @@ const url=process.env.COLUMBIA_LIVE_URL||'file:///'+process.cwd().replaceAll('\\
  assert.equal(await p.evaluate(()=>columbiaJourney.get3D().axes.visible),true);assert.match(await text('#viewerContext'),/calços/);
  // In-process proposals stay as proposals.
  await p.click('[data-step="8"]');await p.click('#stageHow summary');assert.match(await text('#stageHow'),/Proposta.*Calibrar uma cavidade/s);
- // 3ª operação, T.T. and retorno pós-TT: neutral placeholders, no alerts.
- await p.click('[data-operation="2"]');assert.equal(await p.evaluate(()=>document.body.dataset.journeyView),'op3');assert.match(await text('#journeyStage'),/Processo em levantamento/);
- await p.click('#laterNext');assert.equal(await p.evaluate(()=>document.body.dataset.journeyView),'heat');assert.match(await text('#journeyStage'),/depois da 3ª operação.*95,75 mm.*95,00 mm/s);
+ // 3ª operação is a defined operation on the table (O0018–O0021); T.T. and retorno pós-TT stay neutral placeholders, no alerts.
+ await p.click('[data-operation="2"]');assert.equal(await p.evaluate(()=>document.body.dataset.journeyView),'operation');assert.equal(await p.locator('#currentProgram').textContent(),'O0018.TAP');await p.click('#stageHow summary');assert.match(await text('#stageHow'),/Tombada.*Sobre a mesa/s);
+ await p.click('[data-journey-open="heat"]');assert.equal(await p.evaluate(()=>document.body.dataset.journeyView),'heat');assert.match(await text('#journeyStage'),/depois da 3ª operação.*95,75 mm.*95,00 mm/s);
  await p.click('#laterNext');assert.equal(await p.evaluate(()=>document.body.dataset.journeyView),'post-heat');assert.match(await text('#journeyStage'),/Retorno pós-TT.*em levantamento/s);assert.equal(await p.locator('#laterNext').count(),0);
  // Part record and persistence.
  const pass=await p.evaluate(()=>columbiaJourney.passport());assert.equal(pass.receiving.receivedMm,111);assert.equal(pass.target.valueMm,95.75);assert.equal(pass.stages.filter(s=>s.completed).length,1);
  const dl=p.waitForEvent('download');await p.click('[data-tab="history"]');await p.click('#exportPassport');assert.match((await dl).suggestedFilename(),/Registro_OS10713\.json/);
- await load();assert.equal((await journey()).receiving.receivedMm,111);assert.match(await text('#osBar'),/2 de 19 etapas/);
+ await load();assert.equal((await journey()).receiving.receivedMm,111);assert.match(await text('#osBar'),/2 de 23 etapas/);
  // Responsive operation view; the 3D keeps its prominence.
  await p.evaluate(()=>columbiaJourney.openOperationView());await p.click('[data-operation="0"]');
  for(const [w,h] of [[1920,1080],[1440,900],[1024,768],[768,1024],[390,844]]){await p.setViewportSize({width:w,height:h});await p.evaluate(()=>scrollTo(0,0));assert.equal(await p.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false,'overflow operation '+w);await p.screenshot({path:`artifacts/screens/journey-operation-${w}.png`});assert.ok((await action().boundingBox()).height>=44,'action '+w);const box=await p.locator('#stage').boundingBox();if(w>=1280)assert.ok(box.width/w>.6,'3D width '+w);}
  assert.deepEqual(errors,[]);
- fs.writeFileSync('artifacts/reports/Validacao_Jornada_Local.json',JSON.stringify({target:95.75,receivedExample:111,totalStock:15.25,faceA:0.2,faceB:15.05,progress:'2 de 19',singleAction:true,noQuestions:true,errors},null,2));
+ fs.writeFileSync('artifacts/reports/Validacao_Jornada_Local.json',JSON.stringify({target:95.75,receivedExample:111,totalStock:15.25,faceA:0.2,faceB:15.05,progress:'2 de 23',singleAction:true,noQuestions:true,errors},null,2));
  console.log('Journey: system font, no questions/divergence/controls, receiving 111 → 15,25 (A 0,20 editable / B 15,05), single action start/complete/next, order 1→8, 3D context, proposals, placeholders, record, persistence and 5 widths passed.');
 }finally{await b.close()}})().catch(e=>{console.error(e);process.exit(1)});

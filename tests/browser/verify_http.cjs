@@ -19,10 +19,10 @@ try{
   await page.setViewportSize({width:w,height:h});await page.evaluate(()=>scrollTo(0,0));await page.screenshot({path:'artifacts/screens/v1-http-'+w+'.png',fullPage:true});
   await page.locator('#stage').screenshot({path:'artifacts/screens/v1-3d-'+w+'.png'});
  }
- await page.click('[data-operation="2"]');assert.match(await page.locator('#currentProgram').textContent(),/confirmar/i);
+ await page.click('[data-operation="2"]');assert.equal(await page.locator('#currentProgram').textContent(),'O0018.TAP');
  assert.deepEqual(errors,[]);assert.deepEqual(requests,[]);
  const recover=await browser.newPage();await recover.addInitScript(()=>localStorage.setItem('columbia-os10713-demo-v2','null'));await recover.goto(url);await recover.waitForFunction(()=>columbiaDemo?.getCNC().rows.length);assert.equal(await recover.locator('#currentProgram').textContent(),'O001.TAP');
- const malformed=await browser.newPage();await malformed.addInitScript(()=>localStorage.setItem('columbia-os10713-demo-v2',JSON.stringify({phase:999,operator:null,checks:[],tooling:'invalid',faceTiming:3})));await malformed.goto(url);await malformed.waitForFunction(()=>columbiaDemo?.getCNC().rows.length);assert.equal(await malformed.locator('#currentProgram').textContent(),'O008.TAP');
+ const malformed=await browser.newPage();await malformed.addInitScript(()=>localStorage.setItem('columbia-os10713-demo-v2',JSON.stringify({phase:999,operator:null,checks:[],tooling:'invalid',faceTiming:3})));await malformed.goto(url);await malformed.waitForFunction(()=>columbiaDemo?.getCNC().rows.length);assert.equal(await malformed.locator('#currentProgram').textContent(),'O0021.TAP');
  const report={url,http200:true,allPilotPrograms:true,unknownThirdOperation:true,pdfHttp200:true,drawing:true,webgl:true,widths:[320,390,768,1440,1920],malformedStorageRecovered:true,errors,failedRequests:requests};
  fs.writeFileSync('artifacts/reports/Validacao_V1_HTTP.json',JSON.stringify(report,null,2));console.log(JSON.stringify(report,null,2));
 }finally{await browser.close()}})().catch(e=>{console.error(e);process.exit(1)});

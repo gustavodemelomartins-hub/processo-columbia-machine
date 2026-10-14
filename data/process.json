@@ -73,10 +73,21 @@
     },
     {
       "number": 3,
-      "name": null,
-      "programs_received": [],
-      "tools_received": [],
-      "status": "aguardando programas e definição de processo"
+      "name": "Usinagem na mesa",
+      "programs_received": [
+        "O0018.TAP",
+        "O0019.TAP",
+        "O0020.TAP",
+        "O0021.TAP"
+      ],
+      "tools_received": [
+        10,
+        5,
+        6,
+        2,
+        9
+      ],
+      "program_set_status": "O0018 a O0021 (recebidos e confirmados em 14/10)"
     }
   ],
   "fixture": {
@@ -1051,6 +1062,190 @@
         "setup_source": "não informado",
         "machining": "process_timing (cabeçalho do TAP + margem)"
       }
+    },
+    {
+      "phase": 21,
+      "group": 3,
+      "name": "Chanfro",
+      "program": "O0018.TAP",
+      "program_revision": null,
+      "setup": "mesa; 4 garras por fora",
+      "references": {
+        "x0": null,
+        "y0": null,
+        "z0": {
+          "value": "topo da peça",
+          "provenance": "dado de processo / a confirmar na máquina"
+        }
+      },
+      "drawing_reference": {
+        "file": "FP16F 12V H8 - PB.pdf",
+        "page": null,
+        "region": null,
+        "detail": null,
+        "important_dimension": null
+      },
+      "inspection": {
+        "registered": false,
+        "criteria": null
+      },
+      "orientation": {
+        "rotation_x_degrees": 180,
+        "label": "Tombada — lado oposto ao da 2ª operação",
+        "provenance": "peça tombada depois da 2ª operação (Gustavo, 14/10/2026 05:18); montagem ilustrativa, não inferida do TAP"
+      },
+      "instructions": [
+        "Tirar a peça dos calços, tombar e rebarbar bem a parte de baixo",
+        "Retirar os calços, limpar a mesa e montar a peça direto na mesa com as 4 garras por fora",
+        "Alinhar e zerar por fora",
+        "Usar T10 e executar o chanfro de O0018.TAP"
+      ],
+      "intent": {
+        "type": "Chanfro",
+        "objective": "Chanfrar com T10 (percurso CHANFRO).",
+        "source": "Gustavo, 14/10/2026: 05:18 (tombar, montar na mesa com as garras por fora, alinhar e zerar por fora; na orelha 1 as garras voltam para dentro) e 12:28 (O0018 → O0021 na mesa, nessa ordem); estratégia do comentário PERCURSO do TAP"
+      },
+      "timing": {
+        "setup_minutes": null,
+        "setup_source": "não informado",
+        "machining": "process_timing (cabeçalho do TAP + margem)"
+      }
+    },
+    {
+      "phase": 22,
+      "group": 3,
+      "name": "Cantos e raios L2",
+      "program": "O0019.TAP",
+      "program_revision": null,
+      "setup": "mesa; 4 garras por fora",
+      "references": {
+        "x0": null,
+        "y0": null,
+        "z0": {
+          "value": "topo da peça",
+          "provenance": "dado de processo / a confirmar na máquina"
+        }
+      },
+      "drawing_reference": {
+        "file": "FP16F 12V H8 - PB.pdf",
+        "page": null,
+        "region": null,
+        "detail": null,
+        "important_dimension": null
+      },
+      "inspection": {
+        "registered": false,
+        "criteria": null
+      },
+      "orientation": {
+        "rotation_x_degrees": 180,
+        "label": "Tombada — lado oposto ao da 2ª operação",
+        "provenance": "peça tombada depois da 2ª operação (Gustavo, 14/10/2026 05:18); montagem ilustrativa, não inferida do TAP"
+      },
+      "instructions": [
+        "Usar T5 e T6 para os cantos e raios L2 de O0019.TAP"
+      ],
+      "intent": {
+        "type": "Cantos e raios",
+        "objective": "Cantos R6/R5 com T5 e raios L2 com T6 (G41).",
+        "source": "Gustavo, 14/10/2026: 05:18 (tombar, montar na mesa com as garras por fora, alinhar e zerar por fora; na orelha 1 as garras voltam para dentro) e 12:28 (O0018 → O0021 na mesa, nessa ordem); estratégia do comentário PERCURSO do TAP"
+      },
+      "timing": {
+        "setup_minutes": null,
+        "setup_source": "não informado",
+        "machining": "process_timing (cabeçalho do TAP + margem)"
+      }
+    },
+    {
+      "phase": 23,
+      "group": 3,
+      "name": "Orelhas e rebaixo L2",
+      "program": "O0020.TAP",
+      "program_revision": null,
+      "setup": "mesa; garras por dentro da peça",
+      "references": {
+        "x0": null,
+        "y0": null,
+        "z0": {
+          "value": "topo da peça",
+          "provenance": "dado de processo / a confirmar na máquina"
+        }
+      },
+      "drawing_reference": {
+        "file": "FP16F 12V H8 - PB.pdf",
+        "page": null,
+        "region": null,
+        "detail": null,
+        "important_dimension": null
+      },
+      "inspection": {
+        "registered": false,
+        "criteria": null
+      },
+      "orientation": {
+        "rotation_x_degrees": 180,
+        "label": "Tombada — lado oposto ao da 2ª operação",
+        "provenance": "peça tombada depois da 2ª operação (Gustavo, 14/10/2026 05:18); montagem ilustrativa, não inferida do TAP"
+      },
+      "instructions": [
+        "Trocar as garras para dentro da peça, uma de cada vez: tirar uma de fora e colocar uma dentro",
+        "Usar T2 para as orelhas 1 e 2 e o rebaixo L2 de O0020.TAP"
+      ],
+      "intent": {
+        "type": "Orelha",
+        "objective": "Usinar as orelhas 1 e 2 e o rebaixo L2 com T2.",
+        "source": "Gustavo, 14/10/2026: 05:18 (tombar, montar na mesa com as garras por fora, alinhar e zerar por fora; na orelha 1 as garras voltam para dentro) e 12:28 (O0018 → O0021 na mesa, nessa ordem); estratégia do comentário PERCURSO do TAP"
+      },
+      "timing": {
+        "setup_minutes": null,
+        "setup_source": "não informado",
+        "machining": "process_timing (cabeçalho do TAP + margem)"
+      }
+    },
+    {
+      "phase": 24,
+      "group": 3,
+      "name": "Acabar o rebaixo L2",
+      "program": "O0021.TAP",
+      "program_revision": null,
+      "setup": "mesa; garras por dentro da peça",
+      "references": {
+        "x0": null,
+        "y0": null,
+        "z0": {
+          "value": "topo da peça",
+          "provenance": "dado de processo / a confirmar na máquina"
+        }
+      },
+      "drawing_reference": {
+        "file": "FP16F 12V H8 - PB.pdf",
+        "page": null,
+        "region": null,
+        "detail": null,
+        "important_dimension": null
+      },
+      "inspection": {
+        "registered": false,
+        "criteria": null
+      },
+      "orientation": {
+        "rotation_x_degrees": 180,
+        "label": "Tombada — lado oposto ao da 2ª operação",
+        "provenance": "peça tombada depois da 2ª operação (Gustavo, 14/10/2026 05:18); montagem ilustrativa, não inferida do TAP"
+      },
+      "instructions": [
+        "Usar T9 para acabar o rebaixo L2 de O0021.TAP"
+      ],
+      "intent": {
+        "type": "Acabamento",
+        "objective": "Acabar o rebaixo L2 com T9 (G41).",
+        "source": "Gustavo, 14/10/2026: 05:18 (tombar, montar na mesa com as garras por fora, alinhar e zerar por fora; na orelha 1 as garras voltam para dentro) e 12:28 (O0018 → O0021 na mesa, nessa ordem); estratégia do comentário PERCURSO do TAP"
+      },
+      "timing": {
+        "setup_minutes": null,
+        "setup_source": "não informado",
+        "machining": "process_timing (cabeçalho do TAP + margem)"
+      }
     }
   ],
   "reference_defaults": {
@@ -1144,6 +1339,10 @@
       "2": {
         "cutting_length_mm": null,
         "cutting_length_provenance": "não fornecido; cadastro de ferramenta real a confirmar"
+      },
+      "10": {
+        "cutting_length_mm": null,
+        "cutting_length_provenance": "não fornecido; cadastro de ferramenta real a confirmar"
       }
     },
     "provisional_note": "Ferramentas sem cadastro físico usam valores padrão provisórios; o cadastro real será feito depois."
@@ -1232,7 +1431,7 @@
   "process_timing": {
     "allowance_percent": 20,
     "source": "margem de planejamento solicitada pelo operador",
-    "scope": "programas recebidos; O001 nas duas faces; terceira operação a definir",
+    "scope": "programas recebidos; O001 nas duas faces",
     "face_milling": {
       "stage_ids": [
         0,
@@ -1328,9 +1527,8 @@
         "kind": "operation",
         "operation": 2,
         "short": "3ª operação",
-        "title": "Processo em levantamento",
-        "counts": false,
-        "defined": false
+        "title": "Usinagem na mesa",
+        "counts": true
       },
       {
         "id": "heat",
@@ -1574,6 +1772,47 @@
         "program": 16,
         "setup": "calcos",
         "kind": "cut"
+      },
+      {
+        "title": "Chanfrar",
+        "sub": "T10 · Chanfrador 30° Ø25. Peça tombada, direto na mesa, garras por fora. Percurso CHANFRO no O0018.",
+        "tools": [
+          10
+        ],
+        "program": 17,
+        "setup": "mesa",
+        "kind": "cut"
+      },
+      {
+        "title": "Cantos e raios L2",
+        "sub": "T5 · Topo Ø12 longa e T6 · Topo Ø10 longa. Cantos e raios L2 no O0019.",
+        "tools": [
+          5,
+          6
+        ],
+        "program": 18,
+        "setup": "mesa",
+        "kind": "finish"
+      },
+      {
+        "title": "Usinar as orelhas e o rebaixo L2",
+        "sub": "T2 · Girassol Ø63. Garras por dentro da peça. Orelhas 1 e 2 e rebaixo L2 no O0020.",
+        "tools": [
+          2
+        ],
+        "program": 19,
+        "setup": "mesa",
+        "kind": "cut"
+      },
+      {
+        "title": "Acabar o rebaixo L2",
+        "sub": "T9 · Topo Ø12. Acabamento do rebaixo L2 com G41 no O0021.",
+        "tools": [
+          9
+        ],
+        "program": 20,
+        "setup": "mesa",
+        "kind": "finish"
       }
     ],
     "labels": [
@@ -1597,7 +1836,11 @@
       "Externo Y",
       "Externo X",
       "Orelha L1",
-      "Acab. externo"
+      "Acab. externo",
+      "Chanfro",
+      "Cantos L2",
+      "Orelhas / rebaixo L2",
+      "Acab. rebaixo L2"
     ],
     "tool_names": {
       "1": "Girassol Ø100",
@@ -1612,7 +1855,8 @@
       "22": "Broca Ø13,5",
       "14": "Escareador 45° Ø56",
       "13": "Macho 5/8-11 UNC",
-      "2": "Girassol Ø63"
+      "2": "Girassol Ø63",
+      "10": "Chanfrador 30° Ø25"
     },
     "operations": [
       {
@@ -1692,12 +1936,28 @@
       {
         "id": 2,
         "title": "Terceira operação",
-        "name": "A definir",
-        "programs": [],
-        "phases": [],
-        "tools": [],
-        "status": "pending",
-        "description": "Aguardando programas e definição do processo"
+        "name": "Usinagem na mesa",
+        "programs": [
+          17,
+          18,
+          19,
+          20
+        ],
+        "phases": [
+          21,
+          22,
+          23,
+          24
+        ],
+        "tools": [
+          10,
+          5,
+          6,
+          2,
+          9
+        ],
+        "status": "received",
+        "description": "O0018–O0021 · peça tombada na mesa (14/10)"
       }
     ]
   },

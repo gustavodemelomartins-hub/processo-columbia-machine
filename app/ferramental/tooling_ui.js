@@ -9,7 +9,7 @@ function physicalToolData(id){
 }
 
 function toolWorkStages(){return processOperations.flatMap(o=>o.phases.map(id=>({id,tools:phases[id].tools,file:phases[id].program===null?null:DATA.programs[phases[id].program].file})));}
-function toolWorkStatus(id){return {usage:ToolWorkDomain.usage({toolId:Number(id),stages:toolWorkStages(),currentStage:state.operation===2?null:state.phase,records:state.operator}),physical:ToolWorkDomain.physical(tooling.assignment(tooling.jobMachineId,Number(id)))};}
+function toolWorkStatus(id){return {usage:ToolWorkDomain.usage({toolId:Number(id),stages:toolWorkStages(),currentStage:state.operation===PENDING_OPERATION?null:state.phase,records:state.operator}),physical:ToolWorkDomain.physical(tooling.assignment(tooling.jobMachineId,Number(id)))};}
 function offsetSuggestion(id){
  const t=DATA.tools.find(t=>t.id===Number(id));if(!t)return {value:null,applicable:false};
  const programs=t.programs.map(file=>({file,compensationCodes:(STRATEGY_DATA[file]?.strategies??[]).filter(s=>s.tools.includes(t.id)).flatMap(s=>s.compensation_codes)}));
@@ -27,7 +27,7 @@ function renderToolWorkStatus(){
  const section=$('workToolsSection');if(!section)return;
  let host=$('toolReadinessSummary');if(!host){host=document.createElement('div');host.id='toolReadinessSummary';host.className='tool-readiness-summary';section.querySelector('.section-line').after(host);}
  const count=DATA.tools.filter(t=>toolWorkStatus(t.id).physical.both).length;
- const all=toolWorkStages(),index=state.operation===2?-1:all.findIndex(s=>s.id===state.phase),next=index<0?null:all.slice(index+1).find(s=>state.operator[String(s.id)]?.completed!==true);
+ const all=toolWorkStages(),index=state.operation===PENDING_OPERATION?-1:all.findIndex(s=>s.id===state.phase),next=index<0?null:all.slice(index+1).find(s=>state.operator[String(s.id)]?.completed!==true);
  host.innerHTML='<div><strong>'+count+' / '+DATA.tools.length+'</strong><span> montadas e na máquina</span><progress max="'+DATA.tools.length+'" value="'+count+'" aria-label="Ferramentas montadas e na máquina">'+count+'/'+DATA.tools.length+'</progress></div><p>'+(next?'Próxima etapa · '+esc(next.file)+' · '+next.tools.map(id=>'T'+id+': '+toolWorkStatus(id).physical.label.toLowerCase()).join(' / '):'Próxima etapa a definir')+'</p>';
  for(const t of DATA.tools){const node=document.querySelector('[data-tool-work-status="'+t.id+'"]');if(node)node.innerHTML=toolUseMarkup(t.id);const row=document.querySelector('[data-work-tool="'+t.id+'"]');if(row)row.dataset.next=String(toolWorkStatus(t.id).usage.relation==='next');}
 }

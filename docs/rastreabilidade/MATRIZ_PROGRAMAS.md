@@ -10,7 +10,7 @@ Legenda: **E** extraído do arquivo · **C** confirmado pelo Gustavo · **D** de
 |---|---|---|---|---|---|
 | L01 — 09/10/2026 | FP 16F H8 12V · OS 10-713 | O001–O008.TAP | `D:\OS 10713\` (inventário `docs/historico-processo/Inventario_Arquivos_Recebidos.csv`) | `data/cnc/originals/` (SHA-256 em `SHA256.json`) | Incorporado ao processo |
 | L02 — 14/10/2026 | FP 16F H8 12V · OS 10-713 | O009, O0010, O0011, O0012, O0013 | anexos da conversa, 14/10 | `data/cnc/recebidos/2026-10-14_OS10713_mesmo-setup-O009-O0013/` | Incorporado à 2ª operação (etapas 12–16), mesmo setup (C, Gustavo 14/10); ordem e divergências pendentes |
-| L03 — 14/10/2026 | FP 16F H8 12V · OS 10-713 (não declarado) | O0014–O0021 | anexos da conversa, 14/10 05:13, sem texto | `data/cnc/recebidos/2026-10-14_OS10713_O0014-O0021/` | O0014–O0017 incorporados à 2ª operação (fases 17–20), garras por dentro, nos calços (C, Gustavo 14/10 05:18); ficam no fim da 2ª operação (C, Gustavo 14/10 12:25). O0018–O0021 em levantamento: provável 3ª operação (setup na mesa após o tombo) |
+| L03 — 14/10/2026 | FP 16F H8 12V · OS 10-713 (não declarado) | O0014–O0021 | anexos da conversa, 14/10 05:13, sem texto | `data/cnc/recebidos/2026-10-14_OS10713_O0014-O0021/` | O0014–O0017 incorporados à 2ª operação (fases 17–20), garras por dentro, nos calços (C, Gustavo 14/10 05:18); ficam no fim da 2ª operação (C, Gustavo 14/10 12:25). O0018–O0021 incorporados como 3ª operação (fases 21–24), peça tombada na mesa, nessa ordem (C, Gustavo 14/10 12:28) |
 
 ## L01 — o que cada programa comprova (E)
 
@@ -87,13 +87,14 @@ Leitura do conjunto (H): os comentários do CAM usam **L1** e **L2**. O009 (REBA
 
 Confirmado pelo Gustavo (14/10 05:18): O0014 a O0017 rodam com as **garras por dentro** da peça, ainda nos calços. Depois a peça é tirada, tombada e rebarbada embaixo; os calços saem e ela é montada direto na mesa com as 4 garras por fora, alinhada e zerada por fora; em seguida as garras voltam para dentro, uma de cada vez. Foto da montagem prometida.
 
+Confirmado pelo Gustavo (14/10 12:28): O0018 → O0021 rodam na mesa, nessa ordem (3ª operação). As garras voltam para dentro antes da orelha 1 (O0020). Com isso as montagens recomendadas de T9 e T2 passam a seguir a maior descida entre todos os programas: T9 vai de Z −0,297 (O002) para Z −9,51 (O0021) e T2 de Z −23,535 (O0016) para Z −42,836 (O0020).
+
 Ferramentas novas neste lote: T2 Girassol Ø63 R6 e T10 Chanfrador 30° 1F Ø25.
 
 ## Operações sem programa
 
 | Operação | Situação |
 |---|---|
-| 3ª operação | Setup na mesa depois do tombo: peça direto na mesa com as mesmas 4 garras por fora, alinhar e zerar por fora; depois as garras voltam para dentro uma a uma (C, Gustavo 14/10 05:18 e 12:25). Programas ainda não vinculados: O0018–O0021 são os candidatos (L2). |
 | Tratamento térmico | Externo, depois da 3ª operação (C 13/10). |
 | Retorno pós-TT | Em levantamento (C 13/10). |
 
