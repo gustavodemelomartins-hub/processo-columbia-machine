@@ -18,9 +18,9 @@
       "funcao_extraida": "EXTERNO Y com T3 Ø32 alto avanço; X ±542,7 · Y ±300,1; Z até −98,97 em passos de 1 mm",
       "marcador_lado_no_cam": null,
       "operacao": {
-        "valor": "setup com garras por dentro, peça nos calços",
+        "valor": "fim da 2ª operação: garras por dentro, peça nos calços",
         "status": "confirmado",
-        "fonte": "Gustavo, 14/10/2026 05:18"
+        "fonte": "Gustavo, 14/10/2026 05:18 (setup) e 12:25 (escolheu \"Calços na 2a\")"
       },
       "etapa": {
         "valor": "O0014 → O0017 (\"do 14 até o 17\")",
@@ -37,9 +37,9 @@
       "funcao_extraida": "EXTERNO X com T3; X ±568,4 · Y ±291,8; Z até −89,973",
       "marcador_lado_no_cam": null,
       "operacao": {
-        "valor": "setup com garras por dentro, peça nos calços",
+        "valor": "fim da 2ª operação: garras por dentro, peça nos calços",
         "status": "confirmado",
-        "fonte": "Gustavo, 14/10/2026 05:18"
+        "fonte": "Gustavo, 14/10/2026 05:18 (setup) e 12:25 (escolheu \"Calços na 2a\")"
       },
       "etapa": {
         "valor": "O0014 → O0017 (\"do 14 até o 17\")",
@@ -56,9 +56,9 @@
       "funcao_extraida": "ORELHA L1 com T2 Girassol Ø63; X ±561,7 · Y ±176; Z até −23,535",
       "marcador_lado_no_cam": "L1",
       "operacao": {
-        "valor": "setup com garras por dentro, peça nos calços",
+        "valor": "fim da 2ª operação: garras por dentro, peça nos calços",
         "status": "confirmado",
-        "fonte": "Gustavo, 14/10/2026 05:18"
+        "fonte": "Gustavo, 14/10/2026 05:18 (setup) e 12:25 (escolheu \"Calços na 2a\")"
       },
       "etapa": {
         "valor": "O0014 → O0017 (\"do 14 até o 17\")",
@@ -75,9 +75,9 @@
       "funcao_extraida": "PRÉ-ACABAMENTO e ACABAMENTO EXTERNO X (Z −54,997) e Y (Z −86,997) com T8 Ø25 longa, G41",
       "marcador_lado_no_cam": null,
       "operacao": {
-        "valor": "setup com garras por dentro, peça nos calços",
+        "valor": "fim da 2ª operação: garras por dentro, peça nos calços",
         "status": "confirmado",
-        "fonte": "Gustavo, 14/10/2026 05:18"
+        "fonte": "Gustavo, 14/10/2026 05:18 (setup) e 12:25 (escolheu \"Calços na 2a\")"
       },
       "etapa": {
         "valor": "O0014 → O0017 (\"do 14 até o 17\")",
@@ -96,9 +96,9 @@
       "funcao_extraida": "CHANFRO com T10 chanfrador 30° 1F; X ±459,5 · Y ±217,1; Z −4 e −4,997",
       "marcador_lado_no_cam": null,
       "operacao": {
-        "valor": "provável setup na mesa com garras por fora, após o tombo",
+        "valor": "provável 3ª operação (setup na mesa com garras por fora, após o tombo)",
         "status": "pendente",
-        "fonte": "inferência: marcador L2 no CAM + descrição do Gustavo"
+        "fonte": "a 3ª operação = setup na mesa foi confirmada (Gustavo, 14/10 12:25); o vínculo deste programa com ela é inferência (marcador L2 no CAM)"
       },
       "etapa": {
         "valor": null,
@@ -115,9 +115,9 @@
       "funcao_extraida": "CANTO 1/2 R6 L2 (T5, Z −45), CANTO R5 L2 e RAIO 0,2/0,1/0,0 L2 G41 (T6, Z −50)",
       "marcador_lado_no_cam": "L2",
       "operacao": {
-        "valor": "provável setup na mesa com garras por fora, após o tombo",
+        "valor": "provável 3ª operação (setup na mesa com garras por fora, após o tombo)",
         "status": "pendente",
-        "fonte": "inferência: marcador L2 no CAM + descrição do Gustavo"
+        "fonte": "a 3ª operação = setup na mesa foi confirmada (Gustavo, 14/10 12:25); o vínculo deste programa com ela é inferência (marcador L2 no CAM)"
       },
       "etapa": {
         "valor": null,
@@ -134,9 +134,9 @@
       "funcao_extraida": "ORELHA 1 L2 (Z −9,498), ORELHA 2 L2 (Z −42,836) e REBAIXO L2_1/2/3 (Z −9,507) com T2 Ø63",
       "marcador_lado_no_cam": "L2",
       "operacao": {
-        "valor": "provável setup na mesa com garras por fora, após o tombo",
+        "valor": "provável 3ª operação (setup na mesa com garras por fora, após o tombo)",
         "status": "pendente",
-        "fonte": "inferência: marcador L2 no CAM + descrição do Gustavo"
+        "fonte": "a 3ª operação = setup na mesa foi confirmada (Gustavo, 14/10 12:25); o vínculo deste programa com ela é inferência (marcador L2 no CAM)"
       },
       "etapa": {
         "valor": null,
@@ -153,9 +153,9 @@
       "funcao_extraida": "ACABA REBAIXO L2 G41 com T9 Ø12; Z até −9,51",
       "marcador_lado_no_cam": "L2",
       "operacao": {
-        "valor": "provável setup na mesa com garras por fora, após o tombo",
+        "valor": "provável 3ª operação (setup na mesa com garras por fora, após o tombo)",
         "status": "pendente",
-        "fonte": "inferência: marcador L2 no CAM + descrição do Gustavo"
+        "fonte": "a 3ª operação = setup na mesa foi confirmada (Gustavo, 14/10 12:25); o vínculo deste programa com ela é inferência (marcador L2 no CAM)"
       },
       "etapa": {
         "valor": null,
