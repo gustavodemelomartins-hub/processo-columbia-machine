@@ -172,5 +172,14 @@
     "derivado",
     "sugestao",
     "pendente"
+  ],
+  "referencias": [
+    {
+      "arquivo": "referencias/IMG_9422.jpeg",
+      "sha256": "4d6875e7ba0fc52d0a7f15ef579f8c936b5af98ad77f4a0ed8ed096c16c18440",
+      "enviado_em": "2026-10-14",
+      "descricao_informada": "foto da montagem com as garras por dentro (O0014–O0017)",
+      "observado_na_foto": "quatro grampos de aperto apoiados nas paredes internas das cavidades, dois de cada lado; contorno externo e orelhas já usinados"
+    }
   ]
 }
