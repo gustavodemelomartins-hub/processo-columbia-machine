@@ -219,7 +219,6 @@
         "Começar invertida; alinhar por fora e prender as garras",
         "Conferir lado e posição conforme desenho 3D",
         "{reference}",
-        "Montar e presetar T1",
         "Carregar {program}",
         "Ajustar o corretor e facear até limpar"
       ],
@@ -384,7 +383,7 @@
         "Montagem manual: elevar a peça para os quatro calços das extremidades, sem tombar novamente",
         "Alinhar por fora e apertar as garras sobre os apoios",
         "Conferir lado e posição conforme desenho 3D",
-        "Conferir X/Y no centro; presetar a ferramenta no topo da peça",
+        "{reference}",
         "Usar T9 e carregar O002.TAP"
       ],
       "intent": {

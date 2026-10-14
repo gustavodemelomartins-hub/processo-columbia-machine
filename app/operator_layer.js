@@ -241,11 +241,22 @@ renderInspection=function(){
  $("release").disabled=!has||!["dimension","offset","resume"].every(f=>inspectRecord()[f])||!String(inspectRecord().measured||"").trim();
  renderOperational();
 };
+// A tool not used earlier in the same setup (operation) must be preset on the top of the part before it cuts.
+function toolsToPreset(i=state.phase){
+ const op=processOperations.find(o=>o.phases.includes(i));if(!op||op.status==="pending")return[];
+ const toolsOf=j=>phases[j].kind==="setup"?[]:DATA.programs[phases[j].program]?.tools||[];
+ const before=new Set(op.phases.slice(0,op.phases.indexOf(i)).flatMap(toolsOf));
+ return [...new Set(toolsOf(i))].filter(id=>!before.has(id));
+}
 function stepsNow(){
  if(state.operation===PENDING_OPERATION)return ["Montagem e programas a confirmar"];
  const tools=requiredTools().map(id=>'T'+id).join(' / ');
- const reference=engineeringReferences().center?'Conferir X/Y no centro; presetar a ferramenta no topo da peça':'Conferir X/Y conforme engenharia; presetar a ferramenta no topo da peça';
- return (stageConfig()?.instructions||['Usar '+tools+' e carregar {program}']).map(text=>text.replaceAll('{program}',displayedProgramFile()||'A confirmar').replaceAll('{reference}',reference).replaceAll('{pre_heat_target}',fmtTarget(OPERATOR_CONFIG.fixture.face_method.pre_heat_target_mm)));
+ const reference=engineeringReferences().center?'Conferir X/Y no centro':'Conferir X/Y conforme engenharia';
+ const steps=(stageConfig()?.instructions||['Usar '+tools+' e carregar {program}']).map(text=>text.replaceAll('{program}',displayedProgramFile()||'A confirmar').replaceAll('{reference}',reference).replaceAll('{pre_heat_target}',fmtTarget(OPERATOR_CONFIG.fixture.face_method.pre_heat_target_mm)));
+ const fresh=toolsToPreset();if(!fresh.length)return steps;
+ const ids=fresh.map(id=>'T'+id),at=steps.findIndex(s=>/^(Usar|Executar|Carregar)\b/.test(s));
+ steps.splice(at<0?steps.length:at,0,'Presetar '+(ids.length>1?ids.slice(0,-1).join(', ')+' e '+ids.at(-1):ids[0])+' no topo da peça');
+ return steps;
 }
 function renderOperational(){
  if(!$("operationStatus"))return;

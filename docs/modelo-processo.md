@@ -37,6 +37,7 @@ Não há perguntas de descoberta, controles ou inspeção formal na V1. Pergunta
 - `progress()` conta recebimento + 18 etapas de programa. `nodeStates()`: done, running, active, waiting, later.
 - `nextPhase()` segue a ordem; uma etapa só inicia depois das anteriores (a ação principal leva à etapa pendente).
 - `passport()` monta o registro da peça só com registros locais.
+- "Como fazer" acrescenta "Presetar Tn no topo da peça" na primeira vez que cada ferramenta aparece em uma operação (`toolsToPreset` em `app/operator_layer.js`, a partir das ferramentas dos programas); ferramenta repetida na mesma operação não pede preset de novo. Ponto zero só na primeira etapa de cada operação.
 
 ## Vida do insert
 
