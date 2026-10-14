@@ -1,6 +1,6 @@
 # Depois do protótipo
 
-1. Engenharia: resolver meta 96 versus desenho 95,75; registrar revisões aprovadas, tolerâncias e critérios de inspeção. Definir terceira operação. Validar origens, preset, calços, garras, diâmetros reais, corte útil e conjunto físico da Mini Portal.
+1. Engenharia: (resolvido em 13/10: 95,75 mm antes do T.T. para esta peça.) Registrar revisões aprovadas, tolerâncias e critérios de inspeção. Definir terceira operação. Validar origens, preset, calços, garras, diâmetros reais, corte útil e conjunto físico da Mini Portal.
 2. Continuidade: exportar/importar registros do operador com versão e validação; backup de localStorage, inclusive fotos, antes de migrações. Política explícita de alteração de processo sem apagar histórico.
 3. Qualidade: CI com suíte completa WebGL/navegador e aprovação antes do Pages; testes de falhas de armazenamento, recuperação de fotos e acessibilidade por teclado/leitor de tela.
 4. Performance: reduzir HTML ~12,7 MB, extrair assets pesados e carregar por demanda, mantendo pacote offline e links relativos. Extrair renderer monolítico apenas com provas de equivalência.

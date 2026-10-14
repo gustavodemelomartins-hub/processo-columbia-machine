@@ -1,0 +1,22 @@
+{
+  "lote": "AAAA-MM-DD_peca-ou-OS_assunto",
+  "recebido_em": "AAAA-MM-DD",
+  "enviado_por": "Gustavo",
+  "origem": "caminho ou meio de envio informado (ex.: pendrive D:\\OS 10713, conversa do projeto)",
+  "peca": null,
+  "os": null,
+  "desenho": { "arquivo": null, "revisao": null },
+  "contexto_informado": "frase do Gustavo sobre o lote, copiada sem interpretação",
+  "arquivos": [
+    {
+      "arquivo": "O009.TAP",
+      "sha256": null,
+      "funcao_informada": null,
+      "operacao": { "valor": null, "status": "pendente", "fonte": null },
+      "etapa": { "valor": null, "status": "pendente", "fonte": null },
+      "limitacoes": [],
+      "duvidas": []
+    }
+  ],
+  "status_permitidos": ["extraido", "confirmado", "derivado", "sugestao", "pendente"]
+}

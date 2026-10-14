@@ -16,4 +16,6 @@ A fonte editável é data/process.json; runtime guarda apenas a compatibilidade 
 
 Os dados derivados e o HTML gerado têm cópias técnicas por necessidade de build/publicação, não fontes independentes de cadastro. Não corrigir um programa ou uma dimensão em um derivado para aparentar consistência. Revisar o original/proveniência e regenerar com aprovação da engenharia.
 
-Não considerar os valores do 3D como CAD validado. A tabela do desenho confirma largura 1104,9 e profundidade 568,3 na página 1; a espessura ilustrada mantém 96 informado pelo processo, com divergência explícita de 95,75 do desenho. Nenhuma medição de teste foi cadastrada como dado real.
+Não considerar os valores do 3D como CAD validado. A tabela do desenho confirma largura 1104,9 e profundidade 568,3 na página 1; a espessura ilustrada é 95,75 mm antes do T.T. (desenho p.1; decisão do responsável em 13/10/2026, válida só para esta peça). Nenhuma medição de teste foi cadastrada como dado real.
+
+Programas novos chegam em `data/cnc/recebidos/<lote>/` e só entram em `data/cnc/originals/` depois de confirmados. Rastreabilidade em `docs/rastreabilidade/MATRIZ_PROGRAMAS.md`; método em `docs/METODO_DE_TRABALHO.md`.
