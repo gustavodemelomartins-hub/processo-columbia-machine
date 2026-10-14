@@ -301,7 +301,7 @@ function renderStageHow(){
    jDetailRow('Montagem',esc(onSupports?fx.supports:'Sobre a mesa'))+
    (fx.inner_clamps.stages.includes(state.phase)?jDetailRow('Garras',esc(fx.inner_clamps.description)):onSupports?jDetailRow('Garras',esc(fx.top_clamps)):'')+
    jDetailRow('Alinhamento',esc(fx.alignment.value))+
-   jDetailRow('Referência','X0 '+esc(refs.x||'—')+' · Y0 '+esc(refs.y||'—')+' · Z0 '+esc(refs.z||'—')+(meta?.wcs?.length?' · '+esc(meta.wcs.join(' / ')):''))+
+   (jZeroStage()?jDetailRow('Referência','X0 '+esc(refs.x||'—')+' · Y0 '+esc(refs.y||'—')+' · Z0 '+esc(refs.z||'—')+(meta?.wcs?.length?' · '+esc(meta.wcs.join(' / ')):'')):'')+
    jDetailRow('Estratégias no programa',esc((prog?.operations||[]).map(o=>o.replace(/^_+/,'')).join(' · ')))+
    jDetailRow('Tempo no cabeçalho do TAP',prog?esc(strategyTime(prog.seconds))+' <small>sem margem</small>':'')+
    (proposal?jDetailRow('Proposta in-process','<b>Proposta</b> · '+esc(proposal.title)+'<br><small>Para avaliação; o TAP não foi alterado.</small>'):'')+
@@ -338,13 +338,15 @@ function jEnsure3D(){
  }
  return true;
 }
+// O ponto zero só aparece na primeira etapa de cada operação; as seguintes são sequência do mesmo zero.
+function jZeroStage(){return selectedOperation()?.phases[0]===state.phase;}
 function journey3D(){
  if(!jEnsure3D())return;
  const operation=jMode()==='operation',p=phases[state.phase],top=plateBottom+OPERATOR_CONFIG.simulation.part_mm.thickness;
- journeyAxes.position.set(0,top,0);journeyAxes.visible=operation&&engineeringReferences().center;
+ journeyAxes.position.set(0,top,0);journeyAxes.visible=operation&&jZeroStage()&&engineeringReferences().center;
  if(typeof zeroMarker!=='undefined'&&zeroMarker)zeroMarker.visible=false;
  journeyFaceLayer.position.set(0,top+5,0);journeyFaceLayer.visible=operation&&p?.kind==='face';
- const caption=!operation?'':state.phase===FACE_IDS[0]?'Face A em laranja · peça invertida, sobre a mesa':state.phase===FACE_IDS[1]?'Face B em laranja · peça tombada, sobre a mesa':(state.operation===2?'Peça tombada, direto na mesa':'Peça sobre 4 calços')+(OPERATOR_CONFIG.fixture.inner_clamps.stages.includes(state.phase)?' · garras por dentro':' · 4 garras')+' · X0 Y0 no centro, Z0 no topo';
+ const caption=!operation?'':state.phase===FACE_IDS[0]?'Face A em laranja · peça invertida, sobre a mesa':state.phase===FACE_IDS[1]?'Face B em laranja · peça tombada, sobre a mesa':(state.operation===2?'Peça tombada, direto na mesa':'Peça sobre 4 calços')+(OPERATOR_CONFIG.fixture.inner_clamps.stages.includes(state.phase)?' · garras por dentro':' · 4 garras')+(jZeroStage()?' · X0 Y0 no centro, Z0 no topo':'');
  const el=$('viewerContext');if(el){el.textContent=caption;el.hidden=!caption;}
  draw();
 }

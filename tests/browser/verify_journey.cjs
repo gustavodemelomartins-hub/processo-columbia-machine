@@ -76,7 +76,9 @@ const url=process.env.COLUMBIA_LIVE_URL||'file:///'+process.cwd().replaceAll('\\
  const cav=await p.evaluate(()=>columbiaDemo.insertUsage(3).cycles.at(-1));assert.deepEqual([cav.count,cav.cavities,cav.unit,cav.removedMm,cav.program,cav.kind],[5,5,'cavity',null,'O003.TAP','turn']);
  await p.click('[data-tab="details"]');assert.equal(await p.locator('#cavityConsultation [data-cavity]').count(),12);assert.equal(await p.locator('#cavityConsultation #insertCount').count(),0);
  const op2=await text('#stagePanel');assert.match(op2,/O003\.TAP/);assert.match(op2,/T3 · Alto avanço Ø32/);assert.match(op2,/~2 h 51 min/);assert.doesNotMatch(op2,/Passes estimados/);
- assert.equal(await p.evaluate(()=>columbiaJourney.get3D().axes.visible),true);assert.match(await text('#viewerContext'),/calços/);
+ // Zero point only on the first stage of each operation (O002 here); later stages are the same sequence.
+ assert.equal(await p.evaluate(()=>columbiaJourney.get3D().axes.visible),false);assert.match(await text('#viewerContext'),/calços/);assert.doesNotMatch(await text('#viewerContext'),/X0/);
+ await p.click('[data-step="4"]');assert.equal(await p.evaluate(()=>columbiaJourney.get3D().axes.visible),true);assert.match(await text('#viewerContext'),/X0 Y0 no centro/);
  // In-process proposals stay as proposals.
  await p.click('[data-step="8"]');await p.click('#stageHow summary');assert.match(await text('#stageHow'),/Proposta.*Calibrar uma cavidade/s);
  // 3ª operação is a defined operation on the table (O0018–O0021); T.T. and retorno pós-TT stay neutral placeholders, no alerts.

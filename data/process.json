@@ -143,6 +143,11 @@
     "inner_clamps": {
       "description": "quatro garras de barra com rasgo, parafuso e porca, no meio da peça, apoiadas nas nervuras",
       "stages": [
+        12,
+        13,
+        14,
+        15,
+        16,
         17,
         18,
         19,
@@ -150,7 +155,7 @@
         23,
         24
       ],
-      "stages_source": "Gustavo, 14/10/2026 05:18 e 12:28: garras por dentro em O0014–O0017 e a partir da orelha 1 (O0020)",
+      "stages_source": "Gustavo, 14/10/2026: na 2ª operação, garras por dentro a partir do O009 (14:06; nos percursos, O009–O0013 passam sobre as garras de cima dos calços) até O0017 (05:18); na 3ª operação, a partir da orelha 1 do O0020 (12:28)",
       "reference_photo": "data/cnc/recebidos/2026-10-14_OS10713_O0014-O0021/referencias/IMG_9422.jpeg",
       "strap_mm": {
         "length": 200,
@@ -160,7 +165,7 @@
       "coordinates_mm": [
         {
           "x": -310,
-          "y": -125
+          "y": -95
         },
         {
           "x": -310,
@@ -172,10 +177,10 @@
         },
         {
           "x": 310,
-          "y": 125
+          "y": 95
         }
       ],
-      "provenance": "derivado dos programas: posições fora dos percursos de O0014–O0017, O0020 e O0021 (todo movimento abaixo de Z+60, raio da ferramenta + 5 mm), com o parafuso sobre uma cavidade. Coordenadas no sistema do programa (X, Y). Ilustrativo; tamanho da barra estimado da foto; conferir na máquina",
+      "provenance": "derivado dos programas: posições fora dos percursos de O009–O0017, O0020 e O0021 (todo movimento abaixo de Z+60, raio da ferramenta + 5 mm), com o parafuso sobre uma cavidade. Coordenadas no sistema do programa (X, Y). Ilustrativo; tamanho da barra estimado da foto; conferir na máquina",
       "check": "python scripts/check_inner_clamps.py"
     }
   },
@@ -709,7 +714,7 @@
       "name": "Rebaixo",
       "program": "O009.TAP",
       "program_revision": null,
-      "setup": "quatro calços nas extremidades",
+      "setup": "quatro calços; garras por dentro da peça",
       "references": {
         "x0": null,
         "y0": null,
@@ -734,6 +739,7 @@
         "provenance": "montagem ilustrativa conforme orientação do usuário; não inferida do TAP"
       },
       "instructions": [
+        "Trocar as 4 garras para dentro da peça, mantendo a peça nos calços",
         "Usar T12 e executar os rebaixos de O009.TAP"
       ],
       "intent": {
@@ -753,7 +759,7 @@
       "name": "Gravação",
       "program": "O0010.TAP",
       "program_revision": null,
-      "setup": "quatro calços nas extremidades",
+      "setup": "quatro calços; garras por dentro da peça",
       "references": {
         "x0": null,
         "y0": null,
@@ -797,7 +803,7 @@
       "name": "Furos para rosca",
       "program": "O0011.TAP",
       "program_revision": null,
-      "setup": "quatro calços nas extremidades",
+      "setup": "quatro calços; garras por dentro da peça",
       "references": {
         "x0": null,
         "y0": null,
@@ -841,7 +847,7 @@
       "name": "Escarear",
       "program": "O0012.TAP",
       "program_revision": null,
-      "setup": "quatro calços nas extremidades",
+      "setup": "quatro calços; garras por dentro da peça",
       "references": {
         "x0": null,
         "y0": null,
@@ -885,7 +891,7 @@
       "name": "Roscar 5/8-11 UNC",
       "program": "O0013.TAP",
       "program_revision": null,
-      "setup": "quatro calços nas extremidades",
+      "setup": "quatro calços; garras por dentro da peça",
       "references": {
         "x0": null,
         "y0": null,
@@ -955,7 +961,6 @@
         "provenance": "montagem ilustrativa conforme orientação do usuário; não inferida do TAP"
       },
       "instructions": [
-        "Trocar as 4 garras para dentro da peça, mantendo a peça nos calços",
         "Usar T3 e executar o externo Y de O0014.TAP"
       ],
       "intent": {
@@ -1723,7 +1728,7 @@
       },
       {
         "title": "Usinar os rebaixos",
-        "sub": "T12 · Abacaxi Ø25. Percursos REBAIXO 1 e REBAIXO 2 no O009.",
+        "sub": "T12 · Abacaxi Ø25. Percursos REBAIXO 1 e REBAIXO 2 no O009. Garras por dentro da peça.",
         "tools": [
           12
         ],
@@ -1773,7 +1778,7 @@
       },
       {
         "title": "Usinar o externo Y",
-        "sub": "T3 · Alto avanço Ø32. Garras por dentro da peça. Percurso EXTERNO Y no O0014.",
+        "sub": "T3 · Alto avanço Ø32. Percurso EXTERNO Y no O0014.",
         "tools": [
           3
         ],

@@ -30,7 +30,8 @@ Estas perguntas **não aparecem na interface do operador**. Servem para a próxi
 | Depois de O0017 | Tirar a peça, tombar, rebarbar bem a parte de baixo, retirar os calços, limpar a mesa e montar a peça direto na mesa com as mesmas 4 garras por fora; nesta peça alinhar e zerar por fora. Depois as garras voltam para dentro, trocando uma de cada vez (tira uma de fora, põe uma dentro) | — |
 | Organização das operações | O0014–O0017 ficam no fim da 2ª operação (troca de garras, ainda nos calços). O setup na mesa, depois do tombo, é a 3ª operação (Gustavo, 14/10 12:25) | `data/process.json` (2ª e 3ª op) |
 | 3ª operação | O0018 → O0021 rodam na mesa, nessa ordem. "Ouvinte um" = orelha 1 (O0020): antes dela as garras voltam para dentro, uma de cada vez (Gustavo, 14/10 12:28) | `data/process.json` fases 21–24 |
-| Garras por dentro (3D) | Barra com rasgo, parafuso e porca (foto IMG_9422), no meio da peça, onde a ferramenta não desce; posições derivadas dos percursos (Gustavo, 14/10 13:41–13:43) | `fixture.inner_clamps` |
+| Garras por dentro (3D) | Barra com rasgo, parafuso e porca (foto IMG_9422), no meio da peça, onde a ferramenta não desce; posições derivadas dos percursos (Gustavo, 14/10 13:41–13:43). Na 2ª operação as garras passam para dentro a partir do O009, porque O009–O0013 passam sobre as garras de cima (Gustavo, 14:06; conferido nos percursos) | `fixture.inner_clamps` |
+| Ponto zero | Referência X0/Y0/Z0 só na primeira etapa de cada operação (O001, O002, O0018); as demais seguem a sequência (Gustavo, 14/10 14:07) | `journey_ui.js` |
 
 ## Ainda a levantar
 
