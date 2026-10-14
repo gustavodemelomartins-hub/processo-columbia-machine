@@ -12,12 +12,16 @@ parser.add_argument('files',nargs='*')
 args=parser.parse_args()
 ROOT=Path(args.input_dir)
 OUT=Path(args.output_dir);OUT.mkdir(exist_ok=True)
+def decode(raw):
+    # Alguns TAPs chegam em Windows-1252 (acentos nos comentários); os bytes originais não mudam.
+    try:return raw.decode('utf8')
+    except UnicodeDecodeError:return raw.decode('cp1252')
 def sha(p):return hashlib.sha256(p.read_bytes()).hexdigest()
 def dump(p,d):p.parent.mkdir(parents=True,exist_ok=True);p.write_text(json.dumps(d,ensure_ascii=False,indent=2),encoding='utf8')
 def bounds(points):
     return {a:[min(p[i] for p in points),max(p[i] for p in points)] for i,a in enumerate('XYZ')} if points else None
 def analyze(file,index):
-    path=ROOT/file;before=sha(path);source=path.read_text(encoding='utf8')
+    path=ROOT/file;before=sha(path);source=decode(path.read_bytes())
     result,tools,inferred=execute_program(source,language='fanuc_mill')
     lines=source.splitlines();steps={s.source_block:s for s in result.execution_steps}
     ops=[];headers={};operations_by_block={};active=None

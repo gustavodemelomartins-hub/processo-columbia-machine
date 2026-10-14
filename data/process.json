@@ -49,7 +49,11 @@
         "O0010.TAP",
         "O0011.TAP",
         "O0012.TAP",
-        "O0013.TAP"
+        "O0013.TAP",
+        "O0014.TAP",
+        "O0015.TAP",
+        "O0016.TAP",
+        "O0017.TAP"
       ],
       "tools_received": [
         9,
@@ -62,9 +66,10 @@
         11,
         22,
         14,
-        13
+        13,
+        2
       ],
-      "program_set_status": "O002 a O008 (piloto) e O009 a O0013 (recebidos em 14/10, mesmo setup)"
+      "program_set_status": "O002 a O008 (piloto), O009 a O0013 e O0014 a O0017 (recebidos em 14/10)"
     },
     {
       "number": 3,
@@ -869,6 +874,183 @@
         "setup_source": "não informado",
         "machining": "process_timing (cabeçalho do TAP + margem)"
       }
+    },
+    {
+      "phase": 17,
+      "group": 2,
+      "name": "Externo Y",
+      "program": "O0014.TAP",
+      "program_revision": null,
+      "setup": "quatro calços; garras por dentro da peça",
+      "references": {
+        "x0": null,
+        "y0": null,
+        "z0": {
+          "value": "topo da peça",
+          "provenance": "dado de processo / a confirmar na máquina"
+        }
+      },
+      "drawing_reference": {
+        "file": "FP16F 12V H8 - PB.pdf",
+        "page": null,
+        "region": null,
+        "detail": null,
+        "important_dimension": null
+      },
+      "inspection": {
+        "registered": false,
+        "criteria": null
+      },
+      "orientation": {
+        "rotation_x_degrees": 0,
+        "provenance": "montagem ilustrativa conforme orientação do usuário; não inferida do TAP"
+      },
+      "instructions": [
+        "Trocar as 4 garras para dentro da peça, mantendo a peça nos calços",
+        "Usar T3 e executar o externo Y de O0014.TAP"
+      ],
+      "intent": {
+        "type": "Externo",
+        "objective": "Usinar o contorno externo em Y com T3.",
+        "source": "Gustavo, 14/10/2026 05:18: garras por dentro, peça nos calços, ordem O0014→O0017; estratégia do comentário PERCURSO do TAP"
+      },
+      "timing": {
+        "setup_minutes": null,
+        "setup_source": "não informado",
+        "machining": "process_timing (cabeçalho do TAP + margem)"
+      }
+    },
+    {
+      "phase": 18,
+      "group": 2,
+      "name": "Externo X",
+      "program": "O0015.TAP",
+      "program_revision": null,
+      "setup": "quatro calços; garras por dentro da peça",
+      "references": {
+        "x0": null,
+        "y0": null,
+        "z0": {
+          "value": "topo da peça",
+          "provenance": "dado de processo / a confirmar na máquina"
+        }
+      },
+      "drawing_reference": {
+        "file": "FP16F 12V H8 - PB.pdf",
+        "page": null,
+        "region": null,
+        "detail": null,
+        "important_dimension": null
+      },
+      "inspection": {
+        "registered": false,
+        "criteria": null
+      },
+      "orientation": {
+        "rotation_x_degrees": 0,
+        "provenance": "montagem ilustrativa conforme orientação do usuário; não inferida do TAP"
+      },
+      "instructions": [
+        "Usar T3 e executar o externo X de O0015.TAP"
+      ],
+      "intent": {
+        "type": "Externo",
+        "objective": "Usinar o contorno externo em X com T3.",
+        "source": "Gustavo, 14/10/2026 05:18: garras por dentro, peça nos calços, ordem O0014→O0017; estratégia do comentário PERCURSO do TAP"
+      },
+      "timing": {
+        "setup_minutes": null,
+        "setup_source": "não informado",
+        "machining": "process_timing (cabeçalho do TAP + margem)"
+      }
+    },
+    {
+      "phase": 19,
+      "group": 2,
+      "name": "Orelha L1",
+      "program": "O0016.TAP",
+      "program_revision": null,
+      "setup": "quatro calços; garras por dentro da peça",
+      "references": {
+        "x0": null,
+        "y0": null,
+        "z0": {
+          "value": "topo da peça",
+          "provenance": "dado de processo / a confirmar na máquina"
+        }
+      },
+      "drawing_reference": {
+        "file": "FP16F 12V H8 - PB.pdf",
+        "page": null,
+        "region": null,
+        "detail": null,
+        "important_dimension": null
+      },
+      "inspection": {
+        "registered": false,
+        "criteria": null
+      },
+      "orientation": {
+        "rotation_x_degrees": 0,
+        "provenance": "montagem ilustrativa conforme orientação do usuário; não inferida do TAP"
+      },
+      "instructions": [
+        "Usar T2 para a orelha L1 de O0016.TAP"
+      ],
+      "intent": {
+        "type": "Orelha",
+        "objective": "Usinar a orelha L1 com T2.",
+        "source": "Gustavo, 14/10/2026 05:18: garras por dentro, peça nos calços, ordem O0014→O0017; estratégia do comentário PERCURSO do TAP"
+      },
+      "timing": {
+        "setup_minutes": null,
+        "setup_source": "não informado",
+        "machining": "process_timing (cabeçalho do TAP + margem)"
+      }
+    },
+    {
+      "phase": 20,
+      "group": 2,
+      "name": "Acabamento externo",
+      "program": "O0017.TAP",
+      "program_revision": null,
+      "setup": "quatro calços; garras por dentro da peça",
+      "references": {
+        "x0": null,
+        "y0": null,
+        "z0": {
+          "value": "topo da peça",
+          "provenance": "dado de processo / a confirmar na máquina"
+        }
+      },
+      "drawing_reference": {
+        "file": "FP16F 12V H8 - PB.pdf",
+        "page": null,
+        "region": null,
+        "detail": null,
+        "important_dimension": null
+      },
+      "inspection": {
+        "registered": false,
+        "criteria": null
+      },
+      "orientation": {
+        "rotation_x_degrees": 0,
+        "provenance": "montagem ilustrativa conforme orientação do usuário; não inferida do TAP"
+      },
+      "instructions": [
+        "Usar T8 para o pré-acabamento e o acabamento externos de O0017.TAP"
+      ],
+      "intent": {
+        "type": "Acabamento",
+        "objective": "Pré-acabar e acabar o externo X e Y com T8.",
+        "source": "Gustavo, 14/10/2026 05:18: garras por dentro, peça nos calços, ordem O0014→O0017; estratégia do comentário PERCURSO do TAP"
+      },
+      "timing": {
+        "setup_minutes": null,
+        "setup_source": "não informado",
+        "machining": "process_timing (cabeçalho do TAP + margem)"
+      }
     }
   ],
   "reference_defaults": {
@@ -956,6 +1138,10 @@
         "cutting_length_provenance": "não fornecido; cadastro de ferramenta real a confirmar"
       },
       "13": {
+        "cutting_length_mm": null,
+        "cutting_length_provenance": "não fornecido; cadastro de ferramenta real a confirmar"
+      },
+      "2": {
         "cutting_length_mm": null,
         "cutting_length_provenance": "não fornecido; cadastro de ferramenta real a confirmar"
       }
@@ -1348,6 +1534,46 @@
         "program": 12,
         "setup": "calcos",
         "kind": "cut"
+      },
+      {
+        "title": "Usinar o externo Y",
+        "sub": "T3 · Alto avanço Ø32. Garras por dentro da peça. Percurso EXTERNO Y no O0014.",
+        "tools": [
+          3
+        ],
+        "program": 13,
+        "setup": "calcos",
+        "kind": "cut"
+      },
+      {
+        "title": "Usinar o externo X",
+        "sub": "T3 · Alto avanço Ø32. Percurso EXTERNO X no O0015.",
+        "tools": [
+          3
+        ],
+        "program": 14,
+        "setup": "calcos",
+        "kind": "cut"
+      },
+      {
+        "title": "Usinar a orelha L1",
+        "sub": "T2 · Girassol Ø63. Percurso ORELHA L1 no O0016.",
+        "tools": [
+          2
+        ],
+        "program": 15,
+        "setup": "calcos",
+        "kind": "cut"
+      },
+      {
+        "title": "Acabar o externo X e Y",
+        "sub": "T8 · Topo Ø25 longa. Pré-acabamento e acabamento externos com G41 no O0017.",
+        "tools": [
+          8
+        ],
+        "program": 16,
+        "setup": "calcos",
+        "kind": "cut"
       }
     ],
     "labels": [
@@ -1367,7 +1593,11 @@
       "Gravação",
       "Furos Ø13,5",
       "Escarear",
-      "Rosca 5/8-11"
+      "Rosca 5/8-11",
+      "Externo Y",
+      "Externo X",
+      "Orelha L1",
+      "Acab. externo"
     ],
     "tool_names": {
       "1": "Girassol Ø100",
@@ -1381,7 +1611,8 @@
       "11": "Broca de centro",
       "22": "Broca Ø13,5",
       "14": "Escareador 45° Ø56",
-      "13": "Macho 5/8-11 UNC"
+      "13": "Macho 5/8-11 UNC",
+      "2": "Girassol Ø63"
     },
     "operations": [
       {
@@ -1417,7 +1648,11 @@
           9,
           10,
           11,
-          12
+          12,
+          13,
+          14,
+          15,
+          16
         ],
         "phases": [
           4,
@@ -1431,7 +1666,11 @@
           13,
           14,
           15,
-          16
+          16,
+          17,
+          18,
+          19,
+          20
         ],
         "tools": [
           9,
@@ -1444,10 +1683,11 @@
           11,
           22,
           14,
-          13
+          13,
+          2
         ],
         "status": "received",
-        "description": "O002–O0013 recebidos · O009–O0013 no mesmo setup (14/10)"
+        "description": "O002–O0017 recebidos · O0014–O0017 com garras por dentro (14/10)"
       },
       {
         "id": 2,

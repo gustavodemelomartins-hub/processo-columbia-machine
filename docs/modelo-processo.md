@@ -19,8 +19,8 @@ Recebimento → 1ª operação (Face A, Face B) → 2ª operação (O002…O008)
 | Peça, OS, desenho | `process.json` → `part`, `drawing` | 95,75 mm antes do T.T.; 95,0 mm depois (desenho p.1) |
 | Espessura objetivo | `fixture.face_method.pre_heat_target_mm` = 95,75 | Verdade operacional desta peça. Sem divergência, sem confirmação |
 | Recebimento | `receiving` | Medida, objetivo (`target.value_from`), estratégia: Face A apenas limpa (`face_a.default_removal_mm` = 0,20, editável) e Face B fecha a espessura |
-| Jornada | `journey.nodes` | `kind`: `receiving`, `operation`, `external`, `placeholder`. `counts` define "x de N etapas" (15 hoje) |
-| Operações e etapas | `runtime.operations`, `runtime.phases`, `steps` | IDs históricos preservados (1, 3 e 7 arquivados). Ordem obrigatória O001 → O008, seguida de O009 → O0013 (14/10) |
+| Jornada | `journey.nodes` | `kind`: `receiving`, `operation`, `external`, `placeholder`. `counts` define "x de N etapas" (19 hoje) |
+| Operações e etapas | `runtime.operations`, `runtime.phases`, `steps` | IDs históricos preservados (1, 3 e 7 arquivados). Ordem obrigatória O001 → O008, seguida de O009 → O0013 e O0014 → O0017 (14/10) |
 | Fixação | `fixture` | Calços, garras, alinhamento, orientação |
 | Referências | `reference_defaults` + `steps[].references` | X0/Y0 centro, Z0 topo |
 | Ferramentas | `data/derived` (descida do TAP) + `tool_mounting` | Descida máxima ≠ montagem recomendada = ceil(descida + margem). Dados físicos ausentes ficam `null`; valores padrão usados para demonstração são marcados como provisórios |
@@ -34,7 +34,7 @@ Não há perguntas de descoberta, controles ou inspeção formal na V1. Pergunta
 
 - `stockFor(recebida, objetivo, faceA)` → sobremetal total = recebida − objetivo; Face B = total − Face A; `symmetricMm` só como opção secundária ("Dividir igualmente").
 - Exemplo: 111,00 − 95,75 = 15,25 mm; Face A 0,20 → Face B 15,05 mm.
-- `progress()` conta recebimento + 14 etapas de programa. `nodeStates()`: done, running, active, waiting, later.
+- `progress()` conta recebimento + 18 etapas de programa. `nodeStates()`: done, running, active, waiting, later.
 - `nextPhase()` segue a ordem; uma etapa só inicia depois das anteriores (a ação principal leva à etapa pendente).
 - `passport()` monta o registro da peça só com registros locais.
 

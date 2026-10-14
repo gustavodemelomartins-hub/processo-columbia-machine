@@ -33,6 +33,12 @@ for file in files:
     meta['sequence'] = len(payload) + 1
     meta['trajectory_kind'] = 'calculated_programmed'
     meta['diagnostic_count'] = len(meta['diagnostics'])
+    grouped = {}
+    for g in meta['diagnostics']:
+        k = (g['code'], g['message'])
+        if k not in grouped: grouped[k] = {**g, 'count': 0, 'first_line': g.get('line'), 'last_line': g.get('line')}
+        grouped[k]['count'] += 1; grouped[k]['last_line'] = g.get('line')
+    meta['diagnostics'] = list(grouped.values())  # mesmo formato agrupado dos oito originais
     payload[file] = {'columns': d['columns'], 'segments': d['segments'], 'meta': meta, 'source_lines': d['source_lines']}
     strategies[file] = strategy.program_strategies(d)
     depths = {}

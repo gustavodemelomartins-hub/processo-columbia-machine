@@ -15,10 +15,10 @@ assert.equal(J.stockFor(111,95.75,16).valid,false);assert.equal(J.stockFor(111,9
 assert.equal(J.stockFor('',95.75).valid,false);assert.equal(J.stockFor(95,95.75).valid,false);assert.equal(J.stockFor(95.75,95.75,0).faceBMm,0);
 const plan=J.stockPlan(config,{receiving:{receivedMm:111,faceAMm:null}});assert.deepEqual([plan.totalMm,plan.faceAMm,plan.faceBMm],[15.25,0.2,15.05]);
 
-// Macro sequence: receiving → 1ª → 2ª → 3ª → T.T. → retorno pós-TT. Progress counts receiving + 14 program stages.
+// Macro sequence: receiving → 1ª → 2ª → 3ª → T.T. → retorno pós-TT. Progress counts receiving + 18 program stages.
 assert.deepEqual(config.journey.nodes.map(n=>n.id),['receiving','op1','op2','op3','heat','post-heat']);
 const empty=J.emptyJourney();let p=J.progress(config,empty,{});
-assert.equal(p.total,15);assert.equal(p.done,0);assert.equal(p.current.type,'receiving');
+assert.equal(p.total,19);assert.equal(p.done,0);assert.equal(p.current.type,'receiving');
 let states=J.nodeStates(config,empty,{});
 assert.deepEqual(states.map(n=>n.status),['active','waiting','waiting','later','later','later']);
 
@@ -30,8 +30,8 @@ p=J.progress(config,j,records);assert.deepEqual([p.current.type,p.current.id,p.d
 states=J.nodeStates(config,j,records);assert.equal(states[1].status,'done');assert.equal(states[2].status,'active');
 
 // Program order O001 → O0013: next phase skips archived IDs and never enters the 3rd operation.
-assert.equal(J.nextPhase(config,0),2);assert.equal(J.nextPhase(config,2),4);assert.equal(J.nextPhase(config,6),8);assert.equal(J.nextPhase(config,11),12);assert.equal(J.nextPhase(config,16),null);
-assert.deepEqual(config.runtime.operations[1].phases.map(i=>data.programs[config.runtime.phases[i].program].file),['O002.TAP','O003.TAP','O004.TAP','O005.TAP','O006.TAP','O007.TAP','O008.TAP','O009.TAP','O0010.TAP','O0011.TAP','O0012.TAP','O0013.TAP']);
+assert.equal(J.nextPhase(config,0),2);assert.equal(J.nextPhase(config,2),4);assert.equal(J.nextPhase(config,6),8);assert.equal(J.nextPhase(config,11),12);assert.equal(J.nextPhase(config,16),17);assert.equal(J.nextPhase(config,20),null);
+assert.deepEqual(config.runtime.operations[1].phases.map(i=>data.programs[config.runtime.phases[i].program].file),['O002.TAP','O003.TAP','O004.TAP','O005.TAP','O006.TAP','O007.TAP','O008.TAP','O009.TAP','O0010.TAP','O0011.TAP','O0012.TAP','O0013.TAP','O0014.TAP','O0015.TAP','O0016.TAP','O0017.TAP']);
 
 // Times: setup is a provisional estimate; machining comes from the TAP with margin.
 assert.equal(config.process_timing.setup_estimate_minutes,45);assert.equal(config.process_timing.allowance_percent,20);
@@ -49,4 +49,4 @@ assert.deepEqual(J.normalize(null),J.emptyJourney());assert.equal(J.normalize({r
 assert.equal(J.normalize({view:'control-op1'}).view,null);
 const old=J.normalize({view:'receiving',receiving:{receivedMm:101.8,recordedAt:'2026-10-13T10:00:00Z',targetChoice:{id:'process'}},controls:{afterFaceAMm:100}});
 assert.deepEqual(old.receiving,{receivedMm:101.8,recordedAt:'2026-10-13T10:00:00Z',faceAMm:null,note:''});
-console.log('Journey: 95,75 target, Face A 0,20 editable / Face B closes, macro sequence, progress 15 items, program order, times, part record and normalization passed.');
+console.log('Journey: 95,75 target, Face A 0,20 editable / Face B closes, macro sequence, progress 19 items, program order, times, part record and normalization passed.');

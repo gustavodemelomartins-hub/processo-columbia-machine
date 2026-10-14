@@ -10,7 +10,7 @@ Legenda: **E** extraído do arquivo · **C** confirmado pelo Gustavo · **D** de
 |---|---|---|---|---|---|
 | L01 — 09/10/2026 | FP 16F H8 12V · OS 10-713 | O001–O008.TAP | `D:\OS 10713\` (inventário `docs/historico-processo/Inventario_Arquivos_Recebidos.csv`) | `data/cnc/originals/` (SHA-256 em `SHA256.json`) | Incorporado ao processo |
 | L02 — 14/10/2026 | FP 16F H8 12V · OS 10-713 | O009, O0010, O0011, O0012, O0013 | anexos da conversa, 14/10 | `data/cnc/recebidos/2026-10-14_OS10713_mesmo-setup-O009-O0013/` | Incorporado à 2ª operação (etapas 12–16), mesmo setup (C, Gustavo 14/10); ordem e divergências pendentes |
-| L03 — 14/10/2026 | FP 16F H8 12V · OS 10-713 (não declarado) | O0014–O0021 | anexos da conversa, 14/10 05:13, sem texto | `data/cnc/recebidos/2026-10-14_OS10713_O0014-O0021/` | O0014–O0017: garras por dentro, nos calços (C, Gustavo 14/10 05:18). O0018–O0021: provável setup na mesa após o tombo, pendente. Não incorporado |
+| L03 — 14/10/2026 | FP 16F H8 12V · OS 10-713 (não declarado) | O0014–O0021 | anexos da conversa, 14/10 05:13, sem texto | `data/cnc/recebidos/2026-10-14_OS10713_O0014-O0021/` | O0014–O0017 incorporados à 2ª operação (fases 17–20), garras por dentro, nos calços (C, Gustavo 14/10 05:18); organização em operações aguardando sua escolha. O0018–O0021 em levantamento: provável setup na mesa após o tombo |
 
 ## L01 — o que cada programa comprova (E)
 
