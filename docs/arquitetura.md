@@ -33,7 +33,7 @@ app/journey/journey_domain.js (regras puras: objetivos candidatos, sobremetal, p
 
 ## Fronteiras mantidas
 
-Parser → derivados é uma mudança de engenharia, separada da apresentação. Para regenerar: python scripts/cnc_adapter.py, python scripts/build_strategy_data.py, python scripts/build_cavity_data.py, depois validar parser/linhas/hash e build. Execute da raiz. Relatórios históricos em data/derived/cnc são evidência; não são cadastro editável.
+Parser → derivados é uma mudança de engenharia, separada da apresentação. Para regenerar: python scripts/cnc_adapter.py, python scripts/build_strategy_data.py, python scripts/build_cavity_data.py (passagens por cavidade de todos os programas e registro das cavidades no desenho pág. 1), depois validar parser/linhas/hash e build. Execute da raiz. Relatórios históricos em data/derived/cnc são evidência; não são cadastro editável.
 
 Processo → interface exige build. Estado do operador → localStorage não volta para JSON industrial. Não incorporar fixtures, medições ou fotos de testes ao HTML publicado. O runtime de máquina adicional é histórico e permanece isolado; o piloto não expõe seletor de máquinas.
 

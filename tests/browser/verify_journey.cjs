@@ -75,6 +75,11 @@ const url=process.env.COLUMBIA_LIVE_URL||'file:///'+process.cwd().replaceAll('\\
  assert.match(await text('.sp-insert'),/Vida do insert · T3.*Cavidades nesta aresta: 0/s);for(let i=0;i<5;i++)await p.click('[data-quick-insert="add"]');await p.click('[data-quick-insert="turn"]');
  const cav=await p.evaluate(()=>columbiaDemo.insertUsage(3).cycles.at(-1));assert.deepEqual([cav.count,cav.cavities,cav.unit,cav.removedMm,cav.program,cav.kind],[5,5,'cavity',null,'O003.TAP','turn']);
  await p.click('[data-tab="details"]');assert.equal(await p.locator('#cavityConsultation [data-cavity]').count(),12);assert.equal(await p.locator('#cavityConsultation #insertCount').count(),0);
+ // Cavity consultation: one tap selects in the table, the 3D and the drawing; every program with cavities offers it.
+ await p.click('#cavityConsultation [data-cavity="5"]');assert.match(await text('#selectedCavityLines'),/Cavidade 05/);assert.equal(await p.locator('#selectedCavityLines .source-reference').count(),4);assert.match(await text('#cavityConsultation .cavity-changes summary'),/Troca de cavidade no programa \(12\)/);
+ assert.equal(await p.evaluate(()=>columbiaDemo.getCavityView().meshes.find(m=>m.userData.cavityId===5).material.opacity>0),true);assert.equal(await p.locator('#drawingHost [data-drawing-cavity].selected').getAttribute('data-drawing-cavity'),'5');
+ for(const [step,file,count,label] of [[4,'O002.TAP',12,null],[8,'O005.TAP',36,/3 passagens/],[6,'O004.TAP',100,/passagens/],[12,'O009.TAP',null,null]]){await p.click('[data-step="'+step+'"]');await p.click('[data-tab="details"]');if(count===null){assert.equal(await p.locator('#cavityConsultation').count(),0);continue}assert.match(await text('#cavityConsultation .cavity-changes summary'),new RegExp('\\('+count+'\\)'));if(label)assert.match(await text('#selectedCavityLines'),label);}
+ await p.click('[data-step="5"]');
  const op2=await text('#stagePanel');assert.match(op2,/O003\.TAP/);assert.match(op2,/T3 · Alto avanço Ø32/);assert.match(op2,/~2 h 51 min/);assert.doesNotMatch(op2,/Passes estimados/);
  // Zero point only on the first stage of each operation (O002 here); later stages are the same sequence.
  assert.equal(await p.evaluate(()=>columbiaJourney.get3D().axes.visible),false);assert.match(await text('#viewerContext'),/calços/);assert.doesNotMatch(await text('#viewerContext'),/X0/);

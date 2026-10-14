@@ -7,6 +7,7 @@ const OPERATOR_CONFIG=PROCESS_CONFIG;
 const STRATEGY_DATA=__STRATEGY_DATA__;
 __STRATEGY_UI__
 const DRAWING_PAGES=__DRAWING_PAGES__;
+const CAVITY_DATA=__CAVITY_DATA__;
 state.operator=saved.operator&&typeof saved.operator==="object"?saved.operator:{};
 state.faceTiming={stockByStage:saved.faceTiming?.stockByStage||{},reductionPerPassMm:saved.faceTiming?.reductionPerPassMm===undefined?OPERATOR_CONFIG.process_timing.face_milling.reduction_per_pass_mm:saved.faceTiming.reductionPerPassMm};
 state.visualMode=saved.visualMode==="drawing"?"drawing":"3d";
@@ -313,13 +314,16 @@ $("reachMargin").oninput=e=>{
  persist();renderTools();renderInspection();
 };
 $("references").onclick=()=>modal("Referências arquivadas",'<p>Fotos e desenho originais preservados no projeto. A consulta ao desenho está na aba Desenho da referência visual.</p>');
+// Drawn cavities on page 1 (regions found in the drawing image and fitted to the contours; scripts/build_cavity_data.py).
+function drawingCavityOverlay(){const d=CAVITY_DATA.drawing,p=DRAWING_PAGES[d.page-1];return '<svg class="drawing-cavity-overlay" viewBox="0 0 '+p.width+' '+p.height+'" width="'+p.width+'" height="'+p.height+'" aria-hidden="true">'+d.cavities.map(c=>'<polygon data-drawing-cavity="'+c.cavityId+'" points="'+c.outline.map(q=>q.join(',')).join(' ')+'"></polygon>').join('')+'</svg>'}
 function makeDrawingViewer(host,page=0,expanded=false){
- host.innerHTML='<div class="drawing-toolbar"><label>Página <select data-draw="page" aria-label="Página do desenho">'+DRAWING_PAGES.map((p,i)=>'<option value="'+i+'"> '+p.page+' / '+DRAWING_PAGES.length+'</option>').join("")+'</select></label><div class="drawing-buttons"><button data-draw="minus" aria-label="Reduzir desenho">−</button><button data-draw="plus" aria-label="Ampliar zoom do desenho">+</button><button data-draw="fit">Ajustar à tela</button>'+(!expanded?'<button data-draw="expand">Ampliar</button>':'')+'</div></div><div class="drawing-viewport" tabindex="0" aria-label="Desenho: arraste para mover, roda para zoom"><img draggable="false" alt=""></div><div class="drawing-footer">Arraste para mover · roda para zoom · <a href="assets/drawings/originals/'+encodeURIComponent(OPERATOR_CONFIG.drawing.file)+'" target="_blank">PDF original</a></div>';
+ host.innerHTML='<div class="drawing-toolbar"><label>Página <select data-draw="page" aria-label="Página do desenho">'+DRAWING_PAGES.map((p,i)=>'<option value="'+i+'"> '+p.page+' / '+DRAWING_PAGES.length+'</option>').join("")+'</select></label><div class="drawing-buttons"><button data-draw="minus" aria-label="Reduzir desenho">−</button><button data-draw="plus" aria-label="Ampliar zoom do desenho">+</button><button data-draw="fit">Ajustar à tela</button>'+(!expanded?'<button data-draw="expand">Ampliar</button>':'')+'</div></div><div class="drawing-viewport" tabindex="0" aria-label="Desenho: arraste para mover, roda para zoom"><img draggable="false" alt="">'+drawingCavityOverlay()+'</div><div class="drawing-footer">Arraste para mover · roda para zoom · <a href="assets/drawings/originals/'+encodeURIComponent(OPERATOR_CONFIG.drawing.file)+'" target="_blank">PDF original</a></div>';
  const viewport=host.querySelector(".drawing-viewport"),img=viewport.querySelector("img"),select=host.querySelector("select");
  let index=page,scale=1,fitScale=1,x=0,y=0,drag=null,lastWidth=0,lastHeight=0;
- function paint(){img.style.transform="translate("+x+"px,"+y+"px) scale("+scale+")"}
+ const overlay=viewport.querySelector(".drawing-cavity-overlay");
+ function paint(){img.style.transform="translate("+x+"px,"+y+"px) scale("+scale+")";if(overlay)overlay.style.transform=img.style.transform}
  function fit(){const p=DRAWING_PAGES[index];if(!viewport.clientWidth||!viewport.clientHeight)return;lastWidth=viewport.clientWidth;lastHeight=viewport.clientHeight;scale=fitScale=Math.min((viewport.clientWidth-24)/p.width,(viewport.clientHeight-24)/p.height);x=(viewport.clientWidth-p.width*scale)/2;y=(viewport.clientHeight-p.height*scale)/2;paint()}
- function load(i){index=Math.max(0,Math.min(DRAWING_PAGES.length-1,i));const p=DRAWING_PAGES[index];select.value=String(index);img.src=p.image;img.style.width=p.width+"px";img.style.height=p.height+"px";img.alt="Desenho técnico original, página "+p.page+" de "+DRAWING_PAGES.length;fit()}
+ function load(i){index=Math.max(0,Math.min(DRAWING_PAGES.length-1,i));const p=DRAWING_PAGES[index];select.value=String(index);img.src=p.image;img.style.width=p.width+"px";img.style.height=p.height+"px";img.alt="Desenho técnico original, página "+p.page+" de "+DRAWING_PAGES.length;if(overlay)overlay.hidden=p.page!==CAVITY_DATA.drawing.page;fit()}
  function zoom(f,px=viewport.clientWidth/2,py=viewport.clientHeight/2){const next=Math.max(fitScale*.3,Math.min(fitScale*16,scale*f)),ratio=next/scale;x=px-(px-x)*ratio;y=py-(py-y)*ratio;scale=next;paint()}
  select.onchange=e=>load(Number(e.target.value));
  host.querySelector('[data-draw="minus"]').onclick=()=>zoom(1/1.35);
@@ -330,9 +334,12 @@ function makeDrawingViewer(host,page=0,expanded=false){
   const large=makeDrawingViewer($("expandedDrawing"),index,true);$("modal").addEventListener("close",()=>{large.dispose();$("modal").classList.remove("drawing-expanded")},{once:true});
  };
  viewport.addEventListener("wheel",e=>{e.preventDefault();const b=viewport.getBoundingClientRect();zoom(e.deltaY<0?1.15:1/1.15,e.clientX-b.left,e.clientY-b.top)},{passive:false});
- viewport.onpointerdown=e=>{drag={x:e.clientX,y:e.clientY};viewport.setPointerCapture(e.pointerId)};
+ let press=null;
+ viewport.onpointerdown=e=>{drag={x:e.clientX,y:e.clientY};press={x:e.clientX,y:e.clientY};viewport.setPointerCapture(e.pointerId)};
  viewport.onpointermove=e=>{if(!drag)return;x+=e.clientX-drag.x;y+=e.clientY-drag.y;drag={x:e.clientX,y:e.clientY};paint()};
- viewport.onpointerup=viewport.onpointercancel=()=>drag=null;
+ // A tap without dragging on a drawn cavity selects it, like a tap in the 3D.
+ viewport.onpointerup=e=>{drag=null;const tap=press&&Math.hypot(e.clientX-press.x,e.clientY-press.y)<6;press=null;if(!tap||!overlay||overlay.hidden)return;const hit=document.elementsFromPoint(e.clientX,e.clientY).find(n=>n.dataset?.drawingCavity&&overlay.contains(n));if(hit&&typeof selectCavity==='function')selectCavity(Number(hit.dataset.drawingCavity),{fromDrawing:true})};
+ viewport.onpointercancel=()=>{drag=null;press=null};
  viewport.onkeydown=e=>{if(["ArrowLeft","ArrowRight","ArrowUp","ArrowDown","+","-"].includes(e.key))e.preventDefault();if(e.key==="ArrowLeft")x-=30;if(e.key==="ArrowRight")x+=30;if(e.key==="ArrowUp")y-=30;if(e.key==="ArrowDown")y+=30;if(e.key==="+")zoom(1.35);if(e.key==="-")zoom(1/1.35);paint()};
  const observer=new ResizeObserver(()=>{if(viewport.clientWidth!==lastWidth||viewport.clientHeight!==lastHeight)fit()});observer.observe(viewport);load(index);
  return {fit,setPage:load,getState:()=>({page:index+1,scale,x,y}),dispose:()=>observer.disconnect()};

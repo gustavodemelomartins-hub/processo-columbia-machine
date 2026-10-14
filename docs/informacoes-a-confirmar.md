@@ -33,6 +33,7 @@ Estas perguntas **não aparecem na interface do operador**. Servem para a próxi
 | Garras por dentro (3D) | Barra com rasgo, parafuso e porca (foto IMG_9422), no meio da peça, onde a ferramenta não desce; posições derivadas dos percursos (Gustavo, 14/10 13:41–13:43). Na 2ª operação as garras passam para dentro a partir do O009, porque O009–O0013 passam sobre as garras de cima (Gustavo, 14:06; conferido nos percursos) | `fixture.inner_clamps` |
 | Ponto zero | Referência X0/Y0/Z0 só na primeira etapa de cada operação (O001, O002, O0018); as demais seguem a sequência (Gustavo, 14/10 14:07) | `journey_ui.js` |
 | Preset no topo | Cada ferramenta que entra pela primeira vez na operação recebe "Presetar Tn no topo da peça" antes do programa; se repete na mesma operação, não pede de novo. Derivado das ferramentas dos programas, sem lista manual (Gustavo, 14/10 14:31–14:35) | `operator_layer.js` (`toolsToPreset`) |
+| Cavidades no desenho | Seleção da cavidade no 3D, no desenho e nas linhas do TAP em todos os programas com cavidade (Gustavo, 14/10 15:54). O desenho pág. 1 foi registrado pelas 12 cavidades (resíduo 3,6 px); como a peça é simétrica a 180°, o lado segue o 3D (tombada no eixo X) | `scripts/build_cavity_data.py` |
 
 ## Ainda a levantar
 
@@ -56,4 +57,5 @@ Estas perguntas **não aparecem na interface do operador**. Servem para a próxi
 18. L1/L2 nos comentários do CAM significam lado 1 (2ª operação) e lado 2 (peça tombada, 3ª operação)?
 19. O0015 (externo X) desce até Z −89,973 e O0017 acaba o externo X só até Z −54,997, enquanto o externo Y vai a −98,97 (O0014) e −86,997 (O0017). As alturas diferentes por eixo são intencionais (abas/orelhas)?
 20. ~~"Ouvinte um" = orelha 1?~~ Respondido em 14/10 12:28: é a orelha 1 do O0020; as garras voltam para dentro antes dela.
+21. A peça é tombada no eixo X (a cavidade de cima do desenho continua em cima) ou no eixo Y? A peça é simétrica a 180°, então nem o desenho nem os TAPs decidem; o 3D e o destaque no desenho usam o eixo X.
 
