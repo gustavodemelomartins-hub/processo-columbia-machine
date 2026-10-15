@@ -1,0 +1,32 @@
+{
+  "env": {
+    "CHROME_DEVTOOLS_MCP_NO_USAGE_STATISTICS": "1"
+  },
+  "enabledPlugins": {
+    "superpowers@claude-plugins-official": true,
+    "ponytail@ponytail": true,
+    "caveman@caveman": true,
+    "context7@claude-plugins-official": true,
+    "chrome-devtools-mcp@claude-plugins-official": true
+  },
+  "extraKnownMarketplaces": {
+    "claude-plugins-official": {
+      "source": {
+        "source": "github",
+        "repo": "anthropics/claude-plugins-official"
+      }
+    },
+    "ponytail": {
+      "source": {
+        "source": "github",
+        "repo": "DietrichGebert/ponytail"
+      }
+    },
+    "caveman": {
+      "source": {
+        "source": "github",
+        "repo": "JuliusBrussee/caveman"
+      }
+    }
+  }
+}

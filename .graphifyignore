@@ -1,0 +1,27 @@
+# Exclusões do Graphify (grafo só de código, gerado localmente; não versionado).
+# Nunca indexar segredos, dependências, conteúdo de terceiros, gerados ou originais industriais.
+.git/
+node_modules/
+.venv/
+graphify-out/
+artifacts/
+outputs/
+.agents/
+.claude/
+.codex/
+.env
+.env.*
+*.pem
+*.key
+*.log
+package-lock.json
+# Gerado pelo build
+index.html
+# Bibliotecas de terceiros e licenças
+vendor/
+licenses/
+# Dados industriais, originais imutáveis, derivados e mídias
+data/
+assets/
+design/
+docs/

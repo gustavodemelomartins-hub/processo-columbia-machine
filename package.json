@@ -8,11 +8,15 @@
     "test:unit": "node scripts/test.cjs --unit",
     "check:originals": "python scripts/check_originals.py",
     "dev": "python -m http.server 4173 --bind 127.0.0.1",
+    "lint": "eslint .",
     "test:contract": "python scripts/test_project.py",
     "test:parser": "python scripts/test_parser.py",
-    "check": "python scripts/test_project.py && python scripts/check_originals.py && python scripts/test_parser.py && python scripts/check_inner_clamps.py && node scripts/test.cjs --unit"
+    "check": "npm run lint && python scripts/test_project.py && python scripts/check_originals.py && python scripts/test_parser.py && python scripts/check_inner_clamps.py && node scripts/test.cjs --unit"
   },
   "devDependencies": {
+    "@eslint/js": "10.0.1",
+    "eslint": "10.12.0",
+    "globals": "17.13.0",
     "playwright": "1.62.1"
   }
 }

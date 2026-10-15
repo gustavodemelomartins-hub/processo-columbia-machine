@@ -26,7 +26,7 @@ npm run check
 npm test
 ```
 
-`check` valida contratos (inclusive a sequência da jornada), hashes de 21 TAPs + PDF + 7 fotos, parser e sete suítes de domínio/armazenamento. `npm test` executa também sete suítes de navegador (a de jornada percorre recebimento → 1ª → 2ª → 3ª → T.T. → retorno pós-TT em 5 larguras); screenshots e relatórios ficam em artifacts/, ignorado pelo Git. A suíte HTTP adicional usa `COLUMBIA_LIVE_URL` e `node tests/browser/verify_http.cjs`, com o servidor iniciado. Ela confere URLs relativas, PDF, WebGL e larguras 320/390/768/1440/1920. Para usar navegador/runtime já instalado, existem COLUMBIA_CHROMIUM_PATH e COLUMBIA_PLAYWRIGHT_MODULE.
+`check` roda o lint (`npm run lint`, ESLint), valida contratos (inclusive a sequência da jornada), hashes de 21 TAPs + PDF + 7 fotos, parser e sete suítes de domínio/armazenamento. `npm test` executa também sete suítes de navegador (a de jornada percorre recebimento → 1ª → 2ª → 3ª → T.T. → retorno pós-TT em 5 larguras); screenshots e relatórios ficam em artifacts/, ignorado pelo Git. A suíte HTTP adicional usa `COLUMBIA_LIVE_URL` e `node tests/browser/verify_http.cjs`, com o servidor iniciado. Ela confere URLs relativas, PDF, WebGL e larguras 320/390/768/1440/1920. Para usar navegador/runtime já instalado, existem COLUMBIA_CHROMIUM_PATH e COLUMBIA_PLAYWRIGHT_MODULE.
 
 ## Jornada da OS (V1 simplificada)
 
@@ -63,7 +63,7 @@ O GitHub Pages está configurado em main, pasta raiz, modo legacy, com .nojekyll
 npm run build
 npm run check
 npm test
-git add app data assets scripts tests docs README.md CLAUDE.md package.json package-lock.json index.html .github
+git add app data assets scripts tests docs README.md PRODUCT.md AGENTS.md CLAUDE.md .claude eslint.config.mjs .graphifyignore skills-lock.json package.json package-lock.json index.html .github
 git commit -m "fix: estabiliza prototipo Columbia"
 git push origin HEAD:main
 ```
@@ -73,5 +73,12 @@ Publique apenas após verificar se origin/main ainda é ancestral de HEAD. Aguar
 ## Limites reais
 
 Software funcional não significa processo liberado para máquina. Espessura antes do T.T.: 95,75 mm (desenho p.1, decisão do responsável); 95,0 mm depois. Os TAPs não são alterados. Tolerâncias, fixação, colisões e medidas físicas continuam fora da V1. 3D mostra montagem/percurso e não remove material nem certifica colisões. Terceira operação, retorno pós-TT e cadastro físico da Mini Portal em levantamento. O HTML ~12,7 MB pesa no primeiro carregamento; a apresentação local funciona sem CDN.
+
+## Documentação
+
+- [PRODUCT.md](PRODUCT.md): produto, público, fluxos, fora de escopo e critérios de aceitação.
+- [AGENTS.md](AGENTS.md): comandos, mapa e regras do domínio para agentes de IA (o `CLAUDE.md` importa este arquivo).
+- [docs/quality.md](docs/quality.md): o que cada check prova e quando rodar.
+- [docs/setup.md](docs/setup.md): ferramentas de IA configuradas (Vibe Coding Toolkit), evidências e pendências.
 
 Comece por docs/METODO_DE_TRABALHO.md (como trabalhamos) e docs/rastreabilidade/MATRIZ_PROGRAMAS.md (programas recebidos). Veja também docs/arquitetura.md, docs/diagnostico-inicial.md, docs/dados-industriais.md, docs/publicacao.md, docs/backlog.md e docs/briefing-claude-design.md. O acervo anterior e backup integral ficam preservados; desenvolver somente nesta pasta oficial.
