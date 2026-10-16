@@ -18,7 +18,7 @@ Retorno pós-TT aparece como "processo em levantamento" (neutro, sem alerta). O 
 |---|---|---|
 | Peça, OS, desenho | `process.json` → `part`, `drawing` | 95,75 mm antes do T.T.; 95,0 mm depois (desenho p.1) |
 | Espessura objetivo | `fixture.face_method.pre_heat_target_mm` = 95,75 | Verdade operacional desta peça. Sem divergência, sem confirmação |
-| Recebimento | `receiving` | Medida, objetivo (`target.value_from`), estratégia: Face A apenas limpa (`face_a.default_removal_mm` = 0,20, editável) e Face B fecha a espessura |
+| Recebimento | `receiving` | Medida, objetivo (`target.value_from`), estratégia: Face A apenas limpa (`face_a.default_removal_mm` = 0,20, editável) e Face B fecha a espessura. A tela do Recebimento também mostra a lista "Ferramentas do trabalho" para preparar a máquina |
 | Jornada | `journey.nodes` | `kind`: `receiving`, `operation`, `external`, `placeholder`. `counts` define "x de N etapas" (19 hoje) |
 | Operações e etapas | `runtime.operations`, `runtime.phases`, `steps` | IDs históricos preservados (1, 3 e 7 arquivados). Ordem obrigatória O001 → O008, seguida de O009 → O0013 e O0014 → O0017 (14/10); 3ª operação O0018 → O0021 (14/10) |
 | Fixação | `fixture` | Calços, garras, alinhamento, orientação |
@@ -38,6 +38,7 @@ Não há perguntas de descoberta, controles ou inspeção formal na V1. Pergunta
 - `nextPhase()` segue a ordem; uma etapa só inicia depois das anteriores (a ação principal leva à etapa pendente).
 - `passport()` monta o registro da peça só com registros locais.
 - "Como fazer" acrescenta "Presetar Tn no topo da peça" na primeira vez que cada ferramenta aparece em uma operação (`toolsToPreset` em `app/operator_layer.js`, a partir das ferramentas dos programas); ferramenta repetida na mesma operação não pede preset de novo. Ponto zero só na primeira etapa de cada operação.
+- A 1ª operação começa com "Passar a lixadeira na peça para tirar todas as irregularidades antes de colocar na mesa" (Gustavo, 16/10), antes de prender a peça para facear.
 - Ferramentas do trabalho: a tabela segue a ordem de uso pela frente (da primeira etapa não concluída em diante; `toolPriority` em `app/ferramental/tooling_ui.js`). Com a montagem medida informada, cada linha compara com a montagem recomendada de cada programa que falta (`mountAdvice`): abaixo do primeiro que não alcança, "Puxar X mm para fora antes do O…"; acima da maior necessária por mais que a margem, "Pode encurtar até …"; senão "Atende até o …". Sem medida, nada é sugerido.
 - Consultar cavidade no TAP: vale para todo programa cujos cortes abaixo de Z0 caem nas 12 cavidades (hoje O002, O003, O004, O005, O008 e O0018), derivado por `scripts/build_cavity_data.py` em `data/derived/cavity_data.json`. Tocar a cavidade no 3D, no desenho (pág. 1) ou nos botões seleciona nos três; cada passagem mostra Z antes, posição XY, primeiro corte e Z ao concluir, e "Troca de cavidade no programa" lista a linha de entrada de cada passagem. O006, O007 e O0019 ficam de fora porque cortam fora dos contornos das cavidades.
 

@@ -20,3 +20,13 @@ Software industrial simples e natural: superfícies claras, filetes finos, pouco
 ## Componentes
 
 Button · Field · StatusBadge · ToConfirm · Alert · TechValue · TitleBlock · Segments · Stepper · JourneyMap · OSHeader · StockSection · ReferenceOrigin · ToolCard · TimeBlock · Table. Guias e prévias no artefato; a implementação é a mesma folha `components.css` + `journey.css`.
+
+## Revisão visual (16/10/2026)
+
+Pedido do Gustavo: menos coisa grande e desalinhada, mais limpo, sem tirar conteúdo nem dado de engenharia. Bloco "Revisão visual" no fim de `app/journey/journey.css`:
+- Cartão da ferramenta em escala menor (código 22 px, nome 18 px, valores 15 px); caixas de descida/montagem limitadas a 720 px de largura.
+- Tabela de ferramentas: fonte 15 px, linhas mais baixas, programas numa linha só ("O003 · O0014 · O0015"), foto à esquerda do nome, colunas de medida com largura fixa para o texto "Não informado" caber.
+- Mapa da jornada até 1440 px: título e subtítulo quebram em duas linhas em vez de cortar com reticências; no celular os cartões voltam a 64 px de altura.
+- Cartões de etapa com nome em até duas linhas; campo "Sobremetal desta face" com dica menor para caber.
+- Recebimento mostra a tabela "Ferramentas do trabalho".
+

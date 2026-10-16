@@ -168,10 +168,11 @@ body.industrial .operational-notice{background:transparent!important;border:0!im
 .rx-note .ds-link:disabled{color:var(--ink-subtle);text-decoration:none;cursor:default}
 .rx-message{margin:var(--space-2) 0 0;font-size:15px;color:var(--status-blocked)}
 .rx-message:empty{display:none}
-body[data-journey-view=receiving] .process>#operationDetail,body[data-journey-view=receiving] .main,body[data-journey-view=receiving] .work-tools,
-body[data-journey-view=op3] .process>#operationDetail,body[data-journey-view=op3] .main,body[data-journey-view=op3] .work-tools,
-body[data-journey-view=heat] .process>#operationDetail,body[data-journey-view=heat] .main,body[data-journey-view=heat] .work-tools,
-body[data-journey-view=post-heat] .process>#operationDetail,body[data-journey-view=post-heat] .main,body[data-journey-view=post-heat] .work-tools{display:none!important}
+/* Outside an operation the stage-specific tool card is hidden; the receiving view keeps the job tool list for preparation. */
+body[data-journey-view=receiving] .process>#operationDetail,body[data-journey-view=receiving] .main,body[data-journey-view=receiving] #techSection,
+body[data-journey-view=op3] .process>#operationDetail,body[data-journey-view=op3] .main,body[data-journey-view=op3] .work-tools,body[data-journey-view=op3] #techSection,
+body[data-journey-view=heat] .process>#operationDetail,body[data-journey-view=heat] .main,body[data-journey-view=heat] .work-tools,body[data-journey-view=heat] #techSection,
+body[data-journey-view=post-heat] .process>#operationDetail,body[data-journey-view=post-heat] .main,body[data-journey-view=post-heat] .work-tools,body[data-journey-view=post-heat] #techSection{display:none!important}
 
 /* Tools table, records, footer */
 body.industrial .work-tools{width:calc(100% - 2 * var(--page-gutter));max-width:calc(var(--page-max) - 2 * var(--page-gutter));margin:var(--space-6) auto 0;border:1px solid var(--line);border-radius:var(--radius-md);box-shadow:none}
@@ -270,3 +271,73 @@ body.industrial .tech-section .insert-counter{max-width:880px}
  body.industrial .tech-section .insert-counter>*{grid-column:1}
  body.industrial .tech-section .insert-counter>.insert-study-history{grid-column:2;grid-row:1/span 12;margin-top:0}
 }
+
+/* Revisão visual (16/10/2026): escala menor e alinhada no cartão da ferramenta, na tabela de ferramentas e no recebimento. */
+body.industrial .tech-section #toolList .tool{font-size:15px}
+body.industrial .tool .tool-identity{grid-template-columns:auto minmax(0,1fr);gap:4px 10px}
+body.industrial .tool .tool-id{font-size:22px;line-height:28px}
+body.industrial .tool .toolname{font-size:18px;line-height:24px;font-weight:600}
+body.industrial .tool .tool-parameters{font-size:15px;gap:6px 18px;margin:6px 0 14px;color:var(--ink-muted)}
+body.industrial .tool .tool-parameters b{color:var(--ink)}
+body.industrial .tool .tool-parameters small{font-size:13px}
+body.industrial .tool .length-pair{gap:var(--space-3)}
+body.industrial .tool .length-pair>div{padding:10px 12px;border-radius:var(--radius-sm)}
+body.industrial .tool .length-pair span{font-size:13px;line-height:18px;color:var(--ink-muted)}
+body.industrial .tool .length-pair strong,body.industrial .tool .length-pair .recommended strong{font-size:22px;line-height:28px;margin-top:2px}
+body.industrial .tool .length-origin{font-size:13px;margin:6px 0 4px}
+body.industrial .tool .tool-margin-note{font-size:13px;margin:0 0 var(--space-3);color:var(--ink-muted)}
+body.industrial .tool .physical-tool-values{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:var(--space-2) var(--space-4);margin:var(--space-3) 0 0;padding-top:var(--space-3);border-top:1px solid var(--line)}
+body.industrial .tool .physical-tool-values>div{display:block;padding:0;border:0}
+body.industrial .tool .physical-tool-values dt{font-size:13px;line-height:18px;color:var(--ink-muted)}
+body.industrial .tool .physical-tool-values dd{font-size:15px;line-height:22px;text-align:left;font-weight:600}
+body.industrial .tool .tool-visual-reference{font-size:13px;line-height:18px;margin:var(--space-3) 0 0}
+body.industrial .tool .sidebar-photo{width:64px;height:56px;margin-top:var(--space-3);font-size:13px}
+
+body.industrial .work-tool-table{min-width:1120px;font-size:15px}
+body.industrial .work-tool-table th,body.industrial .work-tool-table td{padding:8px}
+body.industrial .work-tool-table thead th{font-size:13px;line-height:16px}
+body.industrial .work-tool-table th:first-child{width:92px}
+body.industrial .work-tool-table th:nth-child(2){width:190px}
+body.industrial .work-tool-table th:nth-child(3){width:150px}
+body.industrial .work-tool-table th:nth-child(4){width:100px}
+body.industrial .work-tool-table th:nth-child(5){width:110px}
+body.industrial .work-tool-table th:nth-child(8){width:150px}
+body.industrial .work-tool-table th:nth-child(9),body.industrial .work-tool-table th:nth-child(10){width:72px}
+body.industrial .work-tool-table tbody th b{font-size:18px}
+body.industrial .work-tool-table .tool-description{font-size:15px}
+body.industrial .work-tool-table .tool-priority,body.industrial .work-tool-table .mount-advice,body.industrial .work-tool-table .tool-use-badge,body.industrial .work-tool-table .tool-mount-progress span,body.industrial .work-tool-table .process-descent{font-size:13px}
+body.industrial .work-tool-table input:not([type=checkbox]){font-size:15px;min-height:40px;padding:0 8px}
+body.industrial .work-tool-table .tool-photo-button{width:44px;height:44px;min-width:44px;flex-basis:44px;font-size:13px}
+body.industrial .work-tool-table .tool-mount-progress progress{height:4px}
+body.industrial .tool-readiness-summary{margin:var(--space-3) 0 var(--space-4);padding:10px 14px}
+body.industrial .tool-readiness-summary strong{font-size:20px}
+body.industrial .tool-readiness-summary span,body.industrial .tool-readiness-summary p{font-size:15px}
+
+.rx .ds-field[data-size=xl] .ds-field-control input{min-height:56px;font-size:28px}
+.rx .ds-field[data-size=xl] .ds-field-unit{font-size:16px;padding:0 var(--space-4)}
+body.industrial .work-tool-table .tool-programs{font-weight:600;line-height:20px}
+body.industrial .work-tool-table .tool-use-badge{margin:2px 0 0}
+body.industrial .work-tool-table .tool-mount-progress{display:flex;align-items:center;gap:8px}
+body.industrial .work-tool-table .tool-mount-progress progress{flex:1;margin:0;max-width:80px}
+body.industrial .work-tool-table th:nth-child(2){width:170px}
+body.industrial .work-tool-table th:nth-child(8){width:130px}
+body.industrial .work-tool-table th:nth-child(6){width:210px}
+body.industrial .work-tool-table th:nth-child(7){width:160px}
+body.industrial .work-tool-table th:nth-child(8){width:150px}
+body.industrial .work-tool-table th:nth-child(2){width:auto;min-width:170px}
+body.industrial .work-tool-table input::placeholder{font-size:14px}
+body.industrial .work-tool-table th:nth-child(2){width:250px;min-width:0}
+body.industrial .tool-desc-content{justify-content:flex-start}
+body.industrial .tool-desc-content .tool-photo-button{order:-1}
+.sp-input input::placeholder{font:400 15px/1 var(--font-sans);color:var(--ink-muted)}
+body.industrial .stage-name{white-space:normal;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
+@media(max-width:900px){body.industrial .ds-osbar .osbar-current{padding-left:0;padding-right:0}}
+@media(max-width:760px){body.industrial #operations.ds-journey .operation-item>button{min-height:64px;padding:var(--space-2) var(--space-3)}}
+@media(max-width:1440px){
+ body.industrial .ds-journey .operation-item>button{padding:var(--space-2) var(--space-3)}
+ body.industrial .ds-journey .operation-item>button strong{font-size:15px}
+ body.industrial .ds-journey .operation-item>button>span:not(.journey-meta){white-space:normal;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;font-size:13px;line-height:17px}
+}
+@media(max-width:1440px){body.industrial .ds-journey .operation-item>button{column-gap:6px}body.industrial .ds-journey .operation-item>button>strong{white-space:normal;line-height:19px}}
+body.industrial .tech-section .tool .length-pair{max-width:720px}
+body.industrial .tech-section .tool .physical-tool-values{max-width:960px}

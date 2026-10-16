@@ -20,6 +20,8 @@ const url=process.env.COLUMBIA_LIVE_URL||'file:///'+process.cwd().replaceAll('\\
  // Receiving: 111,00 → 15,25 total; Face A 0,20 (editable) → Face B 15,05. One action per state.
  assert.equal(await p.locator('#receivingAction').isDisabled(),true);assert.equal(await p.locator('#receivingAction').textContent(),'Concluir recebimento');
  assert.equal(await p.locator('#faceARemoval').inputValue(),'0.2');
+ // Receiving keeps the job tool list visible for preparation; the stage-specific tool card stays hidden.
+ assert.equal(await p.locator('#workToolList tbody tr').first().isVisible(),true);assert.equal(await p.locator('#techSection').isVisible(),false);
  await p.fill('#receivedThickness','111');
  assert.match(await text('#rxFacts'),/95,75 mm.*15,25 mm/s);assert.equal(await text('#rxFaceB'),'15,05 mm');assert.match(await text('#rxSvg'),/Face A · 0,20 mm.*Face B · 15,05 mm/s);
  await p.fill('#faceARemoval','1.25');assert.equal(await text('#rxFaceB'),'14,00 mm');
@@ -33,6 +35,7 @@ const url=process.env.COLUMBIA_LIVE_URL||'file:///'+process.cwd().replaceAll('\\
  // 1ª operação: name, objective, program, tool, stock, reduction, passes, times, single action.
  await p.click('#receivingAction');assert.equal(await p.evaluate(()=>document.body.dataset.journeyView),'operation');
  const panel=await text('#stagePanel');
+ assert.match(await text('#doNow li:first-child'),/^Passar a lixadeira na peça/);
  assert.match(panel,/1ª operação · etapa 1 de 2/);assert.match(panel,/Facear a primeira face/);assert.match(panel,/O001\.TAP/);assert.match(panel,/T1 · Girassol Ø100/);
  assert.match(panel,/Passes estimados\s*~1/);assert.match(panel,/Usinagem estimada\s*~12 min/);assert.match(panel,/Preparação estimada\s*~45 min/);assert.doesNotMatch(panel,/tempo real/i);
  assert.equal(await p.locator('[data-face-stock="0"]').inputValue(),'0.2');assert.equal(await p.locator('#faceReduction').inputValue(),'0.7');
@@ -78,7 +81,7 @@ const url=process.env.COLUMBIA_LIVE_URL||'file:///'+process.cwd().replaceAll('\\
  // Cavity consultation: one tap selects in the table, the 3D and the drawing; every program with cavities offers it.
  await p.click('#cavityConsultation [data-cavity="5"]');assert.match(await text('#selectedCavityLines'),/Cavidade 05/);assert.equal(await p.locator('#selectedCavityLines .source-reference').count(),4);assert.match(await text('#cavityConsultation .cavity-changes summary'),/Troca de cavidade no programa \(12\)/);
  assert.equal(await p.evaluate(()=>columbiaDemo.getCavityView().meshes.find(m=>m.userData.cavityId===5).material.opacity>0),true);assert.equal(await p.locator('#drawingHost [data-drawing-cavity].selected').getAttribute('data-drawing-cavity'),'5');
- for(const [step,file,count,label] of [[4,'O002.TAP',12,null],[8,'O005.TAP',36,/3 passagens/],[6,'O004.TAP',100,/passagens/],[12,'O009.TAP',null,null]]){await p.click('[data-step="'+step+'"]');await p.click('[data-tab="details"]');if(count===null){assert.equal(await p.locator('#cavityConsultation').count(),0);continue}assert.match(await text('#cavityConsultation .cavity-changes summary'),new RegExp('\\('+count+'\\)'));if(label)assert.match(await text('#selectedCavityLines'),label);}
+ for(const [step,,count,label] of [[4,'O002.TAP',12,null],[8,'O005.TAP',36,/3 passagens/],[6,'O004.TAP',100,/passagens/],[12,'O009.TAP',null,null]]){await p.click('[data-step="'+step+'"]');await p.click('[data-tab="details"]');if(count===null){assert.equal(await p.locator('#cavityConsultation').count(),0);continue}assert.match(await text('#cavityConsultation .cavity-changes summary'),new RegExp('\\('+count+'\\)'));if(label)assert.match(await text('#selectedCavityLines'),label);}
  await p.click('[data-step="5"]');
  const op2=await text('#stagePanel');assert.match(op2,/O003\.TAP/);assert.match(op2,/T3 · Alto avanço Ø32/);assert.match(op2,/~2 h 51 min/);assert.doesNotMatch(op2,/Passes estimados/);
  // Zero point only on the first stage of each operation (O002 here); later stages are the same sequence.
