@@ -647,11 +647,11 @@ body.industrial .operational-notice{background:transparent!important;border:0!im
 .rx-note .ds-link:disabled{color:var(--ink-subtle);text-decoration:none;cursor:default}
 .rx-message{margin:var(--space-2) 0 0;font-size:15px;color:var(--status-blocked)}
 .rx-message:empty{display:none}
-/* Outside an operation the stage-specific tool card is hidden; the receiving view keeps the job tool list for preparation. */
-body[data-journey-view=receiving] .process>#operationDetail,body[data-journey-view=receiving] .main,body[data-journey-view=receiving] #techSection,
-body[data-journey-view=op3] .process>#operationDetail,body[data-journey-view=op3] .main,body[data-journey-view=op3] .work-tools,body[data-journey-view=op3] #techSection,
-body[data-journey-view=heat] .process>#operationDetail,body[data-journey-view=heat] .main,body[data-journey-view=heat] .work-tools,body[data-journey-view=heat] #techSection,
-body[data-journey-view=post-heat] .process>#operationDetail,body[data-journey-view=post-heat] .main,body[data-journey-view=post-heat] .work-tools,body[data-journey-view=post-heat] #techSection{display:none!important}
+/* Outside an operation the stage panel and 3D are hidden; the receiving view keeps the job tool list for preparation. */
+body[data-journey-view=receiving] .process>#operationDetail,body[data-journey-view=receiving] .main,
+body[data-journey-view=op3] .process>#operationDetail,body[data-journey-view=op3] .main,body[data-journey-view=op3] .work-tools,
+body[data-journey-view=heat] .process>#operationDetail,body[data-journey-view=heat] .main,body[data-journey-view=heat] .work-tools,
+body[data-journey-view=post-heat] .process>#operationDetail,body[data-journey-view=post-heat] .main,body[data-journey-view=post-heat] .work-tools{display:none!important}
 
 /* Tools table, records, footer */
 body.industrial .work-tools{width:calc(100% - 2 * var(--page-gutter));max-width:calc(var(--page-max) - 2 * var(--page-gutter));margin:var(--space-6) auto 0;border:1px solid var(--line);border-radius:var(--radius-md);box-shadow:none}

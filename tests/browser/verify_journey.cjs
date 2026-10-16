@@ -20,8 +20,8 @@ const url=process.env.COLUMBIA_LIVE_URL||'file:///'+process.cwd().replaceAll('\\
  // Receiving: 111,00 → 15,25 total; Face A 0,20 (editable) → Face B 15,05. One action per state.
  assert.equal(await p.locator('#receivingAction').isDisabled(),true);assert.equal(await p.locator('#receivingAction').textContent(),'Concluir recebimento');
  assert.equal(await p.locator('#faceARemoval').inputValue(),'0.2');
- // Receiving keeps the job tool list visible for preparation; the stage-specific tool card stays hidden.
- assert.equal(await p.locator('#workToolList tbody tr').first().isVisible(),true);assert.equal(await p.locator('#techSection').isVisible(),false);
+ // Receiving keeps the job tool list visible for preparation.
+ assert.equal(await p.locator('#workToolList tbody tr').first().isVisible(),true);
  await p.fill('#receivedThickness','111');
  assert.match(await text('#rxFacts'),/95,75 mm.*15,25 mm/s);assert.equal(await text('#rxFaceB'),'15,05 mm');assert.match(await text('#rxSvg'),/Face A · 0,20 mm.*Face B · 15,05 mm/s);
  await p.fill('#faceARemoval','1.25');assert.equal(await text('#rxFaceB'),'14,00 mm');
