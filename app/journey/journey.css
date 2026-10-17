@@ -341,3 +341,6 @@ body.industrial .stage-name{white-space:normal;display:-webkit-box;-webkit-line-
 @media(max-width:1440px){body.industrial .ds-journey .operation-item>button{column-gap:6px}body.industrial .ds-journey .operation-item>button>strong{white-space:normal;line-height:19px}}
 body.industrial .tech-section .tool .length-pair{max-width:720px}
 body.industrial .tech-section .tool .physical-tool-values{max-width:960px}
+/* Fotos de referência das ferramentas (17/10): retrato 3:4, enquadrar a ferramenta e não o fuso. */
+body.industrial .tool-photo-button img{object-position:50% 72%}
+body.industrial .tool .sidebar-photo{width:96px;height:128px;padding:2px}

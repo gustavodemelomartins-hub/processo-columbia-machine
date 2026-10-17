@@ -23,6 +23,7 @@ values={
  'DRAWING':'data:image/jpeg;base64,'+base64.b64encode(buf.getvalue()).decode(),
  'COLUMBIA_LOGO':data_uri('assets/brand/columbia_logo.png','image/png'),
  'COLUMBIA_FAVICON':data_uri('assets/brand/favicon-32x32.png','image/png'),
+ 'TOOL_REFERENCE_PHOTOS':json.dumps({tool:{'dataUrl':data_uri(photo['file'],'image/jpeg'),'origin':'Gustavo, '+'/'.join(reversed(config['tool_reference_photos']['received'].split('-')[1:]))+' · '+photo['original'].rsplit('/',1)[1],'reference':True} for tool,photo in config['tool_reference_photos']['tools'].items()}),
 }
 files={
  'THREE':'vendor/three/three.min.js','GVIEWER':'app/simulation/gviewer-precomputed.js',
@@ -50,7 +51,7 @@ def expand(match):
  if key not in values:raise ValueError('Token de build desconhecido: '+key)
  if key in expanding:raise ValueError('Ciclo de tokens: '+str(expanding+[key]))
  expanding.append(key)
- value=token.sub(expand,values[key]) if key in {'OPERATOR_LAYER','INSERT_UI','TOOLING_UI','JOURNEY_LAYER'} else values[key]
+ value=token.sub(expand,values[key]) if key in {'OPERATOR_LAYER','INSERT_UI','TOOLING_UI','TOOL_PHOTO_UI','JOURNEY_LAYER'} else values[key]
  expanding.pop()
  return value
 html=token.sub(expand,read('app/prototype-template.html'))

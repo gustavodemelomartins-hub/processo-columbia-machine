@@ -2022,5 +2022,77 @@
   "engineering_review": {
     "status": "resolvida",
     "message": "Espessura antes do T.T.: 95,75 mm (desenho, página 1)."
+  },
+  "tool_reference_photos": {
+    "received": "2026-10-17",
+    "provenance": "Fotos das ferramentas montadas na Mini Portal enviadas pelo Gustavo em 17/10/2026, \"na ordem que aparecem nos programas\". Associação pela ordem da primeira aparição de cada ferramenta nos programas, conferida pelo tipo visível na foto. Recorte 600×800 para a tela; originais em data/cnc/recebidos/2026-10-17_fotos_ferramentas/originais/.",
+    "tools": {
+      "1": {
+        "file": "assets/photos/ferramentas/T1.jpg",
+        "original": "data/cnc/recebidos/2026-10-17_fotos_ferramentas/originais/IMG_9476.jpeg",
+        "basis": "ordem dos programas + tipo na foto: cabeçote de facear (O001)"
+      },
+      "9": {
+        "file": "assets/photos/ferramentas/T9.jpg",
+        "original": "data/cnc/recebidos/2026-10-17_fotos_ferramentas/originais/IMG_9477.jpeg",
+        "basis": "ordem dos programas + tipo na foto: fresa de topo em pinça (O002)"
+      },
+      "3": {
+        "file": "assets/photos/ferramentas/T3.jpg",
+        "original": "data/cnc/recebidos/2026-10-17_fotos_ferramentas/originais/IMG_9478.jpeg",
+        "basis": "ordem dos programas + tipo na foto: fresa de pastilha em haste (O003)"
+      },
+      "12": {
+        "file": "assets/photos/ferramentas/T12.jpg",
+        "original": "data/cnc/recebidos/2026-10-17_fotos_ferramentas/originais/IMG_9479.jpeg",
+        "basis": "ordem dos programas + tipo na foto: fresa tipo abacaxi (O004)"
+      },
+      "4": {
+        "file": "assets/photos/ferramentas/T4.jpg",
+        "original": "data/cnc/recebidos/2026-10-17_fotos_ferramentas/originais/IMG_9480.jpeg",
+        "basis": "ordem dos programas + tipo na foto: fresa de pastilha pequena em extensão (O004)"
+      },
+      "8": {
+        "file": "assets/photos/ferramentas/T8.jpg",
+        "original": "data/cnc/recebidos/2026-10-17_fotos_ferramentas/originais/IMG_9481.jpeg",
+        "basis": "ordem dos programas + tipo na foto: fresa de topo longa grande (O005)"
+      },
+      "5": {
+        "file": "assets/photos/ferramentas/T5.jpg",
+        "original": "data/cnc/recebidos/2026-10-17_fotos_ferramentas/originais/IMG_9482.jpeg",
+        "basis": "ordem dos programas + tipo na foto: fresa de topo longa (O006)"
+      },
+      "6": {
+        "file": "assets/photos/ferramentas/T6.jpg",
+        "original": "data/cnc/recebidos/2026-10-17_fotos_ferramentas/originais/IMG_9483.jpeg",
+        "basis": "ordem dos programas + tipo na foto: fresa de topo longa menor (O007)"
+      },
+      "10": {
+        "file": "assets/photos/ferramentas/T10.jpg",
+        "original": "data/cnc/recebidos/2026-10-17_fotos_ferramentas/originais/IMG_9487.jpeg",
+        "basis": "ordem dos programas + tipo na foto: chanfrador com pastilha (O0018)"
+      }
+    },
+    "pending": [
+      {
+        "original": "data/cnc/recebidos/2026-10-17_fotos_ferramentas/originais/IMG_9484.jpeg",
+        "note": "Fresa de topo fina revestida; pela ordem seria T11 (broca de centro), que não confere com a foto"
+      },
+      {
+        "original": "data/cnc/recebidos/2026-10-17_fotos_ferramentas/originais/IMG_9485.jpeg",
+        "note": "Cabeçote com pastilhas em extensão; parece T2 (Girassol Ø63), mas pela ordem ficaria antes de T22, T14 e T13"
+      },
+      {
+        "original": "data/cnc/recebidos/2026-10-17_fotos_ferramentas/originais/IMG_9486.jpeg",
+        "note": "Ferramenta pequena em pinça; parece T11 (broca de centro), mas vem depois do cabeçote na ordem das fotos"
+      }
+    ],
+    "without_photo": [
+      11,
+      22,
+      14,
+      13,
+      2
+    ]
   }
 }
